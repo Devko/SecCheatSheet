@@ -3,7 +3,7 @@
 
 import { freshnessStatus } from "./freshness.mjs";
 
-const LABELS = { current: "Current", "due-soon": "Review due soon", overdue: "Past review date" };
+const LABELS = { current: "Current", due: "Review due", overdue: "Past review date" };
 
 for (const badge of document.querySelectorAll("[data-fresh]")) {
   const status = freshnessStatus(badge.dataset.reviewed, Number(badge.dataset.every));
