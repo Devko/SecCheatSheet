@@ -561,8 +561,8 @@ sup.cite { line-height: 0; }
   .block > h2 { margin-bottom: 5px; font-size: 11pt; }
   .block__intro { max-width: none; margin: -2px 0 6px; }
   /* Lists may split between items; headings stay with their content; charts and boxes stay whole. */
-  .clock, .block--ranked, .block--timelines, .column, .list > li, .steps > li, .sources li { break-inside: avoid; }
-  .block > h2, .block__intro { break-after: avoid; }
+  .clock, .block--ranked, .block--timelines, .list > li, .steps > li, .sources li { break-inside: avoid; }
+  .block > h2, .block__intro, .column h3 { break-after: avoid; }
 
   .clock { --label-w: 19rem; }
   .tier__label { padding: 5px 0; }

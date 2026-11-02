@@ -15,6 +15,12 @@ npm run check      # same, but fails if PDFs can't be built or a sheet runs past
 npm run dev        # HTML only, then serve dist/ at http://localhost:4321
 ```
 
+To check one sheet without touching `dist/` (useful when several people or agents work at once):
+
+```bash
+node src/build.mjs --only patching --out .build/patching --strict
+```
+
 Output:
 
 ```

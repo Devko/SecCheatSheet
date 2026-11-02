@@ -1,5 +1,6 @@
 // Builds dist/: the library index, one folder per sheet (HTML, Markdown, JSON, PDF) and assets.
-// Usage: node src/build.mjs [--no-pdf] [--strict]
+// Usage: node src/build.mjs [--no-pdf] [--strict] [--only <slug>] [--out <dir>]
+// --only and --out let several people or agents check one sheet each without sharing dist/.
 
 import { mkdir, writeFile, readFile, cp, rm } from "node:fs/promises";
 import path from "node:path";
@@ -10,13 +11,20 @@ import { renderIndex } from "./render-index.mjs";
 import { toMarkdown, toChecklist } from "./markdown.mjs";
 import { buildPdfs } from "./pdf.mjs";
 
+const option = (name) => {
+  const i = process.argv.indexOf(name);
+  return i === -1 ? undefined : process.argv[i + 1];
+};
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const dist = path.join(root, "dist");
+const dist = path.resolve(option("--out") ?? path.join(root, "dist"));
+const only = option("--only");
 const site = JSON.parse(await readFile(path.join(root, "site.config.json"), "utf8"));
 
 const sheets = await loadSheets(path.join(root, "content", "sheets"));
 const map = await loadMap(path.join(root, "content", "map.json"), sheets);
-const written = sheets.filter(isWritten);
+const written = sheets.filter((sheet) => isWritten(sheet) && (!only || sheet.slug === only));
+if (only && !written.length) throw new Error(`--only ${only}: no draft or published sheet with that slug`);
 
 await rm(dist, { recursive: true, force: true });
 await cp(path.join(root, "assets"), path.join(dist, "assets"), { recursive: true });
