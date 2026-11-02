@@ -1,0 +1,340 @@
+{
+  "slug": "patching",
+  "topic": "Patching",
+  "status": "draft",
+  "order": 1,
+  "title": "Patching: how fast is fast enough?",
+  "short": "Exploited and internet-facing: contain in 24 hours, patch within 72.",
+  "answer": "If a vulnerability is being exploited and the system is reachable from the internet, contain it within 24 hours and patch within 72. Schedule everything else by exploitation and exposure, not by CVSS score alone.",
+  "audience": "IT and security teams of any size",
+  "version": "0.1",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "clock",
+      "id": "deadlines",
+      "title": "Patch deadlines by risk",
+      "navTitle": "Deadlines",
+      "span": "full",
+      "intro": "Our recommended deadlines, counted from the day a fix or official workaround is out. Use the first row that matches.",
+      "before": "Attackers often start here: on average 7 days before a fix exists[^mtrends]",
+      "axis": [
+        { "at": "1h", "label": "Fix out" },
+        { "at": "24h" },
+        { "at": "72h", "minor": true },
+        { "at": "7d" },
+        { "at": "14d", "minor": true },
+        { "at": "30d" },
+        { "at": "90d" }
+      ],
+      "tiers": [
+        {
+          "name": "Exploited and exposed",
+          "qualifies": "Known exploited, on a system reachable from the internet. Edge devices first.",
+          "contain": "24h",
+          "fix": "72h"
+        },
+        {
+          "name": "Exploited, internal",
+          "qualifies": "Known exploited, reachable only from inside your network.",
+          "fix": "7d"
+        },
+        {
+          "name": "Exposed and severe",
+          "qualifies": "Critical or high severity on an internet-facing system, or a high EPSS score. Not exploited yet.",
+          "fix": "14d"
+        },
+        {
+          "name": "Internal and severe",
+          "qualifies": "Critical or high severity on internal systems.",
+          "fix": "30d"
+        },
+        {
+          "name": "Everything else",
+          "qualifies": "Medium and low severity, not exposed, not exploited.",
+          "fix": "90d"
+        }
+      ],
+      "caption": "Log scale. Mandiant's latest mean time-to-exploit is −7 days[^mtrends], and 29% of the vulnerabilities added to CISA's KEV catalog in 2025 were exploited on or before the day their CVE was published[^vulncheck], so the first row starts with containment. For comparison, CISA gives US federal agencies 3 days for the most dangerous known-exploited flaws and 14 days for most others[^bod2604]; PCI DSS allows one month for critical patches[^pci]."
+    },
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Know what faces the internet.",
+          "text": "Keep a live inventory of internet-facing systems. A 72-hour deadline is useless on a server nobody knows about."
+        },
+        {
+          "title": "Track exploitation, not just severity.",
+          "text": "Exploiting a vulnerability is now the most common way into a breached organization, at 31% of breaches[^dbir]. Subscribe to CISA KEV[^kev] and to the advisories of every product you expose."
+        },
+        {
+          "title": "Treat edge devices as tier zero.",
+          "text": "Security and networking appliances were hit by 21 of the 43 zero-days aimed at enterprise technology in 2025[^gtig]. Patch them first, and check them for compromise when the flaw was exploited."
+        },
+        {
+          "title": "Automate the routine.",
+          "text": "Turn on automatic updates for operating systems, browsers and apps, so people spend their time on the few urgent cases."
+        },
+        {
+          "title": "Pre-approve the emergency path.",
+          "text": "Agree in advance who may patch or isolate a system outside the change window, so the 72 hours aren't spent waiting for a meeting."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "triage",
+      "title": "Triage a new vulnerability",
+      "navTitle": "Triage",
+      "items": [
+        {
+          "title": "Is it being exploited?",
+          "text": "Check CISA KEV[^kev], the vendor advisory and your national CERT. Vendor wording like \"limited, targeted exploitation\" counts as yes."
+        },
+        {
+          "title": "Can it be reached from the internet?",
+          "text": "Check your external inventory, not your memory. VPNs, firewalls, gateways, mail and file-transfer systems count as exposed by default."
+        },
+        {
+          "title": "What breaks if it's compromised?",
+          "text": "Identity systems, edge devices, backups and anything holding customer data get the next faster deadline."
+        },
+        {
+          "title": "How likely is exploitation soon?",
+          "text": "For everything else, use EPSS[^epss] to break ties and recheck weekly. Then record the tier, the deadline and one named owner."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**CISA replaced BOD 22-01** with BOD 26-04 in June 2026. Deadlines now depend on exposure, exploitation, automatability and impact; the worst cases get 3 days[^bod2604].",
+        "**NVD stopped enriching every CVE.** Since April 2026 it prioritizes KEV entries and US government software[^nvd]. Take severity from the vendor or CNA, and combine it with KEV and EPSS.",
+        "**EPSS moved to version 5** on 15 June 2026[^epss]. Recheck any score thresholds you tuned on older versions.",
+        "**EU reporting duties for manufacturers started** on 11 September 2026 under the Cyber Resilience Act[^cra]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "cant-patch",
+      "title": "Can't make the deadline?",
+      "navTitle": "Can't patch in time",
+      "items": [
+        "**Cut the exposure.** Put the system behind a VPN or an IP allowlist, or switch off the vulnerable feature.",
+        "**Apply the vendor's workaround** and write down when it stops being acceptable.",
+        "**Watch the attack path.** Add WAF or IPS rules and alerts for the known exploit.",
+        "**Assume compromise on exploited edge devices.** Check the vendor's indicators of compromise, rotate credentials the device handled and review logs from before you patched.",
+        "**Give the exception an end date.** An accepted risk has a named owner and expires."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Sorting by CVSS alone.** It says how bad a flaw could be, not whether anyone is using it. Most published vulnerabilities are never exploited.",
+        "**Chasing zero findings.** Medium and low findings on internal systems belong in the regular cycle. Track deadlines met per tier, not the total open count.",
+        "**Emergency patching every headline.** If it isn't exploited and isn't exposed, it goes in the normal cycle, however loud the news.",
+        "**Long scan reports.** A one-page list of overdue first- and second-tier items does more than a 300-page export."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Patching without restarting.** Many fixes aren't live until the service or device restarts.",
+        "**Stopping at the patch.** If an edge device was exposed while the flaw was being exploited, patching won't remove an attacker who is already in.",
+        "**Forgetting what scanners miss:** appliance firmware, container base images and libraries bundled inside other products.",
+        "**Reporting averages.** A good average can hide the one VPN that stayed unpatched for six weeks. Report the slowest cases.",
+        "**No owner for vendor-run systems.** If a supplier operates it, the patch deadline belongs in the contract."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on automatic updates everywhere they exist.",
+            "Where you can, use cloud services instead of self-hosted VPNs and gateways, so the provider patches the edge.",
+            "Subscribe to advisories for the few products that face the internet.",
+            "Name one person who owns patching, plus a backup."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Keep an external attack-surface inventory that updates itself.",
+            "Enrich scanner findings with KEV and EPSS.",
+            "Write down your tiers and deadlines and get them signed off.",
+            "Agree a pre-approved emergency change path."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Report deadlines met per tier to leadership every month.",
+            "Run risk acceptance with owners and expiry dates.",
+            "Put patch deadlines and advisory duties into supplier contracts.",
+            "Map your tiers to NIS2, DORA or PCI DSS, and keep a compromise-assessment playbook for edge devices."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "reporting",
+      "title": "A separate clock: EU reporting",
+      "navTitle": "EU reporting",
+      "span": "full",
+      "intro": "These run alongside your patch deadline, not after it. Both can start the moment you learn a flaw is being exploited.",
+      "items": [
+        {
+          "name": "Cyber Resilience Act",
+          "scope": "Manufacturers, for actively exploited vulnerabilities in their own products. Applies since 11 September 2026; reports go through ENISA's Single Reporting Platform[^cra][^enisa].",
+          "steps": [
+            { "at": "24 h", "what": "Early warning" },
+            { "at": "72 h", "what": "Vulnerability notification" },
+            { "at": "14 days", "what": "Final report, counted from when a fix is available" }
+          ]
+        },
+        {
+          "name": "NIS2",
+          "scope": "Essential and important entities, for significant incidents[^nis2]. NIS2 sets no number for patching, only \"a reasonable time\"[^nis2ir]. A signed-off tier table is how you show what reasonable means.",
+          "steps": [
+            { "at": "24 h", "what": "Early warning" },
+            { "at": "72 h", "what": "Incident notification" },
+            { "at": "1 month", "what": "Final report, counted from the notification" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "measure",
+      "title": "Measure the right things",
+      "navTitle": "Metrics",
+      "span": "full",
+      "items": [
+        "**Deadlines met per tier.** Aim for 100% on the first tier.",
+        "**Oldest open exploited vulnerability,** in days.",
+        "**Time from advisory to decision.** Slow triage eats the deadline before anyone patches.",
+        "**Coverage:** the share of systems reporting to your patch and scanning tools. Systems you can't see never show up as overdue."
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on CISA BOD 26-04, M-Trends 2026 and the CRA reporting duties that started in September."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "vulncheck",
+      "title": "State of Exploitation 2026",
+      "publisher": "VulnCheck",
+      "date": "21 Jan 2026",
+      "url": "https://www.vulncheck.com/blog/state-of-exploitation-2026"
+    },
+    {
+      "id": "bod2604",
+      "title": "BOD 26-04: Prioritizing Security Updates Based on Risk",
+      "publisher": "CISA",
+      "date": "10 Jun 2026",
+      "url": "https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk"
+    },
+    {
+      "id": "pci",
+      "title": "FAQ 1597 on PCI DSS v4.0.1 requirement 6.3.3",
+      "publisher": "PCI Security Standards Council",
+      "date": "May 2025",
+      "url": "https://www.pcisecuritystandards.org/faqs/1597/"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "2026",
+      "url": "https://www.verizon.com/business/resources/reports/dbir/"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "1,766 entries on 30 Oct 2026",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "gtig",
+      "title": "Look What You Made Us Patch: 2025 Zero-Days in Review",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "5 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review"
+    },
+    {
+      "id": "epss",
+      "title": "EPSS data and statistics",
+      "publisher": "FIRST",
+      "date": "version 5 since 15 Jun 2026",
+      "url": "https://www.first.org/epss/data"
+    },
+    {
+      "id": "nvd",
+      "title": "NIST Updates NVD Operations to Address Record CVE Growth",
+      "publisher": "NIST",
+      "date": "15 Apr 2026",
+      "url": "https://www.nist.gov/node/1910421"
+    },
+    {
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Article 14",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    },
+    {
+      "id": "enisa",
+      "title": "The CRA Single Reporting Platform is launched",
+      "publisher": "ENISA",
+      "date": "11 Sep 2026",
+      "url": "https://www.enisa.europa.eu/news/the-cra-single-reporting-platform-is-launched"
+    },
+    {
+      "id": "nis2",
+      "title": "Directive (EU) 2022/2555 (NIS2), Article 23",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Implementing Regulation (EU) 2024/2690, Annex point 6.6",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    }
+  ]
+}

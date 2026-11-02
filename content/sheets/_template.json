@@ -1,0 +1,72 @@
+{
+  "slug": "topic-slug",
+  "topic": "Topic name as it appears in the index",
+  "status": "draft",
+  "order": 99,
+  "title": "Topic: the question readers actually ask?",
+  "short": "One line with the action and a number. Shown in the library index.",
+  "answer": "Two sentences at most. The first is what to do and by when; the second is how to decide everything else.",
+  "audience": "Who this is written for",
+  "version": "0.1",
+  "lastReviewed": "2026-01-31",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        { "title": "Imperative action.", "text": "Why it matters, in one or two sentences, with a citation if it contains a number[^example]." }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "steps",
+      "title": "A sequence the reader follows in order",
+      "items": [{ "title": "Question or step?", "text": "What to check and what follows from the answer." }]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": ["**Thing people over-invest in.** Why it can wait."]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "span": "full",
+      "columns": [
+        { "title": "Small team, no security staff", "items": ["Action"] },
+        { "title": "Growing, with IT or security staff", "items": ["Action"] },
+        { "title": "Enterprise or regulated", "items": ["Action"] }
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "deadlines",
+      "title": "Fixed deadlines from a regulation or contract",
+      "items": [
+        {
+          "name": "Regulation name",
+          "scope": "Who it applies to and from when[^example].",
+          "steps": [{ "at": "24 h", "what": "First duty" }, { "at": "72 h", "what": "Second duty" }]
+        }
+      ]
+    },
+    {
+      "type": "clock",
+      "id": "clock",
+      "title": "Deadlines by risk (see patching.json for a full example)",
+      "span": "full",
+      "axis": [{ "at": "1h", "label": "Start" }, { "at": "24h" }, { "at": "7d" }, { "at": "30d" }],
+      "tiers": [{ "name": "Most urgent", "qualifies": "When this row applies.", "contain": "24h", "fix": "72h" }],
+      "caption": "Where the numbers come from[^example]."
+    }
+  ],
+  "changes": [{ "date": "2026-01-31", "version": "0.1", "text": "First draft." }],
+  "sources": [
+    { "id": "example", "title": "Document title", "publisher": "Publisher", "date": "1 Jan 2026", "url": "https://example.com/" }
+  ]
+}

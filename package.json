@@ -1,0 +1,15 @@
+{
+  "name": "security-cheat-sheets",
+  "private": true,
+  "type": "module",
+  "description": "Opinionated, dated security cheat sheets with web, PDF and Markdown output",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "build:html": "node src/build.mjs --no-pdf",
+    "serve": "node src/serve.mjs",
+    "dev": "node src/build.mjs --no-pdf && node src/serve.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
