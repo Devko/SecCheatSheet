@@ -1,0 +1,333 @@
+{
+  "slug": "ransomware",
+  "topic": "Ransomware readiness",
+  "status": "published",
+  "order": 9,
+  "capability": "resilience/ransomware",
+  "title": "Ransomware: could you recover within a week without paying?",
+  "short": "Keep one backup copy attackers can't delete and time a full restore at least once a year.",
+  "answer": "Keep at least one backup copy that your everyday admin accounts can't delete, and restore your most critical systems from it in a timed test this quarter. Judge every other ransomware measure by whether it keeps attackers away from your backups, identity systems and hypervisors or shortens that measured restore time.",
+  "audience": "IT and security teams in small and mid-size organizations, including those on Microsoft 365",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Keep one copy attackers can't delete.",
+          "text": "Store at least one backup offline or on immutable storage. Run the backup system with admin accounts separate from those that administer the rest of the network, and require MFA to alter or destroy backups[^ncscprem]."
+        },
+        {
+          "title": "Time a full restore.",
+          "text": "Restore your critical systems into an isolated network at least once a year and record how long it takes. In a Sophos-commissioned survey of 2,158 victims, 55% fully recovered within a week[^sophos]."
+        },
+        {
+          "title": "Close the usual ways in.",
+          "text": "Patch VPNs and firewalls within the patching sheet's deadlines and require phishing-resistant MFA for remote access. Confirmed or suspected exploits, mostly of VPNs and firewalls, opened a third of Google's 2025 ransomware cases; stolen credentials, typically for VPN or RDP, opened 21% of those with a known entry point[^gtig]."
+        },
+        {
+          "title": "Guard the systems that control recovery.",
+          "text": "Manage domain controllers, Entra ID, backup servers and hypervisors only from dedicated admin accounts and workstations. Mandiant advises treating virtualization platforms as Tier 0 and decoupling backups from the corporate Active Directory[^mtrends]."
+        },
+        {
+          "title": "Print the plan and the phone list.",
+          "text": "Keep a hard copy and an offline version of the incident plan[^cisa], with contacts for your insurer, incident response firm, lawyer, police and data protection authority."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "test",
+      "title": "Test whether you could recover",
+      "navTitle": "Recovery test",
+      "items": [
+        {
+          "title": "Which services must run first?",
+          "text": "List what the business needs back in the first week, with an owner and a recovery time objective for each. CISA advises restoring from a predefined critical asset list[^cisa]."
+        },
+        {
+          "title": "Can you reach the backups with the domain down?",
+          "text": "Sign in to the backup console without any domain account. If you can't, an attacker with domain admin rights can probably reach the backups."
+        },
+        {
+          "title": "How far back can you go?",
+          "text": "Ransomware can go unnoticed for days[^edpb], so keep versions from before the intrusion. Active Directory backups are usable only within the tombstone lifetime[^adchoose]."
+        },
+        {
+          "title": "How long does a full restore take?",
+          "text": "Restore identity, the backup server and one business application end to end. Time it until users can work and compare the result with the recovery time objectives."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "attacks",
+      "title": "How ransomware attacks run now",
+      "navTitle": "Attacks now",
+      "span": "full",
+      "items": [
+        "**Access is often handed over.** In Mandiant's 2025 investigations, 30% of ransomware intrusions began with access from an earlier compromise, up from 15% in 2024, as groups that break in pass access to groups that deploy ransomware[^mtrends].",
+        "**Recovery systems are targets.** Mandiant saw groups delete backups from cloud storage and encrypt hypervisor datastores to stop all their virtual machines at once[^mtrends]. Google saw attackers harvest credentials from Veeam backup servers in about 10% of intrusions[^gtig].",
+        "**Stolen data is the main lever.** Google found suspected data theft in 77% of the ransomware intrusions it analyzed for 2025, up from 57% in 2024[^gtig]. Europol notes that companies now cope better with losing data than with having it published[^iocta]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "backups",
+      "title": "Backups that survive an attack",
+      "navTitle": "Backups",
+      "items": [
+        "**Use 3-2-1 with one copy out of reach.** Keep three copies on two media types, one of them offsite and one offline or immutable. Ransomware actively targets backups[^ncscmit].",
+        "**Make deletion slow and visible.** Delay deletion requests, alert on mass deletions and retention changes and keep backups for a fixed period rather than a fixed number, so a burst of corrupted backups can't push out the clean ones[^ncscprem].",
+        "**Store keys and passwords offline.** Keep out-of-band copies of backup encryption keys[^ncscprem] and of the Directory Services Restore Mode password[^adchoose]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "spread",
+      "title": "Limit lateral movement",
+      "navTitle": "Lateral movement",
+      "items": [
+        "**Separate admin accounts.** Use designated admin accounts only for admin work, and give every machine its own local admin password with LAPS[^cisa].",
+        "**Segment the network.** Put servers, backups and management interfaces in their own zones, and block SMB and RDP between workstations. CISA notes that segmentation can help contain an intrusion[^cisa].",
+        "**Keep domain controllers bare.** Don't use them for email or web browsing, don't install extra agents and manage privileged access to them with a PAM tool[^cisa]."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rebuild",
+      "title": "Rebuild in this order",
+      "navTitle": "Rebuild order",
+      "items": [
+        {
+          "title": "Set up a clean place to work.",
+          "text": "Use new or reimaged admin workstations on an isolated network. Keep affected systems intact for the investigation."
+        },
+        {
+          "title": "Restore identity first.",
+          "text": "Restore one writable domain controller per domain in isolation, then reset admin passwords and reset the krbtgt password twice[^adinitial]. Entra Backup and Recovery, generally available since June 2026[^entraga], rolls supported objects back up to 7 days but not hard-deleted ones[^entrabackup]."
+        },
+        {
+          "title": "Rebuild the recovery tools.",
+          "text": "Reinstall backup and hypervisor management from trusted media and rotate their credentials."
+        },
+        {
+          "title": "Restore services in priority order.",
+          "text": "Use golden images[^cisa], scan backup data for malware before restoring it[^ncscmit] and reconnect one zone at a time."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "paying",
+      "title": "If you are asked to pay",
+      "navTitle": "Paying",
+      "items": [
+        "**Don't count on payment.** It doesn't guarantee access to your data, and a promise to delete stolen data can't be trusted[^ncscpay]. In Verizon's 2026 DBIR, 69% of ransomware victims didn't pay and the median payment fell to $139,875[^dbir].",
+        "**Screen for sanctions first.** Breaching UK financial sanctions is a serious criminal offense, and OFSI says ransomware payments are unlikely to get a license[^ofsi]. EU cyber sanctions forbid making funds available to listed persons, who include people behind Conti and TrickBot[^eu796].",
+        "**Don't expect a lower ICO penalty.** The ICO doesn't count a ransom payment as risk mitigation or as a reason to reduce a penalty[^ncscpay].",
+        "**Watch for a UK ban.** The UK is developing a ban on payments by public sector bodies and regulated critical national infrastructure[^ukresp].",
+        "**Record each decision.** Keep a careful record of the response and each decision, and report the attack to your insurer or broker[^ncscpay]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Buying another detection product before a tested restore.** If no one has timed a full restore, spend the money and time there first.",
+        "**Counting sync as a backup.** Cloud services often sync encrypted files over the good copies immediately, and NCSC advises against relying on several copies in one cloud service[^ncscmit]. Even Microsoft 365 Backup, with append-only restore points at $0.15 per GiB per month, can be deleted by a Backup admin after a 90-day grace period[^m365backup].",
+        "**Taking every backup offline.** One offline or immutable copy of what the first week needs is enough to start. Keep the rest online for fast restores."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Cleaning up a small infection and moving on.** Infostealers and phishing are common first steps into a ransomware attack[^iocta]. Reset every credential used on that machine.",
+        "**Declaring the incident over once systems are back.** Find out what was taken. Under the GDPR, a personal data breach that may put people at risk goes to the supervisory authority within 72 hours where feasible[^edpb].",
+        "**Rebuilding admin rights as they were.** The same broad admin groups and service accounts give the next attacker the same path. Cut them down during the rebuild."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Back up OneDrive, SharePoint and Exchange Online with Microsoft 365 Backup or a third-party service, in addition to sync.",
+            "Keep two emergency access accounts with their own MFA, and store their recovery steps on paper.",
+            "Ask your IT provider to restore one laptop, one mailbox and one shared folder while you time it."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Back up at least two writable domain controllers per domain[^adchoose] and practice a forest restore in isolation.",
+            "Move backup servers and hypervisor management out of the domain and onto their own network.",
+            "Sign an incident response retainer and check what your insurer requires before you call anyone."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Keep an isolated recovery environment with its own identity, sized for the critical asset list.",
+            "Report measured restore times per critical service to leadership against agreed targets.",
+            "Agree with the board in advance who decides on payment, with legal and sanctions advice."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 6 statements and labels vendor survey figures as such."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on M-Trends 2026, Google's 2025 ransomware review, the 2026 DBIR, Microsoft's recovery documentation and NCSC guidance on backups and ransom payments."
+    }
+  ],
+  "sources": [
+    {
+      "id": "ncscprem",
+      "title": "Principles for ransomware-resistant on premises backups",
+      "publisher": "NCSC (UK)",
+      "date": "22 Nov 2024",
+      "url": "https://www.ncsc.gov.uk/collection/ransomware-resistant-backups/principles-for-ransomware-resistant-on-premises-backups"
+    },
+    {
+      "id": "sophos",
+      "title": "The State of Ransomware 2026 (vendor-commissioned survey, Q1 2026)",
+      "publisher": "Sophos",
+      "date": "Jul 2026",
+      "url": "https://assets.sophos.com/X24WTUEQ/at/jbww7pmb8n3gp99wr6hfq4/sophos-state-ransomware-report-2026.pdf"
+    },
+    {
+      "id": "gtig",
+      "title": "Ransomware Under Pressure: Tactics, Techniques, and Procedures in a Shifting Threat Landscape",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "16 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "cisa",
+      "title": "#StopRansomware Guide",
+      "publisher": "CISA",
+      "date": "Sep 2023",
+      "url": "https://www.cisa.gov/stopransomware/ransomware-guide"
+    },
+    {
+      "id": "edpb",
+      "title": "Guidelines 01/2021 on Examples regarding Personal Data Breach Notification, version 2.0",
+      "publisher": "European Data Protection Board",
+      "date": "14 Dec 2021",
+      "url": "https://www.edpb.europa.eu/system/files/documents/2022-01/edpb_guidelines_012021_pdbnotification_adopted_en.pdf"
+    },
+    {
+      "id": "adchoose",
+      "title": "Active Directory Forest Recovery - Determine how to recover the forest",
+      "publisher": "Microsoft Learn",
+      "date": "10 Jul 2023",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-determine-how-to-recover"
+    },
+    {
+      "id": "iocta",
+      "title": "Internet Organised Crime Threat Assessment (IOCTA) 2026",
+      "publisher": "Europol",
+      "date": "28 Apr 2026",
+      "url": "https://www.europol.europa.eu/cms/sites/default/files/documents/IOCTA-2026.pdf"
+    },
+    {
+      "id": "ncscmit",
+      "title": "Mitigating malware and ransomware attacks",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 9 Sep 2021",
+      "url": "https://www.ncsc.gov.uk/guidance/mitigating-malware-and-ransomware-attacks"
+    },
+    {
+      "id": "adinitial",
+      "title": "Active Directory Forest Recovery - Perform initial recovery",
+      "publisher": "Microsoft Learn",
+      "date": "10 Jul 2023",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-perform-initial-recovery"
+    },
+    {
+      "id": "entraga",
+      "title": "Microsoft Entra Backup and Recovery is now generally available",
+      "publisher": "Microsoft Entra Blog",
+      "date": "30 Jun 2026",
+      "url": "https://techcommunity.microsoft.com/blog/microsoft-entra-blog/microsoft-entra-backup-and-recovery-is-now-generally-available/4521997"
+    },
+    {
+      "id": "entrabackup",
+      "title": "Microsoft Entra Backup and Recovery overview",
+      "publisher": "Microsoft Learn",
+      "date": "30 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/backup/overview"
+    },
+    {
+      "id": "ncscpay",
+      "title": "Guidance for organisations considering payment in ransomware incidents",
+      "publisher": "NCSC (UK) with ABI, BIBA and IUA",
+      "date": "14 May 2024",
+      "url": "https://www.ncsc.gov.uk/guidance/organisations-considering-payment-in-ransomware-incidents"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report: Executive Summary",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/executivebriefs/2026-dbir-executive-summary.pdf"
+    },
+    {
+      "id": "ofsi",
+      "title": "Financial sanctions guidance for ransomware",
+      "publisher": "OFSI (HM Treasury)",
+      "date": "updated 28 Jan 2026",
+      "url": "https://www.gov.uk/government/publications/financial-sanctions-guidance-for-ransomware/financial-sanctions-guidance-for-ransomware"
+    },
+    {
+      "id": "eu796",
+      "title": "Council Regulation (EU) 2019/796 (cyber sanctions), Article 3 and Annex I, consolidated text",
+      "publisher": "EUR-Lex",
+      "date": "13 Jul 2026",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:02019R0796-20260713"
+    },
+    {
+      "id": "ukresp",
+      "title": "Ransomware legislative proposals: reducing payments to cyber criminals and increasing incident reporting. Government response",
+      "publisher": "Home Office (UK)",
+      "date": "22 Jul 2025",
+      "url": "https://assets.publishing.service.gov.uk/media/6899a4ddad0cbc0e276431e3/Government_Response_Ransomware_proposals_to_increase_incident_reporting_and_reduce_payments_to_criminals.pdf"
+    },
+    {
+      "id": "m365backup",
+      "title": "Overview of Microsoft 365 Backup",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-overview"
+    }
+  ]
+}

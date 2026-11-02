@@ -586,6 +586,8 @@ sup.cite { line-height: 0; }
   .sheet__foot { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 16px; padding-top: 10px; font-size: 7.5pt; }
   .sheet__foot h2 { margin-bottom: 4px; }
   .changes > div { display: flex; gap: 8px; }
+  /* Only the latest entry prints: every review adds one, and the full history stays online. */
+  .changes > div + div { display: none; }
   .changes dd { margin-bottom: 2px; }
   .sources { columns: 2; column-gap: 24px; }
   .sources li + li { margin-top: 2px; }

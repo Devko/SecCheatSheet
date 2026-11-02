@@ -1,0 +1,362 @@
+{
+  "slug": "eu-security-laws",
+  "topic": "EU security laws",
+  "status": "published",
+  "order": 8,
+  "capability": "govern/eu-regulation",
+  "title": "EU security laws: which apply to you and what is due when?",
+  "short": "Map each legal entity and product to NIS2, DORA and the CRA, and set up one process that can report within 24 hours.",
+  "answer": "Check which of your legal entities fall under NIS2 or DORA and which products under the CRA, since all three require a first report within 24 hours[^nis2][^dorarts][^cra]. Then resolve overlaps by role: DORA replaces NIS2's risk and reporting rules for financial entities[^nis2] and the CRA adds product duties, so one group can face all three.",
+  "audience": "IT, security and compliance leads in EU organizations, especially in Germany",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "intro": "This is guidance, not legal advice.",
+      "items": [
+        {
+          "title": "Decide scope per legal entity and product.",
+          "text": "NIS2 and DORA apply to entities[^nis2][^dora], the CRA to products with digital elements and their manufacturers, importers and distributors[^cra]. Record the sector and size figures you used."
+        },
+        {
+          "title": "Run one incident process with several clocks.",
+          "text": "NIS2 and the CRA require an early warning within 24 hours[^nis2][^cra] and DORA an initial notification within 4 hours of classification as major[^dorarts]. Name who classifies incidents and who sends each report."
+        },
+        {
+          "title": "Have management sign off and take training.",
+          "text": "Management bodies must approve and oversee the NIS2 risk management measures and take training, and they can be held liable[^nis2]. Put both on the board calendar."
+        },
+        {
+          "title": "Map your controls to the NIS2 measures.",
+          "text": "Article 21 requires measures in at least ten areas, from incident handling and backups to supply chain security and multi-factor authentication[^nis2]. Give each gap an owner and a date."
+        },
+        {
+          "title": "Put the duties into supplier contracts.",
+          "text": "DORA requires a register of information on all ICT service contracts[^dora] and NIS2 requires supply chain security[^nis2]. Add security update, incident notification and audit clauses at renewal."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "scope",
+      "title": "Find out which laws apply to you",
+      "navTitle": "Scope",
+      "items": [
+        {
+          "title": "Do you supply connected products in the EU?",
+          "text": "If you make, import or distribute hardware or software that connects to a device or network, the CRA applies to those products[^cra]. Medical devices, motor vehicles and certified aviation products are excluded, as are cloud services that aren't remote data processing for a product[^cra]."
+        },
+        {
+          "title": "Are you a financial entity under DORA?",
+          "text": "DORA lists 20 types, including credit institutions, payment and e-money institutions, investment firms, crypto-asset service providers, insurers and fund managers[^dora]. For them it replaces NIS2's risk management, reporting and supervision[^nis2]."
+        },
+        {
+          "title": "Is your sector in NIS2 Annex I or II?",
+          "text": "NIS2 covers 18 sectors, among them energy, transport, health, finance, digital infrastructure, digital services, critical product manufacturing, waste, postal services and public administration[^ecnis2]. If no annex lists your type of entity, NIS2 generally doesn't apply[^nis2]."
+        },
+        {
+          "title": "How big is the entity?",
+          "text": "An Annex I or II entity is in scope with 50 or more employees, or with turnover and balance sheet both above €10 million. An Annex I entity is essential with 250 or more employees, or with turnover above €50 million and a balance sheet above €43 million[^sme][^nis2]. Telecom, trust service and DNS providers and TLD registries are in scope at any size[^nis2]."
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "laws",
+      "title": "The three laws side by side",
+      "navTitle": "Three laws",
+      "span": "full",
+      "columns": [
+        {
+          "title": "NIS2",
+          "items": [
+            "**Who.** Medium and large entities in the Annex I and II sectors, plus telecom, trust service and DNS providers and TLD registries at any size[^nis2].",
+            "**Duties.** Management-approved risk management measures in at least ten areas, incident reporting and registration with the national authority[^nis2].",
+            "**Dates.** Member States had to apply it from 18 October 2024[^nis2].",
+            "**Penalties.** Maximum fines of at least €10 million or 2% of worldwide turnover, whichever is higher, for essential entities and €7 million or 1.4% for important ones[^nis2]. Managers of essential entities can be temporarily barred[^nis2]."
+          ]
+        },
+        {
+          "title": "DORA",
+          "items": [
+            "**Who.** 20 types of financial entity[^dora], plus critical ICT providers: 19 designated in November 2025, including AWS, Microsoft and SAP[^ctpp].",
+            "**Duties.** An ICT risk management framework owned by the management body, major incident reporting, resilience testing and a register of information on all ICT service contracts[^dora]. Threat-led penetration tests at least every 3 years for entities their supervisor selects[^dora].",
+            "**Dates.** Applies since 17 January 2025[^dora].",
+            "**Penalties.** Set by Member States, also for management body members[^dora]. Daily penalties of up to 1% of average daily worldwide turnover for critical ICT providers[^dora]."
+          ]
+        },
+        {
+          "title": "CRA",
+          "items": [
+            "**Who.** Manufacturers, importers and distributors of connected hardware and software in the EU[^cra].",
+            "**Duties.** The Annex I security requirements, a software bill of materials, CE marking and vulnerability handling for a support period of at least 5 years, or the expected use time if shorter[^cra].",
+            "**Dates.** In force since 10 December 2024[^eccra]. Reporting applies from 11 September 2026 and the remaining duties from 11 December 2027[^cra].",
+            "**Penalties.** Up to €15 million or 2.5% of worldwide turnover for breaches of Annex I or Articles 13 and 14[^cra]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Waiting for the proposed changes.** Neither the Digital Omnibus reporting rules nor the NIS2 amendments are law yet[^council][^oeil], and the proposed single entry point would keep today's reporting duties and recipients[^ecdigital].",
+        "**A separate compliance program for each law.** Keep one risk register for all three and add law-specific steps only where the duties differ.",
+        "**Reporting every alert.** NIS2 requires reports only for incidents that cause or could cause severe operational disruption, financial loss or considerable damage to others[^nis2]. Give the on-call team written thresholds."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Leaving group companies out of the size test.** The EU test adds the figures of linked and partner enterprises[^sme].",
+        "**Waiting for the full picture to report.** The NIS2 early warning only has to say whether you suspect unlawful or malicious acts or cross-border impact[^nis2].",
+        "**Forgetting products already on the market.** CRA reporting also covers products placed on the market before December 2027[^cra].",
+        "**Missing the implementing regulation.** Cloud, data center, managed service and other digital providers must also meet the detailed requirements of Implementing Regulation (EU) 2024/2690[^nis2ir]."
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "reporting",
+      "title": "Reporting clocks",
+      "navTitle": "Reporting clocks",
+      "intro": "Each clock starts when you become aware, unless noted.",
+      "items": [
+        {
+          "name": "NIS2",
+          "scope": "Significant incidents, to the CSIRT or competent authority; in Germany, the BSI[^bsig]. The final report is due 1 month after the notification[^nis2].",
+          "steps": [
+            {
+              "at": "24 hours",
+              "what": "Early warning"
+            },
+            {
+              "at": "72 hours",
+              "what": "Incident notification"
+            },
+            {
+              "at": "1 month",
+              "what": "Final report"
+            }
+          ]
+        },
+        {
+          "name": "DORA",
+          "scope": "Major ICT-related incidents, to the competent authority. The 4 hours run from classification, capped at 24 hours after awareness unless you classify later; later clocks run from the previous report[^dorarts].",
+          "steps": [
+            {
+              "at": "4 hours",
+              "what": "Initial notification"
+            },
+            {
+              "at": "72 hours",
+              "what": "Intermediate report"
+            },
+            {
+              "at": "1 month",
+              "what": "Final report"
+            }
+          ]
+        },
+        {
+          "name": "CRA",
+          "scope": "Manufacturers, through ENISA's platform[^enisa]. The final report is due 14 days after a fix for actively exploited vulnerabilities and 1 month after the notification for severe incidents[^cra].",
+          "steps": [
+            {
+              "at": "24 hours",
+              "what": "Early warning"
+            },
+            {
+              "at": "72 hours",
+              "what": "Notification"
+            },
+            {
+              "at": "14 days",
+              "what": "Final report"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "germany",
+      "title": "Germany: the NIS2 Implementation Act",
+      "navTitle": "Germany",
+      "items": [
+        "**The law took effect on 6 December 2025.** The act was published in the Bundesgesetzblatt on 5 December 2025, with no general transition period[^bgbl][^bsifaq]. It applies to about 29,500 companies and federal institutions[^bsiportal].",
+        "**The registration deadline has passed.** Entities must register within 3 months of falling under the law, so the first deadline passed in March 2026[^bsig][^bsinis2]. If you haven't registered, get an ELSTER organization certificate through Mein Unternehmenskonto, then register in the BSI portal[^bsinis2], open since 6 January 2026[^bsiportal]. Report changes within 2 weeks[^bsig].",
+        "**DORA entities must register too.** They are exempt from the BSIG's risk management, reporting and management body duties, and the BSIG rules out reporting the same incident under both laws[^bsifaq].",
+        "**Group figures can be left out.** The BSIG excludes linked and partner enterprises from the size test if your IT systems run independently of theirs[^bsig].",
+        "**Management is liable to the entity.** It must implement and oversee the risk management measures and attend regular training, and it is liable for culpable damage under company law[^bsig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**CRA reporting started.** Since 11 September 2026 manufacturers must report actively exploited vulnerabilities and severe incidents[^cra].",
+        "**The Commission proposed NIS2 amendments.** Its proposal of 20 January 2026 would clarify the scope to ease compliance for 28,700 companies, add a small mid-cap category and simplify jurisdiction rules[^ecqa]. It still awaits a committee decision in Parliament[^oeil].",
+        "**The Council wants national reporting entry points.** The Digital Omnibus would let you file NIS2, DORA, GDPR and other reports through one ENISA entry point[^ecdigital]. The Council's position of 21 October 2026 swaps it for one national entry point per Member State and backs a longer GDPR breach deadline; Parliament has not adopted its position yet[^council]."
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check of every date, threshold and deadline against EUR-Lex and, for Germany, the BSIG and BSI."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on the NIS2, DORA and CRA texts, the German BSIG, BSI guidance and the Council's position of 21 October 2026."
+    }
+  ],
+  "sources": [
+    {
+      "id": "nis2",
+      "title": "Directive (EU) 2022/2555 (NIS2), Articles 2 to 4, 20, 21, 23, 32, 34 and 41 and recital 28",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "dorarts",
+      "title": "Commission Delegated Regulation (EU) 2025/301 (DORA incident reporting standards), Article 5",
+      "publisher": "EUR-Lex",
+      "date": "20 Feb 2025",
+      "url": "https://eur-lex.europa.eu/eli/reg_del/2025/301/oj"
+    },
+    {
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 2, 13, 14, 19, 20, 30, 64, 69 and 71, recital 12 and Annex I",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    },
+    {
+      "id": "dora",
+      "title": "Regulation (EU) 2022/2554 (DORA), Articles 1, 2, 5, 26, 28, 35, 50 and 64",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "ecnis2",
+      "title": "NIS2 Directive: securing network and information systems",
+      "publisher": "European Commission",
+      "date": "2 Jul 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/nis2-directive"
+    },
+    {
+      "id": "sme",
+      "title": "Commission Recommendation 2003/361/EC concerning the definition of micro, small and medium-sized enterprises, Annex Articles 2 and 6",
+      "publisher": "EUR-Lex",
+      "date": "6 May 2003",
+      "url": "https://eur-lex.europa.eu/eli/reco/2003/361/oj"
+    },
+    {
+      "id": "ctpp",
+      "title": "List of designated critical ICT third-party service providers at Union level",
+      "publisher": "European Supervisory Authorities (EBA, EIOPA, ESMA)",
+      "date": "18 Nov 2025",
+      "url": "https://www.esma.europa.eu/sites/default/files/2025-11/List_of_designated_CTPPs.pdf"
+    },
+    {
+      "id": "eccra",
+      "title": "Cyber Resilience Act",
+      "publisher": "European Commission",
+      "date": "7 Sep 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act"
+    },
+    {
+      "id": "council",
+      "title": "Digital rulebook: Council agrees position to simplify data protection, privacy and cyber reporting rules",
+      "publisher": "Council of the EU",
+      "date": "21 Oct 2026",
+      "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/10/21/digital-rulebook-council-agrees-position-to-simplify-data-protection-privacy-and-cyber-reporting-rules/"
+    },
+    {
+      "id": "oeil",
+      "title": "2026/0012(COD): Amending the NIS 2 Directive as regards simplification measures and alignment with the Cybersecurity Act 2",
+      "publisher": "European Parliament Legislative Observatory",
+      "date": "checked 2 Nov 2026",
+      "url": "https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2026/0012(COD)"
+    },
+    {
+      "id": "ecdigital",
+      "title": "Digital Package",
+      "publisher": "European Commission",
+      "date": "20 Nov 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/faqs/digital-package"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Commission Implementing Regulation (EU) 2024/2690, Article 1",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "bsig",
+      "title": "BSI-Gesetz (BSIG), §§ 28, 32, 33 and 38",
+      "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
+      "date": "checked 2 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "enisa",
+      "title": "The CRA Single Reporting Platform is launched",
+      "publisher": "ENISA",
+      "date": "11 Sep 2026",
+      "url": "https://www.enisa.europa.eu/news/the-cra-single-reporting-platform-is-launched"
+    },
+    {
+      "id": "bgbl",
+      "title": "Gesetz zur Umsetzung der NIS-2-Richtlinie und zur Regelung wesentlicher Grundzüge des Informationssicherheitsmanagements in der Bundesverwaltung (BGBl. 2025 I Nr. 301)",
+      "publisher": "Bundesgesetzblatt",
+      "date": "5 Dec 2025",
+      "url": "https://www.recht.bund.de/bgbl/1/2025/301/VO.html"
+    },
+    {
+      "id": "bsifaq",
+      "title": "Fragen und Antworten zu NIS-2",
+      "publisher": "BSI",
+      "date": "checked 2 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-FAQ/NIS-2-FAQ-allgemein/FAQ-zu-NIS-2.html"
+    },
+    {
+      "id": "bsiportal",
+      "title": "Zweiter Schritt zur NIS-2-Registrierung: BSI-Portal ab sofort freigeschaltet",
+      "publisher": "BSI",
+      "date": "6 Jan 2026",
+      "url": "https://www.bsi.bund.de/DE/Service-Navi/Presse/Pressemitteilungen/Presse2026/260601_NIS2_BSI-Portal.html"
+    },
+    {
+      "id": "bsinis2",
+      "title": "NIS-2-regulierte Unternehmen",
+      "publisher": "BSI",
+      "date": "checked 2 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/nis-2-regulierte-unternehmen_node.html"
+    },
+    {
+      "id": "ecqa",
+      "title": "Cybersecurity Package - Questions & Answers",
+      "publisher": "European Commission",
+      "date": "20 Jan 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/faqs/cybersecurity-package-questions-answers"
+    }
+  ]
+}

@@ -1,7 +1,325 @@
 {
   "slug": "passkeys-mfa",
   "topic": "Passkeys and MFA",
-  "status": "planned",
+  "status": "published",
   "order": 3,
-  "capability": "identity/authentication"
+  "capability": "identity/authentication",
+  "title": "Passkeys and MFA: which sign-in methods are still good enough?",
+  "short": "Put admins on security keys or passkeys first, then retire SMS, voice and email codes for everyone else.",
+  "answer": "Require phishing-resistant sign-in (security keys, passkeys, Windows Hello for Business or certificates) for every admin first, and secure account recovery before you enforce it. Then move each remaining group to the strongest method its devices support, and give SMS, voice and email codes an end date.",
+  "audience": "IT and security teams, especially on Microsoft 365 and Microsoft Entra ID",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Move admins to phishing-resistant sign-in first.",
+          "text": "Give every privileged account a security key or device-bound passkey and require it at each sign-in. CISA suggests starting with administrators and help desk staff[^cisaprmfa]."
+        },
+        {
+          "title": "Secure account recovery before you enforce.",
+          "text": "Once sign-in is phishing-resistant, attackers target onboarding and recovery, which often still use SMS or email codes[^mddr]. Decide who may reset a method and how they verify identity, and notify the user whenever a method is added or an account is recovered, as NIST requires[^sp80063b]."
+        },
+        {
+          "title": "Move everyone else off phishable methods.",
+          "text": "Adversary-in-the-middle phishing relays passwords and MFA codes to the real sign-in page and captures the session cookie. It made up 44.6% of the phishing techniques Microsoft identified from July 2025 to June 2026[^mddr]. Retire SMS, voice and email codes first, then push and app codes."
+        },
+        {
+          "title": "Block legacy authentication.",
+          "text": "Legacy protocols don't support MFA, so a stolen password is enough to sign in. Microsoft reports that more than 99% of password spray attacks use legacy authentication[^legacyauth]. Find the clients that still use it, then block it with Conditional Access, or with security defaults if your licenses don't include Conditional Access[^legacyauth]."
+        },
+        {
+          "title": "Protect sessions after sign-in.",
+          "text": "A stolen session token works without the passkey. Require compliant devices, bind tokens to the device where supported and enforce phishing-resistant reauthentication for risky sign-ins and sensitive actions[^tokens]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rollout",
+      "title": "Move a group to phishing-resistant sign-in",
+      "navTitle": "Rollout",
+      "items": [
+        {
+          "title": "Check the group's devices.",
+          "text": "List the operating systems each person signs in from. Microsoft's minimum versions are Windows 10 22H2, macOS 13, iOS 17 and Android 14; older devices may need a security key[^deploy]."
+        },
+        {
+          "title": "Create the Conditional Access policy in report-only mode.",
+          "text": "Do this before registration starts, so the sign-in logs show who would be blocked and on which device[^deploy]."
+        },
+        {
+          "title": "Plan how each person registers.",
+          "text": "Existing users register with the MFA they already have. New hires and users without MFA get a Temporary Access Pass after an identity check and register with it[^deploy]."
+        },
+        {
+          "title": "Register a portable credential, then a local one.",
+          "text": "A passkey or security key works across devices; Windows Hello for Business or Platform Credential for macOS speeds up daily sign-in on each computer. Microsoft recommends at least two methods per user, so a lost phone doesn't lock anyone out[^deploy]."
+        },
+        {
+          "title": "Enforce in waves, then remove the old methods.",
+          "text": "Add users to the policy in waves and slow down when help desk tickets rise[^deploy]. Then remove SMS, voice and one-time code methods from their accounts so attackers can't fall back on them[^mddr]."
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "methods",
+      "title": "Which methods to keep",
+      "navTitle": "Methods",
+      "span": "full",
+      "intro": "A method is phishing-resistant when it is bound to the site's domain or to the TLS channel[^sp80063b]. NIST doesn't count any method where the user types a code[^sp80063b].",
+      "columns": [
+        {
+          "title": "Phishing-resistant",
+          "items": [
+            "**Security keys (FIDO2).** They suit admins, shared PCs and computers too old for passkeys.",
+            "**Device-bound passkeys.** The private key never leaves one device, such as a phone running Microsoft Authenticator[^passkeys]. They suit admins without a separate security key.",
+            "**Synced passkeys.** The provider backs them up and restores them on a new device. NIST allows them at AAL2 but not AAL3[^sp80063b].",
+            "**Windows Hello for Business.** It is bound to one computer and suits daily sign-in there.",
+            "**Certificate-based authentication.** CISA counts it as phishing-resistant[^cisaprmfa]. Keep it where you already issue smart cards."
+          ]
+        },
+        {
+          "title": "Acceptable for now",
+          "items": [
+            "**Push approval with number matching.** CISA rates it resistant to push bombing but still vulnerable to phishing[^cisaprmfa].",
+            "**One-time codes from an app or hardware token.** SIM swapping doesn't affect them, but a phishing page can relay them[^cisaprmfa].",
+            "**Phone sign-in in Microsoft Authenticator.** Entra ID counts it as passwordless MFA, but the built-in Phishing-resistant MFA strength excludes it[^authstr]."
+          ]
+        },
+        {
+          "title": "Retire",
+          "items": [
+            "**SMS and voice codes.** NIST classes phone-network codes as restricted and requires a migration plan in case they stop being acceptable[^sp80063b].",
+            "**Email codes.** NIST doesn't allow email for out-of-band authentication[^sp80063b]. CISA's SCuBA baseline for Entra ID requires disabling email, SMS and voice codes[^scuba].",
+            "**Push approval without number matching.** A single tap approves the sign-in, which push bombing relies on[^cisaprmfa]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "microsoft",
+      "title": "If you run Microsoft Entra ID",
+      "navTitle": "Entra ID",
+      "items": [
+        "**Require an authentication strength.** The built-in Phishing-resistant MFA strength needs Entra ID P1 and accepts passkeys (FIDO2), Windows Hello for Business and multifactor certificate-based authentication[^authstr].",
+        "**Use passkey profiles.** Allow synced passkeys for most users and require attested device-bound passkeys, such as security keys or Microsoft Authenticator, for admins. Passkeys work in every Entra ID edition, including Free[^passkeys].",
+        "**Keep Temporary Access Passes short-lived.** Make them one-time use, keep the lifetime near the 1-hour default and limit their sessions with sign-in frequency[^tap].",
+        "**Check VPNs that use the NPS extension.** It doesn't support number matching, so users without a registered one-time code method still get a plain Approve or Deny prompt[^numbermatch].",
+        "**Pilot token protection.** It binds sign-in tokens to the device for Exchange, SharePoint and Teams in native apps[^tokenprot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "special",
+      "title": "Accounts that need their own rules",
+      "navTitle": "Special accounts",
+      "items": [
+        "**Admin accounts.** Microsoft requires MFA for its admin portals and Azure management, and users who already sign in with MFA see no change[^mandmfa]. Require phishing-resistant methods in your own policy.",
+        "**Service accounts.** Move scripts that sign in as users to managed identities or service principals, which mandatory MFA doesn't cover[^mandmfa].",
+        "**Emergency access accounts.** Keep at least two, with security keys or certificates that differ from your normal admin methods. Exclude them from blocking policies, alert on every sign-in and test them at least every 90 days[^breakglass].",
+        "**Shared devices and mailboxes.** Use security keys on shared PCs, since Windows Hello for Business isn't meant for kiosks with a shared account[^deploy]. Block sign-in for shared mailbox accounts.",
+        "**Guests.** They can't register passkeys in your tenant[^passkeys], so require MFA and decide in cross-tenant access settings which home tenants' MFA you trust."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Synced passkeys are generally available in Entra ID.** Since March 2026, passkey profiles set the allowed passkey types, attestation and authenticator models per group[^entranew].",
+        "**Account recovery with Verified ID is generally available in Entra ID.** Since May 2026[^vidnew], users who have lost every method can recover their account through a government ID check[^verifiedid].",
+        "**The UK NCSC now recommends passkeys wherever a service supports them.** It announced the change in April 2026 and counts FIDO2 sign-in with user verification as MFA[^ncscpasskeys].",
+        "**Azure requires MFA for changes made from scripts and tools.** Enforcement for Azure CLI, PowerShell, SDKs and REST APIs began rolling out in October 2025, and tenants could postpone it until 1 July 2026[^mandmfa]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Periodic password changes and composition rules.** NIST SP 800-63B-4 prohibits both; force a change only on evidence of compromise[^sp80063b].",
+        "**Short session timeouts for everyone.** The NCSC warns that frequent reauthentication desensitizes users to entering their credentials[^ncscanti].",
+        "**Security keys for every user.** Microsoft recommends synced passkeys for users without admin rights[^deploy].",
+        "**A new PKI for certificate-based sign-in.** Microsoft calls it more complicated to configure than passkeys[^deploy]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Resetting MFA for unverified callers.** Scattered Spider talked help desks into resetting passwords and moving MFA to attacker devices[^scatspider].",
+        "**Letting anyone with the password register MFA.** Attackers add their own method to keep access[^mddr], so require a managed device to register[^scuba].",
+        "**Excluding accounts from MFA and forgetting them.** The NCSC calls them a backdoor[^ncscanti]. Give each exclusion an owner and an end date.",
+        "**Leaving device code flow open.** Attackers use it in phishing, and Microsoft recommends blocking it wherever possible[^tokens].",
+        "**Stopping at a password reset.** Also revoke sessions and remove the MFA methods, app secrets and consent grants the attacker added[^mddr]."
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 7 statements to what NIST, CISA and Microsoft Learn say."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on NIST SP 800-63B-4, CISA and NCSC guidance, the Microsoft Digital Defense Report 2026 and Microsoft Learn pages on Entra ID."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cisaprmfa",
+      "title": "Implementing Phishing-Resistant MFA",
+      "publisher": "CISA",
+      "date": "Oct 2022",
+      "url": "https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "sp80063b",
+      "title": "SP 800-63B-4, Digital Identity Guidelines: Authentication and Authenticator Management",
+      "publisher": "NIST",
+      "date": "31 Jul 2025",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b.html"
+    },
+    {
+      "id": "legacyauth",
+      "title": "Block legacy authentication with Conditional Access",
+      "publisher": "Microsoft Learn",
+      "date": "24 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-block-legacy-authentication"
+    },
+    {
+      "id": "tokens",
+      "title": "Protecting Tokens in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "24 Apr 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/devices/protecting-tokens-microsoft-entra-id"
+    },
+    {
+      "id": "deploy",
+      "title": "Plan a phishing-resistant passwordless authentication deployment in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "26 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication"
+    },
+    {
+      "id": "passkeys",
+      "title": "How to enable passkeys (FIDO2) in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "8 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-authentication-passkeys-fido2"
+    },
+    {
+      "id": "authstr",
+      "title": "Overview of Conditional Access Authentication Strengths",
+      "publisher": "Microsoft Learn",
+      "date": "4 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths"
+    },
+    {
+      "id": "scuba",
+      "title": "CISA M365 Secure Configuration Baseline for Microsoft Entra ID",
+      "publisher": "CISA (ScubaGear)",
+      "date": "ScubaGear v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md"
+    },
+    {
+      "id": "tap",
+      "title": "Configure a Temporary Access Pass in Microsoft Entra ID to register passwordless authentication methods",
+      "publisher": "Microsoft Learn",
+      "date": "4 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/howto-authentication-temporary-access-pass"
+    },
+    {
+      "id": "numbermatch",
+      "title": "How number matching works in MFA push notifications for Authenticator",
+      "publisher": "Microsoft Learn",
+      "date": "6 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match"
+    },
+    {
+      "id": "tokenprot",
+      "title": "How Token Protection Enhances Conditional Access Policies",
+      "publisher": "Microsoft Learn",
+      "date": "14 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-token-protection"
+    },
+    {
+      "id": "mandmfa",
+      "title": "Plan for mandatory Microsoft Entra multifactor authentication (MFA)",
+      "publisher": "Microsoft Learn",
+      "date": "3 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication"
+    },
+    {
+      "id": "breakglass",
+      "title": "Manage emergency access admin accounts",
+      "publisher": "Microsoft Learn",
+      "date": "4 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access"
+    },
+    {
+      "id": "entranew",
+      "title": "Microsoft Entra releases and announcements",
+      "publisher": "Microsoft Learn",
+      "date": "26 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
+    },
+    {
+      "id": "vidnew",
+      "title": "What's new for Microsoft Entra Verified ID",
+      "publisher": "Microsoft Learn",
+      "date": "8 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/verified-id/whats-new"
+    },
+    {
+      "id": "verifiedid",
+      "title": "Verified ID identity verification overview in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "30 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-verified-id"
+    },
+    {
+      "id": "ncscpasskeys",
+      "title": "Passkeys are more secure than traditional ways to log in",
+      "publisher": "NCSC (UK)",
+      "date": "23 Apr 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/passkeys-are-more-secure-than-traditional-ways-to-log-in"
+    },
+    {
+      "id": "ncscanti",
+      "title": "Avoiding MFA anti-patterns",
+      "publisher": "NCSC (UK)",
+      "date": "version 2.0, 26 Sep 2024",
+      "url": "https://www.ncsc.gov.uk/collection/mfa-for-your-corporate-online-services/avoiding-mfa-anti-patterns"
+    },
+    {
+      "id": "scatspider",
+      "title": "Scattered Spider (AA23-320A)",
+      "publisher": "CISA, FBI and partners",
+      "date": "updated 29 Jul 2025",
+      "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-320a"
+    }
+  ]
 }
