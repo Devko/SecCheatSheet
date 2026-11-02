@@ -9,18 +9,18 @@ export function renderIndex(sheets, { site, map }) {
 <main id="main" class="library">
   <div class="library__intro">
     <h1>Security cheat sheets that tell you what to do first</h1>
-    <p class="lede">Each sheet covers one topic. It ranks the actions, gives real deadlines, cites its sources and shows when it was last reviewed. When a sheet is past its review date, it says so.</p>
+    <p class="lede">Each sheet covers one topic. It ranks the actions, sets deadlines, cites its sources and shows when it was last reviewed. When a sheet is past its review date, it says so.</p>
   </div>
 ${capabilityMap(map)}
   <section class="sheets" id="sheets" aria-labelledby="sheets-title">
-    <h2 id="sheets-title">All sheets</h2>
-    <ul class="index" role="list">${sheets.map(row).join("")}
+    <h2 id="sheets-title">Sheets</h2>
+    <ul class="index" role="list">${sheets.filter(isWritten).map(row).join("")}
     </ul>
   </section>
   <section class="how" id="how" aria-labelledby="how-title">
     <h2 id="how-title">How we review</h2>
     <dl>
-      <div><dt>Ranked, with a skip list</dt><dd>Every sheet opens with at most five actions in priority order, and names what you can safely put off.</dd></div>
+      <div><dt>Ranked, with a skip list</dt><dd>Every sheet ranks at most five actions and names what you can skip.</dd></div>
       <div><dt>Reviewed every 30 days</dt><dd>Each sheet is checked against its sources and the latest advisories, regulations and research at least once a month. The review date is on every page and every PDF.</dd></div>
       <div><dt>Every number has a source</dt><dd>Deadlines and statistics link to the regulation, advisory or study they come from. Where a number is our own recommendation, the sheet says so.</dd></div>
     </dl>
@@ -77,21 +77,16 @@ function capability(c) {
           <li class="cap cap--gap"><span class="cap__name">${esc(c.name)}</span><span class="sr-only">Not covered yet</span></li>`;
 }
 
+// Topics still being written appear only in the map; this list is what can be read today.
 function row(sheet) {
-  if (!isWritten(sheet)) {
-    return `
-    <li class="index__row is-planned">
-      <span class="index__topic">${esc(sheet.topic)}</span>
-      <span class="index__answer">Being written</span>
-      <span class="index__meta"></span>
-    </li>`;
-  }
   return `
     <li class="index__row">
       <a class="index__topic" href="${sheet.slug}/">${esc(sheet.topic)}</a>
       <span class="index__answer">${short(sheet)}</span>
-      <span class="index__meta">Reviewed <time datetime="${sheet.lastReviewed}">${formatDate(sheet.lastReviewed)}</time>${
-        sheet.status === "draft" ? ` <span class="tag">Draft</span>` : ""
-      } <span class="fresh" data-fresh data-reviewed="${sheet.lastReviewed}" data-every="${sheet.reviewEveryDays}" hidden></span></span>
+      <span class="index__meta">
+        <span>Reviewed <time datetime="${sheet.lastReviewed}">${formatDate(sheet.lastReviewed)}</time></span>
+        <span class="index__badges">${sheet.status === "draft" ? `<span class="tag">Draft</span>` : ""}<span class="fresh" data-fresh data-reviewed="${sheet.lastReviewed}" data-every="${sheet.reviewEveryDays}" hidden></span></span>
+        <a class="index__pdf" href="${sheet.slug}/${sheet.slug}.pdf" download="${sheet.slug}-cheat-sheet-${sheet.lastReviewed}.pdf">Download PDF</a>
+      </span>
     </li>`;
 }

@@ -1,5 +1,6 @@
 {
   "name": "Security Cheat Sheets",
   "description": "Short, opinionated security guidance: what to do first, by when, and when we last checked.",
-  "baseUrl": "https://devko.github.io/SecCheatSheet"
+  "baseUrl": "https://devko.github.io/SecCheatSheet",
+  "repoUrl": "https://github.com/Devko/SecCheatSheet"
 }

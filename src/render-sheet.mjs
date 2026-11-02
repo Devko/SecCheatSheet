@@ -13,9 +13,12 @@ export function renderSheet(sheet, { site, place, checklist }) {
   const body = `
 <main id="main" class="sheet-layout">
   <article class="sheet">
-    ${draft ? `<p class="note note--draft">Draft for review. Check the facts and deadlines before this goes public.</p>` : ""}
+    ${draft ? `<p class="note note--draft">Draft, not yet reviewed. Check facts and deadlines against the cited sources before relying on them.</p>` : ""}
     <p class="note note--stale" data-stale hidden>This sheet is past its review date. Deadlines or advice may have changed since ${formatDate(sheet.lastReviewed)}.</p>
     <header class="sheet__head">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="../#map">Capability map</a><span aria-hidden="true">/</span><a href="../#d-${esc(place.domain.id)}">${esc(place.domain.name)}</a><span aria-hidden="true">/</span><span>${esc(place.capability.name)}</span>
+      </nav>
       <h1>${esc(sheet.title)}</h1>
       <p class="answer">${t(sheet.answer)}</p>
       <dl class="meta">
@@ -23,7 +26,6 @@ export function renderSheet(sheet, { site, place, checklist }) {
         <div><dt>Next review</dt><dd><time datetime="${nextReview}">${formatDate(nextReview)}</time></dd></div>
         <div><dt>Version</dt><dd>${esc(sheet.version)}${draft ? " (draft)" : ""}</dd></div>
         <div><dt>Written for</dt><dd>${esc(sheet.audience)}</dd></div>
-        <div><dt>Domain</dt><dd><a href="../#d-${esc(place.domain.id)}">${esc(place.domain.name)}</a></dd></div>
         <div class="print-only"><dt>Latest version</dt><dd>${esc(url.replace(/^https?:\/\//, ""))}</dd></div>
       </dl>
     </header>
@@ -32,7 +34,7 @@ ${sheet.blocks.map((block) => renderBlock(block, t)).join("\n")}
     </div>
     <footer class="sheet__foot">
       <section aria-labelledby="changes-title">
-        <h2 id="changes-title">What changed</h2>
+        <h2 id="changes-title">Version history</h2>
         <dl class="changes">${sheet.changes.map((c) => `
           <div><dt><time datetime="${c.date}">${formatDate(c.date)}</time>, version ${esc(c.version)}</dt><dd>${t(c.text)}</dd></div>`).join("")}
         </dl>
@@ -142,7 +144,7 @@ function clock(block, t) {
             <div class="tier__track">
               <span class="tier__lines" aria-hidden="true">${grid}</span>
               <span class="tier__bar" aria-hidden="true"></span>${contain}
-              <span class="tier__deadline"><span class="sr-only">Fix within </span><span class="tier__n">${fix.n}</span> <span class="tier__unit">${fix.unit}</span></span>
+              <span class="tier__deadline"><span class="sr-only">Patch within </span><span class="tier__n">${fix.n}</span> <span class="tier__unit">${fix.unit}</span></span>
             </div>
           </li>`;
     })

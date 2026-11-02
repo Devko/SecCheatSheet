@@ -20,7 +20,7 @@ export function toMarkdown(sheet, site) {
     out.push(...BLOCKS[block.type](block, md));
   }
 
-  out.push("", "## What changed", "", ...sheet.changes.map((c) => `- ${formatDate(c.date)}, version ${c.version}: ${md(c.text)}`));
+  out.push("", "## Version history", "", ...sheet.changes.map((c) => `- ${formatDate(c.date)}, version ${c.version}: ${md(c.text)}`));
   out.push("", "## Sources", "", ...sheet.sources.map((s, i) => `${i + 1}. ${s.title}. ${s.publisher}${s.date ? `, ${s.date}` : ""}. ${s.url}`));
   return out.join("\n") + "\n";
 }
@@ -29,7 +29,7 @@ const item = (i, md) => (typeof i === "string" ? md(i) : `**${i.title}** ${md(i.
 
 const BLOCKS = {
   clock: (b, md) => [
-    "| Tier | Applies when | Contain in | Fix within |",
+    "| Tier | Applies when | Contain in | Patch within |",
     "| --- | --- | --- | --- |",
     ...b.tiers.map((t) => `| ${t.name} | ${md(t.qualifies)} | ${t.contain ? shortDuration(t.contain) : ""} | ${fmt(t.fix)} |`),
     ...(b.caption ? ["", md(b.caption)] : []),
@@ -58,7 +58,7 @@ export function toChecklist(sheet, site) {
       lines.push(
         "",
         block.title,
-        ...block.tiers.map((t) => `- [ ] ${t.name}: ${t.contain ? `contain in ${fmt(t.contain)}, ` : ""}fix within ${fmt(t.fix)}`)
+        ...block.tiers.map((t) => `- [ ] ${t.name}: ${t.contain ? `contain in ${fmt(t.contain)}, ` : ""}patch within ${fmt(t.fix)}`)
       );
     }
   }
