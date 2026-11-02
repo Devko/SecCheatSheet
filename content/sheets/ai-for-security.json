@@ -1,7 +1,279 @@
 {
   "slug": "ai-for-security",
   "topic": "AI for security teams",
-  "status": "planned",
+  "status": "published",
   "order": 6,
-  "capability": "ai/security-ops"
+  "capability": "ai/security-ops",
+  "title": "AI for security teams: where can we start safely?",
+  "short": "Start with one frequent task you can check quickly, in an approved tool, and keep it read-only.",
+  "answer": "Start with one high-volume task whose output an analyst can check in minutes, such as phishing triage, alert summaries or query writing, and run it read-only in a tool approved for that data. Add the next use case only after you have measured accuracy and time saved against your own baseline.",
+  "audience": "SOC, security engineering and GRC teams starting to use AI",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Start with tasks you can check in minutes.",
+          "text": "The Australian, Canadian, New Zealand and UK cyber agencies advise verifying AI output against evidence and context before acting on it[^opp]."
+        },
+        {
+          "title": "Use only approved tools for security data.",
+          "text": "Keep logs, incident details and customer data out of personal and consumer chatbots[^opp]. Data pasted there sits outside your contracts, retention rules and access controls."
+        },
+        {
+          "title": "Keep AI read-only until it has a track record.",
+          "text": "Let it summarize and suggest before it changes anything. Later, allow unattended actions only where they are narrow, pre-approved and reversible[^opp]."
+        },
+        {
+          "title": "Measure accuracy and time on your own cases.",
+          "text": "Vendor claims and demos aren't enough to show how a tool performs in your environment[^opp]. Record today's time and error rate for the task, then compare."
+        },
+        {
+          "title": "Log prompts and responses.",
+          "text": "When AI output feeds an incident decision, you need to show what the model was given and what it returned. The agencies call for AI-assisted actions to be traceable and reviewable[^opp]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "pick",
+      "title": "Pick your first use case",
+      "navTitle": "First use case",
+      "items": [
+        {
+          "title": "Does it come up many times a week?",
+          "text": "Phishing reports, alert summaries and query writing qualify. A task done once a quarter rarely repays the setup."
+        },
+        {
+          "title": "Can an analyst check the output quickly?",
+          "text": "If checking takes as long as doing the task, nothing is saved. Summaries and queries are quick to check; root-cause conclusions are not."
+        },
+        {
+          "title": "What does a wrong answer cost?",
+          "text": "Start where a mistake costs an analyst a few minutes. Leave tasks where an error means a missed intrusion or a blocked production system for later."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "use-cases",
+      "title": "Good first use cases",
+      "navTitle": "Use cases",
+      "span": "full",
+      "items": [
+        "**Summarizing alerts and incidents.** Turn alerts, logs and forensic artifacts into an incident summary or an update for executives, with a responder checking it before it goes out[^opp]. Check every hostname, account and timestamp against the source.",
+        "**Triaging user-reported phishing.** Reports arrive in volume and each ends in a verdict an analyst can check against the evidence. In a timed Microsoft trial with 167 analysts, those working with its triage agent found up to 6.5 times as many malicious emails per minute and were up to 77% more accurate[^msrct].",
+        "**Writing and explaining queries.** Draft KQL and SPL queries or Sigma rules from plain language and have unfamiliar command lines explained. In a 10-month study of 45 SOC analysts, explaining and writing commands was the most common task, at 31% of prompts, and about 4% asked for a verdict[^soc]. Test each query against known activity before you trust an empty result.",
+        "**Reviewing scripts and infrastructure code.** Have it explain a suspicious PowerShell script or flag risky Terraform settings before merge. The agencies list scanning infrastructure as code for flaws that pattern-based scanners miss[^opp].",
+        "**Drafting policies and reports.** Produce first drafts of policy text, control mappings and post-incident reports. The agencies also list an internal assistant that gives guidance based on your own policies[^opp]. A named owner checks every claim."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Five Eyes agency heads told defenders to use AI.** On 22 June 2026 they wrote that attackers already use AI to move faster and that defenders must do the same, alongside faster patching and a smaller attack surface[^fiveeyes].",
+        "**ENISA recommended AI-assisted triage.** Its July 2026 paper on frontier AI calls for it in incident response, with humans reviewing the results[^enisa].",
+        "**Four agencies published guidance on AI in cyber defense.** In August 2026 the Australian, Canadian, New Zealand and UK agencies set out uses for each security function and questions for vendors, along with principles for oversight and testing[^opp].",
+        "**Microsoft 365 E5 and E7 started including Security Copilot.** The rollout began on 18 November 2025 and continued into 2026[^msinc]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Autonomous response at the start.** Isolating hosts, disabling accounts and purging mail can wait. The NCSC warns that AI tools can be better at finding problems than at reliably acting on them[^ncscadopt].",
+        "**Training your own model.** Start with the AI built into tools you already run. The agencies advise using frontier AI to augment existing tools and processes rather than as a standalone system[^opp].",
+        "**Buying a platform before a pilot.** Run one use case on your own data first. Ask vendors for results measured in real operations, such as time to detect, time to respond and false positives[^opp].",
+        "**Replacing working playbooks.** Keep fixed steps such as enrichment and ticket creation in rule-based automation, which gives the same result every time. Use AI where the input is unstructured text."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Treating a reviewer's sign-off as a full check.** In Microsoft's phishing trial, analysts shown the agent's verdicts were 29 percentage points more likely to miss malicious emails it had been made to label benign[^msrct].",
+        "**Letting attacker-written content steer an AI that can act.** Phishing emails, log lines and malware strings can carry prompt injections aimed at the AI that reads them. The agencies call for safeguards when logs and artifacts go into AI systems[^opp].",
+        "**Running agents on a person's admin account.** Give each agent its own identity with only the permissions it needs, as Microsoft recommends for its phishing triage agent[^msphish].",
+        "**Counting time saved and nothing else.** Track corrections and misses as well. The agencies warn that AI that only adds information can increase workload and risk[^opp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "measure",
+      "title": "How to tell it's helping",
+      "navTitle": "Metrics",
+      "items": [
+        "**Correction rate.** The share of outputs an analyst had to fix or discard, tracked per use case.",
+        "**False negatives among AI-closed alerts.** Re-check a sample of what the AI marked benign without showing the reviewer its verdict.",
+        "**Time per case against your baseline.** Compare the same task type before and after. Microsoft's study of live operations linked Security Copilot adoption to a 30% shorter mean time to resolve incidents but could not rule out other causes[^msmttr].",
+        "**Cost per case.** License or compute cost divided by cases handled. For its phishing triage agent, Microsoft's usage dashboard shows cost per email processed[^msphish]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "microsoft",
+      "title": "If you run Microsoft security tools",
+      "navTitle": "Microsoft",
+      "items": [
+        "**Check your allowance.** E5 and E7 include 400 Security Compute Units (SCUs) a month per 1,000 paid user licenses, up to 10,000 SCUs a month[^msinc].",
+        "**Review the owner settings.** After auto-provisioning, access to Microsoft 365 data is on and data sharing with Microsoft is off. Roles such as Global Administrator and Security Administrator get owner access[^msauto].",
+        "**Turn on prompt logging.** Prompt and response content reaches Purview only through DSPM for AI, after a Security Administrator opts in[^msaudit]. Sessions inactive for 180 days are deleted[^msprivacy], so copy what you need into the incident record.",
+        "**Use Copilot in advanced hunting for KQL.** It runs read-only queries with the user's permissions. Review the query and its results before you act[^mshunt]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Use the AI features already in your email, endpoint or identity products before buying anything.",
+            "Write down which AI tools are approved and what data may go into them.",
+            "Start with explanations of suspicious emails, scripts and sign-in alerts, with a person making the call.",
+            "Save the prompts and responses behind any incident decision in the incident ticket."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Pick one use case, record a baseline, then pilot it and compare.",
+            "Turn on audit logging for prompts and responses and send the logs to your SIEM.",
+            "Give agents their own identities and the fewest permissions that work.",
+            "Review a sample of AI-closed alerts every week."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Keep an inventory of AI use cases with owners, data, permissions and measured results.",
+            "Run AI tools through change management and test them in your own environment before production[^opp].",
+            "Ask vendors the agencies' questions on logging and data use[^opp].",
+            "Add scenarios for AI failure, compromise and hallucination to your incident response plans[^opp]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 5 statements to what the agencies' guidance and Microsoft's studies support."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on the joint Australian, Canadian, New Zealand and UK guidance on AI in cyber defense, the Five Eyes statement of June 2026, ENISA's frontier AI paper, the NCSC's post on AI adoption and Microsoft's Security Copilot documentation and trials."
+    }
+  ],
+  "sources": [
+    {
+      "id": "opp",
+      "title": "Opportunities for AI in cyber defence",
+      "publisher": "ASD's ACSC, Canadian Centre for Cyber Security, NCSC-NZ and NCSC-UK",
+      "date": "Aug 2026 version, page dated 8 Sep 2026",
+      "url": "https://www.cyber.gov.au/publication/opportunities-for-ai-in-cyber-defence"
+    },
+    {
+      "id": "msrct",
+      "title": "Randomized Controlled Trials for Phishing Triage Agent",
+      "publisher": "Microsoft (arXiv preprint)",
+      "date": "17 Nov 2025",
+      "url": "https://arxiv.org/abs/2511.13860"
+    },
+    {
+      "id": "soc",
+      "title": "LLMs in the SOC: An Empirical Study of Human-AI Collaboration in Security Operations Centres",
+      "publisher": "CSIRO's Data61 and eSentire (arXiv preprint)",
+      "date": "19 Sep 2025",
+      "url": "https://arxiv.org/abs/2508.18947"
+    },
+    {
+      "id": "fiveeyes",
+      "title": "The AI shift in cyber risk: why leaders must act now (Five Eyes cyber security agencies statement)",
+      "publisher": "ASD's ACSC, Canadian Centre for Cyber Security, NCSC-NZ, NCSC-UK, NSA and CISA",
+      "date": "22 Jun 2026",
+      "url": "https://www.ncsc.govt.nz/assets/news/Documents/Five-Eyes-Cyber-Security-Agency-AI-Call-to-Action-22-June-2026.pdf"
+    },
+    {
+      "id": "enisa",
+      "title": "ENISA's view on Cybersecurity in the Frontier AI Era",
+      "publisher": "ENISA",
+      "date": "7 Jul 2026",
+      "url": "https://www.enisa.europa.eu/publications/enisas-view-on-cybersecurity-in-the-frontier-ai-era"
+    },
+    {
+      "id": "msinc",
+      "title": "Learn about Security Copilot for Microsoft 365 E5 and E7 customers",
+      "publisher": "Microsoft",
+      "date": "19 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/copilot/security/security-copilot-inclusion"
+    },
+    {
+      "id": "ncscadopt",
+      "title": "Supporting AI adoption for UK cyber defence",
+      "publisher": "NCSC (UK)",
+      "date": "23 Apr 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/supporting-ai-adoption-for-uk-cyber-defence"
+    },
+    {
+      "id": "msphish",
+      "title": "Microsoft Security Copilot Phishing Triage Agent in Microsoft Defender",
+      "publisher": "Microsoft",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/phishing-triage-agent"
+    },
+    {
+      "id": "msmttr",
+      "title": "Generative AI and Security Operations Center Productivity: Evidence from Live Operations",
+      "publisher": "Microsoft (arXiv preprint)",
+      "date": "13 Nov 2024",
+      "url": "https://arxiv.org/abs/2411.03116"
+    },
+    {
+      "id": "msauto",
+      "title": "Understand how Security Copilot is auto provisioned for eligible Microsoft 365 E5 and E7 customers",
+      "publisher": "Microsoft",
+      "date": "18 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/copilot/security/auto-provisioning-security-copilot"
+    },
+    {
+      "id": "msaudit",
+      "title": "Access the Security Copilot audit log",
+      "publisher": "Microsoft",
+      "date": "29 May 2026",
+      "url": "https://learn.microsoft.com/en-us/copilot/security/audit-log"
+    },
+    {
+      "id": "msprivacy",
+      "title": "Privacy and data security in Microsoft Security Copilot",
+      "publisher": "Microsoft",
+      "date": "8 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/copilot/security/privacy-data-security"
+    },
+    {
+      "id": "mshunt",
+      "title": "Microsoft Security Copilot in advanced hunting",
+      "publisher": "Microsoft",
+      "date": "10 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-security-copilot"
+    }
+  ]
 }

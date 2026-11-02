@@ -1,7 +1,257 @@
 {
   "slug": "ai-input-security",
   "topic": "Protecting AI inputs",
-  "status": "planned",
+  "status": "published",
   "order": 5,
-  "capability": "ai/llm-apps"
+  "capability": "ai/llm-apps",
+  "title": "AI inputs: how do you limit prompt injection and keep sensitive data out?",
+  "short": "Give staff one approved AI tool and make every AI app retrieve only what the user can already see.",
+  "answer": "Before real data goes into AI, give staff one approved tool with clear rules on what may go in, and make every AI app retrieve only what the person asking can already see. Judge every other input by who could have written it and what the app could leak or do if it carried instructions.",
+  "audience": "Teams that build or run LLM apps and teams that govern staff use of AI",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Give staff an approved AI tool and clear rules on what goes in.",
+          "text": "The Dutch data protection authority treats personal data entered into a chatbot against company rules as a data breach[^ap]. Choose a business plan under a processor contract[^gdpr] that keeps your data out of model training, and name the data that must never go in."
+        },
+        {
+          "title": "Fix oversharing before an assistant indexes your files.",
+          "text": "Microsoft 365 Copilot can surface any content a user has at least view access to[^m365], so old files shared with the whole organization can show up in any employee's answers. OWASP names oversharing through unscoped drives and legacy permissions as one of two failures behind most disclosure incidents[^owasp26]."
+        },
+        {
+          "title": "Enforce access in code, never in the prompt.",
+          "text": "Check the user's permissions before content reaches the model, and give a customer-facing bot no more access than the customer has. The NCSC says prompt injection may never be fully mitigated[^ncscpi], so assume users can get the model to reveal anything it can reach."
+        },
+        {
+          "title": "Sanitize untrusted content and mark it as data.",
+          "text": "Strip invisible Unicode characters, hidden text and spoofed role tags from uploads and retrieved documents, then wrap what remains in delimiters that mark it as data[^bsi][^owasp26]. This makes attacks harder but does not stop them all[^bsi]."
+        },
+        {
+          "title": "Block the links and images that carry data out.",
+          "text": "Injected instructions can make a chatbot output an image URL that sends chat data to an attacker's server when the image loads[^bsi]. Render links and images only from allowlisted domains[^bsi], and log full inputs and outputs so you can spot suspicious activity[^ncscpi]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "new-source",
+      "title": "Before you connect a new data source to an AI app",
+      "navTitle": "New source check",
+      "items": [
+        {
+          "title": "Who can add or change content in it?",
+          "text": "Anyone who can write to an indexed source can plant instructions or false answers. In research OWASP cites, five poisoned documents in a knowledge base of millions steered answers about 90% of the time[^owasp26]."
+        },
+        {
+          "title": "Does the index enforce each user's access?",
+          "text": "OWASP says to enforce permissions per document and chunk inside the index query, because filtering the answer afterward can't undo what the model has already read[^owasp26]. A connector that indexes everything through one service account, without per-user permissions, fails this test."
+        },
+        {
+          "title": "Does it hold more than the use case needs?",
+          "text": "Index specific folders instead of the whole tenant, and leave out personal data the task doesn't use. OWASP lists sending external providers only the fields a task needs as a foundational control[^owasp26]."
+        },
+        {
+          "title": "Can you remove content from it again?",
+          "text": "OWASP says to delete a document's embeddings within a set time after the source is deleted, and to verify this with audits[^owasp26]. Test removal before launch, including backups and relabeled files."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**OWASP updated its LLM Top 10** on 3 August 2026. Prompt injection remains LLM01 and now covers instructions hidden in images and audio. System prompt leakage became Hidden Context Exposure, which also covers tool schemas and retrieved policy text[^owasp26].",
+        "**Germany's BSI published a baseline against indirect prompt injection** in September 2026. The German-language guide, for LLM chats that work with uploaded documents, lists five measures drawn from red-teaming: sanitize the input, separate trust zones, harden the system prompt, choose a resistant model with reasoning and filter the output[^bsi].",
+        "**Microsoft added AI controls to Purview DLP** in 2026. A preview condition from June keeps external email out of Copilot's grounding to reduce prompt injection; since September, network-level DLP that covers generative AI platforms is generally available[^purviewnew]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Keeping the system prompt secret.** OWASP says to assume hidden context is discoverable[^owasp26]. Write the prompt as if users will read it, and don't spend time on extraction-proof wording.",
+        "**Products that promise to stop prompt injection.** The NCSC tells buyers to be wary of that claim[^ncscpi]. In a study OWASP cites, adaptive attacks beat most of 12 published defenses more than 90% of the time[^owasp26]. Judge a product by what it limits once an injection succeeds.",
+        "**Classifying all your data before the first pilot.** Start with the sites and mailboxes the assistant will index and the few data types on your forbidden list.",
+        "**A long AI policy.** Start with a one-page list of approved tools and forbidden data."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Secrets in the system prompt.** Credentials, connection strings and tokens placed there are exposed to anyone who extracts the prompt[^owasp26]. Keep them in a secrets store on the server, where the model can't reach them.",
+        "**Grounding on external email.** In a 2025 demonstration OWASP describes, one crafted email made Microsoft 365 Copilot leak organizational data with no user interaction, bypassing its injection classifier and link filter[^owasp26]. Keep external email out of grounding where your platform allows it.",
+        "**Checking typed prompts but not uploads.** Purview DLP for Microsoft 365 Copilot checks the text typed into a prompt, not files uploaded with it[^purview]. Test which inputs your own DLP inspects before you rely on it.",
+        "**Treating embeddings as anonymous.** Embedding inversion can recover much of the source text, so OWASP says to treat a leaked vector database or backup as a leak of the documents themselves[^owasp26].",
+        "**Unprotected prompt logs.** Observability platforms such as Langfuse and LangSmith log full prompts, responses and retrieved chunks by default[^owasp26]. Give those logs the same access controls and retention as the source data."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Write down the data that never goes into AI tools: customer and patient records, HR files, passwords and keys.",
+            "Remove organization-wide sharing from files that don't need it before you turn on an assistant that searches your files.",
+            "Give a public chatbot only what you would publish on your website."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Keep an inventory of AI apps: data sources, who can write to each source and who can query the app.",
+            "Use browser or endpoint DLP to warn when sensitive data is pasted or uploaded into unapproved AI sites.",
+            "Review permissions on the sites and mailboxes an assistant will index, largest and oldest first.",
+            "Test each app with poisoned documents and hidden-text uploads before launch and after each new source."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "In Microsoft 365, use Purview DLP to keep labeled files out of Copilot and, in preview, to block prompts that contain sensitive information types[^purview].",
+            "Keep external content in a separate index from confidential data[^owasp26].",
+            "Monitor retrieval logs for unusual query volumes and cross-tenant hits, which can signal probing[^owasp26].",
+            "Red-team against the BSI baseline[^bsi], and share your defense design with testers so they can run adaptive attacks[^owasp26]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "gdpr",
+      "title": "GDPR duties when AI tools process personal data",
+      "navTitle": "GDPR duties",
+      "span": "full",
+      "items": [
+        {
+          "name": "Before an approved tool goes live",
+          "scope": "An AI provider that processes personal data on your behalf is your processor, and processing likely to be high risk needs an impact assessment first[^gdpr].",
+          "steps": [
+            {
+              "at": "Before use",
+              "what": "Processor contract covering the data, purpose, duration and the provider's obligations"
+            },
+            {
+              "at": "If high risk",
+              "what": "Data protection impact assessment (DPIA) before processing starts"
+            }
+          ]
+        },
+        {
+          "name": "After personal data reaches an unapproved tool",
+          "scope": "This is often a reportable breach[^ap]. The clock runs from when you become aware of it[^gdpr]. The Council backed a longer deadline on 21 October 2026, but it is not yet law[^council].",
+          "steps": [
+            {
+              "at": "72 hours",
+              "what": "Notify the supervisory authority, unless a risk to people is unlikely"
+            },
+            {
+              "at": "If high risk",
+              "what": "Tell the people affected without undue delay"
+            },
+            {
+              "at": "Always",
+              "what": "Document the facts, effects and remedial action"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 11 statements to what OWASP, the BSI and the NCSC actually say."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on the OWASP Top 10 for LLM Applications 2026, the BSI's baseline protections against indirect prompt injection, the NCSC's prompt injection guidance, the Dutch data protection authority's chatbot breach warning, the GDPR and Microsoft's Copilot and Purview documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "ap",
+      "title": "Caution: use of AI chatbot may lead to data breaches",
+      "publisher": "Autoriteit Persoonsgegevens (Dutch DPA)",
+      "date": "6 Aug 2024",
+      "url": "https://www.autoriteitpersoonsgegevens.nl/en/current/caution-use-of-ai-chatbot-may-lead-to-data-breaches"
+    },
+    {
+      "id": "gdpr",
+      "title": "Regulation (EU) 2016/679 (GDPR), Articles 4, 28 and 33 to 35",
+      "publisher": "EUR-Lex",
+      "date": "2016",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    },
+    {
+      "id": "m365",
+      "title": "Data, Privacy, and Security for Microsoft Copilot",
+      "publisher": "Microsoft Learn",
+      "date": "9 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/microsoft-365-copilot-privacy"
+    },
+    {
+      "id": "owasp26",
+      "title": "OWASP GenAI LLM Top 10 2026 (LLM01, LLM02, LLM08 and LLM09)",
+      "publisher": "OWASP Gen AI Security Project",
+      "date": "3 Aug 2026",
+      "url": "https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/"
+    },
+    {
+      "id": "ncscpi",
+      "title": "Prompt injection is not SQL injection (it may be worse)",
+      "publisher": "NCSC (UK)",
+      "date": "8 Dec 2025",
+      "url": "https://www.ncsc.gov.uk/blog-post/prompt-injection-is-not-sql-injection"
+    },
+    {
+      "id": "bsi",
+      "title": "Basisschutz gegen Indirect Prompt Injection in dokumentbasierten LLM-Chats",
+      "publisher": "BSI (Germany)",
+      "date": "24 Sep 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KI/Basisschutz_Indirect-Prompt-Injections_LLM.html"
+    },
+    {
+      "id": "purviewnew",
+      "title": "What's new in Microsoft Purview (June and September 2026)",
+      "publisher": "Microsoft Learn",
+      "date": "16 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "purview",
+      "title": "Microsoft Purview DLP for Microsoft 365 Copilot and Cowork",
+      "publisher": "Microsoft Learn",
+      "date": "16 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about"
+    },
+    {
+      "id": "council",
+      "title": "Digital rulebook: Council agrees position to simplify data protection, privacy and cyber reporting rules",
+      "publisher": "Council of the EU",
+      "date": "21 Oct 2026",
+      "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/10/21/digital-rulebook-council-agrees-position-to-simplify-data-protection-privacy-and-cyber-reporting-rules/"
+    }
+  ]
 }

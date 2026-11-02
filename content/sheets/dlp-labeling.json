@@ -1,7 +1,281 @@
 {
   "slug": "dlp-labeling",
   "topic": "DLP and sensitivity labels",
-  "status": "planned",
+  "status": "published",
   "order": 7,
-  "capability": "data/dlp"
+  "capability": "data/dlp",
+  "title": "DLP and sensitivity labels: does E3 cover what you need?",
+  "short": "Publish four labels with a default and stop card numbers and IBANs from leaving by email or sharing links.",
+  "answer": "Tighten sharing links first, then use what Microsoft 365 E3 includes: four manually applied sensitivity labels and DLP policies for payment cards, IBANs and national ID numbers in email, SharePoint and OneDrive[^purviewsd]. Buy E5 or an add-on only for a specific gap, such as automatic labeling, DLP for Teams chats or endpoints, or keeping Copilot away from labeled files[^purviewsd].",
+  "audience": "IT and security teams on Microsoft 365, including in the EU",
+  "version": "1.0",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Tighten sharing first.",
+          "text": "Set the default sharing link to Specific people or Only people in your organization, and make Anyone links expire and view-only[^extshare]. Turn on guest access expiration and, if you share with a known set of partners, limit external sharing to their domains[^extshare]."
+        },
+        {
+          "title": "Publish four labels with a default.",
+          "text": "Public, Internal, Confidential and Highly Confidential are enough to start; Microsoft reports that labeling becomes noticeably less effective beyond five main labels[^labels]. Choose a default label without encryption and require a justification when someone lowers a label[^labels]."
+        },
+        {
+          "title": "Encrypt only your top label.",
+          "text": "Encryption stays with the file, so partners can open it only with an account the label authorizes[^encrypt] and an app that supports the encryption[^labels]. Copilot returns content from an encrypted file only to users who have the copy (EXTRACT) usage right[^labels]."
+        },
+        {
+          "title": "Block card numbers and IBANs with DLP.",
+          "text": "Microsoft's built-in sensitive information types cover credit card numbers, IBANs and German identity card (Personalausweis) and tax ID (Steuer-ID) numbers[^sitlist]. Run each DLP policy in simulation mode and show policy tips before you block external sharing[^dlplearn]."
+        },
+        {
+          "title": "Fix oversharing before you roll out Copilot.",
+          "text": "Copilot runs with each user's own permissions[^dlpcopilot], so it can surface overshared files that user can open. Run the data access governance reports in SharePoint Advanced Management, which comes with Microsoft 365 Copilot, to find sites shared with Everyone except external users[^samlic]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rollout",
+      "title": "Roll out labels without breaking work",
+      "navTitle": "Label rollout",
+      "items": [
+        {
+          "title": "Enable sensitivity labels for SharePoint and OneDrive.",
+          "text": "Do this before any label applies encryption. Until then, search, eDiscovery, DLP and co-authoring don't work on encrypted files stored there[^spolabels]. Files encrypted before you enable it stay closed to search and DLP until someone edits or re-uploads them[^spolabels]."
+        },
+        {
+          "title": "Pilot the labels without encryption.",
+          "text": "Publish them to one department with a default label and content markings, and review which labels people choose over a few weeks."
+        },
+        {
+          "title": "Add encryption to the top label.",
+          "text": "Assign permissions to groups rather than individual users, and configure super users so eDiscovery and data recovery can still read encrypted content[^encrypt]."
+        },
+        {
+          "title": "Publish to everyone and require labels.",
+          "text": "Do this once the pilot shows people choose the right labels, and keep the default label: Microsoft warns that mandatory labeling without one can frustrate users with frequent prompts[^labels]."
+        },
+        {
+          "title": "Add auto-labeling last, in simulation.",
+          "text": "Auto-labeling policies need E5 or an add-on and must run at least one simulation before they label anything[^autolabel]. Review the matches with the data owners before you turn a policy on."
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "licensing",
+      "title": "What E3 and E5 give you",
+      "navTitle": "E3 and E5",
+      "span": "full",
+      "intro": "Feature names follow Microsoft's Purview service description of 29 October 2026[^purviewsd]. \"E5 or an add-on\" means Microsoft 365 E5, Microsoft Purview Suite or Microsoft 365 E5 Information Protection and Governance unless noted.",
+      "columns": [
+        {
+          "title": "Included in Microsoft 365 E3",
+          "items": [
+            "**Manual Sensitivity Labeling** in Office apps and **Message Encryption** for email to any address[^purviewsd].",
+            "**DLP for Exchange Online, SharePoint Online and OneDrive for Business**, which also covers files stored in Teams[^purviewsd].",
+            "**DLP to safeguard prompts** for all users of Microsoft Copilot and Copilot Chat[^purviewsd].",
+            "**Inheriting labels from input to output** in Copilot, with a Microsoft 365 Copilot license[^purviewsd].",
+            "**Audit (Standard)** and **eDiscovery (standard)**[^purviewsd]."
+          ]
+        },
+        {
+          "title": "Needs E5 or an add-on",
+          "items": [
+            "**Client and service-side automatic sensitivity labeling** and default labels for SharePoint document libraries[^purviewsd].",
+            "**DLP for Teams** chat and channel messages and **Endpoint DLP** on Windows and macOS[^purviewsd].",
+            "**DLP to restrict Copilot from processing files and emails** that carry a chosen label[^purviewsd].",
+            "**Insider Risk Management**, which needs E5, Microsoft Purview Suite or the Microsoft 365 E5 Insider Risk Management add-on[^purviewsd].",
+            "**Data classification analytics** (content and activity explorer), **Advanced Message Encryption** and **Double Key Encryption**[^purviewsd]."
+          ]
+        },
+        {
+          "title": "Check before you buy",
+          "items": [
+            "**Default labels on E3.** The service description lists Manual Sensitivity Labeling for E3 but also says labeling, including policy-based labeling, needs E5 or Information Protection and Governance[^purviewsd]. Check your agreement.",
+            "**Who needs a license.** Some tenant-level services can't be limited to licensed users[^m365lic]. Owners and members of sites that a Purview policy covers, and shared mailboxes that use E5 features, need licenses too[^purviewsd].",
+            "**Pay-as-you-go extras.** DLP for unmanaged cloud apps in Edge for Business and network DLP are billed pay-as-you-go[^purviewsd].",
+            "**SharePoint Advanced Management.** Its sensitivity label report needs E5, even with a Microsoft 365 Copilot license[^samlic].",
+            "**Agents.** Microsoft says Purview protection for agents on Microsoft Foundry will come with Microsoft 365 E7 and Agent 365[^purviewsd]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Custom sensitive information types first.** Write your own only for data the built-in types miss, such as customer numbers.",
+        "**Sublabels for every department.** Add one only when a group needs different encryption permissions, and keep each label to five sublabels or fewer[^labels].",
+        "**Double Key Encryption and Customer Key.** Both need E5 or an add-on[^purviewsd], and SharePoint search, co-authoring and DLP don't work on files protected with Double Key Encryption[^spolabels]. Wait until a contract or regulator requires them.",
+        "**Endpoint DLP before the cloud policies work.** It extends DLP to USB copies, printing and browser uploads on Windows and macOS[^edlp]. Tune the email, SharePoint and OneDrive policies first.",
+        "**Insider Risk Management before the basics.** It needs E5, Microsoft Purview Suite or an Insider Risk Management add-on[^purviewsd], and in Germany the works council co-determines tools designed to monitor employees' behavior or performance[^betrvg]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Setting access to expire in a label.** SharePoint can't process files whose label sets an access expiry, so search doesn't return them[^spolabels].",
+        "**Trusting a DLP template's name.** Microsoft's Germany Financial Data template looks for credit card numbers but not IBANs, and its Germany PII Data template leaves out the identity card and tax ID, which the Enhanced GDPR template includes[^dlptpl].",
+        "**Treating Restricted Content Discovery as an oversharing fix.** It limits how sites surface in Copilot and organization-wide search but doesn't change who can open them[^rcd]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**E3 and E5 prices rose without new Purview features.** From 1 July 2026 the US list price of Microsoft 365 E3 went from $36 to $39 per user per month and E5 from $57 to $60. Microsoft added Defender, Intune, Cloud PKI and Copilot features to the suites and lists the Microsoft Purview Suite add-on at $12[^m365price].",
+        "**Copilot can ignore external email.** Since June 2026 a preview DLP policy can keep Copilot from grounding answers in mail from outside your domains, which Microsoft offers as a way to reduce prompt-injection risk[^whatsnew][^dlpcopilot].",
+        "**Auto-labeling can override manual labels.** Since April 2026 auto-labeling policies can replace a lower-priority label that a user applied to a SharePoint or OneDrive file[^whatsnew].",
+        "**Labels and DLP extend to Box and Google Workspace.** In preview since August 2026, auto-labeling and DLP policies can protect files at rest there through Defender for Cloud Apps connectors[^whatsnew]."
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check of every licensing statement against the Microsoft Purview service description of 29 October 2026."
+    },
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on the Microsoft Purview service description of 29 October 2026 and Microsoft's 2026 pricing and packaging update, with details from Microsoft Learn pages on sensitivity labels, DLP and SharePoint."
+    }
+  ],
+  "sources": [
+    {
+      "id": "purviewsd",
+      "title": "Microsoft Purview service description",
+      "publisher": "Microsoft Learn",
+      "date": "29 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-purview-service-description"
+    },
+    {
+      "id": "extshare",
+      "title": "Manage sharing settings for SharePoint and OneDrive in Microsoft 365",
+      "publisher": "Microsoft Learn",
+      "date": "1 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off"
+    },
+    {
+      "id": "labels",
+      "title": "Learn about sensitivity labels",
+      "publisher": "Microsoft Learn",
+      "date": "25 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels"
+    },
+    {
+      "id": "encrypt",
+      "title": "Apply encryption using sensitivity labels",
+      "publisher": "Microsoft Learn",
+      "date": "29 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/encryption-sensitivity-labels"
+    },
+    {
+      "id": "sitlist",
+      "title": "Sensitive information type entity definitions",
+      "publisher": "Microsoft Learn",
+      "date": "15 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/sit-sensitive-information-type-entity-definitions"
+    },
+    {
+      "id": "dlplearn",
+      "title": "Learn about data loss prevention",
+      "publisher": "Microsoft Learn",
+      "date": "16 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/dlp-learn-about-dlp"
+    },
+    {
+      "id": "dlpcopilot",
+      "title": "Microsoft Purview DLP for Microsoft 365 Copilot and Cowork",
+      "publisher": "Microsoft Learn",
+      "date": "27 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about"
+    },
+    {
+      "id": "samlic",
+      "title": "SharePoint Advanced Management features in Microsoft Copilot licenses",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-advanced-management-features-copilot-license"
+    },
+    {
+      "id": "spolabels",
+      "title": "Enable sensitivity labels for files in SharePoint and OneDrive",
+      "publisher": "Microsoft Learn",
+      "date": "19 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-onedrive-files"
+    },
+    {
+      "id": "autolabel",
+      "title": "Automatically apply a sensitivity label to Microsoft 365 data",
+      "publisher": "Microsoft Learn",
+      "date": "30 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/apply-sensitivity-label-automatically"
+    },
+    {
+      "id": "edlp",
+      "title": "Learn about Endpoint data loss prevention",
+      "publisher": "Microsoft Learn",
+      "date": "15 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/endpoint-dlp-learn-about"
+    },
+    {
+      "id": "betrvg",
+      "title": "Works Constitution Act (Betriebsverfassungsgesetz), Section 87",
+      "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
+      "date": "as amended 19 Jul 2024",
+      "url": "https://www.gesetze-im-internet.de/englisch_betrvg/englisch_betrvg.html"
+    },
+    {
+      "id": "dlptpl",
+      "title": "What DLP policy templates include",
+      "publisher": "Microsoft Learn",
+      "date": "15 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/dlp-policy-templates-include"
+    },
+    {
+      "id": "rcd",
+      "title": "Restrict discovery of SharePoint sites and content",
+      "publisher": "Microsoft Learn",
+      "date": "31 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-content-discovery"
+    },
+    {
+      "id": "m365price",
+      "title": "Microsoft 365 Pricing and Packaging Updates",
+      "publisher": "Microsoft Licensing Resources",
+      "date": "16 Feb 2026",
+      "url": "https://www.microsoft.com/en-us/licensing/news/2026-m365-packaging-pricing-updates"
+    },
+    {
+      "id": "whatsnew",
+      "title": "What's new in Microsoft Purview",
+      "publisher": "Microsoft Learn",
+      "date": "20 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/whats-new"
+    },
+    {
+      "id": "m365lic",
+      "title": "Microsoft 365 guidance for security & compliance",
+      "publisher": "Microsoft Learn",
+      "date": "21 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/office365/servicedescriptions/microsoft-365-service-descriptions/microsoft-365-tenantlevel-services-licensing-guidance/microsoft-365-security-compliance-licensing-guidance"
+    }
+  ]
 }
