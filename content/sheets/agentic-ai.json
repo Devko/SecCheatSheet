@@ -1,7 +1,247 @@
 {
   "slug": "agentic-ai",
   "topic": "Agentic AI",
-  "status": "planned",
+  "status": "draft",
   "order": 2,
-  "capability": "ai/agents"
+  "capability": "ai/agents",
+  "title": "Agentic AI: what needs securing before agents act for you?",
+  "short": "Give each agent its own least-privilege identity and a human gate on anything irreversible.",
+  "answer": "Before an agent touches real data or systems, give it its own identity with the least access that works, run it in a sandbox, and make a person approve anything it can't undo. Judge every other tool or permission by two questions: who else can write what the agent reads, and what could it do if they did?",
+  "audience": "IT and security teams deploying or allowing AI agents",
+  "version": "0.1",
+  "lastReviewed": "2026-11-02",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Assume anything the agent reads can steer it.",
+          "text": "Emails, tickets, web pages, files and tool output can all carry instructions, and there is no known fool-proof prevention[^llm01]. Limit what a hijacked agent could do."
+        },
+        {
+          "title": "Give each agent its own identity and the least access that works.",
+          "text": "No shared accounts or borrowed personal tokens. Use credentials with the shortest lifetime you can[^ncsc], separate read from write, and never let an agent change its own permissions[^careful]."
+        },
+        {
+          "title": "Sandbox it and block outbound traffic by default.",
+          "text": "Run agents in a container or VM, and allow only the destinations the task needs[^ncsc]. Outbound access is how a hijacked agent leaks what it has read."
+        },
+        {
+          "title": "Make a person approve anything that can't be undone.",
+          "text": "Payments, deletions, external email, merges to production and permission changes. Enforce the gate in the tool or platform, not in the prompt[^ncsc]."
+        },
+        {
+          "title": "Allowlist tools and log every call.",
+          "text": "A plugin, skill or MCP server is code that runs with the agent's access[^openclaw][^mcpsec]. Approve them like software, by name and version[^careful], and monitor tool calls like any other user activity[^ncsc]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "triage",
+      "title": "Before you give an agent a new tool or permission",
+      "navTitle": "New tool check",
+      "items": [
+        {
+          "title": "Does it read anything outsiders can write?",
+          "text": "Email, tickets, web pages, pull requests, shared documents and other agents' output all count. If yes, assume whoever wrote that content can steer the agent."
+        },
+        {
+          "title": "What is the worst it could do with this access?",
+          "text": "Assume a hijacked agent will use every permission it holds. If the worst case can't be undone, add a human approval or drop the permission."
+        },
+        {
+          "title": "Can it send data out?",
+          "text": "Email, web requests, comments and even links in its output can carry data away. An agent that reads untrusted content and holds sensitive data should have no open outbound path."
+        },
+        {
+          "title": "Would you notice, and could you stop it?",
+          "text": "Its actions should show up in your logs under its own identity, and someone should be able to cut its credentials and network access at once[^ncsc]. If not, it isn't ready."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Five Eyes agencies published joint agent guidance** on 1 May 2026: start with low-risk tasks and never give agents broad or unrestricted access[^careful]. The UK NCSC followed on 20 August with sandbox and network maturity levels[^ncsc].",
+        "**Red-teaming hijacked every model tested.** In results NIST published in March 2026, attackers found successful hijacks against all 13 frontier models, from more than 250,000 attempts[^caisi]. Model choice changes the odds, not the conclusion.",
+        "**Agent skill stores became a target.** In February 2026 OpenClaw started scanning every ClawHub skill with VirusTotal, citing attempts to exploit agent platforms, and warned that scanning won't catch prompt injection[^openclaw].",
+        "**The EU postponed its high-risk AI rules** by 16 months, to 2 December 2027 for uses such as hiring and credit scoring[^aiomnibus]. Transparency duties started on schedule on 2 August 2026[^aiact]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Prompt-injection filters as the main defence.** They are tuned on known attacks, and attackers adapt: in NIST tests, new attacks raised one model's hijack rate from 11% to 81%[^hijack]. Keep filters as one layer and rely on permissions and approvals.",
+        "**Security rules in the system prompt.** \"Never send data outside\" is a request, not a control. Back every rule with a technical one[^ncsc].",
+        "**An AI governance platform before an inventory.** A list of agents, owners, identities and what each can reach does more than a dashboard.",
+        "**Waiting for agent standards.** Even the NCSC calls its advice interim[^ncsc]. Least privilege, sandboxes and logs don't need to wait."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Agents running as a person.** A coding agent in a developer's shell can use every key, token and session that account holds[^ncsc].",
+        "**Untrusted input, private data and a way out, all in one agent.** That combination turns a prompt injection into a data leak. Remove one of the three.",
+        "**\"Allow all\" outside a sandbox.** Auto-approve modes belong in disposable environments, not on laptops with production access.",
+        "**Broad, reusable tokens for MCP servers.** Wildcard scopes like `files:*` turn one leaked token into wide access, and servers must not accept tokens issued for anything else[^mcpsec].",
+        "**Banning agents outright.** It tends to push people to personal accounts and tools you can't see. Offer an approved option with guardrails instead."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Prefer agent products that run in the vendor's sandbox, and keep approval prompts on for anything that writes, sends or pays.",
+            "Give agents their own accounts or API keys, read-only where possible.",
+            "Allow only a short list of plugins and MCP servers from publishers you already trust.",
+            "Keep agents that read email or the web away from finance and admin accounts."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Keep an agent inventory: owner, identity, tools, data and outbound paths.",
+            "Issue agent identities from your identity provider, with short-lived tokens.",
+            "Run coding agents in dev containers or cloud sandboxes with an egress allowlist.",
+            "Send tool-call logs to your SIEM and alert on new destinations and permission changes."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Bring agents into access reviews, with a named owner and expiring delegations.",
+            "Route MCP and tool traffic through a gateway that enforces the allowlist, scopes and logging.",
+            "Red-team each agent with indirect prompt injection before launch and after each new tool, using the OWASP agentic Top 10[^owaspasi].",
+            "Check which agent uses are high-risk under the EU AI Act, such as hiring or credit scoring[^aiact], and plan for 2 December 2027[^aiomnibus]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "eu-ai-act",
+      "title": "EU AI Act dates for deployers",
+      "navTitle": "EU AI Act",
+      "span": "full",
+      "intro": "A deployer is any organisation using AI under its own authority[^aiact]. If you build your own agent, provider duties apply as well.",
+      "items": [
+        {
+          "name": "All deployers",
+          "scope": "High-risk or not. Since July 2026, AI literacy means taking measures to support it, not guaranteeing a level[^aiomnibus].",
+          "steps": [
+            { "at": "2 Feb 2025", "what": "AI literacy for staff; banned practices" },
+            { "at": "2 Aug 2026", "what": "Disclose deepfakes and AI-written text published to inform the public[^aiact]" },
+            { "at": "2 Dec 2026", "what": "Ban on sexual deepfakes of real people without consent" }
+          ]
+        },
+        {
+          "name": "High-risk uses, postponed",
+          "scope": "Agents used for hiring, managing staff, credit scoring and other Annex III uses. Deployers must follow the instructions for use, assign trained human oversight and keep logs for at least six months[^aiact]. New dates from the Digital Omnibus[^aiomnibus].",
+          "steps": [
+            { "at": "2 Dec 2027", "what": "Annex III high-risk uses, including deployer duties" },
+            { "at": "2 Aug 2028", "what": "High-risk AI inside products covered by EU safety law" }
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-02",
+      "version": "0.1",
+      "text": "First draft, based on the Five Eyes agentic AI guidance, the NCSC's interim advice, NIST's red-teaming results and the EU Digital Omnibus on AI."
+    }
+  ],
+  "sources": [
+    {
+      "id": "llm01",
+      "title": "LLM01:2025 Prompt Injection",
+      "publisher": "OWASP Gen AI Security Project",
+      "date": "2025",
+      "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+    },
+    {
+      "id": "ncsc",
+      "title": "Managing the cyber risk of agentic AI",
+      "publisher": "NCSC (UK)",
+      "date": "20 Aug 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/managing-the-cyber-risk-of-agentic-ai"
+    },
+    {
+      "id": "careful",
+      "title": "Careful adoption of agentic AI services",
+      "publisher": "ASD's ACSC, CISA, NSA, Canadian Centre for Cyber Security, NCSC-NZ and NCSC-UK",
+      "date": "1 May 2026",
+      "url": "https://www.cyber.gov.au/publication/careful-adoption-of-agentic-ai-services"
+    },
+    {
+      "id": "openclaw",
+      "title": "OpenClaw Partners with VirusTotal for Skill Security",
+      "publisher": "OpenClaw",
+      "date": "7 Feb 2026",
+      "url": "https://openclaw.ai/blog/virustotal-partnership"
+    },
+    {
+      "id": "mcpsec",
+      "title": "Security Best Practices (specification version 2026-07-28)",
+      "publisher": "Model Context Protocol",
+      "date": "28 Jul 2026",
+      "url": "https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices"
+    },
+    {
+      "id": "caisi",
+      "title": "Insights into AI Agent Security from a Large-Scale Red-Teaming Competition",
+      "publisher": "NIST",
+      "date": "23 Mar 2026",
+      "url": "https://www.nist.gov/blogs/caissi-research-blog/insights-ai-agent-security-large-scale-red-teaming-competition"
+    },
+    {
+      "id": "aiomnibus",
+      "title": "Regulation (EU) 2026/1744 (Digital Omnibus on AI), Articles 1 and 4",
+      "publisher": "EUR-Lex",
+      "date": "24 Jul 2026",
+      "url": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
+    },
+    {
+      "id": "aiact",
+      "title": "Regulation (EU) 2024/1689 (AI Act), Articles 3, 26, 50 and 113, Annex III",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    },
+    {
+      "id": "hijack",
+      "title": "Technical Blog: Strengthening AI Agent Hijacking Evaluations",
+      "publisher": "NIST",
+      "date": "17 Jan 2025",
+      "url": "https://www.nist.gov/news-events/news/2025/01/technical-blog-strengthening-ai-agent-hijacking-evaluations"
+    },
+    {
+      "id": "owaspasi",
+      "title": "OWASP Top 10 for Agentic Applications for 2026",
+      "publisher": "OWASP Gen AI Security Project",
+      "date": "9 Dec 2025",
+      "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+    }
+  ]
 }
