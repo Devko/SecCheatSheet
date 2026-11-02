@@ -3,7 +3,7 @@
 import { esc, inline, strip, parseDuration, splitDuration, shortDuration, formatDate, addDays, cssString } from "./lib.mjs";
 import { page } from "./layout.mjs";
 
-export function renderSheet(sheet, { site, checklist }) {
+export function renderSheet(sheet, { site, place, checklist }) {
   const ids = sheet.sources.map((s) => s.id);
   const t = (text) => inline(text, ids);
   const nextReview = addDays(sheet.lastReviewed, sheet.reviewEveryDays);
@@ -23,6 +23,7 @@ export function renderSheet(sheet, { site, checklist }) {
         <div><dt>Next review</dt><dd><time datetime="${nextReview}">${formatDate(nextReview)}</time></dd></div>
         <div><dt>Version</dt><dd>${esc(sheet.version)}${draft ? " (draft)" : ""}</dd></div>
         <div><dt>Written for</dt><dd>${esc(sheet.audience)}</dd></div>
+        <div><dt>Domain</dt><dd><a href="../#d-${esc(place.domain.id)}">${esc(place.domain.name)}</a></dd></div>
         <div class="print-only"><dt>Latest version</dt><dd>${esc(url.replace(/^https?:\/\//, ""))}</dd></div>
       </dl>
     </header>

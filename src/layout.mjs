@@ -11,11 +11,7 @@ export function page({ site, root, title, description, bodyClass = "", head = ""
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="color-scheme" content="light dark">
-<!-- Prototype only: self-host this font before launch. Embedding Google Fonts sends visitor IP
-     addresses to Google, which LG München ruled a GDPR violation in 2022 (3 O 17493/20). -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&display=swap">
+<link rel="preload" href="${root}assets/fonts/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${root}assets/site.css">
 ${head}
 <script type="module" src="${root}assets/site.js"></script>

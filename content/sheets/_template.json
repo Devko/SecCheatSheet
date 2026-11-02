@@ -3,6 +3,7 @@
   "topic": "Topic name as it appears in the index",
   "status": "draft",
   "order": 99,
+  "capability": "domain-id/capability-id from content/map.json",
   "title": "Topic: the question readers actually ask?",
   "short": "One line with the action and a number. Shown in the library index.",
   "answer": "Two sentences at most. The first is what to do and by when; the second is how to decide everything else.",

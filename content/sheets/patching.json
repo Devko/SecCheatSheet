@@ -3,6 +3,7 @@
   "topic": "Patching",
   "status": "draft",
   "order": 1,
+  "capability": "exposure/patching",
   "title": "Patching: how fast is fast enough?",
   "short": "Exploited and internet-facing: contain in 24 hours, patch within 72.",
   "answer": "If a vulnerability is being exploited and the system is reachable from the internet, contain it within 24 hours and patch within 72. Schedule everything else by exploitation and exposure, not by CVSS score alone.",

@@ -1,0 +1,76 @@
+{
+  "domains": [
+    {
+      "id": "govern",
+      "name": "Governance and regulation",
+      "capabilities": [
+        { "id": "eu-regulation", "name": "EU regulation: NIS2, CRA, DORA" },
+        { "id": "third-party", "name": "Supplier and third-party risk" },
+        { "id": "awareness", "name": "Security awareness" }
+      ]
+    },
+    {
+      "id": "exposure",
+      "name": "Vulnerabilities and exposure",
+      "capabilities": [
+        { "id": "patching", "name": "Patching" },
+        { "id": "attack-surface", "name": "Attack surface management" },
+        { "id": "hardening", "name": "Secure configuration" }
+      ]
+    },
+    {
+      "id": "identity",
+      "name": "Identity and access",
+      "capabilities": [
+        { "id": "authentication", "name": "Passkeys and MFA" },
+        { "id": "privileged-access", "name": "Privileged access" },
+        { "id": "lifecycle", "name": "Joiners, movers and leavers" }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "name": "Cloud and infrastructure",
+      "capabilities": [
+        { "id": "cloud", "name": "Cloud configuration" },
+        { "id": "edge", "name": "Network and edge devices" },
+        { "id": "endpoint", "name": "Endpoints and email" }
+      ]
+    },
+    {
+      "id": "software",
+      "name": "Software and supply chain",
+      "capabilities": [
+        { "id": "supply-chain", "name": "Software supply chain" },
+        { "id": "secure-development", "name": "Secure development" },
+        { "id": "api", "name": "API security" }
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "AI",
+      "capabilities": [
+        { "id": "agents", "name": "AI agents" },
+        { "id": "llm-apps", "name": "LLM applications" },
+        { "id": "governance", "name": "AI governance and the AI Act" }
+      ]
+    },
+    {
+      "id": "detect-respond",
+      "name": "Detection and response",
+      "capabilities": [
+        { "id": "logging", "name": "Logging and monitoring" },
+        { "id": "incident-response", "name": "Incident response" },
+        { "id": "threat-intel", "name": "Threat intelligence" }
+      ]
+    },
+    {
+      "id": "resilience",
+      "name": "Resilience and recovery",
+      "capabilities": [
+        { "id": "backups", "name": "Backups" },
+        { "id": "ransomware", "name": "Ransomware readiness" },
+        { "id": "continuity", "name": "Business continuity" }
+      ]
+    }
+  ]
+}

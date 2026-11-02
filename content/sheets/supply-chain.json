@@ -2,5 +2,6 @@
   "slug": "supply-chain",
   "topic": "Software supply chain",
   "status": "planned",
-  "order": 4
+  "order": 4,
+  "capability": "software/supply-chain"
 }

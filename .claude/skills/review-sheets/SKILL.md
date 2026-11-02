@@ -7,7 +7,8 @@ description: Review and update the security cheat sheets in content/sheets. Re-c
 
 Every sheet is reviewed every `reviewEveryDays` days (30). Your job is to keep each sheet correct
 and current, not to rewrite it. A person approves every change through a pull request: never merge
-it yourself, never push to `main`, and never change a sheet's `status`.
+it yourself, never push to `main`, and never change a sheet's `status` or `capability`, or
+`content/map.json`. If a topic seems to belong elsewhere in the map, say so in the pull request.
 
 ## 1. Pick the sheets
 

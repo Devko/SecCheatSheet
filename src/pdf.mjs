@@ -22,11 +22,13 @@ const BROWSERS = [
   "/usr/bin/chromium-browser",
 ];
 
+// Returns a list of problems (no browser, sheets over the page limit) so --strict builds can fail on them.
 export async function buildPdfs(sheets, dist) {
+  const problems = [];
   const browser = BROWSERS.find((p) => p && existsSync(p));
   if (!browser) {
     console.warn("PDF  skipped: no Chrome or Edge found. Set CHROME_PATH to enable PDFs.");
-    return;
+    return ["No Chrome or Edge found, so no PDFs were built."];
   }
   // A throwaway profile keeps headless runs from colliding with a browser that's already open.
   const profile = await mkdtemp(path.join(os.tmpdir(), "sheet-pdf-"));
@@ -40,15 +42,21 @@ export async function buildPdfs(sheets, dist) {
         "--no-pdf-header-footer",
         `--user-data-dir=${profile}`,
         "--virtual-time-budget=15000", // gives web fonts time to load before printing
+        // CI runners often can't start Chrome's sandbox; the pages printed here are our own build output.
+        ...(process.env.CI ? ["--no-sandbox"] : []),
         `--print-to-pdf=${out}`,
         pathToFileURL(path.join(dir, "index.html")).href,
       ]);
       // Chrome writes page objects uncompressed, so counting them is enough to catch overflow.
       const pages = (await readFile(out, "latin1")).match(/\/Type\s*\/Page[^s]/g)?.length ?? 0;
       console.log(`PDF  ${sheet.slug}/${sheet.slug}.pdf (${pages} pages)`);
-      if (pages > MAX_PAGES) console.warn(`     ${sheet.slug} is ${pages} pages; cheat sheets should fit on ${MAX_PAGES}.`);
+      if (pages > MAX_PAGES) {
+        problems.push(`${sheet.slug} is ${pages} pages; cheat sheets must fit on ${MAX_PAGES}.`);
+        console.warn(`     ${problems.at(-1)}`);
+      }
     }
   } finally {
     await rm(profile, { recursive: true, force: true });
   }
+  return problems;
 }

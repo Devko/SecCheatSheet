@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node src/build.mjs",
     "build:html": "node src/build.mjs --no-pdf",
+    "check": "node src/build.mjs --strict",
     "serve": "node src/serve.mjs",
     "dev": "node src/build.mjs --no-pdf && node src/serve.mjs"
   },

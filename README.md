@@ -11,6 +11,7 @@ There are no npm dependencies.
 
 ```bash
 npm run build      # dist/ with HTML, Markdown, JSON and PDF for every sheet
+npm run check      # same, but fails if PDFs can't be built or a sheet runs past 2 pages
 npm run dev        # HTML only, then serve dist/ at http://localhost:4321
 ```
 
@@ -18,8 +19,8 @@ Output:
 
 ```
 dist/
-  index.html                  library index
-  assets/                     CSS, JS, freshness.mjs
+  index.html                  overview: capability map and all sheets
+  assets/                     CSS, JS, freshness.mjs, self-hosted font
   patching/
     index.html                the sheet
     patching.pdf              A4, printed from the same page with the print stylesheet
@@ -31,6 +32,11 @@ dist/
 
 Copy `content/sheets/_template.json`, rename it to the sheet's slug, and set `status`:
 `planned` (index only), `draft` (built, with a draft notice) or `published`.
+
+Set `capability` to a `domain/capability` pair from [`content/map.json`](content/map.json), such as
+`exposure/patching`. The overview's capability map places each sheet there, and gaps in the map are
+the topics still missing. Each capability holds one sheet; if a topic needs two, split the capability
+in the map. The build fails on capabilities that aren't in the map.
 
 Editorial rules, which are the point of the library:
 
@@ -67,8 +73,12 @@ can run the same skill every month. It re-checks every source, researches what c
 last review, edits the sheets, rebuilds, and opens a pull request. It never merges and never
 publishes a draft.
 
-## Before launch
+## Hosting
 
-- Self-host the font. The prototype loads Atkinson Hyperlegible Next from Google Fonts, which sends
-  visitor IP addresses to Google (ruled a GDPR violation by LG München, 2022).
-- Set `baseUrl` in `site.config.json`. It is printed on every PDF page.
+`.github/workflows/site.yml` runs `npm run check` on every pull request and push. Pushes to `main`
+also deploy `dist/` to GitHub Pages at https://devko.github.io/SecCheatSheet/. For a custom domain,
+set it in the repository's Pages settings and update `baseUrl` in `site.config.json`, which is
+printed on every PDF page.
+
+The font (Atkinson Hyperlegible Next, SIL Open Font License) is self-hosted in `assets/fonts/`, so
+the site makes no requests to third parties.
