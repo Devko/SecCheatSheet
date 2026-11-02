@@ -1,0 +1,7 @@
+{
+  "slug": "dlp-labeling",
+  "topic": "DLP and sensitivity labels",
+  "status": "planned",
+  "order": 7,
+  "capability": "data/dlp"
+}

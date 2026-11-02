@@ -28,6 +28,15 @@
       ]
     },
     {
+      "id": "data",
+      "name": "Data protection",
+      "capabilities": [
+        { "id": "dlp", "name": "DLP and sensitivity labels" },
+        { "id": "retention", "name": "Retention and deletion" },
+        { "id": "encryption", "name": "Encryption and key management" }
+      ]
+    },
+    {
       "id": "infrastructure",
       "name": "Cloud and infrastructure",
       "capabilities": [
@@ -51,6 +60,7 @@
       "capabilities": [
         { "id": "agents", "name": "AI agents" },
         { "id": "llm-apps", "name": "LLM applications" },
+        { "id": "security-ops", "name": "AI for security operations" },
         { "id": "governance", "name": "AI governance and the AI Act" }
       ]
     },
