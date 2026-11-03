@@ -1,14 +1,14 @@
 {
   "slug": "secure-typescript",
   "topic": "Secure TypeScript",
-  "status": "draft",
+  "status": "published",
   "order": 13,
   "capability": "coding/typescript",
   "title": "TypeScript: which security bugs does the compiler not catch?",
-  "short": "Parse every input with a runtime schema, make `any` a lint error and check authorization in each handler, not in middleware.",
-  "answer": "Before your next release, parse every untrusted input with a runtime schema, make typescript-eslint's type-aware `no-unsafe-*` rules errors and move authorization out of middleware into each handler. Judge everything else by whether outside data can reach a shell, a file path, a URL, an object merge, `eval` or raw HTML unchecked.",
+  "short": "Parse every input with a runtime schema, make `any` a lint error and check authorization in each handler, not only in middleware.",
+  "answer": "Before your next release, parse every untrusted input with a runtime schema, make typescript-eslint's type-aware `no-unsafe-*` rules errors and check authorization in each handler, not only in middleware. Judge everything else by whether outside data can reach a shell, a query, a file path, a URL, an object merge, `eval` or raw HTML unchecked.",
   "audience": "Developers and tech leads writing production TypeScript for Node.js servers and React front ends, and the security people who review it",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -31,8 +31,8 @@
           "text": "CVE-2025-29927 let attackers bypass authorization in Next.js middleware[^nextmw], and five more bypasses followed in 2026[^nextadv]. Check the user's right to each record in every handler and Server Action[^nextsec]."
         },
         {
-          "title": "Keep input away from shells, `eval` and raw HTML.",
-          "text": "Cross-site scripting, OS command injection and code injection rank 1st, 9th and 10th in the 2025 CWE Top 25[^cwe]. Use `execFile` with an argument array, never `eval` input, and render user text as JSX children."
+          "title": "Keep input away from shells, SQL, `eval` and raw HTML.",
+          "text": "Cross-site scripting, SQL injection, OS command injection and code injection rank 1st, 2nd, 9th and 10th in the 2025 CWE Top 25[^cwe]. Use parameterized queries and `execFile` with an argument array, never `eval` input, and render user text as JSX children."
         },
         {
           "title": "Patch the framework within days.",
@@ -105,7 +105,7 @@
         "**Hand-written type guards for request bodies.** They drift from the types they guard. Derive types from the schema with `z.infer`.",
         "**eslint-plugin-security as your main check.** Its README warns of many false positives[^eslintsec]. Triage typed lint and CodeQL findings first.",
         "**Freezing built-in prototypes.** `--frozen-intrinsics` is experimental[^nodecli] and freezing can break libraries[^owasppp]. Fix the merges instead.",
-        "**Escaping shell arguments yourself.** Without a shell there is nothing to escape. Drop the shell."
+        "**Escaping shell arguments yourself.** Drop the shell instead."
       ]
     },
     {
@@ -117,7 +117,7 @@
         "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw, exploitable only in rare cases, was fixed on 14 October in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
         "**Next.js shipped more middleware bypasses and critical fixes.** Five middleware or proxy bypasses came in May and July, and five critical remote code execution fixes from August to October[^nextadv]. Run at least 16.4.1 or 15.5.28[^nextsvg].",
         "**TypeScript turned `strict` on by default.** TypeScript 6.0 did so in March[^ts6]. TypeScript 7.0, the native compiler, has no API until 7.1, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
-        "**Node.js 20 reached end of life on 30 April.** Node.js 26 has been Active LTS since 28 October, and 22 ends on 30 April 2027[^noderel]. Type stripping, now stable, runs `.ts` files without checking types[^nodets].",
+        "**Node.js 20 reached end of life on 30 April.** Node.js 26 has been Active LTS since 28 October, and 22 ends on 30 April 2027[^noderel].",
         "**Trusted Types work in every major browser.** They became Baseline in February[^mdntt], and React passes `TrustedHTML` to the DOM unchanged[^reactdom]."
       ],
       "span": "full"
@@ -142,7 +142,7 @@
           "items": [
             "Turn on the `no-unsafe-*` rules as warnings and fix request handlers first.",
             "Search for `exec(`, `shell: true`, `eval(`, `dangerouslySetInnerHTML` and `as any`.",
-            "Move authorization from middleware into handlers, and leave Node.js 20."
+            "Check authorization in handlers, not only middleware, and leave Node.js 20."
           ]
         },
         {
@@ -157,6 +157,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the SSRF address example and narrowed 8 statements to what the sources say."
+    },
     {
       "date": "2026-11-03",
       "version": "0.1",
@@ -273,7 +278,7 @@
       "id": "kev",
       "title": "Known Exploited Vulnerabilities Catalog",
       "publisher": "CISA",
-      "date": "1,766 entries on 30 Oct 2026",
+      "date": "checked 3 Nov 2026",
       "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
     },
     {
