@@ -1,14 +1,14 @@
 {
   "slug": "secure-python",
   "topic": "Secure Python",
-  "status": "draft",
+  "status": "published",
   "order": 15,
   "capability": "coding/python",
   "title": "Python: which everyday calls turn into vulnerabilities?",
   "short": "Keep pickle-based loaders away from outside data, pass data as arguments instead of code, and move off Python 3.10, unsupported since 1 October 2026.",
   "answer": "Before your next release, move off Python 3.10 and older[^versions], keep pickle-based loaders away from outside data, and run Ruff's `S` rules and `pip-audit` in CI. Judge everything else by whether input stays data: never code, a shell command, SQL text, a template or a path outside the directory you meant.",
   "audience": "Developers and tech leads writing production Python, and the security people who review it",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -76,10 +76,10 @@
       "span": "full",
       "items": [
         "**`pickle.loads()`, `shelve` and `yaml.load()`.** Unpickling can run arbitrary code[^owaspdeser], and `shelve` and `multiprocessing`'s `Connection.recv()` use pickle[^secwarn]. Use `json`, and `yaml.safe_load()` for YAML[^owaspdeser].",
-        "**`torch.load()` and `trust_remote_code=True`.** PyTorch has defaulted to `weights_only=True` since 2.6[^torchser], but that mode allowed code execution until 2.10.0[^torchghsa]. Prefer safetensors[^b614]. `trust_remote_code=True` runs code from the Hub repository on your machine[^hfauto].",
+        "**`torch.load()` and `trust_remote_code=True`.** PyTorch has defaulted to `weights_only=True` since 2.6[^torchser], but before 2.10.0 that mode could still run code[^torchghsa]. Prefer safetensors[^b614]. `trust_remote_code=True` runs code from the Hub repository on your machine[^hfauto].",
         "**`eval()` and `ast.literal_eval()`.** Ruff's S307 suggests `literal_eval()` in place of `eval()`[^ruff], but Python's docs advise against it for untrusted data: small inputs can exhaust memory or crash the process[^ast]. Use `json.loads()`.",
-        "**`subprocess.run(cmd, shell=True)`.** With a shell, quoting is your job[^subprocess]. Pass a list such as `[\"convert\", src, dst]` without `shell=True`[^subprocess], and put `--` before values that may start with a dash: in 2026 CPython had to stop `webbrowser.open()` passing such URLs to browsers as options[^secann].",
-        "**SQL in f-strings, `%` or `.format()`.** Pass values as parameters (`%s` in psycopg) or in a `t\"...\"` string, which psycopg 3.3 parameterizes; an `f` in its place pastes values into the SQL[^psycopg]. In Django, never pass a user-supplied dict to `filter()` or `Q()` with `**`: that allowed SQL injection until November 2025[^djnov].",
+        "**`subprocess.run(cmd, shell=True)`.** With a shell, quoting is your job[^subprocess]. Pass a list such as `[\"convert\", src, dst]` without `shell=True`[^subprocess], and put `--` before values that may start with a dash, which programs read as options.",
+        "**SQL in f-strings, `%` or `.format()`.** Pass values as parameters (`%s` in psycopg) or in a Python 3.14 `t\"...\"` string, which psycopg 3.3 parameterizes; an `f` in its place pastes values into the SQL[^psycopg]. In Django, never unpack a user-supplied dict with `**` into QuerySet methods: that still allowed SQL injection in February 2026[^djfeb].",
         "**Templates built from user input.** `render_template_string()` or `from_string()` on user text can lead to remote code execution[^owaspssti]. Pass input as variables to fixed template files, and set `autoescape=select_autoescape()`, since Jinja doesn't escape by default[^jinjaapi].",
         "**`tarfile.extractall()`.** Pass `filter=\"data\"` before Python 3.14, which made it the default[^tarfile]. It isn't a sandbox: from June to October 2026 the PSF published seven advisories for archives that got past the filters[^secann]. Extract into a new empty directory with OS-level limits[^tarfile].",
         "**`os.path.join(base, name)` and `Path(base) / name`.** An absolute `name` discards `base`[^pathlib]. Resolve the result, then check `is_relative_to(base.resolve())`; on unresolved paths that check ignores `..`[^pathlib].",
@@ -93,10 +93,9 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**Ruff's `S` rules.** Add `\"S\"` to `select` in `[tool.ruff.lint]`. Fix S301 (pickle), S506 (YAML), S602 (shell), S608 (SQL), S202 (tar), S113 (timeouts) and S311 (`random`) first[^ruff].",
+        "**Ruff's `S` rules.** Add `\"S\"` to `extend-select` in `[tool.ruff.lint]`. Fix S301 (pickle), S506 (YAML), S602 (shell), S608 (SQL), S202 (tar), S113 (timeouts) and S311 (`random`) first[^ruff].",
         "**Bandit for ML code.** B614 flags `torch.load()`[^b614]; Ruff has no such rule[^ruff].",
-        "**CodeQL.** Run the `security-extended` suite on every pull request.",
-        "**pip-audit.** It checks environments, requirements files and, with `--locked`, `pylock.*.toml` files against PyPI's advisory data or OSV[^pipaudit]."
+        "**pip-audit.** It checks environments, requirements and, with `--locked`, `pylock.*.toml` files against PyPI or OSV advisories[^pipaudit]."
       ]
     },
     {
@@ -106,7 +105,7 @@
       "navTitle": "What changed",
       "items": [
         "**Python 3.10 is end of life.** Support ended on 1 October 2026, and 3.15.0 shipped on 9 October[^versions].",
-        "**A CA compromise reached Python's trust stores.** In October the PSF told users to install certifi 2026.10.19, pip 26.2.2 and uv 0.13.6 or later in every virtual environment, move to Python 3.11.18, 3.12.16, 3.13.18, 3.14.10 or 3.15.2 and rebuild images without cached layers[^emudhra]."
+        "**A CA compromise reached Python's trust stores.** After October's emSign incident, install certifi 2026.10.19, pip 26.2.2 and uv 0.13.6 or later in every virtual environment, move to Python 3.11.18, 3.12.16, 3.13.18, 3.14.10 or 3.15.2 and rebuild images without cached layers[^emudhra]."
       ]
     },
     {
@@ -114,8 +113,8 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**defusedxml for standard library parsers.** Python's docs don't recommend it now: Expat doesn't read local files or open connections by default, and entity expansion attacks affect Expat before 2.7.2[^xml]. Check `pyexpat.EXPAT_VERSION` in CI and turn off S313 to S319[^ruff].",
-        "**Import-level lint warnings.** Turn off S403 and S404, which fire on any import of `pickle` or `subprocess`, and S603, which fires on every `subprocess` call without a shell[^ruff].",
+        "**defusedxml for standard library parsers.** Expat doesn't read local files or open connections by default, and Python's XML docs warn of entity expansion only for Expat before 2.7.2[^xml]. Check `pyexpat.EXPAT_VERSION` in CI and turn off S313 to S319[^ruff].",
+        "**Noisy lint rules.** Turn off S603, which fires on every `subprocess` call without a shell, and preview rules S403 and S404, which fire on any import of `pickle` or `subprocess`[^ruff].",
         "**A `find_class` allowlist for pickle.** Change the format. PyTorch's own restricted unpickler needed a code execution fix in 2026[^torchghsa]."
       ]
     },
@@ -127,7 +126,7 @@
       "items": [
         "**Shipping with the debugger on.** Flask's debugger runs Python sent from the browser[^flaskdebug]. Django's `DEBUG = True` leaks source excerpts and settings; run `manage.py check --deploy` in CI[^djcheck].",
         "**Trusting FastAPI's `OAuth2PasswordBearer`.** It only extracts the token. Verify the signature, `exp`, `iss` and `aud` with PyJWT and a fixed `algorithms` list[^owaspfastapi].",
-        "**Ignoring `.pth` files.** Their `import` lines run at every interpreter start, and Python 3.15 deprecates them in favor of `.start` files[^site]. The malicious LiteLLM 1.82.8 shipped `litellm_init.pth`[^litellm]. Check your images; the supply-chain sheet covers the rest."
+        "**Ignoring `.pth` files.** Their `import` lines run at every interpreter start, as do the `.start` files Python 3.15 adds to replace them[^site]. The malicious LiteLLM 1.107.0 shipped `cook.pth` and `sitecustomize.py`[^litellm]. The supply-chain sheet covers the rest."
       ]
     },
     {
@@ -167,6 +166,11 @@
   "changes": [
     {
       "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which updated 2 incidents and narrowed 8 statements to what the sources say."
+    },
+    {
+      "date": "2026-11-03",
       "version": "0.1",
       "text": "First draft, based on Python docs, PSF and vendor advisories, OWASP cheat sheets, Ruff and Bandit docs and the 2025 CWE Top 25."
     }
@@ -189,8 +193,8 @@
     {
       "id": "emudhra",
       "title": "Information for Python users regarding eMudhra / emSign CA certificate security incident",
-      "publisher": "PSF",
-      "date": "20 Oct 2026",
+      "publisher": "Python Discourse",
+      "date": "20 Oct 2026, updated 31 Oct 2026",
       "url": "https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576"
     },
     {
@@ -203,7 +207,7 @@
     {
       "id": "owaspdeser",
       "title": "Deserialization Cheat Sheet",
-      "publisher": "OWASP Cheat Sheet Series",
+      "publisher": "OWASP",
       "date": "checked 3 Nov 2026",
       "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html"
     },
@@ -217,7 +221,7 @@
     {
       "id": "torchser",
       "title": "Serialization semantics",
-      "publisher": "PyTorch 2.15 documentation",
+      "publisher": "PyTorch docs (2.15)",
       "date": "updated 8 May 2026",
       "url": "https://docs.pytorch.org/docs/2.15/notes/serialization.html"
     },
@@ -231,14 +235,14 @@
     {
       "id": "hfauto",
       "title": "Auto classes (trust_remote_code)",
-      "publisher": "Hugging Face Transformers documentation",
+      "publisher": "Hugging Face docs",
       "date": "checked 3 Nov 2026",
-      "url": "https://huggingface.co/docs/transformers/main/en/model_doc/auto"
+      "url": "https://huggingface.co/docs/transformers/en/model_doc/auto"
     },
     {
       "id": "b614",
       "title": "B614: pytorch_load",
-      "publisher": "Bandit documentation",
+      "publisher": "Bandit docs",
       "date": "checked 3 Nov 2026",
       "url": "https://bandit.readthedocs.io/en/latest/plugins/b614_pytorch_load.html"
     },
@@ -259,28 +263,28 @@
     {
       "id": "psycopg",
       "title": "Template string queries",
-      "publisher": "psycopg 3.3.7 documentation",
+      "publisher": "psycopg docs",
       "date": "checked 3 Nov 2026",
       "url": "https://www.psycopg.org/psycopg3/docs/basic/tstrings.html"
     },
     {
-      "id": "djnov",
-      "title": "Django security releases issued: 5.2.8, 5.1.14, and 4.2.26",
+      "id": "djfeb",
+      "title": "Django security releases issued: 6.0.2, 5.2.11, and 4.2.28",
       "publisher": "Django Project",
-      "date": "5 Nov 2025",
-      "url": "https://www.djangoproject.com/weblog/2025/nov/05/security-releases/"
+      "date": "3 Feb 2026",
+      "url": "https://www.djangoproject.com/weblog/2026/feb/03/security-releases/"
     },
     {
       "id": "owaspssti",
       "title": "Server Side Template Injection Prevention Cheat Sheet",
-      "publisher": "OWASP Cheat Sheet Series",
+      "publisher": "OWASP",
       "date": "checked 3 Nov 2026",
       "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Template_Injection_Prevention_Cheat_Sheet.html"
     },
     {
       "id": "jinjaapi",
       "title": "API: Autoescaping",
-      "publisher": "Jinja documentation (3.1.x)",
+      "publisher": "Jinja docs",
       "date": "checked 3 Nov 2026",
       "url": "https://jinja.palletsprojects.com/en/stable/api/#autoescaping"
     },
@@ -301,7 +305,7 @@
     {
       "id": "reqadv",
       "title": "Advanced Usage",
-      "publisher": "Requests 2.34.2 documentation",
+      "publisher": "Requests docs",
       "date": "checked 3 Nov 2026",
       "url": "https://requests.readthedocs.io/en/latest/user/advanced/"
     },
@@ -322,14 +326,14 @@
     {
       "id": "owaspfastapi",
       "title": "FastAPI Security Cheat Sheet",
-      "publisher": "OWASP Cheat Sheet Series",
+      "publisher": "OWASP",
       "date": "checked 3 Nov 2026",
       "url": "https://cheatsheetseries.owasp.org/cheatsheets/FastAPI_Security_Cheat_Sheet.html"
     },
     {
       "id": "ruff",
       "title": "Rules: flake8-bandit (S)",
-      "publisher": "Ruff documentation",
+      "publisher": "Ruff docs",
       "date": "checked 3 Nov 2026",
       "url": "https://docs.astral.sh/ruff/rules/#flake8-bandit-s"
     },
@@ -349,10 +353,10 @@
     },
     {
       "id": "litellm",
-      "title": "Security Update: Suspected Supply Chain Incident",
+      "title": "Contained: Oct 21, 2026 LiteLLM release v1.107.0 Compromised",
       "publisher": "LiteLLM",
-      "date": "24 Mar 2026, updated 27 Mar 2026",
-      "url": "https://docs.litellm.ai/blog/security-update-march-2026"
+      "date": "21 Oct 2026",
+      "url": "https://docs.litellm.ai/blog/security-incident-oct-21-2026"
     },
     {
       "id": "xml",
@@ -364,14 +368,14 @@
     {
       "id": "flaskdebug",
       "title": "Debugging Application Errors",
-      "publisher": "Flask documentation (3.1.x)",
+      "publisher": "Flask docs",
       "date": "checked 3 Nov 2026",
       "url": "https://flask.palletsprojects.com/en/stable/debugging/"
     },
     {
       "id": "djcheck",
       "title": "Deployment checklist",
-      "publisher": "Django 6.1 documentation",
+      "publisher": "Django docs (6.1)",
       "date": "checked 3 Nov 2026",
       "url": "https://docs.djangoproject.com/en/stable/howto/deployment/checklist/"
     }
