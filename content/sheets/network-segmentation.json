@@ -1,14 +1,14 @@
 {
   "slug": "network-segmentation",
   "topic": "Network segmentation",
-  "status": "draft",
+  "status": "published",
   "order": 12,
   "capability": "infrastructure/segmentation",
   "title": "Network segmentation: can one infected laptop reach everything?",
   "short": "Wall off management and backups first, block SMB and RDP between workstations, and scan from a user laptop every quarter.",
   "answer": "This quarter, move hypervisor, backup and device management into a zone reachable only from admin workstations, and block SMB, RDP and WinRM between workstations with the host firewall. Then put a default-deny firewall between users and servers one zone at a time, and count a rule as working only once you have tested it from a user's laptop.",
   "audience": "IT and network teams with flat or lightly segmented office networks, on-premises servers, some cloud and, in some cases, OT or building systems",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -102,7 +102,7 @@
       "items": [
         "**Port-scan from the user side.** Anything that answers beyond the documented ports is a finding.",
         "**Log what host firewalls drop.** Send dropped-packet logs from hypervisors and management hosts to your SIEM: denials there signal reconnaissance[^mandiant].",
-        "**Ignore local firewall rules.** Turn off local rule merging[^mandiant]. Apps then need central rules, and rules in local Group Policy still apply[^wfrules].",
+        "**Stop local exceptions.** Turn off local rule merging[^mandiant]. Apps then need central rules, and local Group Policy rules still apply[^wfrules].",
         "**Meet the card data clock.** If segmentation isolates your card data environment, PCI DSS v4.0.1 requires pen tests of it at least every 12 months (6 for service providers) and after changes[^pci]."
       ]
     },
@@ -125,9 +125,9 @@
       "title": "What you can skip",
       "items": [
         "**Full microsegmentation before basic zones.** CISA warns that fine-grained segments are harder to build and maintain, and its on-premises example did data center, servers and users first[^cisams].",
-        "**Open routing between VLANs.** A VLAN without a default-deny firewall or ACL in front of it is a label, not a segment.",
+        "**VLANs without rules between them.** A VLAN with no default-deny firewall or ACL in front of it is a label, not a segment.",
         "**Default-deny outbound on workstations.** Microsoft advises allowing outbound in most deployments[^wfrules]. Block SMB to the internet at the edge[^smb].",
-        "**Deep inspection between internal zones.** Stateful port rules do most of the work. Inspect at the internet edge and the OT boundary."
+        "**Deep inspection between internal zones.** Stateful port rules do most of the work. Inspect at the internet edge and the OT boundary first."
       ]
     },
     {
@@ -180,6 +180,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which rewrote the workstation firewall advice as scoped allow rules, added the Active Directory RPC ports and narrowed 5 statements to what the sources say."
+    },
     {
       "date": "2026-11-03",
       "version": "0.1",
