@@ -1,14 +1,14 @@
 {
   "slug": "supply-chain",
   "topic": "Software supply chain",
-  "status": "draft",
+  "status": "published",
   "order": 4,
   "capability": "software/supply-chain",
   "title": "Software supply chain: would a poisoned package or action reach production?",
   "short": "Make new package versions wait 3 days, lock every GitHub Action to a commit and publish without long-lived tokens.",
   "answer": "This month, make new package versions wait three days before they install, lock every GitHub Action to a commit and replace long-lived publishing and cloud tokens with trusted publishing and OIDC. Judge every other control by whether it keeps credentials away from code you didn't write, or tells you within an hour where a bad version ran.",
   "audience": "Development, platform and DevOps teams that build and ship software, including small teams on GitHub",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -17,7 +17,7 @@
       "id": "first",
       "title": "If you only do five things",
       "navTitle": "Five things",
-      "intro": "Verizon's 2026 DBIR found third-party involvement in 48% of breaches, up 60% in a year[^dbir].",
+      "intro": "Third parties, including flaws in vendor software, were involved in 48% of the breaches in Verizon's 2026 DBIR, up 60% in a year[^dbir].",
       "items": [
         {
           "title": "Make new versions wait three days.",
@@ -29,7 +29,7 @@
         },
         {
           "title": "Lock every action to a commit.",
-          "text": "In March an attacker force-pushed 76 of 77 version tags of `trivy-action` to code that read secrets from runner memory[^trivy]. PyPI traced the poisoned LiteLLM and Telnyx releases to a token exposed through the compromised Trivy[^pypiinc]. Turn on **Require actions to be pinned to a full-length commit SHA**, which a workflow lockfile satisfies, and set **Workflow permissions** to read-only[^ghsettings]."
+          "text": "In March 2026 an attacker force-pushed 76 of 77 version tags of `trivy-action` to code that read secrets from runner memory[^trivy]. Turn on **Require actions to be pinned to a full-length commit SHA**, which a workflow lockfile satisfies, and set **Workflow permissions** to read-only[^ghsettings]."
         },
         {
           "title": "Publish and deploy without long-lived tokens.",
@@ -37,7 +37,7 @@
         },
         {
           "title": "Record what every build contained.",
-          "text": "Generate an SBOM in the build for each release and keep it with the artifact[^cisasbom][^enisasbom], so you can tell in minutes whether you shipped a bad version. The CRA requires one from December 2027[^cra]."
+          "text": "Generate an SBOM in the build for each release and keep it with the artifact[^cisasbom][^enisasbom], so you can tell within an hour whether you shipped a bad version. The CRA requires one from December 2027[^cra]."
         }
       ]
     },
@@ -65,14 +65,14 @@
         },
         {
           "title": "Do you have to report it?",
-          "text": "If malicious code could have reached a product you sell in the EU, treat it as a possible severe CRA incident, with an early warning due within 24 hours[^cra]. The EU security laws sheet has the other clocks."
+          "text": "If malicious code could have reached a product you place on the EU market, treat it as a possible severe CRA incident, with an early warning due within 24 hours[^cra]. The EU security laws sheet has the other clocks."
         }
       ]
     },
     {
       "type": "list",
       "id": "cra",
-      "title": "If you sell software in the EU: the CRA",
+      "title": "If you place software on the EU market: the CRA",
       "navTitle": "CRA",
       "items": [
         "**Reporting applies now.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities and severe incidents, also for products placed on the market before the rest of the CRA applies on 11 December 2027[^cra].",
@@ -100,7 +100,7 @@
       "items": [
         "**Chasing unreachable CVEs deep in the tree.** The CRA asks you to remediate in relation to the risks[^cra]. Fix exploited and reachable ones within the patching sheet's deadlines and batch the rest.",
         "**Polishing SBOMs nobody reads.** Generate them in the build with tools you already have, as ENISA advises for a first implementation[^enisasbom]. Buy an SBOM platform only when a customer or regulator consumes them.",
-        "**SLSA Build L3 before the basics.** Hardened builds matter less than the moving tags, stolen tokens and install scripts behind the 2026 incidents.",
+        "**SLSA Build L3 before the basics.** Close the moving tags, long-lived tokens and install scripts behind most 2026 incidents first.",
         "**A registry proxy for a small team.** A cooldown, a lockfile and blocked install scripts give most of its benefit without the upkeep."
       ]
     },
@@ -111,7 +111,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Publishing from a busy job.** Malware in the same job can read the OIDC token from runner memory[^mitre]. Publish from a separate job that installs nothing, in an environment that needs a reviewer's approval[^envs].",
-        "**Running fork code with secrets.** `pull_request_target` workflows are privileged, skip fork approval and must not check out untrusted code[^secureuse][^ghsettings]. From 2 December GitHub blocks them in public repositories by default[^prt].",
+        "**Running fork code with secrets.** `pull_request_target` workflows are privileged, bypass fork approval and must not check out untrusted code[^secureuse][^ghsettings]. From 2 December GitHub blocks them in public repositories by default[^prt].",
         "**Forgetting developer machines.** The poisoned Nx Console extension reached users through VS Code's automatic updates[^cisanx]. Allowlist extensions and pin approved versions with the `AllowedExtensions` policy[^vscode]."
       ]
     },
@@ -126,7 +126,7 @@
           "title": "Small team, no security staff",
           "items": [
             "In the organization's Actions settings, set read-only workflow permissions and require SHA-pinned actions or a lockfile.",
-            "Keep Dependabot's default cooldown and turn on Dependabot malware alerts, security updates and secret scanning.",
+            "Keep Dependabot's default cooldown and turn on Dependabot malware alerts, security updates and, where your plan includes it, secret scanning.",
             "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
           ]
         },
@@ -150,6 +150,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which dated the CRA's SBOM duty to December 2027, made CODEOWNERS review enforceable and narrowed 8 statements to what the sources say."
+    },
     {
       "date": "2026-11-03",
       "version": "0.1",
@@ -236,7 +241,7 @@
     },
     {
       "id": "trivy",
-      "title": "Trivy ecosystem supply chain temporarily compromised (GHSA-69fq-xp46-6x23, CVE-2026-33634)",
+      "title": "Trivy ecosystem supply chain temporarily compromised (GHSA-69fq-xp46-6x23)",
       "publisher": "Aqua Security",
       "date": "21 Mar 2026",
       "url": "https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23"
