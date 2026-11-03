@@ -1,14 +1,14 @@
 {
   "slug": "incident-response",
   "topic": "Incident response",
-  "status": "draft",
+  "status": "published",
   "order": 10,
   "capability": "detect-respond/incident-response",
   "title": "Incident response: what do you do in the first 24 hours?",
   "short": "Check today that your audit log is on; in an incident, isolate rather than wipe and export the logs within the first hours.",
-  "answer": "This month, confirm that Microsoft 365 auditing is on, keep sign-in logs for at least a year and agree who leads, who decides and whom you call. When something looks wrong, isolate accounts and devices without wiping them, export the logs in the first hours and decide within 72 hours whether the GDPR requires a notification[^edpb].",
+  "answer": "This month, confirm that Microsoft 365 auditing is on, keep sign-in logs for at least a year and agree who leads, who decides and whom you call. When something looks wrong, isolate accounts and devices without wiping them, export the logs in the first hours and, if the GDPR requires it, notify within 72 hours[^edpb].",
   "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -55,15 +55,15 @@
           "text": "If an admin account or a mailbox may be compromised, assume the attacker can read them and move to your other channel. Communicating over the network under investigation is a common mistake[^cisatech]."
         },
         {
-          "title": "Isolate, don't wipe or switch off.",
-          "text": "Disconnecting a system can preserve evidence, while shutting it down can lose it[^ncscrec]. Defender for Endpoint, including Plan 1, isolates a device while keeping it connected to Defender[^mde]. Stop backup jobs and protect the backups from further changes[^bsitop12]."
+          "title": "Isolate first, and don't wipe.",
+          "text": "Disconnecting a system preserves evidence that shutting it down can lose, though shutting down may halt active processes[^ncscrec]. Defender for Endpoint, including Plan 1, isolates a device but keeps it connected to Defender, and lifts isolation after seven days[^mde]. Stop backup jobs and protect the backups from further changes[^bsitop12]."
         },
         {
           "title": "Export the logs now.",
           "text": "Search the audit logs from just before the first suspicious activity, without filtering by activity at first[^compromised]. On Entra ID Free, sign-ins older than 7 days are already gone[^entralogs]. Keep the original phishing email with its headers[^msir]."
         },
         {
-          "title": "Call your response firm and insurer before big changes.",
+          "title": "Call your responders, insurer and lawyer before big changes.",
           "text": "Let the investigation run before you restore systems: the NCSC warns that rushing recovery can significantly increase risk[^ncscrec]."
         },
         {
@@ -72,7 +72,7 @@
         },
         {
           "title": "Which clocks have started?",
-          "text": "For personal data, the GDPR's 72 hours run from the point you are reasonably certain of a breach, and you can notify in phases[^edpb]. NIS2, DORA and the CRA have their own clocks: see the EU security laws sheet. A report to the NCSC doesn't meet legal duties[^ncscrec]; in Germany, call your state police's cybercrime contact point (ZAC)[^zac]."
+          "text": "The GDPR's 72 hours start once you are reasonably certain that personal data was compromised, and you can notify in phases[^edpb]. For NIS2, DORA and the CRA, see the EU security laws sheet. In the UK, a report to the NCSC doesn't meet your legal duties[^ncscrec]. To report the crime in Germany, contact your state police's cybercrime contact point (ZAC)[^zac]."
         }
       ]
     },
@@ -85,7 +85,7 @@
         "**Disable the account and revoke sessions.** In the Entra admin center, clear **Account enabled** and select **Revoke sessions**, or run `Revoke-MgUserSignInSession`. Apps that aren't CAE-capable keep access until their access token expires, by default after 1 hour[^revoke].",
         "**Reset the password through another channel.** Don't email it to the user. Reset synced accounts twice in Active Directory, and replace app passwords, which a reset doesn't revoke[^compromised].",
         "**Remove what the attacker added.** Check MFA methods and devices, admin roles and consented apps[^compromised]. Disable a malicious app rather than delete it, or another user's consent can bring it back[^appconsent].",
-        "**Check forwarding and inbox rules.** Run `Get-InboxRule -IncludeHidden` and check the mailbox's forwarding addresses. Rules that forward mail or move it to Notes, Junk Email or RSS Subscriptions are typical signs[^compromised].",
+        "**Check forwarding and inbox rules.** Run `Get-InboxRule -Mailbox <user> -IncludeHidden` and check the mailbox's forwarding addresses. Rules that forward mail or move it to Notes, Junk Email or RSS Subscriptions are typical signs[^compromised].",
         "**Find out what was read.** MailItemsAccessed is logged by default for E3 and E5 users. If the attacker synced mail to their own client, Microsoft says to assume the entire mailbox is compromised[^mailitems].",
         "**Warn the people it wrote to.** Check Sent Items and message trace for changed bank details and phone the recipients. If money left, ask your bank at once to recall it; the FBI says time is of the essence[^ic3]."
       ]
@@ -96,9 +96,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Voice phishing moved into Teams.** Microsoft saw confirmed malicious voice phishing over external Teams calls rise 502% in a year; once a victim grants remote access, attackers finish reconnaissance in two minutes or less[^mddr]. Mandiant ranks voice phishing second among initial vectors, at 11%[^mtrends]. Treat such a call as an incident and isolate the device.",
+        "**Voice phishing went mainstream in Teams.** Microsoft saw confirmed malicious voice phishing over external Teams calls rise 502% in a year; once a victim grants remote access, attackers finish reconnaissance in two minutes or less[^mddr]. Mandiant ranks voice phishing second among initial vectors, at 11%[^mtrends]. If someone gave a caller remote access, treat it as an incident and isolate the device.",
         "**Hand-offs take seconds.** Mandiant measured a median of 22 seconds in 2025 between initial access and hand-off to a second group, down from more than 8 hours in 2022, and advises treating routine malware alerts as high priority[^mtrends].",
-        "**More intrusions are found in-house, but they last longer.** Organizations found 52% of Mandiant's 2025 intrusions themselves, up from 43%, while median dwell time rose to 14 days from 11. Mandiant advises keeping logs well beyond 90 days[^mtrends].",
+        "**More intrusions are found in-house, but they last longer.** Organizations found 52% of Mandiant's 2025 intrusions themselves, up from 43%, while median dwell time rose to 14 days from 11. Mandiant calls standard 90-day log retention insufficient[^mtrends].",
         "**The NCSC published a first-hours checklist.** Its July 2026 guidance on disruptive attacks covers incident command, outside responders, the disconnect-or-shut-down decision and a central record[^ncscrec]. Check your plan against it."
       ]
     },
@@ -108,7 +108,7 @@
       "title": "What you can skip",
       "items": [
         "**Rewriting your plan to NIST's new model.** SP 800-61 Rev. 3 maps incident response to the CSF 2.0 functions, but NIST says to use whichever life cycle model suits you[^sp80061]. Names, numbers and authority matter more.",
-        "**Buying tools during the incident.** Microsoft sees tools bought under pressure go unused and advises deferring purchases until the investigation ends[^msir].",
+        "**Buying tools during the incident.** Microsoft sees tools bought under pressure go unused and advises deferring any you can't deploy during the investigation[^msir].",
         "**Imaging every machine.** Analyze the systems the attacker used or changed[^msir]. NIST notes that most malware incidents won't be prosecuted, so formal chain of custody isn't always used[^sp80061].",
         "**Naming the attacker.** Attribution rarely changes the first day's actions. Spend the time on which accounts, devices and data are involved."
       ]
@@ -123,7 +123,7 @@
         "**Tipping off the attacker.** Don't upload samples to online scanners, which attackers watch[^msir], or ping and browse their servers[^cisatech].",
         "**Fixing only the symptom.** Blocking an IP address without learning what the malware is and how it got in lets the attacker keep access[^cisatech].",
         "**Resetting every password at once.** Reset the accounts you know are compromised first, then others in stages[^msir].",
-        "**Waiting for forensics before the GDPR clock.** Start the short initial investigation at once; detail can follow in a phased notification[^edpb]."
+        "**Waiting for the forensic report to notify.** Start the short initial investigation at once; detail can follow in a phased notification[^edpb]."
       ]
     },
     {
@@ -136,15 +136,15 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Put your IT provider's incident duties and response time in the contract, including what it may do on your behalf[^sp80061].",
+            "Put your IT provider's incident duties and what it may do on your behalf in the contract[^sp80061], with a response time.",
             "Hang up the BSI's IT emergency card with your IT contact's number: staff report at once and act only on instruction[^bsicard].",
-            "Ask your insurer which hotline to call and keep the policy details offline[^ncsctech]."
+            "Note your insurer's incident number and keep the policy details offline[^ncsctech]."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Keep Entra and Microsoft 365 audit logs for at least a year in a SIEM or storage account, as CISA and its partners advise[^cisatech].",
+            "Keep Entra and Microsoft 365 audit logs in a SIEM or storage account for at least a year, CISA's minimum for log data[^cisatech].",
             "Exercise with the retainer team that would come on site[^ncsctech].",
             "Write one-page playbooks for a stolen account, a lost laptop and payment fraud, and test them twice a year."
           ]
@@ -153,7 +153,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Set up incident command, such as Gold, Silver and Bronze[^ncscrec], with delegated authority out of hours[^ncscpeople].",
-            "Use Audit (Premium), which keeps Entra, Exchange, OneDrive and SharePoint records for 1 year by default[^audit].",
+            "With E5 or an add-on[^entralogs], Audit (Premium) keeps Entra, Exchange, OneDrive and SharePoint records for 1 year by default[^audit].",
             "Give each reporting clock an owner and draft the notices in advance, using the EU security laws sheet."
           ]
         }
@@ -161,6 +161,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected an inbox rule command, narrowed 7 statements to what the sources say and replaced the M-Trends blog post with the report."
+    },
     {
       "date": "2026-11-03",
       "version": "0.1",
@@ -173,7 +178,7 @@
       "title": "Guidelines 9/2022 on personal data breach notification under GDPR, version 2.0",
       "publisher": "European Data Protection Board",
       "date": "28 Mar 2023",
-      "url": "https://www.edpb.europa.eu/system/files/2023-04/edpb_guidelines_202209_personal_data_breach_notification_v2.0_en.pdf"
+      "url": "https://www.edpb.europa.eu/system/files/documents/2023-04/edpb_guidelines_202209_personal_data_breach_notification_v2.0_en.pdf"
     },
     {
       "id": "auditon",
@@ -243,7 +248,7 @@
       "title": "Exercise in a Box",
       "publisher": "NCSC (UK)",
       "date": "checked 3 Nov 2026",
-      "url": "https://www.ncsc.gov.uk/information/exercise-in-a-box"
+      "url": "https://www.ncsc.gov.uk/section/exercise-in-a-box/overview"
     },
     {
       "id": "ncscrec",
@@ -271,7 +276,7 @@
       "title": "TOP 12 Maßnahmen bei Cyber-Angriffen",
       "publisher": "BSI (Allianz für Cyber-Sicherheit), BKA and partners",
       "date": "Sep 2019",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/Webs/ACS/DE/Notfallkarte/TOP_12_Massnahmen.pdf?__blob=publicationFile"
+      "url": "https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/Notfallkarte/TOP_12_Massnahmen.pdf?__blob=publicationFile"
     },
     {
       "id": "compromised",
@@ -310,10 +315,10 @@
     },
     {
       "id": "mtrends",
-      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "title": "M-Trends 2026 Executive Edition",
       "publisher": "Google Cloud (Mandiant)",
-      "date": "23 Mar 2026",
-      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
     },
     {
       "id": "bsicard",
