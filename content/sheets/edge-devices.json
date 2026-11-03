@@ -1,14 +1,14 @@
 {
   "slug": "edge-devices",
   "topic": "Edge devices",
-  "status": "draft",
+  "status": "published",
   "order": 11,
   "capability": "infrastructure/edge",
   "title": "Edge devices: would you know if your firewall or VPN had been broken into?",
   "short": "Take management interfaces off the internet, keep 12 months of device logs elsewhere and replace devices before support ends.",
   "answer": "This month, take every edge device's management interface off the internet and send its logs to a system the device can't erase, and replace anything past end of support within 12 months. When a flaw in one is exploited, assume the device is compromised: collect evidence, reset or rebuild it and rotate every credential it held, because a patch doesn't remove an attacker who is already in.",
   "audience": "IT and network teams running firewalls, VPN gateways, routers, load balancers, file-transfer appliances and other internet-facing devices, in organizations of any size",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -28,11 +28,11 @@
         },
         {
           "title": "Put strong MFA on every login the device accepts.",
-          "text": "Require phishing-resistant MFA for admin access[^cccs] and MFA for every VPN user, as the passkeys and MFA sheet describes. VPN access made up 44% of the connection types in the initial access broker offers Verizon analyzed[^dbir]."
+          "text": "Require phishing-resistant MFA for admin access[^cccs] and the strongest MFA the VPN supports for every user, as the passkeys and MFA sheet describes. VPN access made up 44% of the connection types in the initial access broker offers Verizon analyzed[^dbir]."
         },
         {
           "title": "Send the logs somewhere the device can't erase.",
-          "text": "Forward detailed logs to a central system and alert on admin logins, configuration changes and hardware changes[^cccs]. Keep them for at least 12 months: Mandiant saw the BRICKSTORM backdoor go unnoticed for nearly 400 days and warns that 90-day retention leaves you blind[^mtrends]."
+          "text": "Forward detailed logs to a central system and alert on admin logins, configuration changes and hardware changes[^cccs]. Keep them for at least 12 months, as Mandiant advises for network devices' admin logs: BRICKSTORM intrusions averaged 393 days of dwell time[^mtrends]."
         },
         {
           "title": "Replace devices before support ends.",
@@ -45,7 +45,7 @@
       "id": "check",
       "title": "Check a device after an exploited flaw",
       "navTitle": "Compromise check",
-      "intro": "Patch within the patching sheet's deadlines, then check every device the flaw could reach before the patch.",
+      "intro": "Collect evidence first, patch within the patching sheet's deadlines, then check every device the flaw could reach before the patch.",
       "items": [
         {
           "title": "Capture evidence before you patch or reboot.",
@@ -53,7 +53,7 @@
         },
         {
           "title": "Don't trust a clean integrity check.",
-          "text": "Ivanti's checker may miss the October 2026 Connect Secure attacks because the commands run in memory; confirming them takes network and memory forensics[^cisaivanti]. On FortiGates, a file link planted by attackers could survive patching[^fortisym]."
+          "text": "CISA warns that Ivanti's checker can miss attacker commands that run only in memory[^cisaivanti]. On FortiGates, a file link planted by attackers could survive patching[^fortisym]."
         },
         {
           "title": "Look for new admin accounts and changed settings.",
@@ -61,11 +61,11 @@
         },
         {
           "title": "Reset or rebuild, then upgrade.",
-          "text": "Follow the vendor's recovery steps, such as a factory reset or new virtual instance for Ivanti[^cisaivanti] or a hard power-off for Cisco Firepower, where a reboot doesn't remove the malware[^ed2503]. Restore only reviewed settings."
+          "text": "Follow the vendor's recovery steps, such as a factory reset or new virtual instance for Ivanti[^cisaivanti] or a reimage for Cisco Firepower[^ciscopersist]. Review any configuration you restore."
         },
         {
           "title": "Rotate every secret the device held.",
-          "text": "Reset the domain, admin and local account passwords, reissue stored certificates and replace API keys and license server credentials[^cisaivanti]. End live sessions too, as Citrix advised for CVE-2025-5777: `kill icaconnection -all` and `kill pcoipConnection -all`[^citrix]."
+          "text": "Reset the domain, admin and local account passwords, reissue stored certificates and replace API keys and license server credentials[^cisaivanti]. End live sessions too, as Citrix's `kill` commands did after CVE-2025-5777[^citrix]."
         },
         {
           "title": "Hunt behind the device.",
@@ -92,9 +92,9 @@
       "title": "What to demand from vendors",
       "navTitle": "Vendors",
       "items": [
-        "**An end-of-support date before you buy.** From December 2027, the EU Cyber Resilience Act requires manufacturers to state that date clearly at the time of purchase[^crasum]. Put it in the contract.",
+        "**An end-of-support date before you buy.** From 11 December 2027, the EU Cyber Resilience Act requires manufacturers of new products to state it at the time of purchase[^cra]. Put it in the contract.",
         "**Logs and evidence built in.** Ask for TLS-protected remote logging, a record of admin actions and a supported way to collect memory and disk, as the NCSC specifies for network devices[^ncscspec].",
-        "**A way to prove the device is clean.** Ask for an integrity tool and a recovery procedure that removes persistence. On Cisco Firepower, a reboot didn't[^ed2503].",
+        "**A way to prove the device is clean.** Ask for an integrity tool and a recovery procedure that removes persistence. On Cisco Firepower, neither a reboot nor the patch did[^ed2503].",
         "**Secure management out of the box.** Phishing-resistant MFA for admins and no management interface on the internet by default. Canada's Cyber Centre says customers should demand that vendors harden devices to secure management interfaces[^cccs]."
       ]
     },
@@ -105,9 +105,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**CISA set deadlines for end-of-support edge devices.** BOD 26-02, issued in February 2026, gives US federal agencies 12 to 18 months to remove them[^bod2602], and CISA, the FBI and the NCSC urge everyone to follow it[^eosfact].",
-        "**Rebooting didn't remove attackers from Cisco firewalls.** In April 2026, CISA ordered US federal agencies to unplug Firepower and Secure Firewall devices, as a reboot doesn't expunge the malware[^ed2503].",
-        "**A clean integrity check stopped being proof.** In October 2026, CISA warned that Ivanti's checker may not detect exploitation of a new Connect Secure flaw, and that confirming it takes memory forensics. Connect Secure 22.8 reaches end of life on 31 January 2027[^cisaivanti]."
+        "**CISA set deadlines for end-of-support edge devices.** BOD 26-02 of February 2026 gives US federal civilian agencies 12 to 18 months to remove them[^bod2602]; CISA, the FBI and the NCSC urge everyone to follow it[^eosfact].",
+        "**Patches and reboots didn't clear Cisco firewalls.** In April 2026, CISA had federal civilian agencies hard-reset them[^ed2503]; Cisco advises reimaging[^ciscopersist].",
+        "**Ivanti's checker can miss in-memory attacks.** In October 2026, CISA warned that it may not detect exploitation of CVE-2026-104935 in Connect Secure, and that confirming it takes network and memory forensics. Connect Secure 22.8 reaches end of life on 31 January 2027[^cisaivanti]."
       ]
     },
     {
@@ -126,8 +126,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Marking a device patched on a still-vulnerable version.** CISA found agencies doing this with Cisco firewalls[^ed2503]. Check the vendor's fixed-version table.",
-        "**Restoring the attacker's configuration.** A backup taken after the compromise brings back their admin accounts. Fortinet advises treating all configuration as potentially compromised[^fortisym], so restore from before the first exploitation date.",
+        "**Marking a device patched on a still-vulnerable version.** CISA found agencies doing this with Cisco firewalls[^ed2503]. Check the fixed releases.",
+        "**Restoring the attacker's configuration.** A post-compromise backup can bring back their admin accounts, so Fortinet and Cisco say to treat all configuration as compromised[^fortisym][^ciscopersist]. Restore a checked backup or rebuild.",
         "**Overlooking small and remote devices.** Verizon found 45,000 to 50,000 end-of-life cellular modems with an exposed management interface in 2025, and saw such devices reused as attack proxies[^dbir]."
       ]
     },
@@ -166,6 +166,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the Cisco and configuration-restore recovery advice to match the vendors, put evidence collection before patching and narrowed 6 statements to what the sources say."
+    },
     {
       "date": "2026-11-03",
       "version": "0.1",
@@ -210,10 +215,10 @@
     },
     {
       "id": "mtrends",
-      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "title": "M-Trends 2026 Executive Edition",
       "publisher": "Google Cloud (Mandiant)",
-      "date": "23 Mar 2026",
-      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
     },
     {
       "id": "gtig",
@@ -235,6 +240,13 @@
       "publisher": "CISA",
       "date": "updated 23 Apr 2026",
       "url": "https://www.cisa.gov/news-events/directives/ed-25-03-identify-and-mitigate-potential-compromise-cisco-devices"
+    },
+    {
+      "id": "ciscopersist",
+      "title": "Continued Evolution of Persistence Mechanism Against Cisco Secure Firewall Adaptive Security Appliance and Secure Firewall Threat Defense",
+      "publisher": "Cisco PSIRT",
+      "date": "updated 19 May 2026",
+      "url": "https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-asaftd-persist-CISAED25-03"
     },
     {
       "id": "cisaivanti",
@@ -279,11 +291,11 @@
       "url": "https://www.ncsc.gov.uk/guidance/guidance-on-digital-forensics-protective-monitoring"
     },
     {
-      "id": "crasum",
-      "title": "Cyber Resilience Act: summary of the legal text",
-      "publisher": "European Commission",
-      "date": "updated 3 Dec 2025",
-      "url": "https://digital-strategy.ec.europa.eu/en/policies/cra-summary"
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 13(19), 69 and 71",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
     },
     {
       "id": "ncsccovert",
@@ -301,7 +313,7 @@
     },
     {
       "id": "shadow",
-      "title": "Get Reports",
+      "title": "Subscribe to Reports",
       "publisher": "Shadowserver Foundation",
       "date": "checked 3 Nov 2026",
       "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
