@@ -1,0 +1,317 @@
+{
+  "slug": "edge-devices",
+  "topic": "Edge devices",
+  "status": "draft",
+  "order": 11,
+  "capability": "infrastructure/edge",
+  "title": "Edge devices: would you know if your firewall or VPN had been broken into?",
+  "short": "Take management interfaces off the internet, keep 12 months of device logs elsewhere and replace devices before support ends.",
+  "answer": "This month, take every edge device's management interface off the internet and send its logs to a system the device can't erase, and replace anything past end of support within 12 months. When a flaw in one is exploited, assume the device is compromised: collect evidence, reset or rebuild it and rotate every credential it held, because a patch doesn't remove an attacker who is already in.",
+  "audience": "IT and network teams running firewalls, VPN gateways, routers, load balancers, file-transfer appliances and other internet-facing devices, in organizations of any size",
+  "version": "0.1",
+  "lastReviewed": "2026-11-03",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Know every device that faces the internet.",
+          "text": "List each firewall, VPN gateway, router, load balancer and file-transfer appliance with its software version and end-of-support date, and scan your address ranges for the ones nobody listed. CISA, the FBI and the NCSC urge every organization to keep that inventory[^eosfact]."
+        },
+        {
+          "title": "Take management interfaces off the internet.",
+          "text": "Allow admin access only from a dedicated management network[^cccs] or a short list of trusted addresses. The BSI found that firewall operators were hit less often, even by zero-days, when management access was restricted to trusted sources[^bsi]."
+        },
+        {
+          "title": "Put strong MFA on every login the device accepts.",
+          "text": "Require phishing-resistant MFA for admin access[^cccs] and MFA for every VPN user, as the passkeys and MFA sheet describes. VPN access made up 44% of the connection types in the initial access broker offers Verizon analyzed[^dbir]."
+        },
+        {
+          "title": "Send the logs somewhere the device can't erase.",
+          "text": "Forward detailed logs to a central system and alert on admin logins, configuration changes and hardware changes[^cccs]. Keep them for at least 12 months: Mandiant saw the BRICKSTORM backdoor go unnoticed for nearly 400 days and warns that 90-day retention leaves you blind[^mtrends]."
+        },
+        {
+          "title": "Replace devices before support ends.",
+          "text": "An unsupported device won't get the fix for the next exploited flaw. Budget each replacement a year before its end-of-support date, and add compensating controls for any you can't remove in time[^cccs]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "check",
+      "title": "Check a device after an exploited flaw",
+      "navTitle": "Compromise check",
+      "intro": "Patch within the patching sheet's deadlines, then check every device the flaw could reach before the patch.",
+      "items": [
+        {
+          "title": "Capture evidence before you patch or reboot.",
+          "text": "Before updating, store logs off the device and take a disk and memory snapshot, as CISA required for Cisco SD-WAN[^ed2603], and export the configuration. If you find signs of compromise, disconnect the device but keep it powered on[^ed2503]."
+        },
+        {
+          "title": "Don't trust a clean integrity check.",
+          "text": "Ivanti's checker may miss the October 2026 Connect Secure attacks because the commands run in memory; confirming them takes network and memory forensics[^cisaivanti]. On FortiGates, a file link planted by attackers could survive patching[^fortisym]."
+        },
+        {
+          "title": "Look for new admin accounts and changed settings.",
+          "text": "In attacks Fortinet disclosed in January 2026, attackers downloaded configurations and added local admins such as `audit` and `backup`[^fortisso]. Compare configurations and firmware hashes with your offline copies and the vendor's values[^aa25239a]."
+        },
+        {
+          "title": "Reset or rebuild, then upgrade.",
+          "text": "Follow the vendor's recovery steps, such as a factory reset or new virtual instance for Ivanti[^cisaivanti] or a hard power-off for Cisco Firepower, where a reboot doesn't remove the malware[^ed2503]. Restore only reviewed settings."
+        },
+        {
+          "title": "Rotate every secret the device held.",
+          "text": "Reset the domain, admin and local account passwords, reissue stored certificates and replace API keys and license server credentials[^cisaivanti]. End live sessions too, as Citrix advised for CVE-2025-5777: `kill icaconnection -all` and `kill pcoipConnection -all`[^citrix]."
+        },
+        {
+          "title": "Hunt behind the device.",
+          "text": "Check what the device's accounts and VPN users did in directory, server and cloud logs since the first known exploitation. Attackers can use access they set up months or years later[^bsi]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "harden",
+      "title": "Harden what stays exposed",
+      "navTitle": "Hardening",
+      "items": [
+        "**Switch off what you don't use.** Disable unused ports, protocols and features, including management protocols[^aa25239a][^bsi]. FortiGates that had never enabled SSL-VPN weren't affected by the file-link persistence[^fortisym].",
+        "**Use only encrypted management.** Allow SSH, HTTPS and SNMPv3, and block outbound connections from the management interface except to your AAA, syslog and telemetry collectors[^aa25239a].",
+        "**Turn off vendor cloud logins you don't need.** A FortiCloud single sign-on bypass let attackers into FortiGates that had it enabled[^fortisso]. If you keep such a feature, log and review every use.",
+        "**Give the device as few secrets as possible.** Bind it to the directory with a dedicated low-privilege account over LDAPS. Attackers use the devices' own packet capture to collect plaintext credentials[^mtrends].",
+        "**Keep it away from the core.** Zones, firewall rules and admin paths are in the network segmentation sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "vendors",
+      "title": "What to demand from vendors",
+      "navTitle": "Vendors",
+      "items": [
+        "**An end-of-support date before you buy.** From December 2027, the EU Cyber Resilience Act requires manufacturers to state that date clearly at the time of purchase[^crasum]. Put it in the contract.",
+        "**Logs and evidence built in.** Ask for TLS-protected remote logging, a record of admin actions and a supported way to collect memory and disk, as the NCSC specifies for network devices[^ncscspec].",
+        "**A way to prove the device is clean.** Ask for an integrity tool and a recovery procedure that removes persistence. On Cisco Firepower, a reboot didn't[^ed2503].",
+        "**Secure management out of the box.** Phishing-resistant MFA for admins and no management interface on the internet by default. Canada's Cyber Centre says customers should demand that vendors harden devices to secure management interfaces[^cccs]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**CISA set deadlines for end-of-support edge devices.** BOD 26-02, issued in February 2026, gives US federal agencies 12 to 18 months to remove them[^bod2602], and CISA, the FBI and the NCSC urge everyone to follow it[^eosfact].",
+        "**Rebooting didn't remove attackers from Cisco firewalls.** In April 2026, CISA ordered US federal agencies to unplug Firepower and Secure Firewall devices, as a reboot doesn't expunge the malware[^ed2503].",
+        "**A clean integrity check stopped being proof.** In October 2026, CISA warned that Ivanti's checker may not detect exploitation of a new Connect Secure flaw, and that confirming it takes memory forensics. Connect Secure 22.8 reaches end of life on 31 January 2027[^cisaivanti]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Country blocking as your main defense.** Attackers route through covert networks of compromised routers that can be rapidly reshaped[^ncsccovert]. Treat geo-blocks and static blocklists as noise filters, not protection.",
+        "**A clean perimeter pen test as proof of safety.** Google counted 14 zero-days in edge devices in 2025 and thinks that undercounts[^gtig]. No test finds next month's flaw.",
+        "**Ripping out the VPN in a hurry.** The NCSC advises keeping it until other controls give the same protection[^ncscvpn]. A ZTNA connector or cloud gateway is an edge device too, so inventory, harden and log it the same way."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Marking a device patched on a still-vulnerable version.** CISA found agencies doing this with Cisco firewalls[^ed2503]. Check the vendor's fixed-version table.",
+        "**Restoring the attacker's configuration.** A backup taken after the compromise brings back their admin accounts. Fortinet advises treating all configuration as potentially compromised[^fortisym], so restore from before the first exploitation date.",
+        "**Overlooking small and remote devices.** Verizon found 45,000 to 50,000 end-of-life cellular modems with an exposed management interface in 2025, and saw such devices reused as attack proxies[^dbir]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Ask your IT provider to list every internet-facing device with its end-of-support date, and replace any past it.",
+            "Sign up for free exposure alerts: Shadowserver reports[^shadow] or NCSC Early Warning in the UK[^ncscew].",
+            "Check that the firewall's admin page is reachable only from inside and that VPN users need MFA."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Forward firewall and VPN logs to your SIEM or log service, keep 12 months and alert on admin logins and configuration changes.",
+            "Write a one-page compromise check per vendor: integrity tool, evidence to collect, reset steps and credentials to rotate.",
+            "Add end-of-support dates to the asset inventory and budget replacements a year ahead."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Manage devices only over an out-of-band network from dedicated admin workstations[^cccs].",
+            "Score vendors against the NCSC's forensic and monitoring specification in procurement[^ncscspec].",
+            "Use BOD 26-02's timelines as your benchmark and keep an incident response retainer that covers appliance forensics."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "0.1",
+      "text": "First draft, based on Five Eyes and CISA guidance and directives, NCSC and BSI guidance, vendor advisories, M-Trends 2026, the 2026 DBIR and Google's 2025 zero-day review."
+    }
+  ],
+  "sources": [
+    {
+      "id": "eosfact",
+      "title": "Reducing the Attack Surface for End-of-Support Edge Devices",
+      "publisher": "CISA, FBI and NCSC (UK)",
+      "date": "5 Feb 2026",
+      "url": "https://www.cisa.gov/resources-tools/resources/reducing-attack-surface-end-support-edge-devices"
+    },
+    {
+      "id": "bod2602",
+      "title": "BOD 26-02: Mitigating Risk From End-of-Support Edge Devices",
+      "publisher": "CISA",
+      "date": "5 Feb 2026",
+      "url": "https://www.cisa.gov/news-events/directives/bod-26-02-mitigating-risk-end-support-edge-devices"
+    },
+    {
+      "id": "cccs",
+      "title": "Security considerations for edge devices (ITSM.80.101)",
+      "publisher": "Canadian Centre for Cyber Security",
+      "date": "Feb 2025",
+      "url": "https://www.cyber.gc.ca/en/guidance/security-considerations-edge-devices-itsm80101"
+    },
+    {
+      "id": "bsi",
+      "title": "The State of IT Security in Germany 2025: Vulnerabilities in perimeter systems",
+      "publisher": "BSI",
+      "date": "11 Nov 2025",
+      "url": "https://medien.bsi.bund.de/lagebericht/en/schwachstellen-in-perimetersystemen/"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "gtig",
+      "title": "Look What You Made Us Patch: 2025 Zero-Days in Review",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "5 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review"
+    },
+    {
+      "id": "ed2603",
+      "title": "V1: ED 26-03: Mitigate Vulnerabilities in Cisco SD-WAN Systems",
+      "publisher": "CISA",
+      "date": "11 Mar 2026",
+      "url": "https://www.cisa.gov/news-events/directives/v1-ed-26-03-mitigate-vulnerabilities-cisco-sd-wan-systems"
+    },
+    {
+      "id": "ed2503",
+      "title": "ED 25-03: Identify and Mitigate Potential Compromise of Cisco Devices (with V1 and implementation note)",
+      "publisher": "CISA",
+      "date": "updated 23 Apr 2026",
+      "url": "https://www.cisa.gov/news-events/directives/ed-25-03-identify-and-mitigate-potential-compromise-cisco-devices"
+    },
+    {
+      "id": "cisaivanti",
+      "title": "CISA Urges Patching Newly Exploited Vulnerabilities in Ivanti Connect Secure",
+      "publisher": "CISA",
+      "date": "updated 30 Oct 2026",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/10/13/cisa-urges-patching-newly-exploited-vulnerabilities-ivanti-connect-secure"
+    },
+    {
+      "id": "fortisym",
+      "title": "Analysis of Threat Actor Activity",
+      "publisher": "Fortinet PSIRT",
+      "date": "10 Apr 2025",
+      "url": "https://www.fortinet.com/blog/psirt-blogs/analysis-of-threat-actor-activity"
+    },
+    {
+      "id": "fortisso",
+      "title": "FG-IR-26-060: Administrative FortiCloud SSO authentication bypass",
+      "publisher": "Fortinet PSIRT",
+      "date": "27 Jan 2026",
+      "url": "https://fortiguard.com/psirt/FG-IR-26-060"
+    },
+    {
+      "id": "citrix",
+      "title": "NetScaler ADC and NetScaler Gateway Security Bulletin for CVE-2025-5349 and CVE-2025-5777 (CTX693420)",
+      "publisher": "Citrix",
+      "date": "revised 20 Jul 2026",
+      "url": "https://support.citrix.com/external/article/693420/netscaler-adc-and-netscaler-gateway-secu.html"
+    },
+    {
+      "id": "aa25239a",
+      "title": "Countering Chinese State-Sponsored Actors Compromise of Networks Worldwide to Feed Global Espionage System (AA25-239A)",
+      "publisher": "NSA, CISA, FBI and international partners",
+      "date": "updated 3 Sep 2025",
+      "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa25-239a"
+    },
+    {
+      "id": "ncscspec",
+      "title": "Guidance on digital forensics and protective monitoring specifications for producers of network devices and appliances",
+      "publisher": "NCSC (UK)",
+      "date": "4 Feb 2025",
+      "url": "https://www.ncsc.gov.uk/guidance/guidance-on-digital-forensics-protective-monitoring"
+    },
+    {
+      "id": "crasum",
+      "title": "Cyber Resilience Act: summary of the legal text",
+      "publisher": "European Commission",
+      "date": "updated 3 Dec 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/cra-summary"
+    },
+    {
+      "id": "ncsccovert",
+      "title": "Executive Summary: Defending against China-nexus covert networks of compromised devices",
+      "publisher": "NCSC (UK)",
+      "date": "23 Apr 2026",
+      "url": "https://www.ncsc.gov.uk/news/executive-summary-defending-against-china-nexus-covert-networks-of-compromised-devices"
+    },
+    {
+      "id": "ncscvpn",
+      "title": "Zero trust migration: How will I know if I can remove my VPN?",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 16 Jan 2026",
+      "url": "https://www.ncsc.gov.uk/collection/zero-trust/implementing-zt/zero-trust-migration-how-know-remove-vpn"
+    },
+    {
+      "id": "shadow",
+      "title": "Get Reports",
+      "publisher": "Shadowserver Foundation",
+      "date": "checked 3 Nov 2026",
+      "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
+    },
+    {
+      "id": "ncscew",
+      "title": "Early Warning",
+      "publisher": "NCSC (UK)",
+      "date": "checked 3 Nov 2026",
+      "url": "https://www.ncsc.gov.uk/information/early-warning-service"
+    }
+  ]
+}
