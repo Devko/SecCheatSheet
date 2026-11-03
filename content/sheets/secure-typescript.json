@@ -1,0 +1,391 @@
+{
+  "slug": "secure-typescript",
+  "topic": "Secure TypeScript",
+  "status": "draft",
+  "order": 13,
+  "capability": "coding/typescript",
+  "title": "TypeScript: which security bugs does the compiler not catch?",
+  "short": "Parse every input with a runtime schema, make `any` a lint error and check authorization in each handler, not in middleware.",
+  "answer": "Before your next release, parse every untrusted input with a runtime schema, make typescript-eslint's type-aware `no-unsafe-*` rules errors and move authorization out of middleware into each handler. Judge everything else by whether outside data can reach a shell, a file path, a URL, an object merge, `eval` or raw HTML unchecked.",
+  "audience": "Developers and tech leads writing production TypeScript for Node.js servers and React front ends, and the security people who review it",
+  "version": "0.1",
+  "lastReviewed": "2026-11-03",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Parse every input at runtime.",
+          "text": "The compiler erases types and `as` casts[^tseveryday], and `JSON.parse()` and `.json()` return `any`[^tseany]. Parse bodies, params, headers and messages with a schema such as Zod's `z.strictObject()`, which rejects unknown keys[^zod]."
+        },
+        {
+          "title": "Make the compiler and linter refuse `any`.",
+          "text": "Keep `strict`, the default since TypeScript 6.0[^ts6], add `noUncheckedIndexedAccess`[^tsconfig] and lint with typescript-eslint's `strictTypeChecked`[^tsestrict]. Run `tsc --noEmit` in CI, because Node.js runs `.ts` files unchecked[^nodets]."
+        },
+        {
+          "title": "Authorize where the data is read.",
+          "text": "CVE-2025-29927 let attackers bypass authorization in Next.js middleware[^nextmw], and five more bypasses followed in 2026[^nextadv]. Check the user's right to each record in every handler and Server Action[^nextsec]."
+        },
+        {
+          "title": "Keep input away from shells, `eval` and raw HTML.",
+          "text": "Cross-site scripting, OS command injection and code injection rank 1st, 9th and 10th in the 2025 CWE Top 25[^cwe]. Use `execFile` with an argument array, never `eval` input, and render user text as JSX children."
+        },
+        {
+          "title": "Patch the framework within days.",
+          "text": "React2Shell, an unauthenticated remote code execution bug in React Server Components rated CVSS 10, was disclosed on 3 December 2025[^react2shell]; CISA listed it as exploited, with known ransomware use, two days later[^kev]. Patch within the patching sheet's deadlines and run Node.js 22, 24 or 26[^noderel]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "review",
+      "title": "Review a TypeScript pull request",
+      "navTitle": "Review",
+      "items": [
+        {
+          "title": "Where does outside data enter?",
+          "text": "Find the handlers, Server Actions, webhooks and queue consumers the change touches, including Next.js folders in brackets[^nextsec], and check that each parses its input first."
+        },
+        {
+          "title": "Did it add `any`, `as`, `!` or `@ts-expect-error`?",
+          "text": "Ask why for each one near outside data, then follow that data to the sinks in the traps above."
+        },
+        {
+          "title": "Who may do this, to which record?",
+          "text": "Missing authorization ranks 4th in the CWE Top 25[^cwe]. Check ownership of the record, not just the login; a page-level check doesn't cover that page's Server Actions[^nextsec]."
+        },
+        {
+          "title": "What leaves the server?",
+          "text": "Return only the fields the client needs, and keep secrets out of `NEXT_PUBLIC_` variables, which reach the browser[^nextsec]. Send new dependencies through the supply-chain sheet's checks."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "traps",
+      "title": "TypeScript traps and what to use instead",
+      "navTitle": "Traps",
+      "span": "full",
+      "items": [
+        "**`JSON.parse(body) as Order`.** The cast checks nothing, so a missing field or a wrong type flows on[^tseveryday]. Use `Order.parse(JSON.parse(body))` and treat `as` on outside data as a bug.",
+        "**`exec(\"convert \" + file)`.** `exec` runs a shell, and Node.js says never to pass it unsanitized input[^nodechild]. Use `execFile(\"convert\", [file])`, or `spawn` without `shell: true`. A command injection in the React Native CLI has been on CISA's exploited list since February[^kev].",
+        "**`merge(target, req.body)` and `obj[key] = value`.** A `__proto__` or `constructor` key in input changes every object in the process. oRPC's deserializer polluted the prototype before Zod validation ran (CVE-2026-28794, critical)[^orpc]. Use a `Map` or `Object.create(null)` and refuse those keys in merges[^owasppp].",
+        "**`path.join(root, req.query.name)`.** Path traversal ranks 6th in the CWE Top 25[^cwe]. Resolve the path with `path.resolve` or `fs.realpath` and reject it unless it still starts with the root folder.",
+        "**`fetch(req.body.webhookUrl)`.** Attackers aim it at internal services or the cloud metadata address `169.254.169.254`. Allowlist hosts, validate the IP address you connect to and disable redirects[^owaspssrf] with `redirect: \"error\"`. Before October's fix, Node.js validated `0127.0.0.1` as a different address than the OS used[^nodeoct].",
+        "**`new RegExp(input)` and nested quantifiers like `(a+)*`.** One crafted string can take exponential time and block the event loop[^nodeloop]. Cap the input length and use the `re2` package for patterns users supply[^nodeloop].",
+        "**`eval`, `new Function` and `node:vm`.** `vm` is not a security mechanism[^nodevm]. An expression evaluation flaw in n8n gave remote code execution and is on CISA's exploited list[^kev]. Run user code only in a separate container, and start Node.js with `--disallow-code-generation-from-strings`[^nodecli].",
+        "**`dangerouslySetInnerHTML` and user-supplied URLs.** React allows raw HTML only for trusted, sanitized data[^reactdom]. Allow only `https:` URLs, parsed with `new URL()`, in `href` and `window.location`, and enforce Trusted Types with `require-trusted-types-for 'script'`[^mdntt]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Tools that catch it",
+      "navTitle": "Tools",
+      "items": [
+        "**tsc.** `strict` plus `noUncheckedIndexedAccess`, which isn't part of `strict`[^tsconfig].",
+        "**typescript-eslint.** `strictTypeChecked` with `parserOptions.projectService: true` enables the `no-unsafe-*` rules, `no-implied-eval` and `no-non-null-assertion`. Add `no-unsafe-type-assertion` yourself[^tsestrict].",
+        "**eslint-plugin-regexp.** `regexp/no-super-linear-backtracking` flags patterns that can backtrack[^regexp].",
+        "**CodeQL.** `js/command-line-injection`, `js/path-injection`, `js/request-forgery`, `js/prototype-polluting-assignment` and `js/polynomial-redos` cover TypeScript too[^cql].",
+        "**Node.js flags.** `--disable-proto=delete` removes `__proto__`[^nodecli] but not `constructor.prototype`[^owasppp]. `--permission` with `--allow-fs-read` limits what your code reads[^nodeperm]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw came in October, fixed in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
+        "**Next.js had ten serious advisories.** Five middleware or proxy bypasses in May and July, five critical remote code execution bugs from August to October[^nextadv]. Run at least 16.4.1 or 15.5.28[^nextsvg].",
+        "**`strict` is on by default.** TypeScript 6.0 turned it on[^ts6]. TypeScript 7.0, the native compiler, has no API yet, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
+        "**Node.js 20 is end of life.** Node.js 26 has been Active LTS since 28 October; 22 ends on 30 April 2027[^noderel]. Type stripping, now stable, runs `.ts` files without checking types[^nodets].",
+        "**Trusted Types work in every major browser.** They became Baseline in February[^mdntt], and React passes `TrustedHTML` to the DOM unchanged[^reactdom]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Hand-written type guards for request bodies.** They drift from the types they guard. Derive types from the schema with `z.infer`.",
+        "**eslint-plugin-security as your main check.** Its README warns of many false positives[^eslintsec]. Triage typed lint and CodeQL findings first.",
+        "**Freezing built-in prototypes.** `--frozen-intrinsics` is experimental[^nodecli] and freezing can break libraries[^owasppp]. Fix the merges instead.",
+        "**Escaping shell arguments yourself.** Quoting rules differ between shells and Windows `cmd`. Drop the shell."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Treating the Permission Model as a sandbox.** It is a seat belt for trusted code, not a defense against malicious code[^nodeperm], and October's release closed two more gaps in it[^nodeoct]. Run untrusted code in its own container without secrets.",
+        "**Assuming a Server Action is private.** Anyone can call it with a direct POST, even if no page uses it[^nextsec]. Validate its arguments and authorize inside it."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like for your code",
+      "navTitle": "By codebase",
+      "span": "full",
+      "columns": [
+        {
+          "title": "New project",
+          "items": [
+            "Start on Node.js 26 with `strict`, `noUncheckedIndexedAccess` and `strictTypeChecked` as errors.",
+            "Write one schema per input and derive the types from it.",
+            "In Next.js, keep data access and secrets in a `server-only` layer that authorizes[^nextsec]."
+          ]
+        },
+        {
+          "title": "Existing codebase",
+          "items": [
+            "Turn on the `no-unsafe-*` rules as warnings and fix request handlers first.",
+            "Search for `exec(`, `shell: true`, `eval(`, `dangerouslySetInnerHTML` and `as any`.",
+            "Move authorization from middleware into handlers, and leave Node.js 20."
+          ]
+        },
+        {
+          "title": "High-assurance or regulated",
+          "items": [
+            "Make CodeQL's `security-extended` suite a required check.",
+            "Run services with `--permission`, `--disable-proto=delete` and minimal `--allow-*` grants.",
+            "Pen-test `proxy.ts` and route handlers regularly, as Next.js advises[^nextsec]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "0.1",
+      "text": "First draft, based on the TypeScript, typescript-eslint and Node.js documentation, React and Next.js security advisories from 2025 and 2026, CISA's KEV catalog, OWASP cheat sheets and the 2025 CWE Top 25."
+    }
+  ],
+  "sources": [
+    {
+      "id": "tseveryday",
+      "title": "TypeScript Handbook: Everyday Types",
+      "publisher": "TypeScript (Microsoft)",
+      "date": "updated 2 Nov 2026",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
+    },
+    {
+      "id": "tseany",
+      "title": "Avoiding anys with Linting and TypeScript",
+      "publisher": "typescript-eslint",
+      "date": "21 Jan 2025",
+      "url": "https://typescript-eslint.io/blog/avoiding-anys"
+    },
+    {
+      "id": "zod",
+      "title": "Zod: Defining schemas",
+      "publisher": "Zod",
+      "date": "checked 3 Nov 2026",
+      "url": "https://zod.dev/api"
+    },
+    {
+      "id": "ts6",
+      "title": "Announcing TypeScript 6.0",
+      "publisher": "Microsoft TypeScript Blog",
+      "date": "23 Mar 2026",
+      "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/"
+    },
+    {
+      "id": "ts7",
+      "title": "Announcing TypeScript 7.0",
+      "publisher": "Microsoft TypeScript Blog",
+      "date": "8 Jul 2026",
+      "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/"
+    },
+    {
+      "id": "tsconfig",
+      "title": "TSConfig Reference",
+      "publisher": "TypeScript (Microsoft)",
+      "date": "checked 3 Nov 2026",
+      "url": "https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess"
+    },
+    {
+      "id": "tsestrict",
+      "title": "strict-type-checked config",
+      "publisher": "typescript-eslint",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/flat/strict-type-checked.ts"
+    },
+    {
+      "id": "nodets",
+      "title": "Modules: TypeScript",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/api/typescript.html"
+    },
+    {
+      "id": "nextmw",
+      "title": "Next.js advisory GHSA-f82v-jwr5-mffw (CVE-2025-29927)",
+      "publisher": "Vercel (Next.js)",
+      "date": "21 Mar 2025",
+      "url": "https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw"
+    },
+    {
+      "id": "nextadv",
+      "title": "Next.js security advisories",
+      "publisher": "Vercel (Next.js)",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/vercel/next.js/security/advisories"
+    },
+    {
+      "id": "nextsvg",
+      "title": "Next.js advisory GHSA-2464-fhr4-w9xw (CVE-2026-96889)",
+      "publisher": "Vercel (Next.js)",
+      "date": "14 Oct 2026",
+      "url": "https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw"
+    },
+    {
+      "id": "nextsec",
+      "title": "How to think about data security in Next.js",
+      "publisher": "Next.js Docs",
+      "date": "updated 6 Oct 2026",
+      "url": "https://nextjs.org/docs/app/guides/data-security"
+    },
+    {
+      "id": "cwe",
+      "title": "2025 CWE Top 25",
+      "publisher": "MITRE CWE",
+      "date": "Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "react2shell",
+      "title": "Critical Security Vulnerability in React Server Components",
+      "publisher": "React Blog",
+      "date": "3 Dec 2025, updated 26 Jan 2026",
+      "url": "https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components"
+    },
+    {
+      "id": "rscoct",
+      "title": "React advisory GHSA-xqc2-xf4c-x3h3",
+      "publisher": "React (Meta)",
+      "date": "14 Oct 2026",
+      "url": "https://github.com/facebook/react/security/advisories/GHSA-xqc2-xf4c-x3h3"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "1,766 entries on 30 Oct 2026",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "noderel",
+      "title": "Node.js release schedule",
+      "publisher": "Node.js Release Working Group",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/nodejs/Release"
+    },
+    {
+      "id": "nodechild",
+      "title": "Child process",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/api/child_process.html"
+    },
+    {
+      "id": "orpc",
+      "title": "@orpc/client advisory (CVE-2026-28794)",
+      "publisher": "GitHub Advisory Database",
+      "date": "2 Mar 2026",
+      "url": "https://github.com/advisories/GHSA-m272-9rp6-32mc"
+    },
+    {
+      "id": "owasppp",
+      "title": "Prototype Pollution Prevention Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 3 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html"
+    },
+    {
+      "id": "owaspssrf",
+      "title": "Server-Side Request Forgery Prevention Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 3 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"
+    },
+    {
+      "id": "nodeoct",
+      "title": "October 2026 security releases",
+      "publisher": "Node.js",
+      "date": "21 Oct 2026",
+      "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+    },
+    {
+      "id": "nodeloop",
+      "title": "Don't Block the Event Loop",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop"
+    },
+    {
+      "id": "nodevm",
+      "title": "VM (executing JavaScript)",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/api/vm.html"
+    },
+    {
+      "id": "nodecli",
+      "title": "Command-line API",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/api/cli.html"
+    },
+    {
+      "id": "reactdom",
+      "title": "Common components (dangerouslySetInnerHTML)",
+      "publisher": "React Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://react.dev/reference/react-dom/components/common"
+    },
+    {
+      "id": "mdntt",
+      "title": "Trusted Types API",
+      "publisher": "MDN Web Docs",
+      "date": "updated 14 May 2026",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API"
+    },
+    {
+      "id": "regexp",
+      "title": "regexp/no-super-linear-backtracking",
+      "publisher": "eslint-plugin-regexp",
+      "date": "checked 3 Nov 2026",
+      "url": "https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-super-linear-backtracking.html"
+    },
+    {
+      "id": "cql",
+      "title": "CodeQL query help for JavaScript and TypeScript",
+      "publisher": "GitHub CodeQL",
+      "date": "checked 3 Nov 2026",
+      "url": "https://codeql.github.com/codeql-query-help/javascript/"
+    },
+    {
+      "id": "nodeperm",
+      "title": "Permissions",
+      "publisher": "Node.js",
+      "date": "checked 3 Nov 2026",
+      "url": "https://nodejs.org/api/permissions.html"
+    },
+    {
+      "id": "eslintsec",
+      "title": "eslint-plugin-security README",
+      "publisher": "ESLint Community",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/eslint-community/eslint-plugin-security"
+    }
+  ]
+}
