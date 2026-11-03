@@ -36,7 +36,7 @@
         },
         {
           "title": "Patch the framework within days.",
-          "text": "React2Shell, an unauthenticated remote code execution bug in React Server Components rated CVSS 10, was disclosed on 3 December 2025[^react2shell]; CISA listed it as exploited, with known ransomware use, two days later[^kev]. Patch within the patching sheet's deadlines and run Node.js 22, 24 or 26[^noderel]."
+          "text": "CVE-2025-55182 (React2Shell), an unauthenticated remote code execution bug in React Server Components rated CVSS 10, was disclosed on 3 December 2025[^react2shell]. CISA listed it as exploited, with known ransomware use, two days later[^kev]. Patch within the patching sheet's deadlines and run Node.js 22, 24 or 26[^noderel]."
         }
       ]
     },
@@ -52,11 +52,15 @@
         },
         {
           "title": "Did it add `any`, `as`, `!` or `@ts-expect-error`?",
-          "text": "Ask why for each one near outside data, then follow that data to the sinks in the traps above."
+          "text": "Ask why for each one near outside data, then follow that data to the sinks in the traps below."
         },
         {
           "title": "Who may do this, to which record?",
-          "text": "Missing authorization ranks 4th in the CWE Top 25[^cwe]. Check ownership of the record, not just the login; a page-level check doesn't cover that page's Server Actions[^nextsec]."
+          "text": "Missing authorization ranks 4th in the CWE Top 25[^cwe]. Check ownership of the record, not just the login. Server Actions can be called with a direct POST, not just from your UI, so each one checks for itself[^nextsec]."
+        },
+        {
+          "title": "Does it run code it didn't write?",
+          "text": "Neither `vm`[^nodevm] nor the Permission Model is a sandbox: the model is a seat belt for trusted code[^nodeperm], and October's release closed two more gaps in it[^nodeoct]. Run untrusted code in its own container without secrets."
         },
         {
           "title": "What leaves the server?",
@@ -72,13 +76,13 @@
       "span": "full",
       "items": [
         "**`JSON.parse(body) as Order`.** The cast checks nothing, so a missing field or a wrong type flows on[^tseveryday]. Use `Order.parse(JSON.parse(body))` and treat `as` on outside data as a bug.",
-        "**`exec(\"convert \" + file)`.** `exec` runs a shell, and Node.js says never to pass it unsanitized input[^nodechild]. Use `execFile(\"convert\", [file])`, or `spawn` without `shell: true`. A command injection in the React Native CLI has been on CISA's exploited list since February[^kev].",
-        "**`merge(target, req.body)` and `obj[key] = value`.** A `__proto__` or `constructor` key in input changes every object in the process. oRPC's deserializer polluted the prototype before Zod validation ran (CVE-2026-28794, critical)[^orpc]. Use a `Map` or `Object.create(null)` and refuse those keys in merges[^owasppp].",
-        "**`path.join(root, req.query.name)`.** Path traversal ranks 6th in the CWE Top 25[^cwe]. Resolve the path with `path.resolve` or `fs.realpath` and reject it unless it still starts with the root folder.",
-        "**`fetch(req.body.webhookUrl)`.** Attackers aim it at internal services or the cloud metadata address `169.254.169.254`. Allowlist hosts, validate the IP address you connect to and disable redirects[^owaspssrf] with `redirect: \"error\"`. Before October's fix, Node.js validated `0127.0.0.1` as a different address than the OS used[^nodeoct].",
+        "**`exec(\"convert \" + file)`.** `exec` runs a shell, and Node.js says never to pass it unsanitized input[^nodechild]. Use `execFile(\"convert\", [file])`, or `spawn` without `shell: true`. A command injection in the React Native CLI has been on CISA's exploited list since February 2026[^kev].",
+        "**`merge(target, req.body)` and `obj[key] = value`.** `__proto__` or `constructor.prototype` keys in input can add properties to every object in the process. oRPC's deserializer polluted the prototype before Zod validation ran (CVE-2026-28794, critical)[^orpc]. Use a `Map` or `Object.create(null)`[^owasppp], and make merge code skip those keys.",
+        "**`path.join(root, req.query.name)`.** Path traversal ranks 6th in the CWE Top 25[^cwe]. Resolve the path with `path.resolve` or `fs.realpath` and reject it unless it starts with the root folder plus `path.sep`.",
+        "**`fetch(req.body.webhookUrl)`.** It can reach internal services and the cloud metadata address `169.254.169.254`. Allowlist hosts, validate the IP address you connect to and disable redirects[^owaspssrf] with `redirect: \"error\"`. Until October's fix, Node.js's URL parser and the OS read `0127.0.0.1` as different addresses[^nodeoct].",
         "**`new RegExp(input)` and nested quantifiers like `(a+)*`.** One crafted string can take exponential time and block the event loop[^nodeloop]. Cap the input length and use the `re2` package for patterns users supply[^nodeloop].",
         "**`eval`, `new Function` and `node:vm`.** `vm` is not a security mechanism[^nodevm]. An expression evaluation flaw in n8n gave remote code execution and is on CISA's exploited list[^kev]. Run user code only in a separate container, and start Node.js with `--disallow-code-generation-from-strings`[^nodecli].",
-        "**`dangerouslySetInnerHTML` and user-supplied URLs.** React allows raw HTML only for trusted, sanitized data[^reactdom]. Allow only `https:` URLs, parsed with `new URL()`, in `href` and `window.location`, and enforce Trusted Types with `require-trusted-types-for 'script'`[^mdntt]."
+        "**`dangerouslySetInnerHTML` and user-supplied URLs.** React allows raw HTML only for trusted, sanitized data[^reactdom]. Accept only `https:` URLs, parsed with `new URL()`, and enforce Trusted Types with `require-trusted-types-for 'script'`[^mdntt]."
       ]
     },
     {
@@ -89,22 +93,8 @@
       "items": [
         "**tsc.** `strict` plus `noUncheckedIndexedAccess`, which isn't part of `strict`[^tsconfig].",
         "**typescript-eslint.** `strictTypeChecked` with `parserOptions.projectService: true` enables the `no-unsafe-*` rules, `no-implied-eval` and `no-non-null-assertion`. Add `no-unsafe-type-assertion` yourself[^tsestrict].",
-        "**eslint-plugin-regexp.** `regexp/no-super-linear-backtracking` flags patterns that can backtrack[^regexp].",
         "**CodeQL.** `js/command-line-injection`, `js/path-injection`, `js/request-forgery`, `js/prototype-polluting-assignment` and `js/polynomial-redos` cover TypeScript too[^cql].",
         "**Node.js flags.** `--disable-proto=delete` removes `__proto__`[^nodecli] but not `constructor.prototype`[^owasppp]. `--permission` with `--allow-fs-read` limits what your code reads[^nodeperm]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "changed",
-      "title": "What changed in 2026",
-      "navTitle": "What changed",
-      "items": [
-        "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw came in October, fixed in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
-        "**Next.js had ten serious advisories.** Five middleware or proxy bypasses in May and July, five critical remote code execution bugs from August to October[^nextadv]. Run at least 16.4.1 or 15.5.28[^nextsvg].",
-        "**`strict` is on by default.** TypeScript 6.0 turned it on[^ts6]. TypeScript 7.0, the native compiler, has no API yet, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
-        "**Node.js 20 is end of life.** Node.js 26 has been Active LTS since 28 October; 22 ends on 30 April 2027[^noderel]. Type stripping, now stable, runs `.ts` files without checking types[^nodets].",
-        "**Trusted Types work in every major browser.** They became Baseline in February[^mdntt], and React passes `TrustedHTML` to the DOM unchanged[^reactdom]."
       ]
     },
     {
@@ -115,18 +105,22 @@
         "**Hand-written type guards for request bodies.** They drift from the types they guard. Derive types from the schema with `z.infer`.",
         "**eslint-plugin-security as your main check.** Its README warns of many false positives[^eslintsec]. Triage typed lint and CodeQL findings first.",
         "**Freezing built-in prototypes.** `--frozen-intrinsics` is experimental[^nodecli] and freezing can break libraries[^owasppp]. Fix the merges instead.",
-        "**Escaping shell arguments yourself.** Quoting rules differ between shells and Windows `cmd`. Drop the shell."
+        "**Escaping shell arguments yourself.** Without a shell there is nothing to escape. Drop the shell."
       ]
     },
     {
       "type": "list",
-      "id": "mistakes",
-      "title": "Mistakes that cost the most",
-      "navTitle": "Mistakes",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
       "items": [
-        "**Treating the Permission Model as a sandbox.** It is a seat belt for trusted code, not a defense against malicious code[^nodeperm], and October's release closed two more gaps in it[^nodeoct]. Run untrusted code in its own container without secrets.",
-        "**Assuming a Server Action is private.** Anyone can call it with a direct POST, even if no page uses it[^nextsec]. Validate its arguments and authorize inside it."
-      ]
+        "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw was fixed in October in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
+        "**Next.js shipped more middleware bypasses and critical fixes.** Five middleware or proxy bypasses came in May and July, and five critical remote code execution fixes from August to October[^nextadv]. Run at least 16.4.1 or 15.5.28[^nextsvg].",
+        "**TypeScript turned `strict` on by default.** TypeScript 6.0 did so in March[^ts6]. TypeScript 7.0, the native compiler, has no API yet, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
+        "**Node.js 20 reached end of life on 30 April.** Node.js 26 has been Active LTS since 28 October, and 22 ends on 30 April 2027[^noderel]. Type stripping, now stable, runs `.ts` files without checking types[^nodets].",
+        "**Trusted Types work in every major browser.** They became Baseline in February[^mdntt], and React passes `TrustedHTML` to the DOM unchanged[^reactdom]."
+      ],
+      "span": "full"
     },
     {
       "type": "columns",
@@ -166,14 +160,14 @@
     {
       "date": "2026-11-03",
       "version": "0.1",
-      "text": "First draft, based on the TypeScript, typescript-eslint and Node.js documentation, React and Next.js security advisories from 2025 and 2026, CISA's KEV catalog, OWASP cheat sheets and the 2025 CWE Top 25."
+      "text": "First draft, based on TypeScript, typescript-eslint and Node.js documentation, React and Next.js advisories, CISA's KEV catalog, OWASP and the 2025 CWE Top 25."
     }
   ],
   "sources": [
     {
       "id": "tseveryday",
       "title": "TypeScript Handbook: Everyday Types",
-      "publisher": "TypeScript (Microsoft)",
+      "publisher": "Microsoft",
       "date": "updated 2 Nov 2026",
       "url": "https://www.typescriptlang.org/docs/handbook/2/everyday-types.html"
     },
@@ -194,21 +188,21 @@
     {
       "id": "ts6",
       "title": "Announcing TypeScript 6.0",
-      "publisher": "Microsoft TypeScript Blog",
+      "publisher": "Microsoft",
       "date": "23 Mar 2026",
       "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/"
     },
     {
       "id": "ts7",
       "title": "Announcing TypeScript 7.0",
-      "publisher": "Microsoft TypeScript Blog",
+      "publisher": "Microsoft",
       "date": "8 Jul 2026",
       "url": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/"
     },
     {
       "id": "tsconfig",
       "title": "TSConfig Reference",
-      "publisher": "TypeScript (Microsoft)",
+      "publisher": "Microsoft",
       "date": "checked 3 Nov 2026",
       "url": "https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess"
     },
@@ -249,7 +243,7 @@
     },
     {
       "id": "nextsec",
-      "title": "How to think about data security in Next.js",
+      "title": "Data security in Next.js",
       "publisher": "Next.js Docs",
       "date": "updated 6 Oct 2026",
       "url": "https://nextjs.org/docs/app/guides/data-security"
@@ -265,7 +259,7 @@
       "id": "react2shell",
       "title": "Critical Security Vulnerability in React Server Components",
       "publisher": "React Blog",
-      "date": "3 Dec 2025, updated 26 Jan 2026",
+      "date": "3 Dec 2025",
       "url": "https://react.dev/blog/2025/12/03/critical-security-vulnerability-in-react-server-components"
     },
     {
@@ -285,7 +279,7 @@
     {
       "id": "noderel",
       "title": "Node.js release schedule",
-      "publisher": "Node.js Release Working Group",
+      "publisher": "Node.js",
       "date": "checked 3 Nov 2026",
       "url": "https://github.com/nodejs/Release"
     },
@@ -299,7 +293,7 @@
     {
       "id": "orpc",
       "title": "@orpc/client advisory (CVE-2026-28794)",
-      "publisher": "GitHub Advisory Database",
+      "publisher": "GitHub",
       "date": "2 Mar 2026",
       "url": "https://github.com/advisories/GHSA-m272-9rp6-32mc"
     },
@@ -347,7 +341,7 @@
     },
     {
       "id": "reactdom",
-      "title": "Common components (dangerouslySetInnerHTML)",
+      "title": "React DOM common components",
       "publisher": "React Docs",
       "date": "checked 3 Nov 2026",
       "url": "https://react.dev/reference/react-dom/components/common"
@@ -360,16 +354,9 @@
       "url": "https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API"
     },
     {
-      "id": "regexp",
-      "title": "regexp/no-super-linear-backtracking",
-      "publisher": "eslint-plugin-regexp",
-      "date": "checked 3 Nov 2026",
-      "url": "https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-super-linear-backtracking.html"
-    },
-    {
       "id": "cql",
-      "title": "CodeQL query help for JavaScript and TypeScript",
-      "publisher": "GitHub CodeQL",
+      "title": "CodeQL JavaScript and TypeScript queries",
+      "publisher": "GitHub",
       "date": "checked 3 Nov 2026",
       "url": "https://codeql.github.com/codeql-query-help/javascript/"
     },
@@ -382,7 +369,7 @@
     },
     {
       "id": "eslintsec",
-      "title": "eslint-plugin-security README",
+      "title": "eslint-plugin-security",
       "publisher": "ESLint Community",
       "date": "checked 3 Nov 2026",
       "url": "https://github.com/eslint-community/eslint-plugin-security"
