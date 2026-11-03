@@ -21,11 +21,11 @@
       "items": [
         {
           "title": "Make new versions wait three days.",
-          "text": "Poisoned releases are usually caught within hours: PyPI quarantined the LiteLLM and Telnyx ones within four hours of upload[^pypiinc]. Dependabot waits three days by default and pnpm one day[^dbdefault][^pnpmres]; set npm's `min-release-age=3`[^npmconfig] and a `P3D` cooldown in uv or pip[^pypiinc]. CISA suggested seven days after the axios compromise[^cisaaxios]."
+          "text": "Poisoned releases are often caught within hours: PyPI quarantined the LiteLLM and Telnyx ones within four hours of upload[^pypiinc]. Dependabot waits three days by default and pnpm one day[^dbdefault][^pnpmres]; set npm's `min-release-age=3`[^npmconfig] and a `P3D` cooldown in uv or pip[^pypiinc]. CISA suggested seven days after the axios compromise[^cisaaxios]."
         },
         {
           "title": "Block install scripts and install from the lockfile.",
-          "text": "Shai-Hulud 2.0 ran from a `preinstall` script, before any test or security check[^msshai]. npm 12 blocks dependency install scripts by default and pnpm runs only approved ones[^npm12][^pnpmbuild]; approve the few that need it with `npm approve-scripts`[^npm12]. On older npm set `ignore-scripts=true`[^cisaaxios]. Commit lockfiles with hashes[^pypiinc] and install with `npm ci`[^osv]."
+          "text": "Shai-Hulud 2.0 ran from a `preinstall` script, before any test or security check[^msshai]. npm 12 blocks dependency install scripts by default and pnpm runs only approved ones[^npm12][^pnpmbuild]; approve the few that need it with `npm approve-scripts`[^npm12]. On older npm set `ignore-scripts=true`[^cisaaxios]. Commit lockfiles with hashes[^pypiinc] and install with `npm ci`."
         },
         {
           "title": "Lock every action to a commit.",
@@ -33,11 +33,11 @@
         },
         {
           "title": "Publish and deploy without long-lived tokens.",
-          "text": "GitHub calls removing long-lived credentials from CI/CD the number one thing you can do[^ghdisrupt]. Publish to npm and PyPI with trusted publishing[^pypiinc], set npm's **Require two-factor authentication and disallow tokens**[^npmtp], delete the old tokens and deploy to clouds with OIDC[^secureuse]. Require phishing-resistant MFA on developer accounts[^cisaaxios]."
+          "text": "GitHub calls removing long-lived credentials from CI/CD the number one thing you can do[^ghdisrupt]. Publish to npm and PyPI with trusted publishing[^npmtp][^pypiinc], set npm's **Require two-factor authentication and disallow tokens**[^npmtp], delete the old tokens and deploy to clouds with OIDC[^secureuse]. Require phishing-resistant MFA on developer accounts[^cisaaxios]."
         },
         {
           "title": "Record what every build contained.",
-          "text": "Generate an SBOM in the build for each release and keep it with the artifact[^cisasbom][^enisasbom], so you can tell in minutes whether you shipped a bad version. The CRA requires one for products you place on the EU market[^cra]."
+          "text": "Generate an SBOM in the build for each release and keep it with the artifact[^cisasbom][^enisasbom], so you can tell in minutes whether you shipped a bad version. The CRA requires one from December 2027[^cra]."
         }
       ]
     },
@@ -49,7 +49,7 @@
       "items": [
         {
           "title": "Did a bad version run anywhere?",
-          "text": "Search lockfiles, caches and artifact registries, then CI pipelines and developer machines that installed packages in the exposure window[^cisaaxios]. OSV-Scanner checks lockfiles and SBOMs against malicious-package (`MAL-`) records[^osv]."
+          "text": "Search lockfiles, caches and artifact registries, then CI pipelines and developer machines that installed packages in the exposure window[^cisaaxios]. OSV-Scanner checks lockfiles and SBOMs against OSV.dev[^osv], which includes OpenSSF's malicious-package (`MAL-`) records[^osvdata]."
         },
         {
           "title": "Is the machine still infected?",
@@ -100,7 +100,7 @@
       "items": [
         "**Chasing unreachable CVEs deep in the tree.** The CRA asks you to remediate in relation to the risks[^cra]. Fix exploited and reachable ones within the patching sheet's deadlines and batch the rest.",
         "**Polishing SBOMs nobody reads.** Generate them in the build with tools you already have, as ENISA advises for a first implementation[^enisasbom]. Buy an SBOM platform only when a customer or regulator consumes them.",
-        "**SLSA Build L3 before the basics.** Hardened, isolated builds matter less than the moving tags, stolen tokens and install scripts behind the 2026 incidents above.",
+        "**SLSA Build L3 before the basics.** Hardened builds matter less than the moving tags, stolen tokens and install scripts behind the 2026 incidents.",
         "**A registry proxy for a small team.** A cooldown, a lockfile and blocked install scripts give most of its benefit without the upkeep."
       ]
     },
@@ -111,8 +111,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Publishing from a busy job.** Malware in the same job can read the OIDC token from runner memory[^mitre]. Publish from a separate job that installs nothing, in an environment that needs a reviewer's approval[^envs].",
-        "**Running fork code with secrets.** `pull_request_target` workflows are privileged and must not check out untrusted code[^secureuse]; the fork approval setting doesn't stop them from running[^ghsettings].",
-        "**Forgetting developer machines.** The poisoned Nx Console extension reached users through VS Code's automatic updates[^cisanx]. Allowlist extensions with the `AllowedExtensions` policy[^vscode]."
+        "**Running fork code with secrets.** `pull_request_target` workflows are privileged, skip fork approval and must not check out untrusted code[^secureuse][^ghsettings]. From 2 December GitHub blocks them in public repositories by default[^prt].",
+        "**Forgetting developer machines.** The poisoned Nx Console extension reached users through VS Code's automatic updates[^cisanx]. Allowlist extensions and pin approved versions with the `AllowedExtensions` policy[^vscode]."
       ]
     },
     {
@@ -126,16 +126,16 @@
           "title": "Small team, no security staff",
           "items": [
             "In the organization's Actions settings, set read-only workflow permissions and require SHA-pinned actions or a lockfile.",
-            "Keep Dependabot's default cooldown and turn on Dependabot security updates and secret scanning.",
+            "Keep Dependabot's default cooldown and turn on Dependabot malware alerts, security updates and secret scanning.",
             "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Add `.github/workflows` to CODEOWNERS so workflow changes need review[^secureuse].",
+            "Add `.github/workflows` to CODEOWNERS and turn on **Require review from Code Owners**[^codeowners].",
             "Publish from an environment with required reviewers and **Prevent self-review** (public repositories only on Free, Pro and Team)[^envs].",
-            "Scan lockfiles for malicious packages in every pull request with the OSV-Scanner action[^osv]."
+            "Scan lockfiles for malicious packages in every pull request with the OSV-Scanner action."
           ]
         },
         {
@@ -143,7 +143,7 @@
           "items": [
             "Route installs through a registry proxy that enforces a cooldown and checks for malware.",
             "Attest builds with GitHub artifact attestations and verify them before deploy.",
-            "Keep an SBOM per release for the support period and add build pipeline compromises to your CRA reporting path."
+            "Keep each release's SBOM for 10 years or the support period, if longer[^cra], and add build pipeline compromises to your CRA reporting path."
           ]
         }
       ]
@@ -208,10 +208,10 @@
     },
     {
       "id": "npm12",
-      "title": "Upcoming breaking changes for npm v12",
+      "title": "npm install-time security and GAT bypass2fa deprecation",
       "publisher": "GitHub Changelog",
-      "date": "9 Jun 2026",
-      "url": "https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/"
+      "date": "8 Jul 2026",
+      "url": "https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/"
     },
     {
       "id": "pnpmbuild",
@@ -222,10 +222,17 @@
     },
     {
       "id": "osv",
-      "title": "Detecting Malicious Packages Using the OSV API",
-      "publisher": "OpenSSF",
-      "date": "20 May 2026",
-      "url": "https://openssf.org/blog/2026/05/20/detecting-malicious-packages-using-the-osv-api/"
+      "title": "Project Source Scanning",
+      "publisher": "OSV-Scanner Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://google.github.io/osv-scanner/usage/scan-source"
+    },
+    {
+      "id": "osvdata",
+      "title": "OSV.dev data sources",
+      "publisher": "OSV.dev Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://google.github.io/osv.dev/data/"
     },
     {
       "id": "trivy",
@@ -324,6 +331,20 @@
       "publisher": "Visual Studio Code Docs",
       "date": "checked 3 Nov 2026",
       "url": "https://code.visualstudio.com/docs/enterprise/extensions"
+    },
+    {
+      "id": "prt",
+      "title": "pull_request_target blocked by default December 2",
+      "publisher": "GitHub Changelog",
+      "date": "2 Nov 2026",
+      "url": "https://github.blog/changelog/2026-11-02-pull_request_target-blocked-by-default-december-2/"
+    },
+    {
+      "id": "codeowners",
+      "title": "About code owners",
+      "publisher": "GitHub Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
     }
   ]
 }

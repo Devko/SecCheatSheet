@@ -24,7 +24,7 @@
         },
         {
           "title": "Stop workstations talking to each other.",
-          "text": "With Windows Firewall policy from Group Policy or Intune, block SMB and RPC (TCP 135, 139, 445), RDP (3389), WinRM (5985, 5986) and WMI between workstations, except from the admin subnet[^mandiant]. Google saw RDP used for lateral movement in about 85% of the ransomware intrusions it handled in 2025[^gtig]."
+          "text": "With Windows Firewall policy from Group Policy or Intune, let workstations accept SMB and RPC (TCP 135, 139, 445), RDP (3389), WinRM (5985, 5986) and WMI only from admin and management hosts[^mandiant]. Scope the allow rules rather than adding block rules, which override any allow rule they overlap[^wfrules]. RDP carried lateral movement in about 85% of Google's 2025 ransomware cases[^gtig]."
         },
         {
           "title": "Put a default-deny firewall between users and servers.",
@@ -77,9 +77,9 @@
       "items": [
         "**Management.** Hypervisor, storage and switch management, server controllers and the PAW subnet. Put infrastructure VLANs in their own VRF so user and guest zones have no route to them, and vMotion and storage traffic on non-routable VLANs[^mandiant]. The edge devices sheet covers firewall and VPN management.",
         "**Backups.** Non-routable VLANs, with console access only from a PAW and with phishing-resistant MFA[^mandiant]. The ransomware sheet covers the copy attackers can't delete.",
-        "**Identity.** Domain controllers and certificate authorities, both Tier 0 for Mandiant[^mandiant]. Clients get the directory ports they need; admin protocols come only from PAWs.",
+        "**Identity.** Domain controllers and certificate authorities, both Tier 0 for Mandiant[^mandiant]. Clients get the directory ports they need, including RPC on TCP 49152-65535[^adfw]; admin protocols come only from PAWs.",
         "**Servers.** Group them by application and data sensitivity, and keep development apart from production[^cisams].",
-        "**Guest, IoT, printers and building systems.** Give them dedicated segments, as BSI requires for guest access and devices you don't control well[^bsi], with access only to the internet or the one server they report to. The 2026 DBIR recounts the Akira group using unsecured webcams to move laterally and encrypt ESXi shares, unseen by Windows EDR[^dbir].",
+        "**Guest, IoT, printers and building systems.** Give them dedicated segments, as BSI requires for guest access and devices you don't control well[^bsi], with access only to the internet or the one server they report to. The 2026 DBIR recounts the Akira group encrypting network shares from an unsecured webcam, unseen by Windows EDR[^dbir].",
         "**Cloud.** Give each tier its own security group that accepts traffic only from the group in front of it, and remove the allow-all outbound rule that new AWS security groups start with[^awssg]. Keep Kubernetes API servers on private endpoints[^mandiant]."
       ]
     },
@@ -100,10 +100,10 @@
       "title": "Check that the rules hold",
       "navTitle": "Testing",
       "items": [
-        "**Port-scan from the user side.** Anything that answers beyond the documented ports is a finding. PCI DSS names host discovery and port scanning as ways to verify segmentation[^pci].",
-        "**Log what host firewalls drop.** Turn on dropped-packet logging and send it to your SIEM: denied attempts are strong signs of reconnaissance[^mandiant].",
-        "**Ignore local firewall rules.** Turn off local rule merging so an attacker with local admin rights can't add exceptions[^mandiant]. Apps then need central rules[^wfrules].",
-        "**Meet the card data clock.** PCI DSS v4.0.1 requires segmentation penetration tests at least every 12 months (6 for service providers) and after changes[^pci]."
+        "**Port-scan from the user side.** Anything that answers beyond the documented ports is a finding.",
+        "**Log what host firewalls drop.** Send dropped-packet logs from hypervisors and management hosts to your SIEM: denials there signal reconnaissance[^mandiant].",
+        "**Ignore local firewall rules.** Turn off local rule merging[^mandiant]. Apps then need central rules, and rules in local Group Policy still apply[^wfrules].",
+        "**Meet the card data clock.** If segmentation isolates your card data environment, PCI DSS v4.0.1 requires pen tests of it at least every 12 months (6 for service providers) and after changes[^pci]."
       ]
     },
     {
@@ -116,7 +116,7 @@
         "**Handoffs now take seconds.** M-Trends 2026 found the median handoff from initial access to a second group fell to 22 seconds in 2025, from more than 8 hours in 2022[^mtrends]. Close lateral paths before an incident.",
         "**Eight agencies set OT connectivity principles.** The January 2026 principles call for connections that start inside OT, a hardened OT boundary and a tested isolation plan[^ncscot].",
         "**Critical infrastructure got isolation guidance.** CI Fortify (July 2026) covers mapping vital systems and building separation points, so vital OT can be cut off from all other networks in a crisis and keep running[^cifortify].",
-        "**New Azure networks are private by default.** VNets created with API versions released after 31 March 2026 have no default internet egress. Existing VNets keep it until you change them[^azout]."
+        "**New Azure networks are private by default.** VNets created with API versions released after 31 March 2026 have no default internet egress. Existing VNets and older API versions keep it[^azout]."
       ]
     },
     {
@@ -126,7 +126,7 @@
       "items": [
         "**Full microsegmentation before basic zones.** CISA warns that fine-grained segments are harder to build and maintain, and its on-premises example did data center, servers and users first[^cisams].",
         "**Open routing between VLANs.** A VLAN without a default-deny firewall or ACL in front of it is a label, not a segment.",
-        "**Default-deny outbound on workstations.** Microsoft recommends allowing outbound for most deployments[^wfrules]. Block SMB to the internet at the perimeter[^smb].",
+        "**Default-deny outbound on workstations.** Microsoft advises allowing outbound in most deployments[^wfrules]. Block SMB to the internet at the edge[^smb].",
         "**Deep inspection between internal zones.** Stateful port rules do most of the work. Inspect at the internet edge and the OT boundary."
       ]
     },
@@ -235,6 +235,13 @@
       "publisher": "Microsoft Learn",
       "date": "6 Jun 2025",
       "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules"
+    },
+    {
+      "id": "adfw",
+      "title": "Configure firewall for AD domain and trusts",
+      "publisher": "Microsoft Learn",
+      "date": "12 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/troubleshoot/windows-server/active-directory/config-firewall-for-ad-domains-and-trusts"
     },
     {
       "id": "ncscanti",
