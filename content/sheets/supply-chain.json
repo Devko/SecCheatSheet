@@ -1,7 +1,329 @@
 {
   "slug": "supply-chain",
   "topic": "Software supply chain",
-  "status": "planned",
+  "status": "draft",
   "order": 4,
-  "capability": "software/supply-chain"
+  "capability": "software/supply-chain",
+  "title": "Software supply chain: would a poisoned package or action reach production?",
+  "short": "Make new package versions wait 3 days, lock every GitHub Action to a commit and publish without long-lived tokens.",
+  "answer": "This month, make new package versions wait three days before they install, lock every GitHub Action to a commit and replace long-lived publishing and cloud tokens with trusted publishing and OIDC. Judge every other control by whether it keeps credentials away from code you didn't write, or tells you within an hour where a bad version ran.",
+  "audience": "Development, platform and DevOps teams that build and ship software, including small teams on GitHub",
+  "version": "0.1",
+  "lastReviewed": "2026-11-03",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "intro": "Verizon's 2026 DBIR found third-party involvement in 48% of breaches, up 60% in a year[^dbir].",
+      "items": [
+        {
+          "title": "Make new versions wait three days.",
+          "text": "Poisoned releases are usually caught within hours: PyPI quarantined the LiteLLM and Telnyx ones within four hours of upload[^pypiinc]. Dependabot waits three days by default and pnpm one day[^dbdefault][^pnpmres]; set npm's `min-release-age=3`[^npmconfig] and a `P3D` cooldown in uv or pip[^pypiinc]. CISA suggested seven days after the axios compromise[^cisaaxios]."
+        },
+        {
+          "title": "Block install scripts and install from the lockfile.",
+          "text": "Shai-Hulud 2.0 ran from a `preinstall` script, before any test or security check[^msshai]. npm 12 blocks dependency install scripts by default and pnpm runs only approved ones[^npm12][^pnpmbuild]; approve the few that need it with `npm approve-scripts`[^npm12]. On older npm set `ignore-scripts=true`[^cisaaxios]. Commit lockfiles with hashes[^pypiinc] and install with `npm ci`[^osv]."
+        },
+        {
+          "title": "Lock every action to a commit.",
+          "text": "In March an attacker force-pushed 76 of 77 version tags of `trivy-action` to code that read secrets from runner memory[^trivy]. PyPI traced the poisoned LiteLLM and Telnyx releases to a token exposed through the compromised Trivy[^pypiinc]. Turn on **Require actions to be pinned to a full-length commit SHA**, which a workflow lockfile satisfies, and set **Workflow permissions** to read-only[^ghsettings]."
+        },
+        {
+          "title": "Publish and deploy without long-lived tokens.",
+          "text": "GitHub calls removing long-lived credentials from CI/CD the number one thing you can do[^ghdisrupt]. Publish to npm and PyPI with trusted publishing[^pypiinc], set npm's **Require two-factor authentication and disallow tokens**[^npmtp], delete the old tokens and deploy to clouds with OIDC[^secureuse]. Require phishing-resistant MFA on developer accounts[^cisaaxios]."
+        },
+        {
+          "title": "Record what every build contained.",
+          "text": "Generate an SBOM in the build for each release and keep it with the artifact[^cisasbom][^enisasbom], so you can tell in minutes whether you shipped a bad version. The CRA requires one for products you place on the EU market[^cra]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "respond",
+      "title": "When a package or action you use is reported compromised",
+      "navTitle": "If one is compromised",
+      "items": [
+        {
+          "title": "Did a bad version run anywhere?",
+          "text": "Search lockfiles, caches and artifact registries, then CI pipelines and developer machines that installed packages in the exposure window[^cisaaxios]. OSV-Scanner checks lockfiles and SBOMs against malicious-package (`MAL-`) records[^osv]."
+        },
+        {
+          "title": "Is the machine still infected?",
+          "text": "Isolate it before you revoke anything: Mini Shai-Hulud wipes the home directory if its GitHub token is revoked[^mitre]. Shai-Hulud 2.0 registered a GitHub Actions runner called `SHA1Hulud` on infected hosts[^msshai]. Remove persistence and rogue runners, or rebuild."
+        },
+        {
+          "title": "Which secrets could it reach?",
+          "text": "Rotate every secret the job or machine could read, as CISA advises for a compromised CI run[^cisaaxios], and do it in one go: the Trivy attacker may have kept access because an earlier rotation wasn't atomic[^trivy]."
+        },
+        {
+          "title": "What did the attacker do with them?",
+          "text": "Look for new repositories (Trivy's payload created `tpcp-docs-` ones[^trivy]), workflow commits by automated accounts[^cisanx], versions you didn't publish and unusual cloud API calls."
+        },
+        {
+          "title": "Do you have to report it?",
+          "text": "If malicious code could have reached a product you sell in the EU, treat it as a possible severe CRA incident, with an early warning due within 24 hours[^cra]. The EU security laws sheet has the other clocks."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "cra",
+      "title": "If you sell software in the EU: the CRA",
+      "navTitle": "CRA",
+      "items": [
+        "**Reporting applies now.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities and severe incidents, also for products placed on the market before the rest of the CRA applies on 11 December 2027[^cra].",
+        "**A poisoned release counts.** An incident that has led or could lead to malicious code in your product or your users' systems is severe, such as malicious code in your update channel[^cra].",
+        "**The SBOM must be machine-readable, not public.** It needs a commonly used format, must cover at least top-level dependencies and goes to authorities on request; sharing it with users is optional[^cra]. CISA's 2026 minimum elements add transitive dependencies, hashes and licenses[^cisasbom].",
+        "**Vulnerability handling is due by December 2027.** Have a disclosure policy, a reporting contact, free security updates and public notes on fixed flaws for at least 5 years, or the expected use time if shorter. Report flaws in components to their maintainers[^cra]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Attacks moved into CI and release workflows.** Trivy's compromise spread through retagged actions in March[^trivy]. Mini Shai-Hulud scraped runner memory for identity tokens and swapped them for npm trusted-publisher tokens[^mitre]. In May CISA reported that a poisoned VS Code extension update led to theft of GitHub's internal repositories[^cisanx].",
+        "**Safer defaults shipped.** npm 12 blocks dependency install scripts and git and URL dependencies[^npm12][^npmconfig], and since July Dependabot waits three days before version updates[^dbdefault].",
+        "**GitHub Actions got lockfiles.** Since 28 October, `.github/workflows/actions.lock` pins actions to commits on Free, Team and Enterprise Cloud plans, and a **Require lockfile** policy enforces it[^lockga].",
+        "**npm is closing the token route.** Stage-only tokens hold a release until a maintainer approves it with 2FA, and npm aims to end direct publishing with bypass-2FA tokens in January 2027[^npmstage]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Chasing unreachable CVEs deep in the tree.** The CRA asks you to remediate in relation to the risks[^cra]. Fix exploited and reachable ones within the patching sheet's deadlines and batch the rest.",
+        "**Polishing SBOMs nobody reads.** Generate them in the build with tools you already have, as ENISA advises for a first implementation[^enisasbom]. Buy an SBOM platform only when a customer or regulator consumes them.",
+        "**SLSA Build L3 before the basics.** Hardened, isolated builds matter less than the moving tags, stolen tokens and install scripts behind the 2026 incidents above.",
+        "**A registry proxy for a small team.** A cooldown, a lockfile and blocked install scripts give most of its benefit without the upkeep."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Publishing from a busy job.** Malware in the same job can read the OIDC token from runner memory[^mitre]. Publish from a separate job that installs nothing, in an environment that needs a reviewer's approval[^envs].",
+        "**Running fork code with secrets.** `pull_request_target` workflows are privileged and must not check out untrusted code[^secureuse]; the fork approval setting doesn't stop them from running[^ghsettings].",
+        "**Forgetting developer machines.** The poisoned Nx Console extension reached users through VS Code's automatic updates[^cisanx]. Allowlist extensions with the `AllowedExtensions` policy[^vscode]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "In the organization's Actions settings, set read-only workflow permissions and require SHA-pinned actions or a lockfile.",
+            "Keep Dependabot's default cooldown and turn on Dependabot security updates and secret scanning.",
+            "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Add `.github/workflows` to CODEOWNERS so workflow changes need review[^secureuse].",
+            "Publish from an environment with required reviewers and **Prevent self-review** (public repositories only on Free, Pro and Team)[^envs].",
+            "Scan lockfiles for malicious packages in every pull request with the OSV-Scanner action[^osv]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Route installs through a registry proxy that enforces a cooldown and checks for malware.",
+            "Attest builds with GitHub artifact attestations and verify them before deploy.",
+            "Keep an SBOM per release for the support period and add build pipeline compromises to your CRA reporting path."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "0.1",
+      "text": "First draft, based on the CRA, CISA alerts, Trivy and PyPI incident reports, GitHub and npm docs and CISA and ENISA SBOM guidance."
+    }
+  ],
+  "sources": [
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report: Executive Summary",
+      "publisher": "Verizon",
+      "date": "2026",
+      "url": "https://www.verizon.com/business/resources/executivebriefs/2026-dbir-executive-summary.pdf"
+    },
+    {
+      "id": "pypiinc",
+      "title": "Incident Report: LiteLLM/Telnyx supply-chain attacks, with guidance",
+      "publisher": "PyPI Blog",
+      "date": "2 Apr 2026",
+      "url": "https://blog.pypi.org/posts/2026-04-02-incident-report-litellm-telnyx-supply-chain-attack/"
+    },
+    {
+      "id": "dbdefault",
+      "title": "Dependabot version updates introduce default package cooldown",
+      "publisher": "GitHub Changelog",
+      "date": "14 Jul 2026",
+      "url": "https://github.blog/changelog/2026-07-14-dependabot-version-updates-introduce-default-package-cooldown/"
+    },
+    {
+      "id": "pnpmres",
+      "title": "Settings: Dependency resolution (minimumReleaseAge)",
+      "publisher": "pnpm",
+      "date": "checked 3 Nov 2026",
+      "url": "https://pnpm.io/settings/dependency-resolution"
+    },
+    {
+      "id": "npmconfig",
+      "title": "npm config (v12): min-release-age, allow-git, allow-remote",
+      "publisher": "npm Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.npmjs.com/cli/v12/using-npm/config"
+    },
+    {
+      "id": "cisaaxios",
+      "title": "Supply Chain Compromise Impacts Axios Node Package Manager",
+      "publisher": "CISA",
+      "date": "20 Apr 2026",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/04/20/supply-chain-compromise-impacts-axios-node-package-manager"
+    },
+    {
+      "id": "msshai",
+      "title": "Shai-Hulud 2.0: Guidance for detecting, investigating, and defending against the supply chain attack",
+      "publisher": "Microsoft Defender Security Research Team",
+      "date": "9 Dec 2025, updated 13 May 2026",
+      "url": "https://www.microsoft.com/en-us/security/blog/2025/12/09/shai-hulud-2-0-guidance-for-detecting-investigating-and-defending-against-the-supply-chain-attack/"
+    },
+    {
+      "id": "npm12",
+      "title": "Upcoming breaking changes for npm v12",
+      "publisher": "GitHub Changelog",
+      "date": "9 Jun 2026",
+      "url": "https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/"
+    },
+    {
+      "id": "pnpmbuild",
+      "title": "Settings: Build (allowBuilds, strictDepBuilds)",
+      "publisher": "pnpm",
+      "date": "checked 3 Nov 2026",
+      "url": "https://pnpm.io/settings/build"
+    },
+    {
+      "id": "osv",
+      "title": "Detecting Malicious Packages Using the OSV API",
+      "publisher": "OpenSSF",
+      "date": "20 May 2026",
+      "url": "https://openssf.org/blog/2026/05/20/detecting-malicious-packages-using-the-osv-api/"
+    },
+    {
+      "id": "trivy",
+      "title": "Trivy ecosystem supply chain temporarily compromised (GHSA-69fq-xp46-6x23, CVE-2026-33634)",
+      "publisher": "Aqua Security",
+      "date": "21 Mar 2026",
+      "url": "https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23"
+    },
+    {
+      "id": "ghsettings",
+      "title": "Managing GitHub Actions settings for a repository",
+      "publisher": "GitHub Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository"
+    },
+    {
+      "id": "ghdisrupt",
+      "title": "Disrupting supply chain attacks on npm and GitHub Actions",
+      "publisher": "GitHub Blog",
+      "date": "28 Jul 2026",
+      "url": "https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/"
+    },
+    {
+      "id": "npmtp",
+      "title": "Trusted publishing for npm packages",
+      "publisher": "npm Docs",
+      "date": "updated 6 Oct 2026",
+      "url": "https://docs.npmjs.com/trusted-publishers"
+    },
+    {
+      "id": "secureuse",
+      "title": "Secure use reference (GitHub Actions)",
+      "publisher": "GitHub Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+    },
+    {
+      "id": "cisasbom",
+      "title": "2026 Minimum Elements for a Software Bill of Materials (SBOM)",
+      "publisher": "CISA, NSA, FBI and international partners",
+      "date": "29 Jul 2026",
+      "url": "https://www.cisa.gov/resources-tools/resources/2026-minimum-elements-software-bill-materials-sbom"
+    },
+    {
+      "id": "enisasbom",
+      "title": "ENISA Technical Advisory for Software Bill of Materials",
+      "publisher": "ENISA",
+      "date": "Oct 2026",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2026-10/ENISA%20Technical%20Advisory%20-%20Software%20Bill%20of%20Materials%20-%20v1.10.pdf"
+    },
+    {
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 13, 14, 69 and 71, recital 68 and Annexes I, II and VII",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    },
+    {
+      "id": "mitre",
+      "title": "Mini Shai-Hulud (S9043)",
+      "publisher": "MITRE ATT&CK",
+      "date": "modified 31 Jul 2026",
+      "url": "https://attack.mitre.org/software/S9043/"
+    },
+    {
+      "id": "cisanx",
+      "title": "Supply Chain Compromises Impact Nx Console and GitHub Repositories",
+      "publisher": "CISA",
+      "date": "28 May 2026",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/05/28/supply-chain-compromises-impact-nx-console-and-github-repositories"
+    },
+    {
+      "id": "lockga",
+      "title": "GitHub Actions workflow lockfiles are generally available",
+      "publisher": "GitHub Changelog",
+      "date": "28 Oct 2026",
+      "url": "https://github.blog/changelog/2026-10-28-github-actions-workflow-lockfiles-are-generally-available/"
+    },
+    {
+      "id": "npmstage",
+      "title": "Stage-only npm tokens for safer automation",
+      "publisher": "GitHub Changelog",
+      "date": "18 Sep 2026",
+      "url": "https://github.blog/changelog/2026-09-18-stage-only-npm-tokens-for-safer-automation"
+    },
+    {
+      "id": "envs",
+      "title": "Deployments and environments",
+      "publisher": "GitHub Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments"
+    },
+    {
+      "id": "vscode",
+      "title": "Manage extensions in enterprise environments",
+      "publisher": "Visual Studio Code Docs",
+      "date": "checked 3 Nov 2026",
+      "url": "https://code.visualstudio.com/docs/enterprise/extensions"
+    }
+  ]
 }

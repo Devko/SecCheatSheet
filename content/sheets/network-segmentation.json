@@ -1,0 +1,289 @@
+{
+  "slug": "network-segmentation",
+  "topic": "Network segmentation",
+  "status": "draft",
+  "order": 12,
+  "capability": "infrastructure/segmentation",
+  "title": "Network segmentation: can one infected laptop reach everything?",
+  "short": "Wall off management and backups first, block SMB and RDP between workstations, and scan from a user laptop every quarter.",
+  "answer": "This quarter, move hypervisor, backup and device management into a zone reachable only from admin workstations, and block SMB, RDP and WinRM between workstations with the host firewall. Then put a default-deny firewall between users and servers one zone at a time, and count a rule as working only once you have tested it from a user's laptop.",
+  "audience": "IT and network teams with flat or lightly segmented office networks, on-premises servers, some cloud and, in some cases, OT or building systems",
+  "version": "0.1",
+  "lastReviewed": "2026-11-03",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Wall off the management plane first.",
+          "text": "Put hypervisor and storage management, server controllers such as iLO and iDRAC, and backup consoles in segments only an admin subnet can reach. M-Trends 2026 says to treat virtualization and management platforms as Tier 0[^mtrends]. Google saw attackers use a Cisco CIMC controller to overwrite a backup cluster's operating system[^gtig]."
+        },
+        {
+          "title": "Stop workstations talking to each other.",
+          "text": "With Windows Firewall policy from Group Policy or Intune, block SMB and RPC (TCP 135, 139, 445), RDP (3389), WinRM (5985, 5986) and WMI between workstations, except from the admin subnet[^mandiant]. Google saw RDP used for lateral movement in about 85% of the ransomware intrusions it handled in 2025[^gtig]."
+        },
+        {
+          "title": "Put a default-deny firewall between users and servers.",
+          "text": "BSI requires clients and servers in separate segments with at least a stateful firewall between them[^bsi]. Domain controllers and file servers usually need to be reachable from across the network[^smb], so open only their service ports."
+        },
+        {
+          "title": "Deny server egress by default.",
+          "text": "Servers, hypervisors, network devices and OT should reach only allow-listed destinations, such as update servers. Mandiant advises this deny-by-default model, plus blocking recursive DNS lookups that aren't on an allow-list[^mandiant]."
+        },
+        {
+          "title": "Test the rules from where an attacker stands.",
+          "text": "Every quarter and after each firewall change, scan from a user laptop and the guest network toward the management, backup and server zones. Alert on rule changes: in one 2025 intrusion, attackers created firewall policies that gave them access to more subnets[^gtig]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "steps",
+      "title": "Segment a flat network in this order",
+      "navTitle": "Order of work",
+      "items": [
+        {
+          "title": "Map what talks to what.",
+          "text": "Collect a month of firewall or flow logs, so monthly jobs show up. CISA advises building each system's dependency list from observed traffic and checking it with its owners[^cisams]."
+        },
+        {
+          "title": "Build the management zone and the admin path.",
+          "text": "Reach it only from a privileged access workstation (PAW) subnet, and remove every direct route from the user LAN[^mandiant]."
+        },
+        {
+          "title": "Add rules that allow and log.",
+          "text": "Put servers and user groups behind the internal firewall with logging rules, to see what default deny would break. CISA calls this permissive mode[^cisams]."
+        },
+        {
+          "title": "Enforce default deny, one zone at a time.",
+          "text": "Allow the flows you saw, deny the rest and keep a rollback ready[^cisams]. Start with your IT team's own devices, as Microsoft suggests for SMB rules[^smb]."
+        },
+        {
+          "title": "Test, then move to the next zone.",
+          "text": "Scan from each zone into the others and compare the result with the plan. BSI requires regular checks that the live network matches it[^bsi]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "zones",
+      "title": "Zones to create, and what may cross them",
+      "navTitle": "Zones",
+      "span": "full",
+      "items": [
+        "**Management.** Hypervisor, storage and switch management, server controllers and the PAW subnet. Put infrastructure VLANs in their own VRF so user and guest zones have no route to them, and vMotion and storage traffic on non-routable VLANs[^mandiant]. The edge devices sheet covers firewall and VPN management.",
+        "**Backups.** Non-routable VLANs, with console access only from a PAW and with phishing-resistant MFA[^mandiant]. The ransomware sheet covers the copy attackers can't delete.",
+        "**Identity.** Domain controllers and certificate authorities, both Tier 0 for Mandiant[^mandiant]. Clients get the directory ports they need; admin protocols come only from PAWs.",
+        "**Servers.** Group them by application and data sensitivity, and keep development apart from production[^cisams].",
+        "**Guest, IoT, printers and building systems.** Give them dedicated segments, as BSI requires for guest access and devices you don't control well[^bsi], with access only to the internet or the one server they report to. The 2026 DBIR recounts the Akira group using unsecured webcams to move laterally and encrypt ESXi shares, unseen by Windows EDR[^dbir].",
+        "**Cloud.** Give each tier its own security group that accepts traffic only from the group in front of it, and remove the allow-all outbound rule that new AWS security groups start with[^awssg]. Keep Kubernetes API servers on private endpoints[^mandiant]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "ot",
+      "title": "OT and building systems",
+      "navTitle": "OT",
+      "items": [
+        "**Keep OT running when IT is down.** End IT access in an OT DMZ, and give OT its own AD forest and its own backup, EDR and jump servers[^mandiant].",
+        "**Let OT start every connection.** Vendors come in through a broker in the DMZ, and IT reads a historian copy there, not the OT systems[^ncscot].",
+        "**Use zones and conduits.** Group assets with the same security needs into zones and control the paths between them, as IEC 62443 does. First find every data flow, including radio links missing from the diagrams[^ncscot]. ACLs are the minimum control between zones[^ncscot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "testing",
+      "title": "Check that the rules hold",
+      "navTitle": "Testing",
+      "items": [
+        "**Port-scan from the user side.** Anything that answers beyond the documented ports is a finding. PCI DSS names host discovery and port scanning as ways to verify segmentation[^pci].",
+        "**Log what host firewalls drop.** Turn on dropped-packet logging and send it to your SIEM: denied attempts are strong signs of reconnaissance[^mandiant].",
+        "**Ignore local firewall rules.** Turn off local rule merging so an attacker with local admin rights can't add exceptions[^mandiant]. Apps then need central rules[^wfrules].",
+        "**Meet the card data clock.** PCI DSS v4.0.1 requires segmentation penetration tests at least every 12 months (6 for service providers) and after changes[^pci]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Handoffs now take seconds.** M-Trends 2026 found the median handoff from initial access to a second group fell to 22 seconds in 2025, from more than 8 hours in 2022[^mtrends]. Close lateral paths before an incident.",
+        "**Eight agencies set OT connectivity principles.** The January 2026 principles call for connections that start inside OT, a hardened OT boundary and a tested isolation plan[^ncscot].",
+        "**Critical infrastructure got isolation guidance.** CI Fortify (July 2026) covers mapping vital systems and building separation points, so vital OT can be cut off from all other networks in a crisis and keep running[^cifortify].",
+        "**New Azure networks are private by default.** VNets created with API versions released after 31 March 2026 have no default internet egress. Existing VNets keep it until you change them[^azout]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Full microsegmentation before basic zones.** CISA warns that fine-grained segments are harder to build and maintain, and its on-premises example did data center, servers and users first[^cisams].",
+        "**Open routing between VLANs.** A VLAN without a default-deny firewall or ACL in front of it is a label, not a segment.",
+        "**Default-deny outbound on workstations.** Microsoft recommends allowing outbound for most deployments[^wfrules]. Block SMB to the internet at the perimeter[^smb].",
+        "**Deep inspection between internal zones.** Stateful port rules do most of the work. Inspect at the internet edge and the OT boundary."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**A management side door.** One management switch or jump server that reaches every layer bypasses the firewalls between them. The NCSC calls this management bypass[^ncscanti].",
+        "**Admin work from everyday laptops.** Administering systems from a device less trusted than they are is another NCSC anti-pattern[^ncscanti].",
+        "**Shared tools across zones.** Backup, EDR and jump servers that span IT and OT connect what you separated[^mandiant].",
+        "**Temporary rules that stay.** Give every allow rule an owner, a ticket and a review date."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Disable the File and Printer Sharing, Remote Desktop and WinRM firewall rules on laptops.",
+            "Put guest Wi-Fi, cameras and building systems on their own VLANs with internet access only.",
+            "Move hypervisor, NAS and backup admin interfaces to a VLAN only one admin device can reach.",
+            "Ask your IT provider to show what a normal laptop can reach."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Build management, backup, identity and server zones, logging before you enforce.",
+            "Give admins PAWs or a hardened jump host.",
+            "Deny server egress except to allow-listed update and service endpoints.",
+            "Scan from each zone every quarter and after firewall changes."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Keep a flow inventory per application with an owner, and review the rules yearly.",
+            "Pilot microsegmentation where agents or cloud security groups can follow the workload.",
+            "Separate OT with a DMZ and its own identity, and test the isolation plan.",
+            "Schedule PCI DSS segmentation tests; in Germany, map zones to BSI NET.1.1."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "0.1",
+      "text": "First draft, based on CISA's microsegmentation guidance, Mandiant's 2026 hardening guide, M-Trends 2026, the NCSC-led OT principles, BSI NET.1.1, PCI DSS v4.0.1 and Microsoft and AWS documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "gtig",
+      "title": "Ransomware Under Pressure: Tactics, Techniques, and Procedures in a Shifting Threat Landscape",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "16 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape"
+    },
+    {
+      "id": "mandiant",
+      "title": "Proactive Preparation and Hardening Against Destructive Attacks: 2026 Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "6 Mar 2026, updated 13 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/preparation-hardening-destructive-attacks"
+    },
+    {
+      "id": "cisams",
+      "title": "Microsegmentation in Zero Trust, Part One: Introduction and Planning",
+      "publisher": "CISA",
+      "date": "29 Jul 2025",
+      "url": "https://www.cisa.gov/sites/default/files/2025-07/ZT-Microsegmentation-Guidance-Part-One_508c.pdf"
+    },
+    {
+      "id": "bsi",
+      "title": "IT-Grundschutz NET.1.1 Netzarchitektur und -design",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_1_1_Netzarchitektur_und_design_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "smb",
+      "title": "Secure SMB Traffic in Windows Server",
+      "publisher": "Microsoft Learn",
+      "date": "25 Oct 2024",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-secure-traffic"
+    },
+    {
+      "id": "wfrules",
+      "title": "Windows Firewall rules",
+      "publisher": "Microsoft Learn",
+      "date": "6 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules"
+    },
+    {
+      "id": "ncscanti",
+      "title": "Security architecture anti-patterns",
+      "publisher": "NCSC (UK)",
+      "date": "version 1.0, 22 May 2019",
+      "url": "https://www.ncsc.gov.uk/whitepaper/security-architecture-anti-patterns"
+    },
+    {
+      "id": "ncscot",
+      "title": "Secure connectivity principles for operational technology (OT)",
+      "publisher": "NCSC (UK) and seven partner agencies",
+      "date": "14 Jan 2026",
+      "url": "https://www.ncsc.gov.uk/files/ncsc-secure-connectivity-for-operational-technology.pdf"
+    },
+    {
+      "id": "cifortify",
+      "title": "CI Fortify: Advice for isolating vital systems",
+      "publisher": "CISA and ASD's ACSC",
+      "date": "28 Jul 2026",
+      "url": "https://www.cisa.gov/resources-tools/resources/ci-fortify-advice-isolating-vital-systems"
+    },
+    {
+      "id": "pci",
+      "title": "PCI DSS v4.0.1, requirements 11.4.5 and 11.4.6",
+      "publisher": "PCI Security Standards Council",
+      "date": "Jun 2024",
+      "url": "https://www.pcisecuritystandards.org/document_library/"
+    },
+    {
+      "id": "awssg",
+      "title": "Security group rules (Amazon VPC User Guide)",
+      "publisher": "AWS Documentation",
+      "date": "checked 3 Nov 2026",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html"
+    },
+    {
+      "id": "azout",
+      "title": "Default outbound access in Azure",
+      "publisher": "Microsoft Learn",
+      "date": "24 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/default-outbound-access"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report (Year in review)",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6c3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    }
+  ]
+}
