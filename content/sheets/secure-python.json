@@ -6,7 +6,7 @@
   "capability": "coding/python",
   "title": "Python: which everyday calls turn into vulnerabilities?",
   "short": "Keep pickle-based loaders away from outside data, pass data as arguments instead of code, and move off Python 3.10, unsupported since 1 October 2026.",
-  "answer": "Before your next release, move off Python 3.10 and older[^versions], remove pickle-based loaders from every path that outside data can reach, and run Ruff's `S` rules and `pip-audit` in CI. Judge everything else by whether input stays data: it must never become code, a shell command, SQL text, a template or a path outside the directory you meant.",
+  "answer": "Before your next release, move off Python 3.10 and older[^versions], keep pickle-based loaders away from outside data, and run Ruff's `S` rules and `pip-audit` in CI. Judge everything else by whether input stays data: never code, a shell command, SQL text, a template or a path outside the directory you meant.",
   "audience": "Developers and tech leads writing production Python, and the security people who review it",
   "version": "0.1",
   "lastReviewed": "2026-11-03",
@@ -24,7 +24,7 @@
         },
         {
           "title": "Pass data as arguments, never as code.",
-          "text": "Bind SQL values as parameters, call `subprocess` with a list and no `shell=True`, and never render user strings as templates. SQL injection ranks 2nd and OS command injection 9th in the 2025 CWE Top 25[^cwe]."
+          "text": "Bind SQL values as parameters, call `subprocess` with a list and no `shell=True`, and never render user text as a template. SQL injection ranks 2nd and OS command injection 9th in the 2025 CWE Top 25[^cwe]."
         },
         {
           "title": "Run a supported Python and patch it.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Let tools find the obvious ones.",
-          "text": "Run Ruff's `S` rules in CI and `pip-audit` on every build. Ruff flags pickle, `yaml.load()`, `shell=True`, SQL built from strings, missing timeouts and `verify=False`[^ruff]."
+          "text": "Run Ruff's `S` rules and `pip-audit` in CI. Ruff flags pickle, `yaml.load()`, `shell=True`, SQL built from strings, missing timeouts and `verify=False`[^ruff]."
         },
         {
           "title": "Validate at every boundary, at runtime.",
-          "text": "Type hints aren't enforced at runtime[^typing]. Parse input into pydantic models with `extra=\"forbid\"` and strict types: by default pydantic ignores unknown fields and turns `\"123\"` into `123`[^owaspfastapi]."
+          "text": "Type hints aren't enforced at runtime[^typing]. Use pydantic models with `extra=\"forbid\"` and strict types: by default pydantic ignores unknown fields and turns `\"123\"` into `123`[^owaspfastapi]."
         }
       ]
     },
@@ -77,13 +77,13 @@
       "items": [
         "**`pickle.loads()`, `shelve` and `yaml.load()`.** Unpickling can run arbitrary code[^owaspdeser], and `shelve` and `multiprocessing`'s `Connection.recv()` use pickle[^secwarn]. Use `json`, and `yaml.safe_load()` for YAML[^owaspdeser].",
         "**`torch.load()` and `trust_remote_code=True`.** PyTorch has defaulted to `weights_only=True` since 2.6[^torchser], but that mode allowed code execution until 2.10.0[^torchghsa]. Prefer safetensors[^b614]. `trust_remote_code=True` runs code from the Hub repository on your machine[^hfauto].",
-        "**`eval()` and `ast.literal_eval()`.** Ruff's S307 suggests `literal_eval()` in place of `eval()`[^ruff], but Python's docs advise against it for untrusted data, as small inputs can exhaust memory or crash the process[^ast]. Use `json.loads()`.",
+        "**`eval()` and `ast.literal_eval()`.** Ruff's S307 suggests `literal_eval()` in place of `eval()`[^ruff], but Python's docs advise against it for untrusted data: small inputs can exhaust memory or crash the process[^ast]. Use `json.loads()`.",
         "**`subprocess.run(cmd, shell=True)`.** With a shell, quoting is your job[^subprocess]. Pass a list such as `[\"convert\", src, dst]` without `shell=True`[^subprocess], and put `--` before values that may start with a dash, a bug CPython fixed in `webbrowser.open()` in 2026[^secann].",
         "**SQL in f-strings, `%` or `.format()`.** Pass values as parameters (`%s` in psycopg) or in a `t\"...\"` string, which psycopg 3.3 parameterizes; an `f` in its place pastes values into the SQL[^psycopg]. In Django, never pass a user-supplied dict to `filter()` or `Q()` with `**`: that allowed SQL injection until November 2025[^djnov].",
         "**Templates built from user input.** `render_template_string()` or `from_string()` on user text can lead to remote code execution[^owaspssti]. Pass input as variables to fixed template files, and set `autoescape=select_autoescape()`, since Jinja doesn't escape by default[^jinjaapi].",
         "**`tarfile.extractall()`.** Pass `filter=\"data\"` before Python 3.14, which made it the default[^tarfile]. It isn't a sandbox: from June to October 2026 the PSF published seven advisories for archives that got past the filters[^secann]. Extract into a new empty directory with OS-level limits[^tarfile].",
         "**`os.path.join(base, name)` and `Path(base) / name`.** An absolute `name` discards `base`[^pathlib]. Resolve the result, then check `is_relative_to(base.resolve())`; on unresolved paths that check ignores `..`[^pathlib].",
-        "**`requests.get(url)` without `timeout=`, or with `verify=False`.** Requests never times out unless you set a timeout, and `verify=False` accepts any certificate[^reqadv]. Requests trusts the CA list in `certifi`, so update certifi like any other dependency[^reqadv].",
+        "**`requests.get(url)` without `timeout=`, or with `verify=False`.** Requests never times out unless told to, and `verify=False` accepts any certificate. It trusts the CA list in `certifi`, so keep certifi updated[^reqadv].",
         "**`assert` for checks.** `python -O` and `PYTHONOPTIMIZE=1` skip asserts; aiohttp's POST parsing could then loop forever (CVE-2025-69227)[^aiohttpassert]. Raise exceptions for permission and input checks."
       ]
     },
@@ -95,7 +95,7 @@
       "items": [
         "**Ruff's `S` rules.** Add `\"S\"` to `select` under `[tool.ruff.lint]` and fix S301 (pickle), S506 (YAML), S602 (shell), S608 (SQL), S202 (tar), S113 (timeouts) and S311 (`random`) first[^ruff].",
         "**Bandit for ML code.** B614 flags `torch.load()` calls[^b614], which Ruff doesn't[^ruff].",
-        "**CodeQL.** Use the `security-extended` suite: queries such as `py/tarslip` aren't in the default one[^codeqltar].",
+        "**CodeQL.** Run the `security-extended` suite on pull requests; it adds queries that the default suite leaves out.",
         "**pip-audit.** It checks environments, requirements files and, with `--locked`, `pylock.*.toml` files against PyPI's advisory data or OSV[^pipaudit]."
       ]
     },
@@ -106,8 +106,7 @@
       "navTitle": "What changed",
       "items": [
         "**Python 3.10 is end of life.** Support ended on 1 October 2026, and 3.15.0 shipped on 9 October[^versions].",
-        "**A CA compromise reached Python's trust stores.** In October the PSF told users to upgrade to certifi 2026.10.19, pip 26.2.2 and uv 0.13.6 in every virtual environment, move to Python 3.11.18, 3.12.16, 3.13.18, 3.14.10 or 3.15.2 and rebuild images without cached layers[^emudhra].",
-        "**Python 3.15 deprecates `import` lines in `.pth` files.** New `.start` files hold startup entry points instead (PEP 829)[^site]."
+        "**A CA compromise reached Python's trust stores.** In October the PSF told users to upgrade to certifi 2026.10.19, pip 26.2.2 and uv 0.13.6 in every virtual environment, move to Python 3.11.18, 3.12.16, 3.13.18, 3.14.10 or 3.15.2 and rebuild images without cached layers[^emudhra]."
       ]
     },
     {
@@ -117,8 +116,7 @@
       "items": [
         "**defusedxml for standard library parsers.** Python's docs don't recommend it now: Expat doesn't read local files or open connections by default, and entity expansion attacks affect Expat before 2.7.2[^xml]. Check `pyexpat.EXPAT_VERSION` in CI and turn off Ruff's S313 to S319[^ruff].",
         "**Import-level lint warnings.** Turn off S403 and S404, which fire on any import of `pickle` or `subprocess`, and S603, which fires on every `subprocess` call without a shell[^ruff].",
-        "**A `find_class` allowlist for pickle.** Change the format instead. PyTorch's own restricted unpickler needed a code execution fix in 2026[^torchghsa].",
-        "**Hiding FastAPI's `/docs`.** It doesn't protect the API operations[^owaspfastapi]."
+        "**A `find_class` allowlist for pickle.** Change the format instead. PyTorch's own restricted unpickler needed a code execution fix in 2026[^torchghsa]."
       ]
     },
     {
@@ -127,9 +125,9 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Shipping with the debugger on.** Flask's debugger runs Python sent from the browser[^flaskdebug], and Django's `DEBUG = True` leaks source excerpts and settings. Run `manage.py check --deploy` in CI[^djcheck].",
+        "**Shipping with the debugger on.** Ruff's S201 flags Flask's `debug=True`[^ruff]. Django's `DEBUG = True` leaks source excerpts and settings; run `manage.py check --deploy` in CI[^djcheck].",
         "**Trusting FastAPI's `OAuth2PasswordBearer`.** It only extracts the token. Verify the signature, `exp`, `iss` and `aud` with PyJWT and a fixed `algorithms` list[^owaspfastapi].",
-        "**Ignoring `.pth` files.** An `import` line in one runs at every interpreter start[^site], and the malicious LiteLLM 1.82.8 shipped `litellm_init.pth`[^litellm]. Check images for unexpected ones; the supply-chain sheet covers the rest.",
+        "**Ignoring `.pth` files.** An `import` line in one runs at every interpreter start, and Python 3.15 deprecates such lines in favor of `.start` files[^site]. The malicious LiteLLM 1.82.8 shipped `litellm_init.pth`[^litellm]. Check images for unexpected ones; the supply-chain sheet covers the rest.",
         "**Running Python tools in an untrusted checkout.** The current or script directory can come first on `sys.path`, so a planted module can load. Use `python -I`, `-P` or `PYTHONSAFEPATH`[^secwarn]."
       ]
     },
@@ -145,7 +143,7 @@
           "items": [
             "Start on Python 3.14 or 3.15, where tar extraction uses the `data` filter by default[^tarfile].",
             "Turn on Ruff's `S` rules and pip-audit in the first CI pipeline.",
-            "Give every request and message type a pydantic model with `extra=\"forbid\"`."
+            "Give every input type a pydantic model with `extra=\"forbid\"`."
           ]
         },
         {
@@ -161,7 +159,7 @@
           "items": [
             "Run CodeQL's `security-extended` suite on every pull request and block merges on new alerts.",
             "Open untrusted archives, models and documents in a separate process with no secrets and OS-level limits[^tarfile].",
-            "Subscribe to security-announce@python.org and track each advisory to closure[^secann]."
+            "Subscribe to security-announce@python.org and close every advisory[^secann]."
           ]
         }
       ]
@@ -171,7 +169,7 @@
     {
       "date": "2026-11-03",
       "version": "0.1",
-      "text": "First draft, based on the Python docs, PSF advisories and notices, Django, PyTorch and aiohttp advisories, OWASP cheat sheets, Ruff, Bandit and CodeQL docs and the 2025 CWE Top 25."
+      "text": "First draft, based on the Python docs, PSF, Django, PyTorch and aiohttp advisories, OWASP cheat sheets, Ruff and Bandit docs and the 2025 CWE Top 25."
     }
   ],
   "sources": [
@@ -337,13 +335,6 @@
       "url": "https://docs.astral.sh/ruff/rules/#flake8-bandit-s"
     },
     {
-      "id": "codeqltar",
-      "title": "Arbitrary file write during tarfile extraction",
-      "publisher": "CodeQL query help",
-      "date": "checked 3 Nov 2026",
-      "url": "https://codeql.github.com/codeql-query-help/python/py-tarslip/"
-    },
-    {
       "id": "pipaudit",
       "title": "pip-audit",
       "publisher": "PyPA",
@@ -370,13 +361,6 @@
       "publisher": "Python docs",
       "date": "updated 2 Nov 2026",
       "url": "https://docs.python.org/3/library/xml.html#xml-security"
-    },
-    {
-      "id": "flaskdebug",
-      "title": "Debugging Application Errors",
-      "publisher": "Flask documentation (3.1.x)",
-      "date": "checked 3 Nov 2026",
-      "url": "https://flask.palletsprojects.com/en/stable/debugging/"
     },
     {
       "id": "djcheck",
