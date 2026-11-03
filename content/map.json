@@ -41,7 +41,8 @@
       "name": "Cloud and infrastructure",
       "capabilities": [
         { "id": "cloud", "name": "Cloud configuration" },
-        { "id": "edge", "name": "Network and edge devices" },
+        { "id": "edge", "name": "Edge devices" },
+        { "id": "segmentation", "name": "Network segmentation" },
         { "id": "endpoint", "name": "Endpoints and email" }
       ]
     },
