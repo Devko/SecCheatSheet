@@ -1,0 +1,379 @@
+{
+  "slug": "secure-rust",
+  "topic": "Secure Rust",
+  "status": "draft",
+  "order": 14,
+  "capability": "coding/rust",
+  "title": "Rust: it's memory-safe, so what can still go wrong?",
+  "short": "Forbid `unsafe` outside a few reviewed modules, turn on overflow checks in release builds and keep attacker input away from panics.",
+  "answer": "Before your next release, forbid `unsafe` where you don't need it, run the rest under Miri, turn on release overflow checks and keep untrusted input away from panics. Judge everything else by whether it guards what the compiler can't check: `unsafe` code, FFI, sizes and paths from input, and code that runs at build time.",
+  "audience": "Developers and tech leads writing production Rust, and the security people who review it",
+  "version": "0.1",
+  "lastReviewed": "2026-11-03",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "intro": "Seven of the 2025 CWE Top 25 are buffer overflows, out-of-bounds access, use after free or NULL dereference[^cwe25]. Android estimates 0.2 memory-safety vulnerabilities per million lines of Rust, against about 1,000 in C and C++[^android]. Panics, overflow, deadlocks and logic errors remain[^refnot].",
+      "items": [
+        {
+          "title": "Forbid unsafe code wherever you can.",
+          "text": "Set `unsafe_code = \"forbid\"` under `[lints.rust]`[^manifest] in crates that don't need it, and keep the rest in small modules behind a safe API. About 4% of Android's Rust is in `unsafe` blocks[^android]."
+        },
+        {
+          "title": "Justify and test every unsafe block.",
+          "text": "Require `// SAFETY:` comments with Clippy's `undocumented_unsafe_blocks`[^clippy] and run the tests under `cargo +nightly miri test`[^miri]. The kernel's CVE-2025-68260 hid behind a `SAFETY` comment that overlooked another thread[^cve68260]."
+        },
+        {
+          "title": "Turn on overflow checks in release builds.",
+          "text": "Release builds don't check overflow by default[^profiles]; in `bytes`, a wrapped `new_cap + offset` led to out-of-bounds slices[^bytes]. Set `overflow-checks = true` in `[profile.release]`."
+        },
+        {
+          "title": "Keep attacker input away from panics.",
+          "text": "`unwrap()`, indexing, slicing and division can panic[^clippy], unwinding the thread or, under `panic = \"abort\"`, ending the process[^refpanic]. `bcrypt::verify` panicked on hashes with multi-byte characters[^bcrypt]. On input paths use `get()`, `?` and `checked_*`."
+        },
+        {
+          "title": "Treat a build as running dependency code.",
+          "text": "Build scripts and proc macros run with the compiler's access to your files[^procmacro]; a compromised `arrayref` release used one to fetch malware[^arrayref]. Keep secrets out of build jobs and gate CI on `cargo deny check`[^cargodeny]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "review",
+      "title": "Review a Rust pull request",
+      "navTitle": "Review",
+      "items": [
+        {
+          "title": "New unsafe code, extern block or unsafe impl?",
+          "text": "Check each `SAFETY` comment against every caller and thread, check that a panic midway can't leave a broken state, and ask for a Miri test of the new path."
+        },
+        {
+          "title": "Can outside input reach a panic?",
+          "text": "Follow it to `unwrap`, `expect`, `[]`, slices and `/`. Ask for `get`, `?` or a checked method on that path."
+        },
+        {
+          "title": "Is every size computed with checked arithmetic?",
+          "text": "Look for `+`, `*` and `as` casts on lengths, offsets and capacities, and for lengths read from the input that reach an allocation."
+        },
+        {
+          "title": "Does input reach a process, a path or a query?",
+          "text": "Check `Command`, `Path::join` and archive extraction, then SQL, HTML and authorization, where Rust doesn't help."
+        },
+        {
+          "title": "New or updated dependency?",
+          "text": "Read the published files in crates.io's Code tab, which can differ from the repository[^cratesjul]. Start with `build.rs` and procedural macros."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "traps",
+      "title": "Rust traps and what to use instead",
+      "navTitle": "Traps",
+      "span": "full",
+      "items": [
+        "**`unsafe` that overlooks other threads.** Rust Binder's `SAFETY` comment assumed an entry was in its owner's list or in none, but `Node::release` had moved it, so two threads corrupted the same pointers[^cve68260]. Check each claim against every caller and thread, one operation per block (`multiple_unsafe_ops_per_block`)[^clippy].",
+        "**Unsafe cleanup that a panic interrupts.** `thin-vec` reset its length only after dropping the elements, so a panicking `Drop` let safe code cause a double free. Reset the length first or use a drop guard, as `std` does[^thinvec].",
+        "**Lengths read from the input.** A 512-byte file made a parser call `Vec::with_capacity` for 9.3 GB; under a memory limit the process aborts, and no `Result` catches that[^sheets]. Check each length against the bytes left, and cap body size before parsing.",
+        "**`Command` running a `.bat` or `.cmd` file on Windows.** `cmd.exe` splits arguments its own way, so before Rust 1.77.2 untrusted arguments could run commands (CVE-2024-24576, critical). Handle the `InvalidInput` error `spawn` now returns, and never pass untrusted input to `raw_arg`[^cve24576].",
+        "**`base.join(user_path)`.** An absolute `user_path` replaces the base[^path]; accept only `Component::Normal` parts. In archives, `tar` before 0.4.45 followed a planted symlink and changed permissions outside the extraction root[^tarcve].",
+        "**FFI boundaries.** Rust 2024 requires `unsafe extern` because a wrong signature in an `extern` block can cause undefined behavior[^edextern], as can a C++ exception unwinding into Rust through `extern \"C\"`[^refpanic]. Use `\"C-unwind\"` there, and `catch_unwind` in functions you export.",
+        "**Opening a repository you haven't reviewed.** Cargo can execute code from the project it runs in[^cargoaudit], and rust-analyzer runs build scripts and procedural macros by default[^ra]. Open strangers' pull requests in a VM without credentials."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Tools that catch it",
+      "navTitle": "Tools",
+      "items": [
+        "**rustc lints.** Set `unsafe_code = \"forbid\"` and `unsafe_op_in_unsafe_fn = \"deny\"` under `[lints.rust]`[^manifest].",
+        "**Clippy restriction lints,** off by default: `undocumented_unsafe_blocks`, `multiple_unsafe_ops_per_block`, `unwrap_used`, `indexing_slicing`, `string_slice` and `arithmetic_side_effects`[^clippy].",
+        "**Miri** finds out-of-bounds access, use after free, data races and aliasing violations, but only in the paths your tests run[^miri].",
+        "**`cargo fuzz`** for parsers, and **Kani** to check small `unsafe` cores for undefined behavior, panics and overflow across all inputs[^kani].",
+        "**`cargo audit`** checks `Cargo.lock`, and binaries built with `cargo auditable`, against RustSec[^cargoaudit]. **`cargo deny`** adds bans, licenses and allowed sources[^cargodeny]. **`cargo vet`** checks each dependency against audits by your team or organizations you trust[^cargovet]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Build-time malware hit a popular crate.** On 20 August, malicious releases of `arrayref` 0.3.10, `internment` 0.8.7 and `append-only-vec` 0.1.9 were online for up to 107 minutes. Search `~/.cargo/registry/cache` for them[^arrayref].",
+        "**Cargo gets cooldowns.** Rust 1.100, due 12 November, adds `registry.global-min-publish-age`, which skips newer versions not yet in `Cargo.lock`[^cargocl]. Set it in `.cargo/config.toml` to the supply-chain sheet's `\"3 days\"`.",
+        "**Cargo fixed crate-extraction flaws.** A malicious crate could alter permissions on arbitrary paths until 1.94.1[^cargocl], or overwrite another crate from the same third-party registry until 1.96.0[^cve5223].",
+        "**Miri copied every environment variable into `target/`** until the 22 September nightly, exposing CI secrets to pull requests through shared caches[^mirileak]. Rotate any that were exposed."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Banning `unsafe` outright.** FFI and hardware need it. Google calls a ban unworkable and trains developers to write it soundly instead[^android].",
+        "**Replacing every `unwrap()`.** One on a value you just checked, in a test or at startup is fine. Fix the paths untrusted input reaches.",
+        "**Ranking crates by how much `unsafe` they contain.** `bcrypt` forbids unsafe code and still panicked on input[^bcrypt]. Ask what a crate parses and how it's tested."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Dropping hardening because the code is Rust.** Android's hardened allocator made its first Rust memory-safety bug, CVE-2025-48530, non-exploitable[^android]. Keep hardened allocators, sandboxes and least privilege for parsers.",
+        "**Giving build and test jobs secrets.** Neither Cargo nor Miri guarantees that environment variables stay out of `target/`[^mirileak]. Give secrets only to the deploy step."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like for your code",
+      "navTitle": "By codebase",
+      "span": "full",
+      "columns": [
+        {
+          "title": "New project",
+          "items": [
+            "Start on edition 2024 with `unsafe_code = \"forbid\"` and the Clippy panic lints in the workspace `Cargo.toml`.",
+            "Set `overflow-checks = true` for release from the first commit.",
+            "Make `cargo deny check` and `cargo clippy` required CI checks."
+          ]
+        },
+        {
+          "title": "Existing codebase",
+          "items": [
+            "List every `unsafe` block, `extern` block and `unsafe impl`, and review first those that touch parsed input.",
+            "Add `SAFETY` comments as you go, then turn on `undocumented_unsafe_blocks`.",
+            "Turn on release overflow checks and benchmark. Keep `wrapping_*` where wrapping is intended."
+          ]
+        },
+        {
+          "title": "High-assurance or regulated",
+          "items": [
+            "Prove the `unsafe` core with Kani and fuzz every parser continuously.",
+            "Use `cargo vet` so each dependency has a named reviewer, and build releases with `cargo auditable`.",
+            "For functional safety, Ferrocene is qualified for ISO 26262 ASIL D, IEC 61508 SIL 3 and IEC 62304 Class C[^ferrocene]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-03",
+      "version": "0.1",
+      "text": "First draft, based on Rust docs, Rust and RustSec advisories, Google's Android data and the 2025 CWE Top 25."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cwe25",
+      "title": "2025 CWE Top 25 Most Dangerous Software Weaknesses",
+      "publisher": "MITRE",
+      "date": "updated 15 Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "android",
+      "title": "Rust in Android: move fast and fix things",
+      "publisher": "Google",
+      "date": "13 Nov 2025",
+      "url": "https://blog.google/security/rust-in-android-move-fast-fix-things/"
+    },
+    {
+      "id": "refnot",
+      "title": "Rust Reference: Behavior not considered unsafe",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/reference/behavior-not-considered-unsafe.html"
+    },
+    {
+      "id": "manifest",
+      "title": "Cargo Book: The [lints] section",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/cargo/reference/manifest.html#the-lints-section"
+    },
+    {
+      "id": "clippy",
+      "title": "Clippy Lints",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://rust-lang.github.io/rust-clippy/stable/index.html"
+    },
+    {
+      "id": "miri",
+      "title": "Miri (README)",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/rust-lang/miri"
+    },
+    {
+      "id": "cve68260",
+      "title": "CVE-2025-68260: rust_binder: fix race condition on death_list",
+      "publisher": "Linux kernel",
+      "date": "16 Dec 2025",
+      "url": "https://www.cve.org/CVERecord?id=CVE-2025-68260"
+    },
+    {
+      "id": "profiles",
+      "title": "Cargo Book: Profiles",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/cargo/reference/profiles.html"
+    },
+    {
+      "id": "bytes",
+      "title": "RUSTSEC-2026-0007: Integer overflow in BytesMut::reserve",
+      "publisher": "RustSec",
+      "date": "3 Feb 2026",
+      "url": "https://rustsec.org/advisories/RUSTSEC-2026-0007.html"
+    },
+    {
+      "id": "refpanic",
+      "title": "Rust Reference: Panic",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/reference/panic.html"
+    },
+    {
+      "id": "bcrypt",
+      "title": "RUSTSEC-2026-0199: Panic in bcrypt::verify on non-ASCII hash input",
+      "publisher": "RustSec",
+      "date": "20 Jun 2026",
+      "url": "https://rustsec.org/advisories/RUSTSEC-2026-0199.html"
+    },
+    {
+      "id": "procmacro",
+      "title": "Rust Reference: Procedural macros",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/reference/procedural-macros.html"
+    },
+    {
+      "id": "arrayref",
+      "title": "Supply chain attack on arrayref",
+      "publisher": "Rust Blog",
+      "date": "20 Aug 2026",
+      "url": "https://blog.rust-lang.org/2026/08/20/supply-chain-attack-on-arrayref/"
+    },
+    {
+      "id": "cargodeny",
+      "title": "cargo-deny (README)",
+      "publisher": "Embark Studios",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/EmbarkStudios/cargo-deny"
+    },
+    {
+      "id": "cratesjul",
+      "title": "crates.io: development update",
+      "publisher": "Rust Blog",
+      "date": "13 Jul 2026",
+      "url": "https://blog.rust-lang.org/2026/07/13/crates-io-development-update/"
+    },
+    {
+      "id": "thinvec",
+      "title": "RUSTSEC-2026-0103: Use-after-free and double free in thin-vec",
+      "publisher": "RustSec",
+      "date": "14 Apr 2026",
+      "url": "https://rustsec.org/advisories/RUSTSEC-2026-0103.html"
+    },
+    {
+      "id": "sheets",
+      "title": "RUSTSEC-2026-0317: A 512-byte workbook can provoke a multi-GB allocation",
+      "publisher": "RustSec",
+      "date": "29 Sep 2026",
+      "url": "https://rustsec.org/advisories/RUSTSEC-2026-0317.html"
+    },
+    {
+      "id": "cve24576",
+      "title": "Security advisory for the standard library (CVE-2024-24576)",
+      "publisher": "Rust Blog",
+      "date": "9 Apr 2024",
+      "url": "https://blog.rust-lang.org/2024/04/09/cve-2024-24576/"
+    },
+    {
+      "id": "path",
+      "title": "std::path::Path::join",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/std/path/struct.Path.html#method.join"
+    },
+    {
+      "id": "tarcve",
+      "title": "CVE-2026-33056: tar-rs unpack_in can chmod arbitrary directories",
+      "publisher": "GitHub",
+      "date": "20 Mar 2026",
+      "url": "https://www.cve.org/CVERecord?id=CVE-2026-33056"
+    },
+    {
+      "id": "edextern",
+      "title": "Edition Guide: Unsafe extern blocks",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/edition-guide/rust-2024/unsafe-extern.html"
+    },
+    {
+      "id": "cargoaudit",
+      "title": "cargo audit (README)",
+      "publisher": "RustSec",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/rustsec/rustsec/tree/main/cargo-audit"
+    },
+    {
+      "id": "ra",
+      "title": "rust-analyzer manual: Configuration",
+      "publisher": "rust-analyzer",
+      "date": "checked 3 Nov 2026",
+      "url": "https://rust-analyzer.github.io/book/configuration.html"
+    },
+    {
+      "id": "kani",
+      "title": "The Kani Rust Verifier (README)",
+      "publisher": "Kani project",
+      "date": "checked 3 Nov 2026",
+      "url": "https://github.com/model-checking/kani"
+    },
+    {
+      "id": "cargovet",
+      "title": "cargo vet book",
+      "publisher": "Mozilla",
+      "date": "checked 3 Nov 2026",
+      "url": "https://mozilla.github.io/cargo-vet/"
+    },
+    {
+      "id": "cargocl",
+      "title": "Cargo Book: Changelog",
+      "publisher": "Rust",
+      "date": "checked 3 Nov 2026",
+      "url": "https://doc.rust-lang.org/nightly/cargo/CHANGELOG.html"
+    },
+    {
+      "id": "cve5223",
+      "title": "Security Advisory for Cargo (CVE-2026-5223)",
+      "publisher": "Rust Blog",
+      "date": "25 May 2026",
+      "url": "https://blog.rust-lang.org/2026/05/25/cve-2026-5223/"
+    },
+    {
+      "id": "mirileak",
+      "title": "GitHub Actions leaking secrets when Miri output is cached",
+      "publisher": "Rust Blog",
+      "date": "21 Sep 2026",
+      "url": "https://blog.rust-lang.org/2026/09/21/github-actions-leaking-secrets-when-miri-output-is-cached/"
+    },
+    {
+      "id": "ferrocene",
+      "title": "Ferrocene",
+      "publisher": "Ferrous Systems",
+      "date": "checked 3 Nov 2026",
+      "url": "https://ferrocene.dev/en/"
+    }
+  ]
+}
