@@ -36,7 +36,7 @@
         },
         {
           "title": "Patch the framework within days.",
-          "text": "CVE-2025-55182 (React2Shell), an unauthenticated remote code execution bug in React Server Components rated CVSS 10, was disclosed on 3 December 2025[^react2shell]. CISA listed it as exploited, with known ransomware use, two days later[^kev]. Patch within the patching sheet's deadlines and run Node.js 22, 24 or 26[^noderel]."
+          "text": "CVE-2025-55182 (React2Shell), an unauthenticated remote code execution bug in React Server Components rated CVSS 10, was disclosed on 3 December 2025[^react2shell]. CISA listed it as exploited two days later and now flags known ransomware use[^kev]. Patch within the patching sheet's deadlines and run Node.js 22, 24 or 26[^noderel]."
         }
       ]
     },
@@ -76,13 +76,13 @@
       "span": "full",
       "items": [
         "**`JSON.parse(body) as Order`.** The cast checks nothing, so a missing field or a wrong type flows on[^tseveryday]. Use `Order.parse(JSON.parse(body))` and treat `as` on outside data as a bug.",
-        "**`exec(\"convert \" + file)`.** `exec` runs a shell, and Node.js says never to pass it unsanitized input[^nodechild]. Use `execFile(\"convert\", [file])`, or `spawn` without `shell: true`. A command injection in the React Native CLI has been on CISA's exploited list since February 2026[^kev].",
-        "**`merge(target, req.body)` and `obj[key] = value`.** `__proto__` or `constructor.prototype` keys in input can add properties to every object in the process. oRPC's deserializer polluted the prototype before Zod validation ran (CVE-2026-28794, critical)[^orpc]. Use a `Map` or `Object.create(null)`[^owasppp], and make merge code skip those keys.",
+        "**`exec(\"convert \" + file)`.** `exec` runs a shell, and Node.js says never to pass it unsanitized input[^nodechild]. Use `execFile(\"convert\", [file])`, or `spawn` without `shell: true`, and reject a `file` that starts with `-`. A React Native CLI command injection is on CISA's exploited list[^kev].",
+        "**`merge(target, req.body)` and `obj[a][b] = value`.** `__proto__` or `constructor.prototype` keys in input can add properties to every object in the process. oRPC's deserializer polluted the prototype before Zod validation ran (CVE-2026-28794, critical)[^orpc]. Use a `Map` or `Object.create(null)`[^owasppp], and make merge code skip those keys.",
         "**`path.join(root, req.query.name)`.** Path traversal ranks 6th in the CWE Top 25[^cwe]. Resolve the path with `path.resolve` or `fs.realpath` and reject it unless it starts with the root folder plus `path.sep`.",
-        "**`fetch(req.body.webhookUrl)`.** It can reach internal services and the cloud metadata address `169.254.169.254`. Allowlist hosts, validate the IP address you connect to and disable redirects[^owaspssrf] with `redirect: \"error\"`. Until October's fix, Node.js's URL parser and the OS read `0127.0.0.1` as different addresses[^nodeoct].",
-        "**`new RegExp(input)` and nested quantifiers like `(a+)*`.** One crafted string can take exponential time and block the event loop[^nodeloop]. Cap the input length and use the `re2` package for patterns users supply[^nodeloop].",
-        "**`eval`, `new Function` and `node:vm`.** `vm` is not a security mechanism[^nodevm]. An expression evaluation flaw in n8n gave remote code execution and is on CISA's exploited list[^kev]. Run user code only in a separate container, and start Node.js with `--disallow-code-generation-from-strings`[^nodecli].",
-        "**`dangerouslySetInnerHTML` and user-supplied URLs.** React allows raw HTML only for trusted, sanitized data[^reactdom]. Accept only `https:` URLs, parsed with `new URL()`, and enforce Trusted Types with `require-trusted-types-for 'script'`[^mdntt]."
+        "**`fetch(req.body.webhookUrl)`.** It can reach internal services and the cloud metadata address `169.254.169.254`. Allowlist hosts, validate the IP address you connect to and disable redirects[^owaspssrf] with `redirect: \"error\"`. WHATWG URL rules read `0127.0.0.1` as `87.0.0.1`, some OS resolvers as `127.0.0.1`[^nodeoct].",
+        "**`new RegExp(input)` and nested quantifiers like `(a+)*`.** One crafted string can take exponential time and block the event loop. Cap the input length and use the `re2` package for patterns users supply[^nodeloop].",
+        "**`eval`, `new Function` and `node:vm`.** `vm` is not a security mechanism[^nodevm]. Remote code execution through n8n's expression evaluation is on CISA's exploited list[^kev]. Run user code only in its own container. `--disallow-code-generation-from-strings` blocks `eval` and `new Function`[^nodecli].",
+        "**`dangerouslySetInnerHTML` and user-supplied URLs.** React says raw HTML must come from a trusted source and be sanitized[^reactdom]. Accept only `https:` URLs, parsed with `new URL()`, and enforce Trusted Types with `require-trusted-types-for 'script'`[^mdntt]."
       ]
     },
     {
@@ -94,7 +94,7 @@
         "**tsc.** `strict` plus `noUncheckedIndexedAccess`, which isn't part of `strict`[^tsconfig].",
         "**typescript-eslint.** `strictTypeChecked` with `parserOptions.projectService: true` enables the `no-unsafe-*` rules, `no-implied-eval` and `no-non-null-assertion`. Add `no-unsafe-type-assertion` yourself[^tsestrict].",
         "**CodeQL.** `js/command-line-injection`, `js/path-injection`, `js/request-forgery`, `js/prototype-polluting-assignment` and `js/polynomial-redos` cover TypeScript too[^cql].",
-        "**Node.js flags.** `--disable-proto=delete` removes `__proto__`[^nodecli] but not `constructor.prototype`[^owasppp]. `--permission` with `--allow-fs-read` limits what your code reads[^nodeperm]."
+        "**Node.js flags.** `--disable-proto=delete` removes `__proto__`[^nodecli] but not `constructor.prototype`[^owasppp]. `--permission` with `--allow-fs-read` limits what your code reads through `node:fs`[^nodeperm]."
       ]
     },
     {
@@ -114,9 +114,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw was fixed in October in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
+        "**React Server Components had a second critical bug.** An unauthenticated remote code execution flaw, exploitable only in rare cases, was fixed on 14 October in 19.0.9, 19.1.10, 19.2.9 and 19.3.1[^rscoct].",
         "**Next.js shipped more middleware bypasses and critical fixes.** Five middleware or proxy bypasses came in May and July, and five critical remote code execution fixes from August to October[^nextadv]. Run at least 16.4.1 or 15.5.28[^nextsvg].",
-        "**TypeScript turned `strict` on by default.** TypeScript 6.0 did so in March[^ts6]. TypeScript 7.0, the native compiler, has no API yet, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
+        "**TypeScript turned `strict` on by default.** TypeScript 6.0 did so in March[^ts6]. TypeScript 7.0, the native compiler, has no API until 7.1, so typescript-eslint needs TypeScript 6 alongside[^ts7].",
         "**Node.js 20 reached end of life on 30 April.** Node.js 26 has been Active LTS since 28 October, and 22 ends on 30 April 2027[^noderel]. Type stripping, now stable, runs `.ts` files without checking types[^nodets].",
         "**Trusted Types work in every major browser.** They became Baseline in February[^mdntt], and React passes `TrustedHTML` to the DOM unchanged[^reactdom]."
       ],
@@ -323,7 +323,7 @@
       "title": "Don't Block the Event Loop",
       "publisher": "Node.js",
       "date": "checked 3 Nov 2026",
-      "url": "https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop"
+      "url": "https://nodejs.org/learn/asynchronous-work/dont-block-the-event-loop"
     },
     {
       "id": "nodevm",
