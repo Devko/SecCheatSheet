@@ -56,6 +56,15 @@
       ]
     },
     {
+      "id": "coding",
+      "name": "Secure coding",
+      "capabilities": [
+        { "id": "typescript", "name": "TypeScript and Node.js" },
+        { "id": "rust", "name": "Rust" },
+        { "id": "python", "name": "Python" }
+      ]
+    },
+    {
       "id": "ai",
       "name": "AI",
       "capabilities": [
