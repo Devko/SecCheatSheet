@@ -1,14 +1,14 @@
 {
   "slug": "endpoints-email",
   "topic": "Endpoints and email",
-  "status": "draft",
+  "status": "published",
   "order": 19,
   "capability": "infrastructure/endpoint",
   "title": "Endpoints and email: which settings stop the attacks that actually land?",
-  "short": "Make EDR block, not just alert, and put users on standard accounts this month; take every mail domain to DMARC reject within 90 days.",
-  "answer": "This month, make EDR block on every laptop, remove users' local admin rights and turn on Microsoft's three standard attack surface reduction rules; this quarter, take your mail domains to DMARC reject and confirm every bank detail change by phone. Judge the rest by whether it stops pasted commands, fake sign-in pages or fake payment requests.",
+  "short": "Run EDR with tamper protection everywhere and put users on standard accounts this month; take every mail domain to DMARC enforcement within 90 days.",
+  "answer": "This month, run EDR with tamper protection on every laptop, remove users' local admin rights and turn on Microsoft's three standard attack surface reduction rules; this quarter, take your mail domains to DMARC enforcement and confirm every bank detail change by phone. Judge the rest by whether it stops pasted commands, fake sign-in pages or fake payment requests.",
   "audience": "IT teams in small and mid-size organizations managing Windows and Mac laptops, phones and Microsoft 365 or Google Workspace mail, often without security staff",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -19,12 +19,12 @@
       "navTitle": "Five things",
       "items": [
         {
-          "title": "Run EDR that blocks, on every device.",
+          "title": "Run EDR on every device, and lock it.",
           "text": "Defender for Endpoint Plan 1 lacks EDR; Defender for Business (in Business Premium) and Plan 2 have it[^mdb]. Turn on tamper protection, and on Macs move Defender's from audit mode to block[^tamper]."
         },
         {
           "title": "Take away local admin rights.",
-          "text": "Entra join makes the joining user a local admin by default[^localadmin]; turn that off in the device registration policy or Autopilot profile. Manage the built-in admin with Windows LAPS, which needs only Intune Plan 1[^laps]."
+          "text": "Entra join makes the joining user a local admin. Turn that off in the device registration policy or Autopilot profile, and fix joined devices with an Intune account protection policy[^localadmin]. Manage the built-in admin with Windows LAPS, which needs only Intune Plan 1[^laps]."
         },
         {
           "title": "Turn on attack surface reduction rules.",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Take every mail domain to DMARC enforcement.",
-          "text": "Set up SPF and DKIM for every sender, then step DMARC from `p=none` via `p=quarantine` to `p=reject`, Microsoft's goal for every domain[^dmarcms]. Today, publish `v=DMARC1; p=reject;` on domains that never send mail, including onmicrosoft.com if unused[^dmarcms]."
+          "text": "Set up SPF and DKIM for every sender, then step DMARC from `p=none` via `p=quarantine` to `p=reject`, Microsoft's goal for every domain[^dmarcms]. RFC 9989 advises against `p=reject` where users post to mailing lists[^rfc9989]. Today, publish `v=DMARC1; p=reject;` on domains that never send mail, including onmicrosoft.com if unused[^dmarcms]."
         },
         {
           "title": "Confirm payment changes on a known number.",
@@ -56,7 +56,7 @@
         },
         {
           "title": "Audit the other ASR rules, then block.",
-          "text": "Run them in audit mode for a few weeks, add per-rule exclusions only for named business apps, then switch to block[^asr]."
+          "text": "Run them in audit mode for a few weeks, plus the WMI rule if you use Configuration Manager. Add per-rule exclusions only for named business apps, then switch to block[^asr]."
         },
         {
           "title": "Add application control in audit mode.",
@@ -74,7 +74,7 @@
       "title": "Device settings that close the common paths",
       "navTitle": "Devices",
       "items": [
-        "**Block macro and script paths.** Office on Windows blocks macros in files from the internet by default, but the enforcing policy needs Microsoft 365 Apps for enterprise[^macros]. Add the ASR rules against macro Win32 API calls, obfuscated scripts and scripts launching downloads[^asr].",
+        "**Block macro and script paths.** Office on Windows blocks macros in files from the internet by default, but the policy that enforces it works only in Microsoft 365 Apps for enterprise, not for business[^macros]. Add the ASR rules against macro Win32 API calls, obfuscated scripts and scripts launching downloads[^asr].",
         "**Limit what pasted commands can do.** ClickFix lures, which get users to paste a command into Run, Terminal or File Explorer, ran on over 1.1 million devices from February to early May 2026. Restrict PowerShell and JavaScript and enforce application control in user-writable folders[^mddr].",
         "**Allow remote support tools for IT only.** Vishing callers get victims to grant access through one, then finish reconnaissance in two minutes or less[^mddr]. Block the rest with application control.",
         "**Allowlist browser extensions.** Set Edge's ExtensionInstallBlocklist to `*` and list approved ones in ExtensionInstallAllowlist[^edgeext]. At the average company, over 15% of users had unauthorized AI extensions[^dbir].",
@@ -90,9 +90,9 @@
       "items": [
         "**Turn on the preset policies.** Assign Microsoft's Standard preset security policy to everyone and Strict to admins, finance and executives; until you turn them on, they apply to no one[^preset]. In Google Workspace, turn on every option under Gmail **Safety**[^gws].",
         "**Remove the Safe Links click-through.** Microsoft advises time-of-click URL checks without a user override; 89% to 96% of malicious attachments each month led to phishing pages, not malware[^mddr].",
-        "**Mark external mail.** `Set-ExternalInOutlook -Enabled $true` adds an External tag in Outlook on every platform[^exttag].",
-        "**Block automatic external forwarding.** Set the outbound spam policy to **Off - Forwarding is disabled**; the default, Automatic, varies by tenant. A compromised account can also add forwarding rules[^fwd]: see the incident response sheet.",
-        "**Reject Direct Send.** Run `Set-OrganizationConfig -RejectDirectSend $true` (off by default) once no scanner or app uses Direct Send[^directsend].",
+        "**Mark external mail.** `Set-ExternalInOutlook -Enabled $true` adds an External tag in supported versions of Outlook on every platform[^exttag].",
+        "**Block automatic external forwarding.** Set the outbound spam policy to **Off - Forwarding is disabled**; the default, Automatic, varies by tenant. Off also disables inbox rules that forward outside, which attackers add to compromised accounts[^fwd].",
+        "**Reject Direct Send.** Run `Set-OrganizationConfig -RejectDirectSend $true` once every scanner or app that uses Direct Send has an inbound connector[^directsend].",
         "**Require TLS with MTA-STS.** Publish the policy in testing mode, then enforce. Exchange Online already checks other domains' policies on outbound mail[^mtasts]."
       ]
     },
@@ -103,9 +103,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**DMARC became a standards-track RFC.** RFC 9989 replaced RFC 7489 in May 2026 and swaps the `pct` tag for `t` (testing). It says domains whose users post to mailing lists should not publish `p=reject`, so check your reports for list traffic first[^rfc9989].",
+        "**DMARC became a standards-track RFC.** RFC 9989 replaced RFC 7489 and RFC 9091 in May 2026. It swaps the `pct` tag, which Microsoft's guide still uses[^dmarcms], for `t` (testing), and requires DKIM signing on domains that publish `p=reject`[^rfc9989].",
         "**Windows 11 24H2 Home and Pro lost support.** They no longer get updates, and Enterprise 23H2 stops on 10 November 2026[^w11].",
-        "**Administrator protection shipped.** The October 2026 update turns it on where Microsoft's Windows security baselines apply. Microsoft says not to use it on LAPS-managed devices[^adminprot], so set the policy explicitly."
+        "**Administrator protection shipped.** The October 2026 update turns it on where Microsoft's Windows security baselines apply. Microsoft says not to use it on LAPS-managed devices[^adminprot], so set the policy explicitly on those."
       ]
     },
     {
@@ -148,7 +148,7 @@
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Audit every ASR rule for a month, then block.",
+            "Audit the other ASR rules for a month, then block.",
             "Pilot App Control for Business with the Intune managed installer.",
             "Use Strict presets for finance and admins; enforce MTA-STS and reject Direct Send."
           ]
@@ -158,13 +158,18 @@
           "items": [
             "Enforce App Control on all workstations.",
             "Handle elevation requests with Endpoint Privilege Management, not admin accounts.",
-            "Report weekly coverage: EDR blocking, ASR in block mode, encryption, supported OS."
+            "Report weekly coverage: EDR with tamper protection, ASR in block mode, encryption, supported OS."
           ]
         }
       ]
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which aligned the DMARC advice with RFC 9989 and narrowed 9 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
@@ -300,10 +305,10 @@
     },
     {
       "id": "directsend",
-      "title": "More control over Direct Send in Exchange Online",
-      "publisher": "Microsoft Exchange Blog",
-      "date": "updated 20 May 2026",
-      "url": "https://techcommunity.microsoft.com/blog/exchange/introducing-more-control-over-direct-send-in-exchange-online/4408790"
+      "title": "Set-OrganizationConfig",
+      "publisher": "Microsoft Learn",
+      "date": "updated 29 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/set-organizationconfig"
     },
     {
       "id": "mtasts",
