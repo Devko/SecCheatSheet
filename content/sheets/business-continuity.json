@@ -99,7 +99,7 @@
       "navTitle": "Outage lessons",
       "span": "full",
       "items": [
-        "**One update can stop every Windows device.** A faulty CrowdStrike update on 19 July 2024 affected 8.5 million Windows devices[^msweston], and the manual fix could ask for each BitLocker recovery key[^kb]. Stage such updates, which customers can now control[^csrca], and make sure the help desk can read keys with servers down.",
+        "**One update can stop all your Windows devices.** A faulty CrowdStrike update on 19 July 2024 affected 8.5 million Windows devices[^msweston], and the manual fix could ask for each BitLocker recovery key[^kb]. Stage such updates, which customers can now control[^csrca], and make sure the help desk can read keys with servers down.",
         "**Sign-in and phones are dependencies.** In AWS's October 2025 outage, Identity Center users in us-east-1 couldn't sign in and callers to Amazon Connect contact centers got busy tones[^aws]. Test emergency access to each cloud console and keep a fallback phone number."
       ]
     },
@@ -111,7 +111,7 @@
       "items": [
         {
           "title": "Can you reach the crisis team?",
-          "text": "Run an unannounced alert test after hours over the backup channel. BSI requires alert and crisis staff exercises even at its entry stage[^bsi2004]."
+          "text": "Run an unannounced alert test after hours over the backup channel, and tell the works council first. BSI's standard requires alert and crisis staff exercises even at its entry stage[^bsi2004]."
         },
         {
           "title": "Do the decisions hold up?",
@@ -146,7 +146,7 @@
       "items": [
         "**A power failure in one zone slowed a cloud region.** On 20 October 2026, generators at Google Cloud's London zone europe-west2-b failed to start; other zones were affected and some failovers failed for lack of capacity[^gcp]. Test failover at full capacity.",
         "**The NCSC published guidance on recovering to minimum viable operations:** the lowest level at which you can operate safely, meet legal duties and keep trust[^ncscrec2]. Set one per critical process.",
-        "**Germany's KRITIS umbrella act took effect** on 17 March 2026. Critical facility operators need a resilience plan 10 months after registering, with recovery measures such as emergency power[^kritis]."
+        "**Germany's KRITIS umbrella act took effect** on 17 March 2026, but the ordinance defining critical facilities is still being drafted[^bbkfaq]. Once registered, most operators outside IT, telecom and finance need a resilience plan within 10 months, with recovery measures such as emergency power[^kritis]."
       ]
     },
     {
@@ -170,7 +170,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Follow BSI-Standard 200-4's reactive entry stage: crisis team with deputies, a 7-day shortlist and one-page workarounds[^bsi2004].",
+            "Unless regulated, follow BSI-Standard 200-4's reactive entry stage: crisis team with deputies, a 7-day shortlist and one-page workarounds[^bsi2004].",
             "Print the plan, the phone tree and the BitLocker key steps; keep copies with two people at home.",
             "Ask your IT provider and key SaaS suppliers how fast they restore and how they'd reach you without email."
           ]
@@ -187,7 +187,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "NIS2 requires business continuity and crisis management[^nis2]; point 4 of Implementing Regulation 2024/2690 details it for digital providers[^nis2ir].",
-            "Under DORA, test yearly with cyberattack and switchover scenarios and keep a crisis management function[^dora].",
+            "Under DORA, test yearly. Unless you're a microenterprise, include cyberattack and switchover scenarios and keep a crisis management function[^dora].",
             "Exercise the loss of a cloud zone and region, and check which SaaS suppliers share them."
           ]
         }
@@ -268,9 +268,16 @@
     {
       "id": "kritis",
       "title": "KRITIS-Dachgesetz, §§ 8 and 13",
-      "publisher": "Federal Ministry of Justice (Germany)",
+      "publisher": "BMJV (Germany)",
       "date": "checked 4 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/kritisdachg/BJNR0420B0026.html"
+    },
+    {
+      "id": "bbkfaq",
+      "title": "FAQ zum KRITIS-Dachgesetz",
+      "publisher": "BBK (Germany)",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.bbk.bund.de/DE/Themen/Kritische-Infrastrukturen/Strategien-und-rechtlicher-Rahmen/KRITISDachG/FAQ/faq_node.html"
     },
     {
       "id": "msweston",
