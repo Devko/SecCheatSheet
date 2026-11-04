@@ -1,14 +1,14 @@
 {
   "slug": "ai-act",
   "topic": "AI governance and the AI Act",
-  "status": "draft",
+  "status": "published",
   "order": 23,
   "capability": "ai/governance",
   "title": "AI Act: what do you owe for each AI system, and by when?",
   "short": "List every AI system with your role and its risk class; Annex III high-risk duties start 2 December 2027.",
   "answer": "This quarter, list every AI system you use, build or sell with your role and its risk class, and check that none is banned and that chatbots and AI content are disclosed as required since 2 August 2026. Then prepare the duties for any Annex III use, such as hiring or credit scoring, before they apply on 2 December 2027.",
   "audience": "Compliance, legal, security and IT leads in EU organizations that use or build AI, including providers of AI systems and models",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -191,6 +191,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check against the consolidated AI Act, which narrowed 13 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
