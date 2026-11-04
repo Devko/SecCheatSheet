@@ -111,7 +111,7 @@
         },
         {
           "title": "Which clocks have started?",
-          "text": "If it processed personal data for you, the GDPR's 72 hours generally start when it tells you[^edpb]. The EU security laws sheet has the NIS2 and DORA clocks."
+          "text": "For personal data it processed for you, the GDPR's 72 hours generally start when it tells you[^edpb]. The EU security laws sheet has the other clocks."
         }
       ]
     },
@@ -146,7 +146,7 @@
         "**Assuming outsourcing moves the duty.** The BSI says NIS-2 entities that outsource all IT remain responsible and that contracts alone aren't enough[^bsifaq]. DORA keeps financial entities fully responsible too[^dora].",
         "**Leaving access behind when a contract ends.** CISA warns that disabling MSP accounts then is easy to overlook[^aa22131a]. Klue's 2026 breach began with a legacy integration credential[^klue].",
         "**Tightening consent without cleanup.** New Entra consent settings leave existing grants in place[^consent]. Revoke the ones you don't need.",
-        "**Letting your MSP hold your only backups.** One breach of its accounts reaches both. Keep a copy it can't delete, as the ransomware sheet describes."
+        "**Letting your MSP hold your only backups.** One breach of its accounts then reaches both. Keep a copy it can't delete."
       ]
     },
     {
@@ -160,7 +160,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Get a list of every account, tool and token your IT provider uses with you, all with 2-step verification[^ncscmsp].",
-            "Remove Global Administrator from partners under **Settings** > **Partner relationships** in Microsoft 365[^dap].",
+            "In Microsoft 365, remove partners' Global Administrator role under **Settings** > **Partner relationships**[^dap].",
             "Agree how fast your provider reports incidents, and ask for a monthly health report[^ncscmsp]."
           ]
         },
