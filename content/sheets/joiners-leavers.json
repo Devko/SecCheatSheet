@@ -1,0 +1,360 @@
+{
+  "slug": "joiners-leavers",
+  "topic": "Joiners, movers and leavers",
+  "status": "draft",
+  "order": 26,
+  "capability": "identity/lifecycle",
+  "title": "Joiners, movers and leavers: does access end with the job?",
+  "short": "Drive accounts from HR dates, cut every access on the last day, and review guests and dormant accounts every quarter.",
+  "answer": "Feed hire, move and leave dates from HR into Entra ID or Google Workspace this quarter, and on each last day disable the account and revoke its sessions. Then chase what the directory doesn't reach: apps outside SSO, shared passwords and keys, and guests, contractors and service accounts without an owner and an end date.",
+  "audience": "IT, HR-IT and security teams, mostly on Microsoft Entra ID and Microsoft 365, some on Google Workspace",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Make HR the trigger.",
+          "text": "Connect HR to Entra ID through the Workday or SuccessFactors connector, or through API-driven provisioning from any HR system or CSV export. Both need Entra ID P1[^govlic]. Hires, changes and terminations then create, update and disable accounts[^hrprov]."
+        },
+        {
+          "title": "Grant access by role, not by copying a colleague.",
+          "text": "Give each department and location a birthright group with its apps and licenses. Route the rest through requests with an approver and an end date, such as access packages (Entra ID P2)[^govlic]. BSI requires removing rights no longer needed when personnel change[^bsiorp4]."
+        },
+        {
+          "title": "Cut access everywhere on the last day.",
+          "text": "Disable the account and revoke its sessions. Exchange, SharePoint and Teams react within minutes[^cae]; other apps keep working until their access token expires, after 1 hour by default, or their own session ends[^revoke]."
+        },
+        {
+          "title": "Put every SaaS app behind SSO and SCIM.",
+          "text": "SCIM provisioning disables the app account when the user is disabled or unassigned, typically within 20 to 40 minutes[^revoke][^provworks]. Entra ID can't end sessions an app issued itself[^revoke], so give each app without SCIM an owner who removes accounts."
+        },
+        {
+          "title": "Give every guest, contractor and service account an owner and an end date.",
+          "text": "A guest invited through an access package is blocked when the last one expires and removed 30 days later by default[^emext]. Give service accounts an owner and credentials that expire[^svcgov]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "last-day",
+      "title": "Offboard a leaver in this order",
+      "navTitle": "Last day",
+      "items": [
+        {
+          "title": "Is the departure hostile?",
+          "text": "Then disable access while the person is being told, or before[^sp80053]. Otherwise set the leave date in HR so the workflows run on time."
+        },
+        {
+          "title": "Disable the account and sign it out.",
+          "text": "Disable the user in AD and in Entra ID, then select **Revoke sessions**[^revoke]. Blocking sign-in can take up to 24 hours to apply everywhere, so also reset the password[^m365block]."
+        },
+        {
+          "title": "Remove what lets the person back in.",
+          "text": "Delete their sign-in methods, disable their devices[^revoke], remove groups, roles and access packages, and turn off POP, IMAP and ActiveSync[^m365block]. In Google Workspace, reset sign-in cookies and revoke OAuth tokens, security keys and app passwords[^gwssecure]."
+        },
+        {
+          "title": "Hand over mail and files.",
+          "text": "Apply a retention policy before you delete the account, or the mailbox is gone after 30 days[^inactivembx]. Move OneDrive files to a successor: unlicensed OneDrives turn read-only after 60 days and are archived after 93[^onedrive]."
+        },
+        {
+          "title": "Close what the directory doesn't reach.",
+          "text": "Remove local accounts in apps outside SSO, rotate shared passwords and API keys the person knew[^sp80053], and give their apps, automations and files a new owner."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "joiners",
+      "title": "Joiners: the right access on day one",
+      "navTitle": "Joiners",
+      "items": [
+        "**Create the account from the HR record, before day one.** Lifecycle workflows can email the manager a Temporary Access Pass 7 days before `employeeHireDate` and enable the account on the day[^lcwtemplates], with Entra ID Governance[^govlic]. The passkeys sheet covers first sign-in.",
+        "**Verify remote hires before the account goes live.** Mandiant measured a median dwell time of 122 days for North Korean IT worker and espionage incidents[^mtrends].",
+        "**Never clone a colleague.** Copying a long-tenured colleague's access copies everything they collected."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "movers",
+      "title": "Movers: take the old access away",
+      "navTitle": "Movers",
+      "items": [
+        "**Trigger on the HR change.** Entra's job profile change workflow notifies the manager and removes old access packages after 15 days by default[^lcwtemplates].",
+        "**Remove old access on a date, not on request.** NIST asks you to confirm the ongoing need for current access at every transfer[^sp80053].",
+        "**Let groups follow HR attributes.** Dropping out of a dynamic group assigned to an app counts as a deprovisioning event for SCIM[^provworks]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "outsiders",
+      "title": "Guests, contractors and service accounts",
+      "navTitle": "Non-employees",
+      "items": [
+        "**Give contractors an end date at creation.** NIST asks suppliers to report when their staff with your credentials leave[^sp80053]; put a deadline for it in the contract.",
+        "**Review guests by inactivity.** Entra access reviews can target guests inactive for up to 730 days, block them for 30 days, then delete them[^review]. Inactive-user reviews need Entra ID Governance[^govlic].",
+        "**Remove guest access in your own tenant.** Revoking refresh tokens doesn't end a guest's home-tenant session[^lcwtasks], and continuous access evaluation doesn't cover guests[^cae].",
+        "**Give service accounts a named owner.** Record owner, purpose and review date, prefer managed identities, and disable without deleting when the owner doesn't confirm[^svcgov]."
+      ],
+      "span": "full"
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Unlicensed OneDrives now get deleted.** Since 1 July 2026, an unlicensed OneDrive without paid storage faces deletion after 365 cumulative days, even under a retention policy or hold[^onedrive].",
+        "**Entra ID finds orphan accounts in connected apps.** Account discovery, generally available with Entra ID Governance since May 2026, lists accounts in provisioned apps, including orphan accounts[^entranew].",
+        "**Guest governance needs its own billing.** Since January 2026, Entra ID Governance features for guests, such as inactive-guest reviews, need a linked Azure subscription[^entranew].",
+        "**AI agents get a new sponsor when people leave.** Since May 2026, lifecycle workflows can move a leaver's agent sponsorships to their manager[^entranew], with Microsoft Agent 365[^lcwtemplates]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A company-wide role model before you automate.** Start with birthright groups per department and location, and refine them from what people request.",
+        "**Reviews of every group by every manager.** Bulk approvals catch little. Review guests, sensitive apps and inactive users, with the **No sign-in within 30 days** recommendation on[^review].",
+        "**Short inactivity cutoffs.** 30 days hits people on vacation or parental leave. Microsoft calls 90 to 180 days reasonable in many organizations[^inactive].",
+        "**Deleting accounts on the last day.** Disable first: ENISA notes that disabling may be needed to keep audit trails[^enisa]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Disabling only in Active Directory.** Entra ID keeps the account and its sessions until the next sync. Disable and revoke there too[^revoke].",
+        "**Trusting lifecycle workflows with admins.** Their **Disable user account** task skips users with Entra roles or role-assignable groups[^lcwtasks]. See the privileged access sheet.",
+        "**Deleting a Google user before the handover.** Data only they owned is deleted, Vault holds stop applying and their group calendars go too[^gwsdelete]. Suspend or archive them first.",
+        "**Skipping the exit review.** Verizon found that an activity review when someone with sensitive access leaves has caught numerous breaches[^dbir]. In Germany, the works council co-determines systems designed to monitor employees[^betrvg]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Keep a one-page leaver checklist that HR starts on notice. BSI says IT must hear of every departure[^bsiorp2].",
+            "List every app with its own login, and keep shared passwords in a team password manager.",
+            "In the Microsoft 365 admin center, reset the password, sign out all sessions and block sign-in[^m365block]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Connect HR to Entra ID and set `employeeLeaveDateTime` for every leaver.",
+            "Turn on SCIM for the apps holding the most data, and make SSO and SCIM a buying requirement.",
+            "Review identities at least quarterly, as ENISA suggests[^enisa], and disable accounts unused for 90 days."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run lifecycle workflows and account discovery, and report the hours from HR termination to the last access removed.",
+            "Cloud, MSP and other digital providers under NIS2 must keep a register of access rights and log changes to it[^nis2ir].",
+            "In Germany, agree inactivity reports and exit reviews with the works council before rollout[^betrvg]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn pages on Entra ID Governance, provisioning and token revocation, Google Workspace Admin Help, NIST SP 800-53, the NIS2 implementing rules with ENISA's guidance, BSI IT-Grundschutz and the 2026 DBIR."
+    }
+  ],
+  "sources": [
+    {
+      "id": "govlic",
+      "title": "Microsoft Entra ID Governance licensing fundamentals",
+      "publisher": "Microsoft Learn",
+      "date": "29 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/licensing-fundamentals"
+    },
+    {
+      "id": "hrprov",
+      "title": "What is HR-driven provisioning with Microsoft Entra ID?",
+      "publisher": "Microsoft Learn",
+      "date": "9 Apr 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/app-provisioning/what-is-hr-driven-provisioning"
+    },
+    {
+      "id": "bsiorp4",
+      "title": "IT-Grundschutz ORP.4 Identitäts- und Berechtigungsmanagement",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/02_ORP_Organisation_und_Personal/ORP_4_Identitaets_und_Berechtigungsmanagement_Editon_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "bsiorp2",
+      "title": "IT-Grundschutz ORP.2 Personal",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/02_ORP_Organisation_und_Personal/ORP_2_Personal_Editon_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "cae",
+      "title": "Continuous access evaluation in Microsoft Entra",
+      "publisher": "Microsoft Learn",
+      "date": "8 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-continuous-access-evaluation"
+    },
+    {
+      "id": "revoke",
+      "title": "Revoke user access in an emergency in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "19 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/users/users-revoke-access"
+    },
+    {
+      "id": "provworks",
+      "title": "How Application Provisioning works in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "4 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works"
+    },
+    {
+      "id": "emext",
+      "title": "Govern access for external users in entitlement management",
+      "publisher": "Microsoft Learn",
+      "date": "9 Sep 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/entitlement-management-external-users"
+    },
+    {
+      "id": "svcgov",
+      "title": "Governing Microsoft Entra service accounts",
+      "publisher": "Microsoft Learn",
+      "date": "9 Feb 2023",
+      "url": "https://learn.microsoft.com/en-us/entra/architecture/govern-service-accounts"
+    },
+    {
+      "id": "sp80053",
+      "title": "SP 800-53 Rev. 5, Release 5.2.0: AC-2, PS-4, PS-5 and PS-7",
+      "publisher": "NIST",
+      "date": "27 Aug 2025",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final"
+    },
+    {
+      "id": "m365block",
+      "title": "Prevent user sign-in and block access to Microsoft 365",
+      "publisher": "Microsoft Learn",
+      "date": "5 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee-step-1"
+    },
+    {
+      "id": "gwssecure",
+      "title": "Maintain data security after an employee leaves",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/users/maintain-data-security-after-an-employee-leaves"
+    },
+    {
+      "id": "gwsdelete",
+      "title": "Delete or remove a user from your organization",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/users/delete-or-remove-a-user-from-your-organization"
+    },
+    {
+      "id": "inactivembx",
+      "title": "Learn about inactive mailboxes",
+      "publisher": "Microsoft Learn",
+      "date": "5 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/inactive-mailboxes-in-office-365"
+    },
+    {
+      "id": "onedrive",
+      "title": "Manage unlicensed OneDrive user accounts",
+      "publisher": "Microsoft Learn",
+      "date": "26 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/unlicensed-onedrive-accounts"
+    },
+    {
+      "id": "lcwtemplates",
+      "title": "Lifecycle Workflows templates and categories",
+      "publisher": "Microsoft Learn",
+      "date": "25 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/lifecycle-workflow-templates"
+    },
+    {
+      "id": "lcwtasks",
+      "title": "Lifecycle Workflows tasks and definitions",
+      "publisher": "Microsoft Learn",
+      "date": "25 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/lifecycle-workflow-tasks"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "review",
+      "title": "Create an access review of groups and applications",
+      "publisher": "Microsoft Learn",
+      "date": "12 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/create-access-review"
+    },
+    {
+      "id": "entranew",
+      "title": "Microsoft Entra releases and announcements",
+      "publisher": "Microsoft Learn",
+      "date": "26 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
+    },
+    {
+      "id": "inactive",
+      "title": "How to manage inactive user accounts",
+      "publisher": "Microsoft Learn",
+      "date": "21 Feb 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-manage-inactive-user-accounts"
+    },
+    {
+      "id": "enisa",
+      "title": "NIS2 technical implementation guidance, v1.0",
+      "publisher": "ENISA",
+      "date": "26 Jun 2025",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "betrvg",
+      "title": "Betriebsverfassungsgesetz (BetrVG), § 87",
+      "publisher": "Bundesministerium der Justiz",
+      "date": "as amended 19 Jul 2024",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Implementing Regulation (EU) 2024/2690, Article 1 and Annex point 11",
+      "publisher": "EUR-Lex",
+      "date": "17 Oct 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    }
+  ]
+}

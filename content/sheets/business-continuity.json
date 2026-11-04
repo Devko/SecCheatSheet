@@ -1,0 +1,325 @@
+{
+  "slug": "business-continuity",
+  "topic": "Business continuity",
+  "status": "draft",
+  "order": 28,
+  "capability": "resilience/continuity",
+  "title": "Business continuity: could you keep working for a week without a key system, supplier or site?",
+  "short": "List the processes that can't stop for a week, give each a written workaround and exercise the plan at least once a year.",
+  "answer": "This quarter, list the processes that would do serious harm if stopped for a week, set up a crisis team with deputies and a channel outside your own IT, and give each process a one-page workaround. Then run a tabletop and a technical failover at least once a year, and let the measured recovery times decide what to fix next.",
+  "audience": "IT, security, risk and operations leads in EU organizations of any size, including those under NIS2 or DORA",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "List the processes that can't stop for a week.",
+          "text": "Ask each department what 7 days of downtime would cost, and have management sign off the shortlist. BSI-Standard 200-4 uses such a prefilter to focus the impact analysis[^bsi2004]."
+        },
+        {
+          "title": "Set up the crisis team first.",
+          "text": "Name a lead, a deputy for each role and a channel that works without your own IT. BSI's entry stage starts here, because a crisis team allows a basic response before any plans exist[^bsi2004]."
+        },
+        {
+          "title": "Write a workaround for each critical process.",
+          "text": "Describe on one page how it runs on paper, by phone or on spare devices. The NCSC says organizations commonly run with limited or no IT for weeks after a disruptive attack[^ncscrec2]."
+        },
+        {
+          "title": "Set recovery targets and measure them.",
+          "text": "Give each critical process a maximum tolerable downtime, then recovery time and data loss targets for its systems[^bsi2004]. The backups and ransomware sheets cover restore tests."
+        },
+        {
+          "title": "Exercise at least once a year.",
+          "text": "Run a tabletop for decisions and a failover of one top system, and record the times. ENISA advises testing at least annually[^enisatig]; the NCSC warns that many plans fail in practice[^ncscbc]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "bia",
+      "title": "Run a lean impact analysis",
+      "navTitle": "Impact analysis",
+      "items": [
+        {
+          "title": "What would hurt within a week?",
+          "text": "Ask each unit what a 7-day outage would do to safety, operations, legal and contract duties, reputation and finances[^bsi2004]. Keep those above a threshold agreed with management."
+        },
+        {
+          "title": "How long can each process stop?",
+          "text": "Set the maximum tolerable period of disruption, a recovery time objective below it and a recovery point objective for its data[^bsi2004]."
+        },
+        {
+          "title": "What does it run on?",
+          "text": "List people, sites, IT systems, SaaS, suppliers and data. DORA requires the analysis to cover third-party dependencies and interdependencies[^dora]. Note which share a cloud region or identity provider."
+        },
+        {
+          "title": "What is good enough in a crisis?",
+          "text": "Set a minimum service level, such as the share of calls answered within a set time[^enisatig]."
+        },
+        {
+          "title": "Do your systems meet the targets?",
+          "text": "Compare each target with the last measured restore time. Close the gap, change the workaround or have management accept it."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "workarounds",
+      "title": "Keep working without your systems",
+      "navTitle": "Workarounds",
+      "items": [
+        "**Check what is critical this month.** Payroll, cash flow, regulatory reporting and peak seasons shift priorities[^ncscrec2]. Note the critical dates.",
+        "**Review workarounds for security.** Private email or a shared spreadsheet can add risk. Review each one before use and give it a review date so it doesn't become permanent[^ncscrec2].",
+        "**Plan how the data gets back.** Decide early how records kept on paper or in spreadsheets will be reconciled with restored systems[^ncscrec2].",
+        "**Keep the inputs on paper.** Print the plan, as ENISA suggests[^enisatig], plus contact lists, price lists and open orders."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "crisis",
+      "title": "Crisis team, decisions and messages",
+      "navTitle": "Crisis team",
+      "items": [
+        "**Agree when to declare a crisis.** Write criteria such as prolonged downtime, several sites hit or likely public scrutiny[^enisatig]. Anyone may escalate; named people declare.",
+        "**Decide authority in advance.** Record who makes strategic decisions, your risk appetite and escalation thresholds[^ncscdec], and who may stop deliveries or approve emergency spending. The incident response sheet covers the first hours.",
+        "**Prepare messages and channels.** Draft statements for staff, customers and suppliers, and keep channels that work when primary systems are down[^ncscdec]. The EU security laws sheet has the reporting clocks.",
+        "**Log decisions and times.** Each time the plan is activated, record decisions, steps and the final recovery time[^enisatig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "lessons",
+      "title": "What large outages teach",
+      "navTitle": "Outage lessons",
+      "span": "full",
+      "items": [
+        "**One update can stop every Windows device.** A faulty CrowdStrike update on 19 July 2024 affected 8.5 million Windows devices[^msweston], and the manual fix could ask for each BitLocker recovery key[^kb]. Stage such updates, which customers can now control[^csrca], and make sure the help desk can read keys with servers down.",
+        "**Sign-in and phones are dependencies.** In AWS's October 2025 outage, Identity Center users in us-east-1 couldn't sign in and callers to Amazon Connect contact centers got busy tones[^aws]. Test emergency access to each cloud console and keep a fallback phone number."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "exercises",
+      "title": "Exercise in this order",
+      "navTitle": "Exercises",
+      "items": [
+        {
+          "title": "Can you reach the crisis team?",
+          "text": "Run an unannounced alert test after hours over the backup channel. BSI requires alert and crisis staff exercises even at its entry stage[^bsi2004]."
+        },
+        {
+          "title": "Do the decisions hold up?",
+          "text": "Run a two-hour tabletop: a key SaaS supplier is gone for a week. The NCSC's Exercise in a Box has scenarios[^ncscbc]."
+        },
+        {
+          "title": "Do the workarounds work?",
+          "text": "Walk through each with the people who would run it, then try one for half a day."
+        },
+        {
+          "title": "Does failover work under load?",
+          "text": "Run real work on one top system's secondary site, zone or backup. DORA requires most financial entities to test such switchovers[^dora][^rts]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Treating recovery time as total downtime.** The recovery time objective runs from declaring the emergency, so detection and decision come off the tolerable downtime first[^bsi2004].",
+        "**Planning around one person.** If only one person knows the workaround, the plan fails when they are away. DORA's scenarios include losing a critical number of staff[^rts].",
+        "**Trusting the provider's redundancy.** Google says customers must provision failover for zonal resources such as VMs[^gcp]. Ask each critical SaaS provider what its plan leaves to you.",
+        "**Testing only the easy parts.** A tabletop alone doesn't show that a top system runs at the backup site. DORA's tests must challenge the plans' assumptions[^rts]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "items": [
+        "**A power failure in one zone slowed a cloud region.** On 20 October 2026, generators at Google Cloud's London zone europe-west2-b failed to start; other zones were affected and some failovers failed for lack of capacity[^gcp]. Test failover at full capacity.",
+        "**The NCSC published guidance on recovering to minimum viable operations:** the lowest level at which you can operate safely, meet legal duties and keep trust[^ncscrec2]. Set one per critical process.",
+        "**Germany's KRITIS umbrella act took effect** on 17 March 2026. Critical facility operators need a resilience plan 10 months after registering, with recovery measures such as emergency power[^kritis]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**An impact analysis of every process.** BSI's entry stages start with the most time-critical processes and add the rest in later cycles. If you're regulated, include all regulated processes in the first cycle[^bsi2004].",
+        "**Certification before the first exercise.** A certificate doesn't show that payroll runs on day three. ISO 22301 is also being revised[^din22301].",
+        "**Runbooks for every system.** Write them for the systems critical processes need. Restore the rest from backup in priority order.",
+        "**Multi-cloud as the plan.** Running everything twice is costly and rarely tested. First prove failover to a second zone or region."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Follow BSI-Standard 200-4's reactive entry stage: crisis team with deputies, a 7-day shortlist and one-page workarounds[^bsi2004].",
+            "Print the plan, the phone tree and the BitLocker key steps; keep copies with two people at home.",
+            "Ask your IT provider and key SaaS suppliers how fast they restore and how they'd reach you without email."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Have process owners set the targets for the shortlist and management sign them off.",
+            "Write runbooks for the top five systems and time one restore or failover each quarter.",
+            "Quick machine recovery's cloud remediation is off by default on managed devices[^qmr]: decide whether to turn it on, and stage EDR content updates."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "NIS2 requires business continuity and crisis management[^nis2]; point 4 of Implementing Regulation 2024/2690 details it for digital providers[^nis2ir].",
+            "Under DORA, test yearly with cyberattack and switchover scenarios and keep a crisis management function[^dora].",
+            "Exercise the loss of a cloud zone and region, and check which SaaS suppliers share them."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on BSI-Standard 200-4, Implementing Regulation 2024/2690 and ENISA's guidance on it, DORA and its ICT risk management standards, NCSC guidance on disruptive attacks and the providers' reports on the CrowdStrike, AWS and Google Cloud outages."
+    }
+  ],
+  "sources": [
+    {
+      "id": "bsi2004",
+      "title": "BSI-Standard 200-4 Business Continuity Management, version 1.0",
+      "publisher": "BSI",
+      "date": "May 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_4.pdf?__blob=publicationFile&v=8"
+    },
+    {
+      "id": "ncscrec2",
+      "title": "Disruptive cyber attacks: recovery and ongoing investigations",
+      "publisher": "NCSC (UK)",
+      "date": "28 Jul 2026, reviewed 1 Oct 2026",
+      "url": "https://www.ncsc.gov.uk/collection/disruptive-cyber-attacks/recovering/2-recovery-ongoing-investigations"
+    },
+    {
+      "id": "ncscbc",
+      "title": "Disruptive cyber attacks: prepare your business continuity",
+      "publisher": "NCSC (UK)",
+      "date": "1 Oct 2026",
+      "url": "https://www.ncsc.gov.uk/collection/disruptive-cyber-attacks/preparing/1-prepare-business-continuity"
+    },
+    {
+      "id": "ncscdec",
+      "title": "Disruptive cyber attacks: prepare to make critical decisions",
+      "publisher": "NCSC (UK)",
+      "date": "1 Oct 2026",
+      "url": "https://www.ncsc.gov.uk/collection/disruptive-cyber-attacks/preparing/4-prepare-critical-decisions"
+    },
+    {
+      "id": "enisatig",
+      "title": "NIS2 Technical Implementation Guidance, version 1.0",
+      "publisher": "ENISA",
+      "date": "26 Jun 2025",
+      "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
+    },
+    {
+      "id": "nis2",
+      "title": "Directive (EU) 2022/2555 (NIS2), Article 21",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Implementing Regulation (EU) 2024/2690, Article 1 and Annex point 4",
+      "publisher": "EUR-Lex",
+      "date": "17 Oct 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "dora",
+      "title": "Regulation (EU) 2022/2554 (DORA), Article 11",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "rts",
+      "title": "Delegated Regulation (EU) 2024/1774, Articles 25 and 26",
+      "publisher": "EUR-Lex",
+      "date": "13 Mar 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_del/2024/1774/oj"
+    },
+    {
+      "id": "kritis",
+      "title": "KRITIS-Dachgesetz, §§ 8 and 13",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/kritisdachg/BJNR0420B0026.html"
+    },
+    {
+      "id": "msweston",
+      "title": "Helping our customers through the CrowdStrike outage",
+      "publisher": "Microsoft",
+      "date": "20 Jul 2024",
+      "url": "https://blogs.microsoft.com/blog/2024/07/20/helping-our-customers-through-the-crowdstrike-outage/"
+    },
+    {
+      "id": "csrca",
+      "title": "Channel File 291 Incident Root Cause Analysis",
+      "publisher": "CrowdStrike",
+      "date": "6 Aug 2024",
+      "url": "https://www.crowdstrike.com/wp-content/uploads/2024/08/Channel-File-291-Incident-Root-Cause-Analysis-08.06.2024.pdf"
+    },
+    {
+      "id": "kb",
+      "title": "KB5042421: CrowdStrike issue impacting Windows endpoints",
+      "publisher": "Microsoft Support",
+      "date": "checked 4 Nov 2026",
+      "url": "https://support.microsoft.com/en-us/help/5042421"
+    },
+    {
+      "id": "qmr",
+      "title": "Quick machine recovery",
+      "publisher": "Microsoft Learn",
+      "date": "26 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/configuration/quick-machine-recovery/"
+    },
+    {
+      "id": "aws",
+      "title": "Summary of the Amazon DynamoDB service disruption in US-EAST-1",
+      "publisher": "AWS",
+      "date": "Oct 2025",
+      "url": "https://aws.amazon.com/message/101925/"
+    },
+    {
+      "id": "gcp",
+      "title": "Incident report: multiple services in europe-west2",
+      "publisher": "Google Cloud",
+      "date": "27 Oct 2026",
+      "url": "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"
+    },
+    {
+      "id": "din22301",
+      "title": "Project prEN ISO 22301 rev",
+      "publisher": "DIN",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.din.de/en/getting-involved/standards-committees/naorg/projects/wdc-proj:din21:398303008"
+    }
+  ]
+}

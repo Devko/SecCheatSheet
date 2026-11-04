@@ -1,0 +1,373 @@
+{
+  "slug": "backups",
+  "topic": "Backups",
+  "status": "draft",
+  "order": 27,
+  "capability": "resilience/backups",
+  "title": "Backups: what must you back up, and would restores work?",
+  "short": "Set RPO and RTO per system with its owner, back up SaaS data and configuration too, and restore something every month.",
+  "answer": "This quarter, agree with each system's owner how much data it may lose and how long it may be down, and check that your backups cover every system, SaaS service and configuration, with one copy outside each provider's account. Then restore something every month, from single files to whole systems and SaaS apps, and treat any target you haven't met in a test as unmet.",
+  "audience": "IT teams in small, mid-size and large organizations with on-premises servers, virtualization, Microsoft 365 or Google Workspace, other SaaS and cloud workloads",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Let each system's owner set its targets.",
+          "text": "Ask how much data it may lose (RPO) and how long it may be down (RTO). The business decides; IT makes it happen."
+        },
+        {
+          "title": "Back up what the provider won't restore.",
+          "text": "Your data and configuration stay yours to protect in SaaS too[^sharedresp]. Keep an independent copy in another service[^ncscsaas]."
+        },
+        {
+          "title": "Keep a copy outside the platform it protects.",
+          "text": "In 2024 a Google error deleted a customer's VMware Engine private cloud without notice. Backups in another service helped restore it[^gcve]."
+        },
+        {
+          "title": "Check coverage weekly, not just job status.",
+          "text": "Alert on any system without a recent restore point. New servers, sites and SaaS apps are the usual gaps."
+        },
+        {
+          "title": "Restore something every month.",
+          "text": "Rotate a file, a mailbox, a server and a SaaS app, and have the owner check each. The ransomware sheet covers the full test."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "scope",
+      "title": "Set scope and targets with the business",
+      "navTitle": "Scope and targets",
+      "items": [
+        {
+          "title": "What do you run?",
+          "text": "Take the asset inventory and add SaaS from invoices and single sign-on. Include network devices: they store configuration too[^bsicon3]."
+        },
+        {
+          "title": "How much loss and downtime can each system take?",
+          "text": "Agree RPO and RTO with the owner, within the business continuity sheet's process limits, plus the legal and deletion needs the BSI lists[^bsicon3]. Base backup frequency on criticality and change rate[^sp80034]."
+        },
+        {
+          "title": "How far back must you go?",
+          "text": "Set retention from the slowest loss anyone would notice."
+        },
+        {
+          "title": "Can the method meet the target?",
+          "text": "Check that restore bandwidth fits the RTO, and that online backup contracts state location, SLA and encryption[^bsicon3]."
+        },
+        {
+          "title": "Can you reach the plan in a crisis?",
+          "text": "Write one page per system: what, how, how long, restore order, owner. Keep it where it survives the backup system[^bsicon3]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "forgotten",
+      "title": "What people forget to back up",
+      "navTitle": "Often forgotten",
+      "items": [
+        "**SaaS beyond mail and files.** CRM, ticketing, wikis, HR, finance. Atlassian's backup add-on keeps copies only 30 days[^atlbackup].",
+        "**Repositories and CI.** GitHub's migration archives skip LFS objects, discussions and packages, and GitHub has no supported way to restore them[^ghbackup]. Self-managed GitLab backups omit `gitlab-secrets.json`, which holds the key to 2FA data and CI/CD variables[^gitlab].",
+        "**Tenant configuration.** Microsoft Graph snapshots Entra, Intune, Exchange and Teams settings but deletes them after 7 days[^tcm]. Export them.",
+        "**BitLocker keys.** Deleting an Entra device deletes them for good[^stale].",
+        "**Network configs and the admin vault.** Export DNS zones and device configs after each change, and keep an encrypted vault export offline."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "providers",
+      "title": "What SaaS providers restore, and for how long",
+      "navTitle": "Provider limits",
+      "items": [
+        "**Exchange Online.** Deleted items are recoverable 14 days by default, 30 at most[^exorec]. A deleted mailbox is gone after 30 days[^exodel].",
+        "**SharePoint and OneDrive.** The recycle bin keeps items 93 days. After that, Microsoft support can roll back only a whole site or subsite, within 14 more days[^spdel]. A deleted user's OneDrive is kept 30 days by default, then 93 days in the recycle bin[^odret].",
+        "**Microsoft 365 Backup.** It skips group and room mailboxes[^m365new], and its copies stay inside Microsoft 365[^m365backup].",
+        "**Google Workspace.** Admins can restore Drive files for 25 days after the trash is emptied[^gdrive] and deleted users for 20 days[^guser]. Google says Vault isn't designed as a backup tool[^vault]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "retention",
+      "title": "How far back to keep",
+      "navTitle": "Retention",
+      "items": [
+        "**Keep dailies 35 days and monthlies 12 months.** That spans a month-end close, and the 35 days match AWS Backup's default audit control[^awsaudit].",
+        "**Know what versioning keeps.** With an expiry limit, SharePoint files nobody edits can lose every version[^spplan]. Raise Exchange's deleted item retention to 30 days[^exorec].",
+        "**Archive records; don't keep backups for years.** The BSI treats long-term retention as archiving[^bsicon3]. Meet tax and legal retention in a records system.",
+        "**Let personal data age out.** A fixed retention period does that. The retention and deletion sheet covers erasure requests and restores."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tests",
+      "title": "Prove coverage and restores",
+      "navTitle": "Coverage and tests",
+      "items": [
+        "**Find what nothing protects.** AWS Backup Audit Manager flags resources outside any backup plan or without a recent recovery point[^awsaudit].",
+        "**Alert on silence.** A stopped job raises no failure, and full storage can stop backups or overwrite old ones unnoticed[^bsicon3].",
+        "**Test small and large restores.** ENISA's NIS2 guidance suggests testing full system and single file restores, validated by business users[^enisa]. Restore SaaS to a new location, never over production.",
+        "**Automate in the cloud.** AWS Backup can restore a random recovery point on a schedule, time it and delete it[^awsrt]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Microsoft 365 Backup restores single files and keeps longer.** Granular file restore has been generally available since September 2026, for the last 14 days. Recovery windows have been configurable since September, and since 31 October reach 10 years for SharePoint and OneDrive[^m365new].",
+        "**Microsoft 365 Backup catches new items.** Full Workload Backup, in preview since September 2026, adds sites, OneDrives and mailboxes that no policy covers. Daily email digests of backup events can go to up to 20 recipients[^m365new].",
+        "**AWS air-gapped vaults take more workloads.** Since March 2026 they accept Amazon EKS backups, which can be shared for recovery across accounts and AWS Organizations[^awseks]."
+      ],
+      "span": "full"
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Image backups of laptops.** If files sync to OneDrive or Google Drive and Intune or Autopilot rebuilds devices, reinstall instead.",
+        "**Whole-VM backups of servers built from code.** Back up the data, the code and the secrets.",
+        "**One schedule for everything.** NIST bases frequency on criticality and change rate[^sp80034]. Most file shares are fine with daily backups.",
+        "**Decade-long backup retention.** It multiplies cost and erasure work. Archive what the law requires."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Deleting a leaver's account first.** The mailbox is gone 30 days later[^exodel], a Google account after 20 days[^guser]. The joiners and leavers sheet has the order.",
+        "**Counting RAID or replication as a backup.** A mirror changes with the original, so overwrites and malware hit both[^bsicon3].",
+        "**Keeping cloud backups in one region.** Azure's Cross Region Restore needs a geo-redundant vault, set before the first backup[^azvault].",
+        "**Trusting a green dashboard.** Jobs can succeed while skipping new systems. Only a restore proves a backup."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Raise Exchange deleted item retention to 30 days and OneDrive retention for deleted users to a year.",
+            "Keep a printed page per system: owner, what's backed up, where, how to restore.",
+            "Restore one file and one mailbox item every month and write down how long it took."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Spend an hour with each system owner on RPO, RTO and retention, and get their sign-off.",
+            "Send a weekly report of assets without a recent restore point to a named person.",
+            "Back up repositories, CI settings and tenant configuration, not just data."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "NIS2 digital providers need backup plans covering configuration and cloud data, distant copies, retention periods and integrity checks[^enisa].",
+            "Report measured restore times against RPO and RTO per system each quarter.",
+            "Keep critical SaaS and cloud data with a second provider and test restores from it."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on BSI CON.3, NIST SP 800-34, ENISA's NIS2 guidance, NCSC guidance, provider incident reviews and vendor documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "sp80034",
+      "title": "SP 800-34 Rev. 1, Contingency Planning Guide",
+      "publisher": "NIST",
+      "date": "May 2010",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf"
+    },
+    {
+      "id": "bsicon3",
+      "title": "IT-Grundschutz, CON.3 Datensicherungskonzept",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/03_CON_Konzepte_und_Vorgehensweisen/CON_3_Datensicherungskonzept_Edition_2023.pdf?__blob=publicationFile&v=2"
+    },
+    {
+      "id": "sharedresp",
+      "title": "Shared responsibility in the cloud",
+      "publisher": "Microsoft Learn",
+      "date": "24 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/shared-responsibility"
+    },
+    {
+      "id": "ncscsaas",
+      "title": "Back up your organisation's critical data",
+      "publisher": "NCSC (UK)",
+      "date": "11 Jan 2024",
+      "url": "https://www.ncsc.gov.uk/collection/using-online-services-safely/back-up-critical-data"
+    },
+    {
+      "id": "gcve",
+      "title": "Details of Google Cloud GCVE incident",
+      "publisher": "Google Cloud",
+      "date": "24 May 2024",
+      "url": "https://cloud.google.com/blog/products/infrastructure/details-of-google-cloud-gcve-incident"
+    },
+    {
+      "id": "atlbackup",
+      "title": "Overview of Atlassian Backup and Restore",
+      "publisher": "Atlassian Support",
+      "date": "checked 4 Nov 2026",
+      "url": "https://support.atlassian.com/organization-administration/docs/overview-of-atlassian-backups/"
+    },
+    {
+      "id": "ghbackup",
+      "title": "Backing up a repository",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/repositories/archiving-a-github-repository/backing-up-a-repository"
+    },
+    {
+      "id": "gitlab",
+      "title": "Back up GitLab",
+      "publisher": "GitLab Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.gitlab.com/administration/backup_restore/backup_gitlab/"
+    },
+    {
+      "id": "tcm",
+      "title": "Tenant Configuration Management APIs in Microsoft Graph",
+      "publisher": "Microsoft Learn",
+      "date": "19 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/unified-tenant-configuration-management-api-overview?view=graph-rest-1.0"
+    },
+    {
+      "id": "stale",
+      "title": "Manage stale devices in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "27 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/devices/manage-stale-devices"
+    },
+    {
+      "id": "exorec",
+      "title": "Recoverable Items folder in Exchange Online",
+      "publisher": "Microsoft Learn",
+      "date": "25 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/exchange/security-and-compliance/recoverable-items-folder/recoverable-items-folder"
+    },
+    {
+      "id": "exodel",
+      "title": "Delete or restore user mailboxes in Exchange Online",
+      "publisher": "Microsoft Learn",
+      "date": "updated 3 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/delete-or-restore-mailboxes"
+    },
+    {
+      "id": "spdel",
+      "title": "Microsoft 365 SharePoint data deletion",
+      "publisher": "Microsoft Learn",
+      "date": "28 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-data-deletion"
+    },
+    {
+      "id": "odret",
+      "title": "OneDrive retention and deletion",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/retention-and-deletion"
+    },
+    {
+      "id": "m365backup",
+      "title": "Overview of Microsoft 365 Backup",
+      "publisher": "Microsoft Learn",
+      "date": "4 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-overview"
+    },
+    {
+      "id": "m365new",
+      "title": "What's new in Microsoft 365 Backup",
+      "publisher": "Microsoft Learn",
+      "date": "4 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-whats-new"
+    },
+    {
+      "id": "gdrive",
+      "title": "Recover deleted files and folders for Drive users",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/drive/recover-deleted-files-and-folders-for-drive-users"
+    },
+    {
+      "id": "guser",
+      "title": "Restore a recently deleted user",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/users/restore-a-recently-deleted-user"
+    },
+    {
+      "id": "vault",
+      "title": "Google Vault FAQ",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/vault/getting-started/google-vault-faq"
+    },
+    {
+      "id": "awsaudit",
+      "title": "AWS Backup Audit Manager controls",
+      "publisher": "AWS Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/controls-and-remediation.html"
+    },
+    {
+      "id": "spplan",
+      "title": "Plan version storage for document libraries",
+      "publisher": "Microsoft Learn",
+      "date": "29 May 2025",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/plan-version-storage"
+    },
+    {
+      "id": "enisa",
+      "title": "NIS2 technical implementation guidance, v1.0",
+      "publisher": "ENISA",
+      "date": "26 Jun 2025",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
+    },
+    {
+      "id": "awsrt",
+      "title": "AWS Backup restore testing",
+      "publisher": "AWS Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/restore-testing.html"
+    },
+    {
+      "id": "azvault",
+      "title": "Create and configure Recovery Services vaults",
+      "publisher": "Microsoft Learn",
+      "date": "10 Dec 2025",
+      "url": "https://learn.microsoft.com/en-us/azure/backup/backup-create-recovery-services-vault"
+    },
+    {
+      "id": "awseks",
+      "title": "AWS Backup adds logically air-gapped vault support for Amazon EKS",
+      "publisher": "AWS",
+      "date": "12 Mar 2026",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/03/aws-backup-logically-air-gapped-vault-amazon-eks/"
+    }
+  ]
+}
