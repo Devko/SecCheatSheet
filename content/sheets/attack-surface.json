@@ -1,14 +1,14 @@
 {
   "slug": "attack-surface",
   "topic": "Attack surface management",
-  "status": "draft",
+  "status": "published",
   "order": 24,
   "capability": "exposure/attack-surface",
   "title": "Attack surface: what do you expose to the internet that you don't know about?",
   "short": "Rebuild your list of internet-facing assets from registrars, DNS, certificate logs and cloud accounts, rescan it every week and give each exposed service an owner.",
-  "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and sign up for free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
+  "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and get free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
   "audience": "IT and security teams in organizations of any size that need to know what they expose to the internet",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,15 +24,15 @@
         },
         {
           "title": "Get the free outside view this week.",
-          "text": "Send your IP ranges and domains to Shadowserver[^shadow] and to your national service. CISA says Cyber Hygiene users typically cut risk and exposure by 40% in 12 months[^cyhy]."
+          "text": "Send your IP ranges and domains to Shadowserver[^shadow] and, where it takes sign-ups, your national service. In Germany, CERT-Bund reports to the abuse contact registered for each IP range[^certbund]."
         },
         {
           "title": "Give every exposed service an owner and a reason.",
-          "text": "CISA advises closing or restricting every port without a documented operational need[^cisaerg]. If nobody claims a service within two weeks, block it and see who asks."
+          "text": "CISA advises closing or restricting every port without a documented operational need[^cisaerg]. Block unclaimed services after a notice period, keeping a quick way back."
         },
         {
           "title": "Take remote access and databases off the internet.",
-          "text": "Put them behind a VPN or access gateway. Exploits opened 32% of Mandiant's 2025 intrusions, and the estimated mean time to exploit is -7 days, so exploitation often starts before the patch[^mtrends]."
+          "text": "Put them behind a VPN or gateway with phishing-resistant MFA[^cisaerg]. Exploits opened 32% of Mandiant's 2025 intrusions, and the estimated mean time to exploit is -7 days, before the patch is out[^mtrends]."
         },
         {
           "title": "Watch for leaked secrets and passwords.",
@@ -67,7 +67,7 @@
           "text": "Self-service sign-ups can leave unmanaged Entra directories on your domains; take them over by verifying the domain[^entratakeover]. Do the same in other SaaS that verifies domains."
         },
         {
-          "title": "Scan it all and compare.",
+          "title": "Scan what you own and compare.",
           "text": "Scan from outside every week. Anything that answers but isn't listed gets an owner or gets switched off."
         }
       ]
@@ -80,7 +80,7 @@
       "items": [
         "**Remote access and OT protocols.** CISA's minimum list of ports to check includes SSH, Telnet, RDP, VNC, TeamViewer, Modbus, DNP3 and BACnet[^cisaerg]. Firewall and VPN admin pages are in the edge devices sheet.",
         "**Databases.** Elasticsearch, MongoDB and other data stores should never answer from the internet; Shadowserver reports open ones daily[^shadow]. Cloud storage is in the cloud configuration sheet.",
-        "**Forgotten and temporary systems.** File transfer servers, remote management tools, dev and test sites, and services that should have been decommissioned or kept internal[^easm].",
+        "**Forgotten and temporary systems.** Services that should have been decommissioned or kept internal, and old configuration pointing at former suppliers[^easm]. Include dev, test and file transfer servers.",
         "**Dangling DNS.** A CNAME to a deleted resource lets an attacker claim the name, serve content and get a valid certificate on your subdomain[^azdangling]. Any AWS account can claim a deleted S3 bucket or Elastic Beanstalk name[^awstakeover]."
       ]
     },
@@ -104,8 +104,8 @@
       "items": [
         "**The NCSC retired Web Check and Mail Check** on 31 March 2026 and recommends commercial EASM instead[^ncscretire].",
         "**Exposed PLCs at US water utilities came under attack.** CISA saw more than 100 water sector entities targeted in July 2026, often via PLCs on cellular modems[^cisaerg], which may not show up in routine scans[^cisaplc].",
-        "**Exposure now drives US federal patch deadlines.** Under BOD 26-04, a system counts as exposed if any method finds it so, and agencies attest their public IPs and domains every quarter[^bod2604].",
-        "**New S3 buckets can avoid name squatting.** Buckets in S3's new account regional namespaces can't be claimed by another account after deletion; keep checking older ones[^awstakeover]."
+        "**Exposure will help set US federal patch deadlines.** From December 2026, BOD 26-04 deadlines treat a system as exposed if any method finds it so. Agencies attest public IPs and domains quarterly[^bod2604].",
+        "**New S3 buckets can avoid name takeover.** Buckets in S3's account regional namespaces can't be claimed by another account. They aren't the default, and older buckets keep the risk[^awstakeover]."
       ]
     },
     {
@@ -117,7 +117,7 @@
         "**Shadowserver.** Free daily reports on exposed services for the IP ranges and domains you control[^shadow].",
         "**CISA Cyber Hygiene (US).** Free weekly scan reports and urgent alerts for US governments and critical infrastructure[^cyhy].",
         "**NCSC Early Warning (UK).** Free alerts on vulnerable or exposed services for any UK organization that registers its IPs and domains[^ncscew].",
-        "**CERT-Bund (Germany).** It sends daily reports to network operators by IP address and asks providers to pass them on[^certbund]. Essential and important entities can ask the BSI to check their public systems[^bsig].",
+        "**CERT-Bund (Germany).** It reports infected systems and open services to the network operator of each IP range[^certbund]. Essential and important entities can ask the BSI to check their public systems[^bsig].",
         "**Commercial EASM.** It adds continuous discovery, takeover checks and history. Ask how it validates findings and how fresh its data is[^easm]."
       ]
     },
@@ -152,7 +152,7 @@
       "items": [
         "**Scanning only the ranges you know.** Cloud, SaaS and supplier systems sit on other addresses, and vendor-installed modems may not show up in routine scans[^cisaplc]. Discover from DNS and certificates too.",
         "**Deleting the resource before its DNS record.** Delete the record, wait out the TTL, then delete the resource[^awstakeover].",
-        "**Notices to a mailbox nobody reads.** CERT-Bund sends its reports to the network operator for each IP address[^certbund]. Make sure providers forward them and abuse mail reaches a person."
+        "**Notices to a mailbox nobody reads.** CERT-Bund sends its reports to the abuse contact registered with RIPE for each IP range[^certbund]. Make sure yours reaches a person and providers forward reports for your addresses."
       ]
     },
     {
@@ -167,7 +167,7 @@
           "items": [
             "Ask your IT provider for one list of domains, DNS records, public IPs and cloud accounts, each with an owner.",
             "Keep all domains in one registrar account with MFA, and subscribe to Shadowserver and your national service.",
-            "Turn on secret scanning for your GitHub organization and run the free assessment[^ghss]."
+            "Run GitHub's free secret risk assessment on your organization and rotate what it finds[^ghss]."
           ]
         },
         {
@@ -182,7 +182,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Choose a commercial EASM with the NCSC's buyer questions and feed it your cloud and asset inventories[^easm].",
-            "Have each business unit attest its public IPs and domains quarterly, including systems suppliers host, as BOD 26-04 requires of agencies[^bod2604].",
+            "Have each business unit attest its public IPs and domains quarterly and list systems suppliers host for it, as BOD 26-04 requires of agencies[^bod2604].",
             "Add acquisitions, subsidiaries and OT sites, including vendor-installed modems, to discovery."
           ]
         }
@@ -190,6 +190,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 12 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
@@ -200,7 +205,7 @@
     {
       "id": "shadow",
       "title": "Subscribe to Reports",
-      "publisher": "Shadowserver",
+      "publisher": "Shadowserver Foundation",
       "date": "checked 4 Nov 2026",
       "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
     },
@@ -248,7 +253,7 @@
     },
     {
       "id": "rfc9162",
-      "title": "RFC 9162: Certificate Transparency Version 2.0",
+      "title": "RFC 9162: Certificate Transparency Version 2.0, Sections 1 and 11.5",
       "publisher": "IETF",
       "date": "Dec 2021",
       "url": "https://www.rfc-editor.org/rfc/rfc9162"
@@ -311,10 +316,10 @@
     },
     {
       "id": "certbund",
-      "title": "CERT-Bund Reports",
+      "title": "CERT-Bund Reports: FAQ",
       "publisher": "BSI",
       "date": "checked 4 Nov 2026",
-      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Reaktion/CERT-Bund/CERT-Bund-Reports/cert-bund-reports_node.html"
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Reaktion/CERT-Bund/CERT-Bund-Reports/FAQ/faq_node.html"
     },
     {
       "id": "bsig",
