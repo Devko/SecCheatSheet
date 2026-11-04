@@ -1,14 +1,14 @@
 {
   "slug": "secure-development",
   "topic": "Secure development",
-  "status": "draft",
+  "status": "published",
   "order": 21,
   "capability": "software/secure-development",
   "title": "Secure development: which practices prevent vulnerabilities, and can you prove it?",
   "short": "Publish a disclosure policy, block secrets at push and fix reported flaws within 90 days, or 7 if exploited.",
   "answer": "This quarter, publish a vulnerability disclosure policy with a security.txt contact, block secrets at push and make review plus one precise static analysis check required before merge. Judge every other practice by whether it removes a whole class of bug by default or leaves evidence that a customer or regulator can check.",
   "audience": "Engineering leads, product security teams and developers who build and run their own software, from small product teams to regulated enterprises",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -28,15 +28,15 @@
         },
         {
           "title": "Block secrets before they reach the repository.",
-          "text": "Turn on push protection everywhere. On GitHub, private repositories need Secret Protection for it[^ghpush][^ghss]; on GitLab, it takes Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
+          "text": "Turn on push protection everywhere. On GitHub, private repositories need Secret Protection for it[^ghpush]; on GitLab, it takes Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
         },
         {
           "title": "Require review and one precise scanner before merge.",
-          "text": "On the default branch, require a pull request, **Require approval of the most recent reviewable push** and passing checks[^rules]. Run CodeQL's highly precise `default` suite[^cqlsuites] and block high and critical alerts with **Require code scanning results**[^mergeprot]."
+          "text": "On the default branch, require a pull request with one approval, **Require approval of the most recent reviewable push** and passing checks[^rules]. Run CodeQL's `default` suite[^cqlsuites] and block high and critical alerts with **Require code scanning results**[^mergeprot]."
         },
         {
           "title": "Fix by exploitation and publish what you fixed.",
-          "text": "Ship fixes within 90 days of a report, or 7 days once exploited, the deadlines Google Project Zero gives vendors[^p0]. Issue a CVE with CWE and CPE fields for each critical or high flaw[^pledge]."
+          "text": "Ship fixes within 90 days of a report, or 7 once exploited, per Google Project Zero[^p0]. Issue a CVE with CWE and CPE for each critical or high flaw that's exploited or that users must patch[^pledge]."
         }
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Is it real?",
-          "text": "Acknowledge it within three business days and reproduce it before anyone spends a week. Expect noise: curl's share of confirmed reports fell below 5% in 2025 as AI-written reports surged[^curl]."
+          "text": "Acknowledge it within three business days and reproduce it before anyone spends a week. Expect volume: by April, curl got twice 2025's rate of reports, nearly all AI-assisted, and 15 to 16% were confirmed[^curl]."
         },
         {
           "title": "Is it exploited?",
@@ -56,7 +56,7 @@
         },
         {
           "title": "When does the fix ship?",
-          "text": "Set the date by exploitation and exposure, then severity, and tell the reporter. If the fix will take longer, publish a workaround first[^ssdf]. Ship security fixes separately from feature updates where feasible, as the CRA requires[^cra]."
+          "text": "Set the date by exploitation and exposure, then severity, and tell the reporter. On internet-facing services you run, an exploited flaw gets the patching sheet's 72 hours. If the fix will take longer, publish a workaround first[^ssdf]. Ship security fixes separately from feature updates where feasible, as the CRA requires[^cra]."
         },
         {
           "title": "What do you publish?",
@@ -75,10 +75,10 @@
       "navTitle": "Automated checks",
       "items": [
         "**Secret scanning with push protection.** It covers Git history, issues and pull requests, and validity checks show which secrets still work[^ghss].",
-        "**Dependency scanning.** CISA says to patch a known exploited flaw in a component within 30 days of its fix[^badprac]. See the supply-chain sheet.",
-        "**SAST with a precise rule set.** Start with CodeQL's `default` suite, not the less precise `security-extended`[^cqlsuites]. Each month, drop rules whose findings you mostly dismiss.",
+        "**Dependency scanning.** If a KEV-listed flaw in a component is exploitable in your product, CISA wants a free patch within 30 days of its fix[^badprac].",
+        "**SAST with a precise rule set.** Start with CodeQL's `default` suite, not the less precise `security-extended`[^cqlsuites]. Each month, tune out rules that are mostly false positives.",
         "**A DAST baseline in CI.** ZAP's baseline scan spiders for a minute and doesn't attack, so it can run against production[^zap].",
-        "**Tests for what tools miss.** Tools can't verify access control[^asvsassess], the top risk in the OWASP Top 10:2025[^top10]. Test that one user can't reach another's records."
+        "**Tests for what tools miss.** Tools can't fully verify access control[^asvsassess], the top risk in the OWASP Top 10:2025[^top10]. Test that one user can't reach another's records."
       ]
     },
     {
@@ -87,7 +87,7 @@
       "title": "Before a risky change ships",
       "navTitle": "Risky changes",
       "items": [
-        "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers and new interfaces get a threat model and a reviewer who knows security. The NCSC wants closer oversight of AI-written code that handles authentication, personal data or secrets[^ncscvibe].",
+        "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers and new interfaces get a threat model and a reviewer who knows security. The NCSC wants closer oversight of AI-written code that handles authentication, sensitive personal data or secrets[^ncscvibe].",
         "**Threat model it in half an hour.** Ask what you're working on, what can go wrong, what you'll do about it and whether you did a good enough job, with STRIDE's six categories as prompts[^owasptm]. Keep the answers with the code.",
         "**Pick requirements from ASVS 5.0.** Level 1 holds about 20% of some 350 requirements, and most applications should aim for Level 2[^asvs]. Cite them with the version, as in `v5.0.0-1.2.5`[^asvs].",
         "**Ship secure defaults.** No shared default passwords, MFA on for admins and logs for customers[^badprac]. The CRA requires a secure default configuration and a reset[^cra]."
@@ -101,7 +101,7 @@
       "items": [
         "**Answers to buyers' standard questions.** CISA's Secure by Demand guide tells buyers to ask for a disclosure policy, CVEs with CWE and CPE fields, a plan to end vulnerability classes, an SBOM and MFA by default[^demand].",
         "**A mapping to SSDF 1.1.** Name the task each practice meets, such as PW.7.2 for code review[^ssdf]. US agencies may still ask for the attestation form, though it's no longer required[^omb].",
-        "**CRA technical documentation, if you ship products.** Keep the risk assessment current and the documentation for 10 years or the support period, if longer. SaaS that isn't part of a product is outside the CRA[^cra]."
+        "**CRA technical documentation.** Keep the risk assessment current and the documentation for 10 years or the support period, if longer. SaaS that isn't remote data processing for a product is outside the CRA[^cra]."
       ]
     },
     {
@@ -110,9 +110,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**CRA reporting started.** Since 11 September, manufacturers report actively exploited vulnerabilities through ENISA's platform[^srp]. The Commission's first guidance, on 27 July, covers support periods and risk assessment[^craguide].",
+        "**CRA reporting started.** Since 11 September, manufacturers must report actively exploited vulnerabilities through ENISA's platform[^srp]. The Commission's draft guidance of 27 July explains scope, remote data processing and support periods[^craguide].",
         "**AI finds flaws at scale.** The NCSC expects a forced correction of technical debt and an influx of updates of every severity[^ncscwave]. Plan who fixes the findings before you scan with a model.",
-        "**EU vendors can issue CVEs under ENISA.** ENISA became a CVE Root on 20 November 2025 and onboards CNAs in the EU[^enisavd]."
+        "**EU vendors can issue CVEs under ENISA.** ENISA, a CVE Root since November 2025, had 20 CNAs by August, vendors among them[^enisacna]."
       ]
     },
     {
@@ -120,7 +120,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A paid bug bounty before you can triage.** curl ended its bounty in January after AI-written reports swamped it[^curl]. A disclosure policy is free.",
+        "**A paid bug bounty before you can triage.** curl ended its bounty in early 2026 after a flood of AI-written junk reports[^curl]. A disclosure policy is free.",
         "**Black-box penetration tests.** OWASP favors source-led tests, and it certifies no one for ASVS[^asvsassess].",
         "**Rewriting history after a leak.** Revoke the secret. GitHub calls scrubbing history time-consuming and often unnecessary[^ghss].",
         "**Waiting for SSDF 1.2.** NIST's December 2025 draft adds continuous improvement and staged updates with rollback[^ssdf12]. Map to 1.1 now."
@@ -147,9 +147,9 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Turn on private vulnerability reporting, push protection, Dependabot and CodeQL everywhere.",
+            "Turn on Dependabot, push protection and CodeQL. Private GitHub repos need paid Secret Protection and Code Security[^ghpush].",
             "Publish security.txt with a mailbox two people read, and require one review before merge.",
-            "Keep one list of open vulnerabilities with their ship dates."
+            "Keep one list of open flaws with ship dates."
           ]
         },
         {
@@ -163,7 +163,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Become a CNA, under ENISA's Root if you're in the EU, and publish CVEs with CWE and CPE.",
+            "Become a CNA, under ENISA's Root if it covers you[^enisacna], and publish CVEs with CWE and CPE.",
             "Keep CRA technical documentation per product, with risk assessment and vulnerability records.",
             "Fork ASVS into an internal standard naming your approved libraries[^asvs]."
           ]
@@ -172,6 +172,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which updated the curl figures and narrowed 12 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
@@ -195,7 +200,7 @@
     },
     {
       "id": "cra",
-      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 13, 14 and 71, recital 12 and Annex I",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 3, 13, 14 and 71, recital 12 and Annex I",
       "publisher": "EUR-Lex",
       "date": "2024",
       "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
@@ -223,17 +228,17 @@
     },
     {
       "id": "ghss",
-      "title": "About secret scanning",
+      "title": "Secret scanning",
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
-      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning"
+      "url": "https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning"
     },
     {
       "id": "ghpush",
-      "title": "About push protection",
+      "title": "About GitHub Advanced Security",
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
-      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
+      "url": "https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security"
     },
     {
       "id": "glpush",
@@ -261,14 +266,14 @@
       "title": "CodeQL query suites",
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
-      "url": "https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/codeql-query-suites"
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-query-suites"
     },
     {
       "id": "mergeprot",
       "title": "Set code scanning merge protection",
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
-      "url": "https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/set-code-scanning-merge-protection"
+      "url": "https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/manage-your-configuration/set-merge-protection"
     },
     {
       "id": "p0",
@@ -279,17 +284,24 @@
     },
     {
       "id": "curl",
-      "title": "The end of the curl bug-bounty",
+      "title": "High-Quality Chaos",
       "publisher": "Daniel Stenberg (curl)",
-      "date": "26 Jan 2026",
-      "url": "https://daniel.haxx.se/blog/2026/01/26/the-end-of-the-curl-bug-bounty/"
+      "date": "22 Apr 2026",
+      "url": "https://daniel.haxx.se/blog/2026/04/22/high-quality-chaos/"
     },
     {
       "id": "enisavd",
-      "title": "Vulnerability disclosure",
+      "title": "Vulnerability Services",
       "publisher": "ENISA",
       "date": "checked 4 Nov 2026",
-      "url": "https://www.enisa.europa.eu/topics/vulnerability-disclosure"
+      "url": "https://www.enisa.europa.eu/topics/vulnerability-services"
+    },
+    {
+      "id": "enisacna",
+      "title": "ENISA scales up its role in the CVE Program",
+      "publisher": "ENISA",
+      "date": "6 Aug 2026",
+      "url": "https://www.enisa.europa.eu/news/enisa-scales-up-its-role-in-the-cve-program"
     },
     {
       "id": "srp",
@@ -331,7 +343,7 @@
       "title": "OWASP Top 10:2025, Introduction",
       "publisher": "OWASP",
       "date": "2025",
-      "url": "https://owasp.org/Top10/2025/0x00_2025-Introduction/"
+      "url": "https://top10.owasp.org/2025/0x00_2025-Introduction/"
     },
     {
       "id": "ncscvibe",
