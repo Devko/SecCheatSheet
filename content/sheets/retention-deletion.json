@@ -5,8 +5,8 @@
   "order": 29,
   "capability": "data/retention",
   "title": "Retention and deletion: how long must you keep data, and can you prove you deleted the rest?",
-  "short": "Give every record type a legal period (10, 8 or 6 years for German books, vouchers and letters) and delete the rest automatically each January.",
-  "answer": "By January 2027, write a retention schedule that gives every record type a reason, a period and a start event, and set Microsoft 365, Google Workspace and your business systems to delete automatically when the period ends. Keep data longer only under a documented hold, and make sure backups and other hidden copies run out on the same schedule.",
+  "short": "Give every record type a period (in Germany 10 years for books, 8 for vouchers, 6 for letters) and delete whatever has expired each January.",
+  "answer": "By January 2027, write a retention schedule that gives every record type a reason, a period and a start event, and set Microsoft 365, Google Workspace and your business systems to delete automatically when the period ends. Keep data past its period only under a documented hold, and make sure backups and other hidden copies run out on the same schedule.",
   "audience": "IT, security, data protection and compliance leads in EU organizations, especially in Germany, on Microsoft 365 or Google Workspace",
   "version": "0.1",
   "lastReviewed": "2026-11-04",
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Write one retention schedule.",
-          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. The EDPB found that controllers, especially small ones, struggle to set periods[^cef25]."
+          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. The EDPB found that some controllers, especially small ones, struggle to set periods[^cef25]."
         },
         {
           "title": "Delete by default, keep by exception.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Let backups expire, then delete again after a restore.",
-          "text": "German regulators accept deleting from backups when they're overwritten on schedule, but data restored after an incident must be deleted again at once[^sdm60]. Keep a list of erasures to replay."
+          "text": "German regulators accept cleaning backups when they're overwritten on schedule if deleting sooner isn't practical, but data restored after an incident must be deleted again at once[^sdm60]. Keep a list of erasures to replay."
         },
         {
           "title": "Treat holds as temporary.",
-          "text": "Place a hold as soon as a lawsuit, audit or investigation is likely, and release it when the matter closes. Nothing under an eDiscovery hold can be deleted by a retention policy or label[^retention]."
+          "text": "Place a hold as soon as a lawsuit, audit or investigation is likely, and release it when the matter closes. Nothing under an eDiscovery hold can be permanently deleted by a retention policy or label[^retention]."
         }
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "List record types, not systems.",
-          "text": "Group data into types such as invoices, contracts, personnel files, applications and logs, and note every system and copy that holds each. Deletion must reach every copy, including offline copies on devices and in the cloud[^sdm60]."
+          "text": "Group data into types such as invoices, contracts, personnel files, applications and logs (the logging sheet covers log periods), and note every system and copy that holds each. Deletion must reach every copy, including offline copies on devices and in the cloud[^sdm60]."
         },
         {
           "title": "Find the minimum and the maximum.",
@@ -56,7 +56,7 @@
         },
         {
           "title": "Group the periods into deletion classes.",
-          "text": "Write each rule as a period plus the event that starts it, as the German regulators' Standard Data Protection Model recommends for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398 as the standard for it in September 2025[^din27555]."
+          "text": "Write each rule as a period plus the event that starts it, as DIN 66398 recommends and the German regulators' Standard Data Protection Model endorses for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398 in September 2025[^din27555]."
         },
         {
           "title": "Assign each class to a tool.",
@@ -77,7 +77,7 @@
       "items": [
         {
           "name": "Books and business records",
-          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao]. January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is open[^ao]. Banks and insurers keep vouchers 10 years[^hgb].",
+          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao]. January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is open[^ao]. Banks, insurers and investment firms keep vouchers 10 years[^hgb].",
           "steps": [
             {
               "at": "6 years",
@@ -95,7 +95,7 @@
         },
         {
           "name": "Applicants and employees",
-          "scope": "Common minimums. Collective agreements and sector law can require more.",
+          "scope": "Minimums. Check collective agreements and sector law for longer periods.",
           "steps": [
             {
               "at": "2 months",
@@ -127,7 +127,7 @@
         "**Leavers' mailboxes.** Under a retention policy they become inactive mailboxes, which aren't deleted automatically when retention ends[^exret].",
         "**Teams call logs.** They're kept indefinitely[^teamsret], and since April 2026 only a separate call logs policy, set in PowerShell, deletes new ones[^whatsnew].",
         "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default[^m365backup]. See the backups sheet.",
-        "**Google Vault.** Expired data stays available to Vault for about 30 days before it's purged[^vault].",
+        "**Google Vault.** Expired data stays available to Vault for about 30 days[^vault].",
         "**Processors.** They must delete or return your data at contract end[^gdpr]; see the third-party risk sheet."
       ]
     },
@@ -137,9 +137,9 @@
       "title": "If you run Microsoft Purview",
       "navTitle": "Purview",
       "items": [
-        "**Know what E3 covers.** Retention policies and manual labels come with E3 and Business Premium. Auto-applied and default labels, adaptive scopes, event-based retention, disposition review and records need E5[^purviewsd].",
-        "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, a label beats a policy, a scoped policy beats an org-wide one, then the shortest period wins[^retention].",
-        "**Lock only what a regulator demands.** Preservation Lock stops anyone, admins included, from turning off or shortening a policy[^retention], so a locked 10-year policy couldn't follow the 2025 cut to 8 years[^egao].",
+        "**Know what E3 covers.** Retention policies and manual labels come with E3 and Business Premium. Auto-applied labels, default labels for SharePoint libraries, adaptive scopes, event-based retention, disposition review and records need E5[^purviewsd].",
+        "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, labels beat scoped policies, which beat org-wide ones[^retention].",
+        "**Lock only what a regulator demands.** No one can turn off or shorten a locked policy[^retention], not even for the 2025 cut from 10 to 8 years[^egao].",
         "**Put holds in eDiscovery cases.** A hold can take 24 hours to apply and captures group membership only once[^hold]."
       ]
     },
@@ -150,10 +150,10 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**The EDPB reported on erasure.** Its February 2026 report on 764 controllers found missing procedures, trouble setting retention periods and inconsistent deletion in backups[^cef25].",
-        "**Anonymization has a test.** The EDPB's July 2026 draft checks for record isolation, linkage and inference, and says anonymizing without deleting the original doesn't help storage limitation[^anon].",
-        "**Pay records may need to last longer.** The EU pay transparency directive was due by 7 June 2026 and allows at least 3 years to bring equal pay claims[^ptd]. Check national law before you shorten pay records.",
-        "**Priority cleanup overrides holds.** The E5 feature[^purviewsd] deletes chosen items despite retention and holds, needs three approvals since July 2026 and reaches files in preview since August[^whatsnew]."
+        "**The EDPB reported on erasure.** Its February 2026 report on 764 controllers found missing procedures, unclear retention periods and inconsistent deletion in backups[^cef25].",
+        "**Anonymization has a test.** The EDPB's July 2026 draft checks record isolation, linkage and inference; anonymizing without deleting the original doesn't help storage limitation[^anon].",
+        "**Pay records may need longer.** The EU pay transparency directive, due by 7 June 2026, allows at least 3 years for equal pay claims[^ptd]. Check national law before you shorten pay records.",
+        "**Priority cleanup overrides holds.** The E5 feature[^purviewsd] needs three approvals since July 2026 and, in preview since August, also deletes SharePoint and OneDrive files[^whatsnew]."
       ]
     },
     {
@@ -161,9 +161,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Keeping all email for 10 years.** Only business letters about a transaction and other tax-relevant documents need 6 years[^hgb][^ao]. Give other mail a short default.",
+        "**Keeping all email for 10 years.** Only business letters, invoices and other tax-relevant mail need keeping[^hgb][^ao]. Give the rest a short default.",
         "**Running the old ERP for a decade.** Five years after a system change, an analyzable export is enough, unless a tax audit has started[^ao].",
-        "**Disposition review for routine records.** It needs E5[^purviewsd] and a reviewer per batch. Keep it for records whose deletion needs sign-off."
+        "**Disposition review for routine records.** It needs E5[^purviewsd] and people to review items first[^retention]. Save it for records that need sign-off."
       ]
     },
     {
