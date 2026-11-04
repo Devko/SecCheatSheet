@@ -52,7 +52,7 @@
         },
         {
           "title": "Disable the account and sign it out.",
-          "text": "Disable the user in AD and in Entra ID, then select **Revoke sessions**[^revoke]. Blocking sign-in can take up to 24 hours to apply everywhere, so also reset the password[^m365block]."
+          "text": "Disable the user in AD and in Entra ID, then select **Revoke sessions**[^revoke]. Blocking sign-in can take up to 24 hours to take effect, so also reset the password[^m365block]."
         },
         {
           "title": "Remove what lets the person back in.",
@@ -85,7 +85,7 @@
       "title": "Movers: take the old access away",
       "navTitle": "Movers",
       "items": [
-        "**Trigger on the HR change.** Entra's job profile change workflow notifies the manager and removes old access packages after 15 days by default[^lcwtemplates].",
+        "**Trigger on the HR change.** Entra's **Employee job profile change** template notifies the manager and removes old access packages after 15 days by default[^lcwtemplates].",
         "**Remove old access on a date, not on request.** NIST asks you to confirm the ongoing need for current access at every transfer[^sp80053].",
         "**Let groups follow HR attributes.** Dropping out of a dynamic group assigned to an app counts as a deprovisioning event for SCIM[^provworks]."
       ]
@@ -110,9 +110,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Unlicensed OneDrives now get deleted.** Since 1 July 2026, an unpaid, unlicensed OneDrive faces deletion after 365 days, even under a hold[^onedrive].",
+        "**Unlicensed OneDrives are on a deletion clock.** Since 1 July 2026, an unlicensed OneDrive faces deletion after 365 unpaid days, even under a hold[^onedrive]. Move leavers' files first.",
         "**Entra ID finds orphan accounts in apps.** Account discovery, generally available since May 2026 with ID Governance, lists them for provisioned apps[^entranew].",
-        "**Guest governance needs Azure billing.** Since January 2026, ID Governance features for guests, such as inactive-guest reviews, need a linked Azure subscription[^entranew].",
+        "**Guest governance needs Azure billing.** Since early 2026, ID Governance features for guests, such as lifecycle workflows and inactive-guest reviews, need a linked Azure subscription[^entranew].",
         "**Agents get a new sponsor when people leave.** Since May 2026, lifecycle workflows can hand a leaver's agent sponsorships to their manager, with Agent 365[^entranew][^lcwtemplates]."
       ]
     },
@@ -133,8 +133,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Disabling only in Active Directory.** Entra ID keeps the account and its sessions until the next sync, so disable and revoke there too[^revoke].",
-        "**Trusting lifecycle workflows with admins.** Their **Disable user account** task skips users with Entra roles or role-assignable groups[^lcwtasks].",
+        "**Disabling only in Active Directory.** Microsoft's steps for hybrid accounts also disable the user in Entra ID and revoke sessions there[^revoke].",
+        "**Trusting lifecycle workflows with admins.** Their **Disable user account** task doesn't handle users with Entra roles or role-assignable groups[^lcwtasks].",
         "**Deleting a Google user too early.** Data only they owned, Vault holds and group calendars go with the account[^gwsdelete].",
         "**Skipping the exit review.** Verizon found that reviewing activity when someone with sensitive access leaves has caught numerous breaches[^dbir]."
       ]
@@ -165,8 +165,8 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Run lifecycle workflows and account discovery, and report the hours from HR termination to the last access removed.",
-            "NIS2 rules make cloud, MSP and other digital providers keep a register of access rights and log its changes[^nis2ir].",
+            "Run lifecycle workflows and account discovery; report hours from termination to last access removed.",
+            "Under NIS2, cloud, MSP and other digital providers must keep a register of access rights[^nis2ir].",
             "In Germany, agree inactivity reports and exit reviews with the works council[^betrvg]."
           ]
         }

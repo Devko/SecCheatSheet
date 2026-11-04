@@ -77,21 +77,42 @@
       "items": [
         {
           "name": "Books and business records",
-          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao], so January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is still open[^ao]. Banks and insurers keep vouchers 10 years[^hgb].",
+          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao]. January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is open[^ao]. Banks and insurers keep vouchers 10 years[^hgb].",
           "steps": [
-            { "at": "6 years", "what": "Business letters, other tax-relevant papers[^hgb][^ao]" },
-            { "at": "8 years", "what": "Booking vouchers, since 2025 for all not yet expired[^egao]" },
-            { "at": "10 years", "what": "Books, annual accounts, inventories and the documentation to read them[^hgb]" }
+            {
+              "at": "6 years",
+              "what": "Business letters, other tax-relevant papers[^hgb][^ao]"
+            },
+            {
+              "at": "8 years",
+              "what": "Booking vouchers, since 2025 for all not yet expired[^egao]"
+            },
+            {
+              "at": "10 years",
+              "what": "Books, annual accounts and the documents needed to understand them[^hgb]"
+            }
           ]
         },
         {
           "name": "Applicants and employees",
           "scope": "Common minimums. Collective agreements and sector law can require more.",
           "steps": [
-            { "at": "2 months", "what": "Rejected applicants must claim discrimination in writing[^agg]" },
-            { "at": "6 months", "what": "Delete rejected applications, the BfDI's maximum[^bfdi]" },
-            { "at": "2 years", "what": "Overtime records[^arbzg]" },
-            { "at": "End of 6th year", "what": "Payroll account after the last payment[^estg]" }
+            {
+              "at": "2 months",
+              "what": "Rejected applicants must claim discrimination in writing[^agg]"
+            },
+            {
+              "at": "6 months",
+              "what": "Delete rejected applications, the BfDI's maximum[^bfdi]"
+            },
+            {
+              "at": "2 years",
+              "what": "Overtime records[^arbzg]"
+            },
+            {
+              "at": "End of 6th year",
+              "what": "Payroll account after the last payment[^estg]"
+            }
           ]
         }
       ]
@@ -102,12 +123,12 @@
       "title": "Where deleted data lives on",
       "navTitle": "Hidden copies",
       "items": [
-        "**SharePoint and OneDrive.** Under a retain policy, edited and deleted files go to the hidden Preservation Hold library, which counts against the site's storage[^retention].",
+        "**SharePoint and OneDrive.** Under a retain policy, edited and deleted files go to the hidden Preservation Hold library, using site storage[^retention].",
         "**Leavers' mailboxes.** Under a retention policy they become inactive mailboxes, which aren't deleted automatically when retention ends[^exret].",
-        "**Teams call logs.** They're kept indefinitely unless you create a call logs retention policy[^teamsret].",
-        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default[^m365backup]. The backups sheet covers backup retention.",
+        "**Teams call logs.** They're kept indefinitely[^teamsret], and since April 2026 only a separate call logs policy, set in PowerShell, deletes new ones[^whatsnew].",
+        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default[^m365backup]. See the backups sheet.",
         "**Google Vault.** Expired data stays available to Vault for about 30 days before it's purged[^vault].",
-        "**Providers and processors.** Microsoft keeps deleted content up to 30 days[^msdel]. Processors must delete or return your data at contract end[^gdpr], as the third-party risk sheet covers."
+        "**Processors.** They must delete or return your data at contract end[^gdpr]; see the third-party risk sheet."
       ]
     },
     {
@@ -116,9 +137,8 @@
       "title": "If you run Microsoft Purview",
       "navTitle": "Purview",
       "items": [
-        "**Know what E3 covers.** Retention policies and manually applied labels come with E3 and Business Premium. Auto-applied and default labels, adaptive scopes, event-based retention, disposition review and records need E5 or an add-on[^purviewsd].",
+        "**Know what E3 covers.** Retention policies and manual labels come with E3 and Business Premium. Auto-applied and default labels, adaptive scopes, event-based retention, disposition review and records need E5[^purviewsd].",
         "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, a label beats a policy, a scoped policy beats an org-wide one, then the shortest period wins[^retention].",
-        "**Use labels for exceptions.** A label applies to one item and moves with it inside the tenant; a policy applies to a whole location[^retention].",
         "**Lock only what a regulator demands.** Preservation Lock stops anyone, admins included, from turning off or shortening a policy[^retention], so a locked 10-year policy couldn't follow the 2025 cut to 8 years[^egao].",
         "**Put holds in eDiscovery cases.** A hold can take 24 hours to apply and captures group membership only once[^hold]."
       ]
@@ -132,9 +152,8 @@
       "items": [
         "**The EDPB reported on erasure.** Its February 2026 report on 764 controllers found missing procedures, trouble setting retention periods and inconsistent deletion in backups[^cef25].",
         "**Anonymization has a test.** The EDPB's July 2026 draft checks for record isolation, linkage and inference, and says anonymizing without deleting the original doesn't help storage limitation[^anon].",
-        "**Pay records may need to last longer.** The EU pay transparency directive was due in national law by 7 June 2026 and allows no less than 3 years to bring equal pay claims[^ptd]. Check your country's law before you shorten pay or recruitment records.",
-        "**Teams call records need their own policy.** Since April 2026, new call records fall under separate call logs retention policies, created in PowerShell[^whatsnew].",
-        "**Priority cleanup can override holds.** It deletes chosen items despite retention and eDiscovery holds, needs three approvals since July 2026 and reaches SharePoint and OneDrive files in preview since August[^whatsnew]. It needs E5[^purviewsd]."
+        "**Pay records may need to last longer.** The EU pay transparency directive was due by 7 June 2026 and allows at least 3 years to bring equal pay claims[^ptd]. Check national law before you shorten pay records.",
+        "**Priority cleanup overrides holds.** The E5 feature[^purviewsd] deletes chosen items despite retention and holds, needs three approvals since July 2026 and reaches files in preview since August[^whatsnew]."
       ]
     },
     {
@@ -142,9 +161,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Keeping all email for 10 years.** Only business letters, which concern a transaction, and other tax-relevant documents carry a 6-year duty[^hgb][^ao]. Give ordinary mail a short default.",
-        "**Running the old ERP for a decade.** Five calendar years after a system change, a machine-readable and analyzable export is enough, unless a tax audit has started[^ao].",
-        "**Disposition review for routine records.** It needs E5[^purviewsd] and a reviewer for every batch. Keep it for contracts and other records whose deletion needs sign-off."
+        "**Keeping all email for 10 years.** Only business letters about a transaction and other tax-relevant documents need 6 years[^hgb][^ao]. Give other mail a short default.",
+        "**Running the old ERP for a decade.** Five years after a system change, an analyzable export is enough, unless a tax audit has started[^ao].",
+        "**Disposition review for routine records.** It needs E5[^purviewsd] and a reviewer per batch. Keep it for records whose deletion needs sign-off."
       ]
     },
     {
@@ -154,7 +173,6 @@
       "navTitle": "Mistakes",
       "items": [
         "**One org-wide \"retain forever\" policy.** Retention always beats deletion[^retention], so it cancels every delete rule and keeps every leaver's mailbox[^exret].",
-        "**Applying the longest period to everything.** The EDPB cites a controller that did this instead of setting a period per purpose[^cef25].",
         "**Masking and calling it deletion.** Partial masking or basic pseudonymization doesn't meet the GDPR's requirements for deletion[^cef25].",
         "**Assuming Vault works like Purview.** In Vault a custom rule beats the default rule even when it's shorter[^vault]."
       ]
@@ -177,7 +195,7 @@
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Write a deletion concept along DIN EN ISO/IEC 27555 and link it to the record of processing activities.",
+            "Write a deletion concept along DIN EN ISO/IEC 27555, linked to your processing records.",
             "Add deletion jobs to CRM, ERP and HR systems, and keep their logs.",
             "Once a year, find one test person's data in every system within a week."
           ]
@@ -203,7 +221,7 @@
   "sources": [
     {
       "id": "gdpr",
-      "title": "Regulation (EU) 2016/679 (GDPR), Articles 5, 12, 17, 19, 28 and 30",
+      "title": "Regulation (EU) 2016/679 (GDPR)",
       "publisher": "EUR-Lex",
       "date": "2016",
       "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
@@ -217,7 +235,7 @@
     },
     {
       "id": "gtig",
-      "title": "Ransomware Under Pressure: Tactics, Techniques, and Procedures in a Shifting Threat Landscape",
+      "title": "Ransomware Under Pressure",
       "publisher": "Google Threat Intelligence Group",
       "date": "16 Mar 2026",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape"
@@ -319,13 +337,6 @@
       "publisher": "Google Workspace Help",
       "date": "updated 26 Oct 2026",
       "url": "https://knowledge.workspace.google.com/vault/retention/how-retention-works"
-    },
-    {
-      "id": "msdel",
-      "title": "Data retention, deletion, and destruction in Microsoft 365",
-      "publisher": "Microsoft Learn",
-      "date": "29 Sep 2025",
-      "url": "https://learn.microsoft.com/en-us/compliance/assurance/assurance-data-retention-deletion-and-destruction-overview"
     },
     {
       "id": "purviewsd",

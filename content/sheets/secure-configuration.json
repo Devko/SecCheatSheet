@@ -1,0 +1,379 @@
+{
+  "slug": "secure-configuration",
+  "topic": "Secure configuration",
+  "status": "draft",
+  "order": 30,
+  "capability": "exposure/hardening",
+  "title": "Secure configuration: which baseline should your servers follow, and do they still match it?",
+  "short": "Pick one baseline per server platform, audit each risky change for two to four weeks, enforce in rings and check drift weekly.",
+  "answer": "This quarter, pick one published baseline per server platform, remove default and shared credentials and switch off the legacy protocols that relay attacks need, auditing each change before you enforce it. Then apply the baseline from code to every new and existing server and compare live settings with it every week, so drift becomes a finding with an owner.",
+  "audience": "IT and platform teams running Windows and Linux servers, hypervisors, databases and other server software, on premises or on IaaS",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Pick one baseline per platform.",
+          "text": "Use Microsoft's security baseline for each Windows Server version[^sct], the CIS Level 1 Server profile your Linux distribution ships[^rhel][^usg] and Broadcom's guide for vSphere[^vcfscg]. Add STIG or other profiles only where a contract requires them."
+        },
+        {
+          "title": "Remove default and shared credentials.",
+          "text": "Give each Windows server its own local admin password with Windows LAPS, built into Server 2019 and later[^laps]. Replace default passwords on iLO, iDRAC and other management controllers, which scanners probe[^vcfscg], and keep the SQL Server `sa` login disabled[^sqlbp]."
+        },
+        {
+          "title": "Switch off what relay attacks need.",
+          "text": "Require SMB signing, LDAP signing and LDAP channel binding, and remove SMBv1, NTLMv1, LLMNR and NetBIOS. Microsoft handled nearly six times as many NTLM-related security cases as a decade ago, and more in the first half of 2026 than in all of 2025[^mddr]."
+        },
+        {
+          "title": "Lock down hypervisor management.",
+          "text": "Turn on ESXi lockdown mode, which is off by default, limit the host firewall to admin networks and keep SSH stopped[^vcfscg]. Mandiant advises taking hypervisors and backups out of the corporate Active Directory[^mtrends]."
+        },
+        {
+          "title": "Apply it from code and check for drift.",
+          "text": "Keep GPOs, OSConfig settings and playbooks in version control, with one tool owning each setting. Google calls hardening a state to maintain against drift: UNC3944 relied on changes such as enabling SSH and altering firewall rules[^gtigvs]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rollout",
+      "title": "Roll out a baseline without breaking things",
+      "navTitle": "Rollout",
+      "items": [
+        {
+          "title": "Measure before you change.",
+          "text": "Pick the domain controller, member server or workgroup variant for each server[^osconfig]. Compare current GPOs with it in Policy Analyzer[^sct], or run `oscap xccdf eval` with the profile on Linux[^rhel]."
+        },
+        {
+          "title": "Turn on the audit events and wait.",
+          "text": "Log for two to four weeks, including a month end: SMB server audit events 3021 and 3022[^smbsign], NTLM events 4020 to 4033[^ntlmaudit], LDAP events 2889 and 3074 to 3075[^ldapsign][^ldapcbt] and LSA protection events 3065 and 3066[^lsa]."
+        },
+        {
+          "title": "Enforce in rings, with an exception list.",
+          "text": "Start with IT's own servers. Give each exception an owner, a reason and an end date; BSI asks you to document every setting you can't apply[^bsisys11]."
+        },
+        {
+          "title": "Plan the rollback before you remediate.",
+          "text": "Snapshot first: Red Hat has no automated way to revert hardening[^rhel], and removing an OSConfig baseline may not restore the old settings[^osconfig]."
+        },
+        {
+          "title": "Build new servers hardened.",
+          "text": "Install from a hardened Kickstart file or image[^rhel], and finish the configuration before a server reaches production or the internet, as BSI asks[^bsisys11]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "windows",
+      "title": "Windows Server settings that matter most",
+      "navTitle": "Windows Server",
+      "items": [
+        "**SMB.** SMBv1 isn't installed by default on Server 2019 and later[^smb1]; remove it from older servers. Server 2025 requires signing only for outbound connections[^smbsign], so set **Microsoft network server: Digitally sign communications (always)** after the audit, as the 2602 baseline does[^wsbase2602].",
+        "**NTLMv1 and LM.** Server 2025 no longer has NTLMv1[^ntlmv1]. On older servers, allow NTLMv2 only, as the baselines do[^osconfig].",
+        "**LDAP signing and channel binding.** Only new Server 2025 forests require signing by default; channel binding defaults to **When supported** there and **Never** on 2022 and earlier[^ldapsign][^ldapcbt]. Once the audit events stop, set **Require signature** and **Always**.",
+        "**LLMNR, NetBIOS and old TLS.** The Server 2025 OSConfig baseline disables LLMNR and NetBIOS and requires TLS 1.2 or later[^osconfig]. Even Server 2025 enables TLS 1.0 and 1.1 by default[^schannel]; the encryption sheet covers the TLS settings.",
+        "**LSA protection.** Windows 11 enables it by default, Windows Server doesn't[^lsa]. Turn it on once the audit events are clean.",
+        "**Unused roles and services.** Remove what a server doesn't need, including firmware functions[^bsisys11]. Start with the Print Spooler on domain controllers and servers that don't print[^spooler], and the OpenSSH server that Server 2025 installs by default[^ws2025new]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "platforms",
+      "title": "Linux, databases and hypervisors",
+      "navTitle": "Other platforms",
+      "items": [
+        "**Linux.** RHEL 10's SCAP Security Guide has CIS, DISA STIG, PCI DSS and BSI SYS.1.1 and SYS.1.3 profiles[^rhel]. Ubuntu's USG has CIS and STIG profiles for 20.04 to 24.04 and needs an Ubuntu Pro subscription[^usg].",
+        "**Databases.** Prefer Active Directory logins to SQL Server logins, keep `sa` disabled, leave `xp_cmdshell` off and enable only the features you use[^sqlbp].",
+        "**ESXi.** Use a site-specific admin group instead of the default **ESX Admins**, turn on audit records, which are off by default, and forward them[^vcfscg]. Google advises not joining hosts to Active Directory and encrypting Tier 0 VMs[^gtigvs].",
+        "**Management controllers.** Put iLO, iDRAC and other BMCs on an isolated network with local accounts outside your main directory, disable IPMI Cipher 0 and unused services[^vcfscg]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**The Windows Server 2025 baseline turned on NTLM auditing and SMB server signing.** Version 2602, from February 2026, also moves the print RPC listener on member servers from Negotiate to Kerberos[^wsbase2602].",
+        "**NTLM is being switched off in stages.** The October 2026 updates brought enhanced NTLM auditing to Server 2019 and 2022[^ntlmaudit] and block NTLMv1-derived single sign-on by default on Server 2025, which can break MS-CHAPv2 Wi-Fi and VPN logins[^ntlmv1]. Microsoft plans to disable network NTLM by default in the next major Windows Server release[^ntlmoff].",
+        "**The 2011 Secure Boot certificates expired.** The Microsoft KEK and UEFI CAs lapsed in June 2026 and the Windows Production PCA on 19 October 2026. Servers and VMs without the 2023 certificates still boot but get no new boot-level protections[^secureboot].",
+        "**Broadcom's 9.1 hardening guide came out in June 2026.** It covers ESX and vCenter in VCF and vSphere Foundation 9.1, and comes with PowerCLI audit and remediation scripts[^vcfscg]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Applying every control at its strictest.** Broadcom calls its guide a reasonable baseline, not a catalog of every control, because the strictest settings impede daily administration[^vcfscg]. Use CIS Level 1, not Level 2, unless a rule requires it.",
+        "**Buying CIS SecureSuite before applying a free baseline.** Microsoft's baselines are free and RHEL ships CIS profiles[^rhel]. Membership starts at $2,400 a year for up to 99 employees and excludes commercial use such as consulting[^cisprice]; the free PDFs are CC BY-NC-SA 4.0[^cisterms].",
+        "**Hardening the ESXi SSH daemon.** Broadcom dropped that control: keep SSH stopped except for brief, supervised diagnostics[^vcfscg]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Enforcing signing before auditing.** Clients that can't sign can no longer query domain controllers once LDAP signing is required[^ldapsign].",
+        "**Two tools managing one setting.** If Group Policy and OSConfig set different values, the setting keeps flipping between them[^osconfig]. Remove one source.",
+        "**Weakening every server for one device.** Disabling SMB signing for an old NAS[^smb1], disabling AppArmor for one app[^ubaa] or switching RHEL to the LEGACY crypto policy[^rhel] lowers protection for everything else.",
+        "**Leaving old VMs on the datastore.** UNC3944 staged its attacks from powered-off, orphaned VMs[^gtigvs]. Delete decommissioned disks.",
+        "**Exceptions that never end.** Review the list every quarter and close the ones past their end date."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Import Microsoft's baseline GPOs for each server version from the Security Compliance Toolkit, or apply OSConfig on Server 2025.",
+            "Ask your IT provider to list every default or shared password on servers, hypervisors, NAS and management controllers, and turn on Windows LAPS.",
+            "If a provider hardens your servers with CIS content, ask how it is licensed for commercial use[^cisprice]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Keep baselines and exceptions in version control and change them by pull request.",
+            "Run the NTLM, SMB and LDAP audits this quarter, then enforce one ring a month.",
+            "With Defender for Servers Plan 2, track CIS or STIG compliance in its baseline assessment[^mdvm]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Map results to the framework your auditors use: CIS, STIG, PCI DSS or, in Germany, BSI SYS.1.1 and SYS.1.3[^rhel].",
+            "Report drift on premises with Azure Machine Configuration, free through Azure Arc for Windows Server with Software Assurance[^arcmgmt].",
+            "Build golden images in a pipeline that fails on baseline violations."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft's Windows Server 2025 security baseline and OSConfig documentation, Microsoft's NTLM, SMB and LDAP guidance, Red Hat's RHEL 10 hardening guide, Broadcom's VCF 9.1 hardening guide, M-Trends 2026 and BSI IT-Grundschutz."
+    }
+  ],
+  "sources": [
+    {
+      "id": "sct",
+      "title": "Microsoft Security Compliance Toolkit",
+      "publisher": "Microsoft Learn",
+      "date": "updated 8 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/security-compliance-toolkit-10"
+    },
+    {
+      "id": "wsbase2602",
+      "title": "Security baseline for Windows Server 2025, version 2602",
+      "publisher": "Microsoft Security Baselines blog",
+      "date": "23 Feb 2026",
+      "url": "https://techcommunity.microsoft.com/blog/microsoft-security-baselines/security-baseline-for-windows-server-2025-version-2602/4496468"
+    },
+    {
+      "id": "osconfig",
+      "title": "Deploy Windows Server 2025 security baselines locally with OSConfig",
+      "publisher": "Microsoft Learn",
+      "date": "updated 2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/security/osconfig/osconfig-how-to-configure-security-baselines"
+    },
+    {
+      "id": "laps",
+      "title": "Windows LAPS overview",
+      "publisher": "Microsoft Learn",
+      "date": "updated 12 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/laps/laps-overview"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "smbsign",
+      "title": "Control SMB signing behavior",
+      "publisher": "Microsoft Learn",
+      "date": "updated 15 Sep 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-signing"
+    },
+    {
+      "id": "smb1",
+      "title": "Detect, enable, and disable SMBv1, SMBv2, and SMBv3",
+      "publisher": "Microsoft Learn",
+      "date": "updated 8 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/storage/file-server/troubleshoot/detect-enable-and-disable-smbv1-v2-v3"
+    },
+    {
+      "id": "ntlmv1",
+      "title": "KB5066470: Manage NTLMv1 changes and prevent network authentication issues in Windows",
+      "publisher": "Microsoft Support",
+      "date": "updated 19 Oct 2026",
+      "url": "https://support.microsoft.com/help/5066470"
+    },
+    {
+      "id": "ntlmaudit",
+      "title": "KB5064479: Overview of NTLM auditing enhancements",
+      "publisher": "Microsoft Support",
+      "date": "updated 13 Oct 2026",
+      "url": "https://support.microsoft.com/topic/overview-of-ntlm-auditing-enhancements-in-windows-11-version-24h2-and-windows-server-2025-b7ead732-6fc5-46a3-a943-27a4571d9e7b"
+    },
+    {
+      "id": "ntlmoff",
+      "title": "Advancing Windows security: Disabling NTLM by default",
+      "publisher": "Windows IT Pro Blog",
+      "date": "29 Jan 2026",
+      "url": "https://techcommunity.microsoft.com/blog/windows-itpro-blog/advancing-windows-security-disabling-ntlm-by-default/4489526"
+    },
+    {
+      "id": "ldapsign",
+      "title": "LDAP signing overview for Active Directory Domain Services",
+      "publisher": "Microsoft Learn",
+      "date": "2 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/ldap-signing"
+    },
+    {
+      "id": "ldapcbt",
+      "title": "LDAP channel binding for AD DS",
+      "publisher": "Microsoft Learn",
+      "date": "2 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/ldap-channel-binding"
+    },
+    {
+      "id": "schannel",
+      "title": "Protocols in TLS/SSL (Schannel SSP)",
+      "publisher": "Microsoft Learn",
+      "date": "20 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthn/protocols-in-tls-ssl--schannel-ssp-"
+    },
+    {
+      "id": "lsa",
+      "title": "Configure added LSA protection",
+      "publisher": "Microsoft Learn",
+      "date": "updated 12 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection"
+    },
+    {
+      "id": "spooler",
+      "title": "Defender for Identity: identity infrastructure security assessments",
+      "publisher": "Microsoft Learn",
+      "date": "updated 6 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/identity-infrastructure"
+    },
+    {
+      "id": "ws2025new",
+      "title": "What's new in Windows Server 2025",
+      "publisher": "Microsoft Learn",
+      "date": "updated 16 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/get-started/whats-new-windows-server-2025"
+    },
+    {
+      "id": "sqlbp",
+      "title": "SQL Server security best practices",
+      "publisher": "Microsoft Learn",
+      "date": "updated 19 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/sql-server-security-best-practices"
+    },
+    {
+      "id": "arcmgmt",
+      "title": "Windows Server Management enabled by Azure Arc",
+      "publisher": "Microsoft Learn",
+      "date": "updated 16 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/servers/windows-server-management-overview"
+    },
+    {
+      "id": "mdvm",
+      "title": "Security baselines assessment",
+      "publisher": "Microsoft Learn",
+      "date": "updated 26 May 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-vulnerability-management/tvm-security-baselines"
+    },
+    {
+      "id": "secureboot",
+      "title": "KB5062710: Windows Secure Boot certificate expiration and CA updates",
+      "publisher": "Microsoft Support",
+      "date": "updated 18 May 2026",
+      "url": "https://support.microsoft.com/en-us/servicing/os/secure-boot/2025/06/windows-secure-boot-certificate-expiration-and-ca-updates"
+    },
+    {
+      "id": "rhel",
+      "title": "RHEL 10: Security hardening",
+      "publisher": "Red Hat Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html-single/security_hardening/index"
+    },
+    {
+      "id": "usg",
+      "title": "Ubuntu Security Guide (USG)",
+      "publisher": "Ubuntu security documentation",
+      "date": "updated 22 Oct 2026",
+      "url": "https://documentation.ubuntu.com/security/compliance/usg/"
+    },
+    {
+      "id": "ubaa",
+      "title": "Common security mistakes: Disabling AppArmor",
+      "publisher": "Ubuntu security documentation",
+      "date": "updated 1 May 2026",
+      "url": "https://documentation.ubuntu.com/security/common-mistakes/disabling-apparmor/"
+    },
+    {
+      "id": "vcfscg",
+      "title": "VMware Cloud Foundation 9.1 Security Configuration and Hardening Guide, guidance and controls",
+      "publisher": "Broadcom",
+      "date": "12 Jun 2026",
+      "url": "https://github.com/vmware/vcf-security-and-compliance-guidelines/tree/main/security-configuration-hardening-guide/cloud-foundation/9.1"
+    },
+    {
+      "id": "gtigvs",
+      "title": "From Help Desk to Hypervisor: Defending Your VMware vSphere Estate from UNC3944",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "23 Jul 2025",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/defending-vsphere-from-unc3944/"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026, Executive Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "bsisys11",
+      "title": "IT-Grundschutz-Kompendium: SYS.1.1 Allgemeiner Server",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/07_SYS_IT_Systeme/SYS_1_1_Allgemeiner_Server_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "cisprice",
+      "title": "CIS SecureSuite: End User pricing",
+      "publisher": "CIS",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.cisecurity.org/cis-securesuite/pricing-and-categories/end-user"
+    },
+    {
+      "id": "cisterms",
+      "title": "Terms and conditions: CIS Benchmarks (free PDF use)",
+      "publisher": "CIS",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.cisecurity.org/terms-and-conditions-table-of-contents"
+    }
+  ]
+}
