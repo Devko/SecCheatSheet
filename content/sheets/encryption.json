@@ -90,6 +90,18 @@
       ]
     },
     {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**A certificate authority lost its keys.** In October 2026 eight eMudhra intermediate CA keys proved recoverable, and Mozilla and Chrome dropped its emSign ECC Root CA - G3[^emudhra]. Update the trust store in every runtime and image (Python: see the secure-python sheet), and keep a second ACME CA ready.",
+        "**Public certificates are becoming server-only.** Chrome requires public certificates issued from 15 March 2027 to be for server authentication only[^crp]. Move mutual TLS to a private CA.",
+        "**BSI and NIST set end dates for classical cryptography** in TR-02102 2026-01 and the final IR 8547 (dates below)[^tr1][^ir8547]."
+      ]
+    },
+    {
       "type": "timelines",
       "id": "deadlines",
       "title": "Dates that set your schedule",
@@ -128,26 +140,14 @@
             },
             {
               "at": "End 2031",
-              "what": "BSI: end of classical-only key exchange and TLS 1.2[^tr1][^tr2]"
+              "what": "BSI: classical key exchange and TLS 1.2 end[^tr1][^tr2]"
             },
             {
               "at": "End 2035",
-              "what": "Medium-risk uses migrated[^euroadmap]; NIST disallows RSA and ECC[^ir8547]"
+              "what": "Medium-risk migrated[^euroadmap]; NIST bars RSA and ECC[^ir8547]"
             }
           ]
         }
-      ]
-    },
-    {
-      "type": "list",
-      "id": "changed",
-      "title": "What changed in 2026",
-      "navTitle": "What changed",
-      "span": "full",
-      "items": [
-        "**A certificate authority lost its keys.** In October 2026 eight eMudhra intermediate CA keys proved recoverable, and Mozilla and Chrome dropped its emSign ECC Root CA - G3[^emudhra]. Update the trust store in every runtime and image (Python: see the secure-python sheet), and keep a second ACME CA ready.",
-        "**Public certificates are becoming server-only.** Chrome requires public certificates issued from 15 March 2027 to be for server authentication only[^crp]. Move mutual TLS to a private CA.",
-        "**BSI and NIST put end dates on classical cryptography.** BSI did so in TR-02102 2026-01, NIST in the final IR 8547 in October (dates above)[^tr1][^ir8547]."
       ]
     },
     {
@@ -157,8 +157,8 @@
       "items": [
         "**Bigger symmetric keys for quantum.** NIST counts approved symmetric algorithms with at least 128-bit security as quantum-resistant[^ir8547].",
         "**Post-quantum certificates now.** Classical signatures stay trustworthy until a quantum computer exists, and BSI recommends them until the end of 2035[^tr1].",
-        "**Cloud keys in your own HSM.** AWS says the availability and latency risks of external key stores exceed the perceived benefit for most customers[^xks].",
-        "**Rotating KMS keys more than yearly.** Wrapping keys are almost never used enough to wear out, and rotation doesn't re-encrypt data[^kmsrot]."
+        "**Cloud keys in your own HSM.** AWS says the availability and latency risks of external key stores outweigh the benefit for most customers[^xks].",
+        "**Rotating KMS keys more than yearly.** Wrapping keys are almost never used enough to wear out[^kmsrot]."
       ]
     },
     {
@@ -169,7 +169,7 @@
       "items": [
         "**Deleting a key something still uses.** A deleted AWS KMS key leaves its data unrecoverable. Disable it first and alarm on use during the 7 to 30 day waiting period[^kmsdel].",
         "**Trusting infrastructure-as-code defaults.** AWS load balancers created from the CLI, CloudFormation or CDK get `ELBSecurityPolicy-2016-08`, which allows TLS 1.0 and 1.1[^albpol].",
-        "**Turning off post-quantum key exchange for a middlebox.** Firefox warns that this removes protection against later decryption of recorded traffic[^ffpq]. Fix the middlebox instead."
+        "**Turning off post-quantum key exchange for a middlebox.** Firefox warns this removes protection against later decryption of recorded traffic[^ffpq]. Fix the middlebox."
       ]
     },
     {
@@ -198,7 +198,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Write the cryptography policy NIS2 requires: approved algorithms, key management from generation to destruction, planned reviews[^enisa].",
+            "Write the cryptography policy NIS2 requires, from approved algorithms to key destruction, and review it on a schedule[^enisa].",
             "Keep the inventory in a standard format such as CBOM[^euroadmap] and report quantum risk to the board.",
             "Start with the PKI, the slowest to migrate, and put PQC support into supplier contracts."
           ]
@@ -210,13 +210,13 @@
     {
       "date": "2026-11-04",
       "version": "0.1",
-      "text": "First draft, based on the CA/Browser Forum Baseline Requirements, BSI TR-02102 (2026-01), the EU PQC roadmap and FAQ, NCSC PQC timelines, NIST IR 8547, the eMudhra incident record and Microsoft, AWS and Google Cloud key management documentation."
+      "text": "First draft, based on CA/Browser Forum rules, BSI TR-02102 2026-01, the EU PQC roadmap, NIST IR 8547 and cloud KMS documentation."
     }
   ],
   "sources": [
     {
       "id": "br",
-      "title": "Baseline Requirements for TLS Server Certificates, v2.3.1",
+      "title": "Baseline Requirements, v2.3.1",
       "publisher": "CA/Browser Forum",
       "date": "4 Oct 2026",
       "url": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/"
@@ -230,7 +230,7 @@
     },
     {
       "id": "crp",
-      "title": "Chrome Root Program Policy, version 1.8",
+      "title": "Chrome Root Program Policy, v1.8",
       "publisher": "Google",
       "date": "5 Feb 2026",
       "url": "https://googlechrome.github.io/chromerootprogram/crp/policy"
@@ -244,21 +244,21 @@
     },
     {
       "id": "tr1",
-      "title": "TR-02102-1: Cryptographic Mechanisms, version 2026-01",
+      "title": "TR-02102-1, version 2026-01",
       "publisher": "BSI",
       "date": "23 Jan 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile"
     },
     {
       "id": "tr2",
-      "title": "TR-02102-2: Use of TLS, version 2026-01",
+      "title": "TR-02102-2 (TLS), version 2026-01",
       "publisher": "BSI",
       "date": "27 Jan 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile"
     },
     {
       "id": "bsitr",
-      "title": "TR-02102 overview page, note on TLS 1.3",
+      "title": "TR-02102 page, note on TLS 1.3",
       "publisher": "BSI",
       "date": "checked 4 Nov 2026",
       "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Technische-Richtlinien/TR-nach-Thema-sortiert/tr02102/tr02102_node.html"
@@ -279,7 +279,7 @@
     },
     {
       "id": "ir8547",
-      "title": "IR 8547: Transition to Post-Quantum Cryptography Standards",
+      "title": "IR 8547: Transition to PQC Standards",
       "publisher": "NIST",
       "date": "Oct 2026",
       "url": "https://csrc.nist.gov/pubs/ir/8547/final"
@@ -287,14 +287,14 @@
     {
       "id": "chrome",
       "title": "A new path for Kyber on the web",
-      "publisher": "Google Security Blog",
+      "publisher": "Google",
       "date": "13 Sep 2024",
       "url": "https://security.googleblog.com/2024/09/a-new-path-for-kyber-on-web.html"
     },
     {
       "id": "ffpq",
       "title": "PostQuantumKeyAgreementEnabled",
-      "publisher": "Firefox admin docs",
+      "publisher": "Mozilla",
       "date": "updated 4 Nov 2026",
       "url": "https://firefox-admin-docs.mozilla.org/reference/policies/postquantumkeyagreementenabled/"
     },
@@ -314,7 +314,7 @@
     },
     {
       "id": "schannel",
-      "title": "TLS Supported Groups in Windows 11 24H2 and later",
+      "title": "TLS Supported Groups in Windows",
       "publisher": "Microsoft Learn",
       "date": "20 May 2026",
       "url": "https://learn.microsoft.com/en-us/windows/win32/secauthn/tls-supported-groups-in-windows-11-24h2-and-later"
@@ -343,41 +343,41 @@
     {
       "id": "kmspol",
       "title": "Default key policy",
-      "publisher": "AWS KMS",
+      "publisher": "AWS",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html"
     },
     {
       "id": "kmsdel",
       "title": "Delete an AWS KMS key",
-      "publisher": "AWS KMS",
+      "publisher": "AWS",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html"
     },
     {
       "id": "kmsrot",
       "title": "Rotate AWS KMS keys",
-      "publisher": "AWS KMS",
+      "publisher": "AWS",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
     },
     {
       "id": "xks",
       "title": "External key stores",
-      "publisher": "AWS KMS",
+      "publisher": "AWS",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/kms/latest/developerguide/keystore-external.html"
     },
     {
       "id": "s3sse",
       "title": "Protecting data with server-side encryption",
-      "publisher": "Amazon S3",
+      "publisher": "AWS",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html"
     },
     {
       "id": "enisa",
-      "title": "NIS2 technical implementation guidance, v1.0, point 9",
+      "title": "NIS2 technical implementation guidance, v1.0",
       "publisher": "ENISA",
       "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"

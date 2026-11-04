@@ -70,6 +70,7 @@
       "title": "What each role owes",
       "navTitle": "Duties by role",
       "span": "full",
+      "intro": "Deployer dates are also on the agentic AI sheet.",
       "columns": [
         {
           "title": "Deployers (most organizations)",
@@ -95,8 +96,7 @@
             "**Systemic risk.** Presumed above 10²⁵ FLOP: evaluations with adversarial testing, risk mitigation, incident reporting and cybersecurity[^aiact]."
           ]
         }
-      ],
-      "intro": "Deployer dates are also on the agentic AI sheet."
+      ]
     },
     {
       "type": "list",
@@ -153,8 +153,7 @@
       "items": [
         "**Building CV screening on a general assistant.** It can make you the provider of a high-risk system, with every provider duty[^aiact].",
         "**Emotion analytics on staff.** Inferring employees' or candidates' emotions from calls or meeting video is banned, even during probation[^prohib].",
-        "**Relying on the vendor's compliance.** Oversight, logs and worker information are deployer duties[^aiact]. Put instructions for use, log access and incident notice in the contract.",
-        "**Counting only what IT bought.** AI features arrive in tools you already use. Add them from the release notes."
+        "**Relying on the vendor's compliance.** Oversight, logs and worker information are deployer duties[^aiact]. Put instructions for use, log access and incident notice in the contract."
       ]
     },
     {
@@ -264,14 +263,14 @@
     },
     {
       "id": "kimig",
-      "title": "KI-MIG (German AI Act implementation law), Sections 2 and 12",
+      "title": "KI-MIG, Sections 2 and 12",
       "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
       "date": "22 Jul 2026",
       "url": "https://www.gesetze-im-internet.de/ki-mig/"
     },
     {
       "id": "betrvg",
-      "title": "Betriebsverfassungsgesetz, Sections 87 and 90",
+      "title": "BetrVG, Sections 87 and 90",
       "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
       "date": "as amended 19 Jul 2024",
       "url": "https://www.gesetze-im-internet.de/betrvg/"

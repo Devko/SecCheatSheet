@@ -88,10 +88,9 @@
       "navTitle": "Risky changes",
       "items": [
         "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers, new interfaces and secrets need more oversight, also when AI wrote the code[^ncscvibe].",
-        "**Threat model it in half an hour.** Ask what you're working on, what can go wrong, what you'll do about it and whether you did a good enough job. Use STRIDE's six categories as prompts[^owasptm].",
+        "**Threat model it in half an hour.** Ask what you're working on, what can go wrong, what you'll do about it and whether you did a good enough job, with STRIDE's six categories as prompts[^owasptm]. Keep the answers with the code.",
         "**Pick requirements from ASVS 5.0.** Level 1 holds about 20% of some 350 requirements, and most applications should aim for Level 2[^asvs]. Cite them with the version, as in `v5.0.0-1.2.5`[^asvs].",
-        "**Ship secure defaults.** No shared default passwords, MFA on for admins and logs for customers[^badprac]. The CRA requires a secure default configuration and a reset[^cra].",
-        "**Record the decision.** Keep the threat model and accepted risks with the code. The CRA's risk assessment must be documented and kept current[^cra]."
+        "**Ship secure defaults.** No shared default passwords, MFA on for admins and logs for customers[^badprac]. The CRA requires a secure default configuration and a reset[^cra]."
       ]
     },
     {
@@ -102,7 +101,7 @@
       "items": [
         "**Answers to buyers' standard questions.** CISA's Secure by Demand guide tells buyers to ask for a disclosure policy, CVEs with CWE and CPE fields, a plan to end vulnerability classes, an SBOM and MFA by default[^demand].",
         "**A mapping to SSDF 1.1.** Name the task each practice meets, such as PW.7.2 for code review[^ssdf]. US agencies may still ask for the attestation form, though it's no longer required[^omb].",
-        "**CRA technical documentation, if you ship products.** Keep it, with the risk assessment, for 10 years or the support period, if longer[^cra]. SaaS alone falls under NIS2[^cra]."
+        "**CRA technical documentation, if you ship products.** Keep the risk assessment current, and keep it with the documentation for 10 years or the support period, if longer[^cra]. SaaS alone falls under NIS2[^cra]."
       ]
     },
     {
