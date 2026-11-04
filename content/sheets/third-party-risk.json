@@ -90,7 +90,7 @@
       "items": [
         "**Give MSP staff named accounts with MFA.** Keep them out of internal admin groups, limit them to the systems the MSP manages and disable them when not in use[^aa22131a]. No admin credential should serve several customers[^rasw].",
         "**Allow one remote access tool.** Allowlist the approved RMM tool, block the ports of others and keep log deletion out of its reach[^rasw]. In 2025, ransomware actors used a software provider's unpatched SimpleHelp RMM to reach its customers[^aa25163a].",
-        "**Take Global Administrator away from Microsoft partners.** Check partner roles under **Settings** > **Partner relationships** and switch to least-privilege GDAP roles[^gdap]. Microsoft advises a quarterly review[^dap].",
+        "**Take Global Administrator away from Microsoft partners.** Under **Settings** > **Partner relationships**, remove partner roles you don't need and ask for least-privilege GDAP roles[^dap]. Review them quarterly.",
         "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes and avoid Salesforce's `full`[^gtigdrift].",
         "**Watch supplier activity.** Alert on sign-ins by supplier accounts, new app consents and new RMM agents, and keep your most important logs for at least six months[^aa22131a]."
       ]
@@ -121,7 +121,7 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires makers of software and connected devices, but not standalone SaaS, to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already on the market[^cra]. Give key vendors a monitored security contact.",
+        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires makers of software and connected devices, but not of standalone SaaS, to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already on the market[^cra]. Give key vendors a monitored security contact.",
         "**Integration token theft hit another SaaS vendor.** In June 2026, an attacker used a stolen GitHub token to plant code in Klue's integration service and collect customers' Salesforce OAuth tokens[^klue].",
         "**The BSI published C5:2026.** Final since March 2026[^c5], it has 168 criteria instead of 121 and applies to attestations from 1 June 2027[^c5faq]. Ask cloud suppliers when their first report is due."
       ]
@@ -131,7 +131,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Your own 300-question questionnaire.** Send low tiers a one-page form, or accept standard evidence ENISA names, such as certifications or a completed SIG or CAIQ[^enisatig]. The top tier gets audit reports.",
+        "**Your own 300-question questionnaire.** Send low tiers a one-page form, or take a completed SIG or CAIQ, which ENISA names as evidence[^enisatig].",
         "**Custom terms with hyperscalers.** Compare their standard terms and audit reports with your clauses and record the gaps. ENISA suggests negotiating jointly[^enisatig]; DORA allows pooled audits[^rtscontract].",
         "**Mapping every fourth party.** NIS2 and the BSIG address direct suppliers[^bsifaq]; DORA adds subcontractors behind critical or important functions[^rtssub]. Ask the top tier which subcontractors touch your data.",
         "**A security rating feed before a supplier list.** No outside score tells you who holds admin rights in your tenant."
@@ -298,13 +298,6 @@
     },
     {
       "id": "dap",
-      "title": "Review cloud solution provider (partner) admin privileges",
-      "publisher": "Microsoft Learn",
-      "date": "3 Sep 2026",
-      "url": "https://learn.microsoft.com/en-us/microsoft-365/commerce/review-partner-admin-privileges"
-    },
-    {
-      "id": "gdap",
       "title": "Manage Microsoft-certified solution provider partner relationships",
       "publisher": "Microsoft Learn",
       "date": "30 Mar 2026",
