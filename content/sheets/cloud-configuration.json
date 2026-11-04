@@ -1,14 +1,14 @@
 {
   "slug": "cloud-configuration",
   "topic": "Cloud configuration",
-  "status": "draft",
+  "status": "published",
   "order": 18,
   "capability": "infrastructure/cloud",
   "title": "Cloud configuration: which settings let attackers in, and would you notice if one changed?",
   "short": "Check Microsoft 365 and every cloud account against one free baseline this month, block public storage and long-lived keys at the top, and diff the results every week.",
   "answer": "This month, run CISA's ScubaGear against Microsoft 365 and a free posture check against each cloud, and fix public storage, long-lived access keys, open app consent and open external access first. Then lock those settings with organization-level guardrails and re-run the same checks every week, so a changed setting shows up as a diff rather than as an incident.",
   "audience": "IT, platform and security teams running Microsoft 365 with workloads in Azure, AWS or Google Cloud, in organizations of any size",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -90,7 +90,7 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of the Google Cloud intrusions in Google's data and weak or missing credentials 27.2%; misconfiguration fell to 21%. Google suggests its secure defaults may have driven the shift[^th]. Patch within the patching sheet's deadlines.",
+        "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of Google Cloud intrusions in Google's data and weak or missing credentials 27.2%; misconfiguration fell to 21%. Google suggests its secure defaults may have driven the shift[^th]. Patch within the patching sheet's deadlines.",
         "**ScubaGear 2.0 is out.** The October 2026 release adds a Security Suite baseline for Defender, Purview, Exchange Online and Teams[^scubanews], so replace `defender` with `securitysuite` in your config[^scubagear]. The Entra baseline now requires blocking risky AI agents where Agent 365 or E7 is licensed[^scuba].",
         "**Microsoft 365 moved toward secure defaults.** Baseline Security Mode, in the admin center since November 2025, covers phishing-resistant MFA for admins, legacy authentication and app consent[^bsm]. Tenant Configuration Management, generally available since April 2026, monitors over 200 settings in six workloads[^tcmga].",
         "**S3 public access can be blocked for a whole organization.** Since November 2025 one AWS Organizations policy blocks it in every account, including new ones[^s3org]."
@@ -113,7 +113,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Trusting a new default to fix old resources.** Enforcing IMDSv2 for an account leaves instances that already allow IMDSv1 alone[^imds], and consent changes keep old grants[^consent].",
-        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol]. Keep only billing and organization tasks there.",
+        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol]. Keep it for billing and organization tasks.",
         "**Exposing a test resource \"just for a day.\"** Microsoft measured a median of 5.3 hours from an exposed container's start to the first exploit attempt[^mddr]."
       ]
     },
@@ -135,7 +135,7 @@
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Run ScubaGear weekly from a scheduled job and post the diff to the team channel.",
+            "Run ScubaGear weekly from a scheduled job, guard its app certificate like an admin credential and post the diff to the team channel.",
             "Connect every cloud account to one posture tool and give each finding an owner and a due date.",
             "Make infrastructure as code the only write path, and keep console write access for emergency roles."
           ]
@@ -143,7 +143,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "US federal civilian agencies must meet BOD 25-01's mandatory SCuBA policies and report to CISA[^bod].",
+            "Treat BOD 25-01's mandatory SCuBA policies as your floor, as US federal civilian agencies must[^bod].",
             "Feed drift and posture findings into the SIEM, with a fix time per severity.",
             "Review changes to guardrail policies like Tier 0 code, with two people."
           ]
@@ -154,6 +154,11 @@
   "changes": [
     {
       "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the Salesloft Drift example and the IMDSv1 cutover order and narrowed 4 statements to what the sources say."
+    },
+    {
+      "date": "2026-11-04",
       "version": "0.1",
       "text": "First draft, based on CISA's SCuBA baselines and BOD 25-01, Google's Cloud Threat Horizons Report H1 2026, the 2026 DBIR, the Microsoft Digital Defense Report 2026 and AWS, Microsoft Learn and Google Cloud documentation."
     }
@@ -161,7 +166,7 @@
   "sources": [
     {
       "id": "scubagear",
-      "title": "ScubaGear (README)",
+      "title": "ScubaGear (README and docs)",
       "publisher": "CISA",
       "date": "v2.0.0, Oct 2026",
       "url": "https://github.com/cisagov/ScubaGear"
