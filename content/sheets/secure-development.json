@@ -20,15 +20,15 @@
       "items": [
         {
           "title": "Publish a disclosure policy and a contact.",
-          "text": "Authorize good-faith testing, rule out legal action against it, give a reporting channel and allow coordinated publication[^pledge]. Serve `/.well-known/security.txt` with `Contact`, `Policy` and an `Expires` date under a year away[^rfc9116]. The CRA requires a policy and a contact[^cra]."
+          "text": "Authorize good-faith testing, rule out legal action against it, give a reporting channel and allow coordinated publication[^pledge]. Serve `/.well-known/security.txt` with `Contact`, `Policy` and an `Expires` date under a year away[^rfc9116]. The CRA requires both from December 2027[^cra]."
         },
         {
           "title": "Make the safe way the default way.",
-          "text": "Cross-site scripting and SQL injection top the 2025 CWE Top 25[^cwe]. Offer parameterized queries, auto-escaping templates and shell-free command APIs[^badprac]. Write new components in memory-safe languages: memory safety bugs fell below 20% of Android's vulnerabilities in 2025[^android]."
+          "text": "Cross-site scripting and SQL injection top the 2025 CWE Top 25[^cwe]. Offer parameterized queries, auto-escaping templates and shell-free command APIs[^pledge][^badprac]. Write new components in memory-safe languages: memory safety bugs fell below 20% of Android's vulnerabilities in 2025[^android]."
         },
         {
           "title": "Block secrets before they reach the repository.",
-          "text": "Turn on push protection everywhere; private repositories need GitHub Secret Protection[^ghss] or GitLab Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
+          "text": "Turn on push protection everywhere. On GitHub, private repositories need Secret Protection[^ghss]; on GitLab, it takes Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
         },
         {
           "title": "Require review and one precise scanner before merge.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Fix by exploitation and publish what you fixed.",
-          "text": "Ship fixes within 90 days of a report, or 7 days once exploited, when Google Project Zero would disclose[^p0]. Issue a CVE with CWE and CPE fields for each critical or high flaw[^pledge]."
+          "text": "Ship fixes within 90 days of a report, or 7 days once exploited, the deadlines Google Project Zero gives vendors[^p0]. Issue a CVE with CWE and CPE fields for each critical or high flaw[^pledge]."
         }
       ]
     },
@@ -52,7 +52,7 @@
         },
         {
           "title": "Is it exploited?",
-          "text": "Check CISA KEV, ENISA's EU KEV catalogue[^enisavd] and your own logs. If it is and the product is on the EU market, send an early warning through ENISA's platform within 24 hours[^cra][^srp]. The EU security laws sheet has the later clocks."
+          "text": "Check CISA KEV, ENISA's EU KEV catalog[^enisavd] and your own logs. If it is and the product is on the EU market, send an early warning through ENISA's platform within 24 hours[^cra][^srp]. The EU security laws sheet has the later clocks."
         },
         {
           "title": "When does the fix ship?",
@@ -60,7 +60,7 @@
         },
         {
           "title": "What do you publish?",
-          "text": "An advisory with a CVE, a CVSS score and a CWE, crediting the reporter. NVD no longer adds its own score where the CNA gave one and doesn't schedule most other CVEs for enrichment[^nvd], so your record is what customers see."
+          "text": "An advisory with a CVE, a CVSS score and a CWE, crediting the reporter. NVD no longer routinely adds its own score where the CNA gave one[^nvd], so your record is what customers see."
         },
         {
           "title": "Where else is the same bug?",
@@ -87,7 +87,7 @@
       "title": "Before a risky change ships",
       "navTitle": "Risky changes",
       "items": [
-        "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers, new interfaces and secrets need more oversight, also when AI wrote the code[^ncscvibe].",
+        "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers and new interfaces get a threat model and a reviewer who knows security. The NCSC wants closer oversight of AI-written code that handles authentication, personal data or secrets[^ncscvibe].",
         "**Threat model it in half an hour.** Ask what you're working on, what can go wrong, what you'll do about it and whether you did a good enough job, with STRIDE's six categories as prompts[^owasptm]. Keep the answers with the code.",
         "**Pick requirements from ASVS 5.0.** Level 1 holds about 20% of some 350 requirements, and most applications should aim for Level 2[^asvs]. Cite them with the version, as in `v5.0.0-1.2.5`[^asvs].",
         "**Ship secure defaults.** No shared default passwords, MFA on for admins and logs for customers[^badprac]. The CRA requires a secure default configuration and a reset[^cra]."
@@ -101,7 +101,7 @@
       "items": [
         "**Answers to buyers' standard questions.** CISA's Secure by Demand guide tells buyers to ask for a disclosure policy, CVEs with CWE and CPE fields, a plan to end vulnerability classes, an SBOM and MFA by default[^demand].",
         "**A mapping to SSDF 1.1.** Name the task each practice meets, such as PW.7.2 for code review[^ssdf]. US agencies may still ask for the attestation form, though it's no longer required[^omb].",
-        "**CRA technical documentation, if you ship products.** Keep the risk assessment current, and keep it with the documentation for 10 years or the support period, if longer[^cra]. SaaS alone falls under NIS2[^cra]."
+        "**CRA technical documentation, if you ship products.** Keep the risk assessment current, and keep both for 10 years or the support period, if longer. SaaS that isn't part of a product is outside the CRA[^cra]."
       ]
     },
     {
@@ -147,9 +147,9 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Turn on private vulnerability reporting, push protection, Dependabot and CodeQL in every repository.",
+            "Turn on private vulnerability reporting, push protection, Dependabot and CodeQL everywhere.",
             "Publish security.txt with a mailbox two people read, and require one review before merge.",
-            "Keep one list of open vulnerabilities, each with its ship date."
+            "Keep one list of open vulnerabilities with their ship dates."
           ]
         },
         {
