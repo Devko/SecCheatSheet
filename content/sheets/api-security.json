@@ -1,14 +1,14 @@
 {
   "slug": "api-security",
   "topic": "API security",
-  "status": "draft",
+  "status": "published",
   "order": 22,
   "capability": "software/api",
   "title": "API security: is every request authorized for the exact object it touches?",
   "short": "Check the caller's right to each object in code on every request, and replay every call with a second tenant's token before each release.",
   "answer": "Check in code, on every request, that the caller may act on the exact object and fields it names, and add tests this month that replay each endpoint with a second tenant's token. Use the gateway for token checks, rate limits, schema checks and the version inventory, and switch off any API that isn't in that inventory.",
   "audience": "Developers, architects and platform teams that build web, mobile or partner APIs (REST, GraphQL, gRPC, webhooks), and the security staff who review them",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -75,8 +75,8 @@
       "navTitle": "Attacks now",
       "span": "full",
       "items": [
-        "**Logged-in users reach other users' data.** In OWASP's 2025 Top 10 data, 100% of applications tested had some form of broken access control[^owasptop10]. Three of the API Top 10's first five risks are about authorization[^nist228].",
-        "**Old and side-door endpoints carry the breach.** Attackers usually get in through old API versions or endpoints left unpatched[^owaspapi9]. Insufficient authentication and no rate limiting in Dell's partner portal API let attackers take personal details of 49 million customers[^ncscblog]."
+        "**Logged-in users reach other users' data.** In OWASP's 2025 Top 10 data, 100% of applications tested had some form of broken access control, a category that also covers SSRF and CSRF[^owasptop10]. Three of the API Top 10's first five risks are about authorization[^nist228].",
+        "**Old and side-door endpoints let attackers in.** OWASP says unmanaged APIs are usually breached via old versions or unpatched endpoints[^owaspapi9]. The NCSC says weak authentication and no rate limiting in Dell's partner portal API exposed details of 49 million customers[^ncscblog]."
       ]
     },
     {
@@ -87,9 +87,9 @@
       "items": [
         "**Use the code flow with PKCE.** RFC 9700 forbids the password grant, advises against the implicit grant and requires PKCE for public clients[^rfc9700].",
         "**Bind each token to one API.** Restrict access tokens to one audience and the least privilege; an API must refuse tokens meant for another[^rfc9700]. Identify users by `iss` plus `sub`[^asvs].",
-        "**Sender-constrain high-value tokens.** RFC 9700 recommends mutual TLS or DPoP, and requires sender-constrained or rotated refresh tokens for public clients[^rfc9700].",
+        "**Sender-constrain tokens, high-value ones first.** RFC 9700 recommends mutual TLS or DPoP for all access tokens, and requires sender-constrained or rotated refresh tokens for public clients[^rfc9700].",
         "**Keep lifetimes short.** Authorization codes last at most 10 minutes and refresh tokens need an absolute expiry[^asvs]. Keep access tokens to minutes. Give outside callers opaque tokens, not JWTs that reveal internal claims[^nist228].",
-        "**Don't rely on API keys alone.** The NCSC calls them shared bearer tokens, often broad and without expiry[^ncscauth]. Authenticate partners and services with `private_key_jwt` or mutual TLS[^asvs]."
+        "**Don't rely on API keys alone.** The NCSC calls them shared bearer tokens, often broad and without expiry[^ncscauth]. Authenticate partner and service clients with `private_key_jwt` or mutual TLS[^rfc9700]."
       ]
     },
     {
@@ -99,7 +99,7 @@
       "navTitle": "Gateway or code",
       "items": [
         "**The gateway checks who and how much.** Validate tokens, reject requests outside the schema, cap payload size and time, and log every call[^nist228][^ncscexposure].",
-        "**The code checks which object.** Ownership, tenant, record state and field rules need the data, so the service decides.",
+        "**The code checks which object.** Ownership, tenant, record state and field rules need the data, so the service decides, or a policy service it asks.",
         "**Make the gateway impossible to skip.** Accept traffic only from the gateway, by network policy or a credential it attaches[^nist228]. In January 2026 CISA listed a Versa Concerto proxy flaw that exposed admin endpoints[^kev].",
         "**Strip identity headers at the edge.** Clients must not be able to set headers such as `X-User-ID` that the gateway sets[^asvs].",
         "**Rate-limit per caller.** Key limits to the user or credential over 1 to 5 minutes and cap concurrent requests; a total limit lets one caller crowd out the rest[^nist228]."
@@ -112,7 +112,7 @@
       "navTitle": "Webhooks, GraphQL",
       "items": [
         "**Verify every webhook you receive.** Check the HMAC over the raw body in constant time[^ghwebhook][^stripe], reject old timestamps (Stripe's libraries allow 5 minutes by default) and skip event IDs already processed[^stripe].",
-        "**Treat webhook URLs you call as hostile.** CISA listed a GitLab webhook SSRF as exploited in February 2026[^kev]. Allowlist hosts and check the address you connect to, as the TypeScript sheet explains.",
+        "**Treat webhook URLs you call as hostile.** CISA listed a GitLab webhook SSRF as exploited in February 2026[^kev]. Allowlist hosts, check the address you connect to and refuse redirects, as the TypeScript sheet explains.",
         "**Cap GraphQL query cost.** Use depth and amount limits or cost analysis[^asvs], limit batching and check authorization on both edges and nodes[^owaspgql].",
         "**Hide the schema on public endpoints.** Turn off introspection unless outside parties use the API[^asvs], and GraphiQL in production[^owaspgql]. gRPC's docs flag the reflection service as a possible security issue on public APIs[^grpcrefl]."
       ]
@@ -123,10 +123,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Checking the role but not the record.** NIST counts checks against the wrong user, permission or resource as incorrect authorization[^nist228].",
+        "**Checking the role but not the record.** NIST counts a missing resource-level check, or one against the wrong user or resource, as an authorization risk[^nist228].",
         "**Letting the app hide fields.** Attackers read the raw API, and decompile mobile apps to find endpoints and keys[^ncscexposure].",
         "**Leaving a beta host behind.** In OWASP's example, a rate limit in front of the production reset API didn't cover a beta host running the same code, where a researcher brute-forced the 6-digit token[^owaspapi9].",
-        "**Calling other services with the backend's own token.** Base each decision on the original caller's permissions[^asvs], or one bug in the first service reaches every service behind it."
+        "**Calling other services with the backend's own token.** Pass the caller on by token exchange and base each decision on their permissions[^asvs], or one bug in the first service reaches every service behind it."
       ]
     },
     {
@@ -188,6 +188,11 @@
   "changes": [
     {
       "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 7 statements to what the sources say."
+    },
+    {
+      "date": "2026-11-04",
       "version": "0.1",
       "text": "First draft, based on the OWASP API Security Top 10 2023, OWASP ASVS 5.0, RFC 9700, RFC 10017, NIST SP 800-228 (March 2026 update), NCSC guidance on HTTP-based APIs and CISA's Known Exploited Vulnerabilities catalog."
     }
@@ -230,7 +235,7 @@
     },
     {
       "id": "rfc9700",
-      "title": "RFC 9700, OAuth 2.0 Security Best Current Practice",
+      "title": "RFC 9700, Best Current Practice for OAuth 2.0 Security",
       "publisher": "IETF",
       "date": "Jan 2025",
       "url": "https://www.rfc-editor.org/rfc/rfc9700.html"
