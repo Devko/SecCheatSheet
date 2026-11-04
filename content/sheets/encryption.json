@@ -1,14 +1,14 @@
 {
   "slug": "encryption",
   "topic": "Encryption and key management",
-  "status": "draft",
+  "status": "published",
   "order": 25,
   "capability": "data/encryption",
   "title": "Encryption: who can decrypt your data, and what must you start for post-quantum?",
   "short": "Automate certificate renewal before the 100-day limit on 15 March 2027, and inventory your cryptography for the post-quantum move.",
   "answer": "Automate renewal of every public TLS certificate before the maximum lifetime drops to 100 days on 15 March 2027[^br], and inventory your cryptography this quarter so data that must stay secret for ten years or more gets hybrid post-quantum key exchange first. Then judge each measure by who can use the key, and whether you could still decrypt if it were deleted.",
   "audience": "IT, security and platform teams in EU organizations that run TLS, certificates, disk and database encryption, cloud key management and secrets",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -155,7 +155,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Bigger symmetric keys for quantum.** NIST believes approved symmetric algorithms with at least 128-bit security meet its lowest post-quantum security category[^ir8547].",
+        "**Re-keying everything to AES-256 for quantum.** NIST believes approved symmetric algorithms with at least 128-bit security meet its lowest post-quantum security category[^ir8547]. Use AES-256 for new long-term secrets, as BSI advises[^tr1].",
         "**Post-quantum TLS certificates now.** Classical signatures stay trustworthy until a quantum computer exists, and BSI recommends them until the end of 2035[^tr1]. Firmware signing can't wait that long[^euroadmap].",
         "**Cloud keys in an external key store.** AWS says their availability and latency risks exceed the perceived benefit for most customers[^xks].",
         "**Rotating KMS keys more than yearly.** Wrapping keys are almost never used enough to wear out[^kmsrot]."
@@ -207,6 +207,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which fixed the AWS policy name and narrowed 10 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
