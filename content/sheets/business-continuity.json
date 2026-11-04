@@ -187,7 +187,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "NIS2 requires business continuity and crisis management[^nis2]; point 4 of Implementing Regulation 2024/2690 details it for cloud, managed service and other digital providers[^nis2ir].",
-            "Under DORA, all but microenterprises test yearly with cyberattack and switchover scenarios and keep a crisis management function[^dora].",
+            "Under DORA, test yearly; all but microenterprises add cyberattack and switchover scenarios and a crisis management function[^dora].",
             "Exercise the loss of a cloud zone and region, and check which SaaS suppliers share them."
           ]
         }
