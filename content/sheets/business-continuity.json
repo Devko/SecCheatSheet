@@ -1,14 +1,14 @@
 {
   "slug": "business-continuity",
   "topic": "Business continuity",
-  "status": "draft",
+  "status": "published",
   "order": 28,
   "capability": "resilience/continuity",
   "title": "Business continuity: could you keep working for a week without a key system, supplier or site?",
   "short": "List the processes that can't stop for a week, give each a written workaround and exercise the plan at least once a year.",
   "answer": "This quarter, list the processes that would do serious harm if stopped for a week, set up a crisis team with deputies and a channel outside your own IT, and give each process a one-page workaround. Then run a tabletop and a technical failover at least once a year, and let the measured recovery times decide what to fix next.",
   "audience": "IT, security, risk and operations leads in EU organizations of any size, including those under NIS2 or DORA",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -77,7 +77,7 @@
         "**Check what is critical this month.** Payroll, cash flow, regulatory reporting and peak seasons shift priorities[^ncscrec2]. Note the critical dates.",
         "**Review workarounds for security.** Private email or a shared spreadsheet can add risk. Review each one before use and give it a review date so it doesn't become permanent[^ncscrec2].",
         "**Plan how the data gets back.** Decide early how records kept on paper or in spreadsheets will be reconciled with restored systems[^ncscrec2].",
-        "**Keep the inputs on paper.** Print the plan, as ENISA suggests[^enisatig], plus contact lists, price lists and open orders."
+        "**Keep the inputs on paper.** Print the plan, as ENISA suggests[^enisatig], plus contact lists and price lists, and keep a daily offline export of open orders."
       ]
     },
     {
@@ -155,7 +155,7 @@
       "title": "What you can skip",
       "items": [
         "**An impact analysis of every process.** BSI's entry stages start with the most time-critical processes and add the rest in later cycles. If you're regulated, include all regulated processes in the first cycle[^bsi2004].",
-        "**Certification before the first exercise.** A certificate doesn't show that payroll runs on day three. ISO 22301 is also being revised[^din22301].",
+        "**Certification before the first exercise.** A certificate doesn't show that payroll runs on day three.",
         "**Runbooks for every system.** Write them for the systems critical processes need. Restore the rest from backup in priority order.",
         "**Multi-cloud as the plan.** Running everything twice is costly and rarely tested. First prove failover to a second zone or region."
       ]
@@ -195,6 +195,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the KRITIS-Dachgesetz status and narrowed 7 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
@@ -320,13 +325,6 @@
       "publisher": "Google Cloud",
       "date": "27 Oct 2026",
       "url": "https://status.cloud.google.com/incidents/Xs2XTHzAVC9YnafnPyzj"
-    },
-    {
-      "id": "din22301",
-      "title": "Project prEN ISO 22301 rev",
-      "publisher": "DIN",
-      "date": "checked 4 Nov 2026",
-      "url": "https://www.din.de/en/getting-involved/standards-committees/naorg/projects/wdc-proj:din21:398303008"
     }
   ]
 }
