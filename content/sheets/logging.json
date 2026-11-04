@@ -78,7 +78,7 @@
         "**Entra ID.** Export sign-in logs, including non-interactive and service principal ones, audit logs and Graph activity logs (P1 or P2)[^entralogs], kept only if exported[^entraret]. For Microsoft 365, see the incident response sheet.",
         "**Linux.** Copy rule files from `/usr/share/audit/sample-rules` to `/etc/audit/rules.d/` and run `augenrules --load`[^rhaudit]. Log use of curl, systemctl and python[^asd].",
         "**Cloud.** In AWS, use a multi-Region trail with log file integrity validation[^ctbp]. In Azure, add an Activity log diagnostic setting per subscription; a management group setting misses some events[^activity].",
-        "**Hypervisors.** Mandiant calls their logs the only way to detect snapshot tampering or rogue virtual machines[^mtrends]."
+        "**Hypervisors.** Forward their logs too: Mandiant calls them the only way to detect snapshot tampering or rogue virtual machines[^mtrends]."
       ]
     },
     {
@@ -88,7 +88,7 @@
       "navTitle": "Alerts",
       "items": [
         "**Logging stopped or cleared.** Windows events 1102 and 104 mean a log was cleared[^wef]. Also alert on deleted diagnostic settings and stopped trails.",
-        "**New admin rights.** Use the privileged access sheet's list for AD groups and Entra roles. For firewalls and VPNs, see the edge devices sheet.",
+        "**New admin rights.** Use the privileged access sheet's list for AD groups and Entra roles, and the edge devices sheet's for firewalls and VPNs.",
         "**Mail forwarded outside.** The default policy **Suspicious email forwarding activity** is High severity and on by default in E1, E3 and E5[^alertpol]. Add your alert mailbox as a recipient.",
         "**Security tools changed.** Alert when someone changes Defender or logging settings or disables monitoring services[^asd].",
         "**High-severity incidents.** Create a Defender XDR email rule for High and Medium incidents and use **Send test email**[^xdrmail].",
@@ -139,7 +139,7 @@
       "items": [
         "**Basic audit policy overwriting the advanced one.** Enable **Audit: Force audit policy subcategory settings**; event 4719 shows an overwrite[^cmdline].",
         "**Local logs too small.** Events overwritten before they are forwarded are lost without notice[^wef]. Raise maximum log sizes[^asd].",
-        "**Counting on a license upgrade.** Entra retention isn't retroactive[^entraret].",
+        "**Counting on a license upgrade.** It won't bring back expired Entra logs[^entraret].",
         "**Letting everyone read the logs.** Command lines and script blocks can expose passwords and other credentials[^cmdline][^pslog]. Limit who can read them."
       ]
     },
