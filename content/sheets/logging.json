@@ -6,7 +6,7 @@
   "capability": "detect-respond/logging",
   "title": "Logging and monitoring: which logs do you need, and which alerts deserve a person?",
   "short": "Send identity, cloud and server logs to a store your admins can't erase, keep 12 months and prove monthly that your alerts fire.",
-  "answer": "This month, send Entra, Microsoft 365, cloud and server logs to a store that your everyday admin accounts can't change or delete, and keep 12 months of them, the first 6 searchable, as the new US federal baseline requires[^m2614]. Then alert on the few events that are rarely harmless, give each alert a named owner and deputy, and prove every month that the alerts still reach them.",
+  "answer": "This month, send Entra, Microsoft 365, cloud and server logs to a store that your everyday admin accounts can't change or delete, and keep 12 months of them, the first 6 searchable, matching the new baseline for US federal agencies[^m2614]. Then alert on the few events that are rarely harmless, give each alert a named owner and deputy, and prove every month that the alerts still reach them.",
   "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID with some on-premises servers and cloud workloads",
   "version": "0.1",
   "lastReviewed": "2026-11-04",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Could you see an admin sign-in from 10 months ago?",
-          "text": "If not, extend retention. It can take up to 18 months to discover an incident[^asd], and Mandiant calls standard 90-day retention insufficient for scoping intrusions[^mtrends]."
+          "text": "If not, extend retention. In some cases it takes up to 18 months to discover an incident[^asd], and Mandiant calls standard 90-day retention insufficient for scoping intrusions[^mtrends]."
         },
         {
           "title": "Who could erase the central copy?",
@@ -76,7 +76,7 @@
       "items": [
         "**Rank by what attackers want.** ASD's top three are critical systems and data, internet-facing services, and identity servers[^asd].",
         "**Entra ID.** Export sign-in logs, including non-interactive and service principal ones, audit logs and Graph activity logs (P1 or P2)[^entralogs], kept only if exported[^entraret]. For Microsoft 365, see the incident response sheet.",
-        "**Linux.** Copy rule files from `/usr/share/audit/sample-rules` to `/etc/audit/rules.d/` and run `augenrules --load`[^rhaudit]. Log use of curl, systemctl and python[^asd].",
+        "**Linux.** On RHEL, copy one set of sample rules, such as the STIG set, from `/usr/share/audit/sample-rules` to `/etc/audit/rules.d/` and run `augenrules --load`[^rhaudit]. Log use of curl, systemctl and python[^asd].",
         "**Cloud.** In AWS, use a multi-Region trail with log file integrity validation[^ctbp]. In Azure, add an Activity log diagnostic setting per subscription; a management group setting misses some events[^activity].",
         "**Hypervisors.** Forward their logs too: Mandiant calls them the only way to detect snapshot tampering or rogue virtual machines[^mtrends]."
       ]
@@ -101,11 +101,11 @@
       "title": "Retention and cost",
       "navTitle": "Retention",
       "items": [
-        "**Keep 12 months, 6 of them searchable.** That's the US federal minimum since May 2026[^m2614], and a sound default.",
-        "**Tier the storage.** Keep recent logs hot and older ones cold[^asd]. Sentinel keeps analytics data free for 90 days and has a cheaper lake tier[^sentbill].",
+        "**Keep 12 months, 6 of them searchable.** That's the minimum for US federal agencies since May 2026[^m2614], and a sound default.",
+        "**Tier the storage.** Keep recent logs hot and older ones cold[^asd]. Sentinel's first 90 days of retention are free, and its lake tier is cheaper[^sentbill].",
         "**Start with what's free.** Sentinel ingests Azure Activity, Office 365 audit logs and Defender alerts free; raw Entra ID and Defender logs cost extra[^sentbill].",
         "**Filter at the source.** Collect Windows security events with the Common or Minimal set, and keep non-security data in a separate workspace[^sentcost].",
-        "**Write the period down.** NIS2 rules for digital providers require one[^enisa]. The BSI suggests 90 days for federal logs but lets you keep security events without personal data longer[^bsipd]."
+        "**Write the period down.** NIS2 rules for digital providers require one[^enisa]. The BSI's federal standard gives 90 days as an example and requires deletion afterward, except for security events without personal data and events tied to an attack[^bsipd]."
       ]
     },
     {
@@ -114,7 +114,7 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The US federal baseline was cut.** In May 2026, OMB's M-26-14 replaced M-21-31, whose retention of vast log volumes proved neither feasible nor cost-effective for most agencies[^m2614].",
+        "**The US federal baseline was cut.** In May 2026, OMB's M-26-14 replaced M-21-31, whose retention of vast log volumes without clear utility proved neither feasible nor cost-effective for most agencies[^m2614].",
         "**CISA published a logging reference architecture.** Its August 2026 guide calls for health monitoring, synthetic tests and threat emulation[^lra].",
         "**CISA retired Logging Made Easy.** Support ended on 22 May 2026 and the repository is read-only[^lme]. If you run it, plan a replacement.",
         "**Sysmon is built into Windows.** Windows 11 and Windows Server 2025 include it as an optional feature. Uninstall standalone Sysmon first, and parse the XML, as event text is now localized[^sysmon]."
@@ -125,7 +125,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Sending everything to the SIEM.** CISA notes that SIEM-first designs get costly as volume grows[^lra]. Keep bulky logs in cheaper storage.",
+        "**Sending everything to the SIEM.** CISA notes that SIEM-first designs often get costly as volume grows[^lra]. Keep bulky logs in cheaper storage.",
         "**Microsoft service principal sign-in logs.** Microsoft calls this preview log high-volume and not essential for security investigations[^entralogs].",
         "**Data access logs everywhere.** Google Cloud leaves them off, except for BigQuery, because of their volume[^gcpaudit]. Enable them only for sensitive data.",
         "**Hundreds of imported rules.** Ten answered alerts beat hundreds ignored."
@@ -154,7 +154,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Send Defender XDR incident emails for High and Medium severity to a shared mailbox[^xdrmail].",
-            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable].",
+            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable], then check that new logs still arrive.",
             "Ask your IT provider for the last alert it acted on."
           ]
         },
@@ -169,9 +169,9 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Under NIS2, digital providers must sync clocks and monitor logging availability independently[^enisa].",
+            "Under NIS2, digital providers must sync clocks where feasible and monitor logging availability independently[^enisa].",
             "Keep a year or more in a cheaper lake tier and only recent data in analytics[^sentbill].",
-            "Inject synthetic events for each source monthly[^lra]."
+            "Each month, inject synthetic events[^lra] for every source."
           ]
         }
       ]
@@ -225,7 +225,7 @@
       "title": "Mindeststandard Protokollierung und Detektion von Cyberangriffen, Version 2.1",
       "publisher": "BSI",
       "date": "11 Nov 2024",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Mindeststandards/MST_BSI_PD_Version_2_1.pdf"
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Mindeststandards/MST_BSI_PD_Version_2_1.pdf?__blob=publicationFile&v=6"
     },
     {
       "id": "lme",

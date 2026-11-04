@@ -77,10 +77,10 @@
       "items": [
         "**Public storage.** Google's public access prevention revokes existing public access once you enforce it[^gcpcons]. Move public sites and downloads to a separate account or project first.",
         "**Access keys and shared keys.** Attackers reach Azure Blob Storage with exposed credentials, shared keys and SAS tokens[^mddr]; accounts accept keys until `AllowSharedKeyAccess` is false[^azshared]. Google Cloud blocks service account keys in organizations created since May 2024[^gcpbase] and disables exposed ones[^th].",
-        "**Instance metadata.** Require IMDSv2, which uses token-backed sessions, by account default or declarative policy. Find instances that still allow IMDSv1 with the `ImdsV1Enabled` metric, and add `ec2:RoleDelivery` to an SCP so IMDSv1 credentials stop working[^imds].",
+        "**Instance metadata.** Require IMDSv2, which uses token-backed sessions, by account default or declarative policy. Track the `ImdsV1Enabled` and `MetadataNoToken` metrics to zero, then add `ec2:RoleDelivery` to an SCP so IMDSv1 credentials stop working[^imds].",
         "**Broad roles for workloads.** Remove wildcard actions (Security Hub controls IAM.1 and IAM.21)[^fsbp] and pin GitHub OIDC trust to one repository and branch or environment[^ghoidc]. An over-broad deploy role took UNC6426 from a stolen GitHub token to AWS administrator in under 72 hours[^th].",
         "**Guests and external access.** Let only admins and Guest Inviters invite guests, and only from approved domains[^scuba]. Allow Teams external domains one by one and block chats from unmanaged accounts. Google Cloud's `iam.allowedPolicyMemberDomains` does the same for IAM grants[^gcpbase]. SharePoint links: see the DLP sheet.",
-        "**OAuth app consent.** Microsoft's managed default for new tenants still lets users consent to permissions outside a list of mail, file, calendar and chat scopes[^consentpol]. Changes keep existing grants[^consent], so review those too. Stolen Salesloft Drift tokens exposed Salesforce data at Google, Zscaler, Cisco and others[^dbir]."
+        "**OAuth app consent.** Microsoft's managed default for new tenants still lets users consent to permissions outside a list of mail, file, calendar and chat scopes[^consentpol]. Changes keep existing grants[^consent], so review those too. Stolen Salesloft Drift tokens let attackers bulk-export Salesforce data[^th]."
       ]
     },
     {
@@ -91,9 +91,9 @@
       "span": "full",
       "items": [
         "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of the Google Cloud intrusions in Google's data and weak or missing credentials 27.2%; misconfiguration fell to 21%. Google suggests its secure defaults may have driven the shift[^th]. Patch within the patching sheet's deadlines.",
-        "**ScubaGear 2.0 is out.** The October 2026 release adds a Security Suite baseline for Defender, Purview, Exchange Online and Teams[^scubanews], and the Entra baseline now requires blocking risky AI agents[^scuba]. Update your config and re-run it.",
+        "**ScubaGear 2.0 is out.** The October 2026 release adds a Security Suite baseline for Defender, Purview, Exchange Online and Teams[^scubanews], so replace `defender` with `securitysuite` in your config[^scubagear]. The Entra baseline now requires blocking risky AI agents where Agent 365 or E7 is licensed[^scuba].",
         "**Microsoft 365 moved toward secure defaults.** Baseline Security Mode, in the admin center since November 2025, covers phishing-resistant MFA for admins, legacy authentication and app consent[^bsm]. Tenant Configuration Management, generally available since April 2026, monitors over 200 settings in six workloads[^tcmga].",
-        "**S3 public access can be blocked for a whole organization.** Since November 2025 one AWS Organizations policy enforces Block Public Access for every account, including new ones[^s3org]."
+        "**S3 public access can be blocked for a whole organization.** Since November 2025 one AWS Organizations policy blocks it in every account, including new ones[^s3org]."
       ]
     },
     {
@@ -103,7 +103,7 @@
       "items": [
         "**A paid CSPM before the free checks.** ScubaGear and Defender for Cloud's Foundational CSPM cost nothing[^scubagear][^cspm]. Buy attack path analysis once the basics are closed.",
         "**Perfecting 90-day key rotation.** Security Hub checks for it[^fsbp], but AWS advises not creating long-term keys at all[^awsssec]. Remove them instead.",
-        "**A home-grown baseline.** Start from a published one. A list you write yourself has no one keeping it current."
+        "**A home-grown baseline.** Start from a published one that someone keeps current."
       ]
     },
     {
@@ -113,7 +113,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Trusting a new default to fix old resources.** Enforcing IMDSv2 for an account leaves instances that already allow IMDSv1 alone[^imds], and consent changes keep old grants[^consent].",
-        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol]. The privileged access sheet covers its root user.",
+        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol]. Keep only billing and organization tasks there.",
         "**Exposing a test resource \"just for a day.\"** Microsoft measured a median of 5.3 hours from an exposed container's start to the first exploit attempt[^mddr]."
       ]
     },
@@ -252,7 +252,7 @@
     },
     {
       "id": "azshared",
-      "title": "Prevent authorization with Shared Key",
+      "title": "Prevent Shared Key authorization for an Azure Storage account",
       "publisher": "Microsoft Learn",
       "date": "11 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/azure/storage/common/shared-key-authorization-prevent"

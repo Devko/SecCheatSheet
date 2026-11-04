@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "List the suppliers that can reach your systems or data.",
-          "text": "Record each supplier with admin rights, remote access, API or OAuth tokens, or a copy of critical data, with an owner and a contact. Verizon found third-party involvement, including exploited vendor flaws, in 48% of breaches in its 2026 report, up 60%[^dbir]."
+          "text": "Record each supplier with admin rights, remote access, API or OAuth tokens, or a copy of critical data, with an owner and a contact. Verizon found third-party involvement, including exploited vendor flaws, in 48% of breaches in its 2026 report, up from 30%[^dbir]."
         },
         {
           "title": "Be able to cut any supplier off within an hour.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Add five clauses at each renewal.",
-          "text": "Incident notice, vulnerability handling, audit rights, subcontractor rules, and exit with data return. NIS2's implementing rules require cloud and managed service providers to include all five where appropriate[^nis2ir]."
+          "text": "Incident notice, vulnerability handling, audit rights, subcontractor rules, and exit with data return. NIS2's implementing rules make cloud providers and MSPs demand all five from their suppliers, where appropriate[^nis2ir]."
         },
         {
           "title": "Plan for a week without each critical supplier.",
-          "text": "Decide how the business keeps running and keep your data exportable. A DynamoDB disruption in one AWS region in October 2025 lasted about 14.5 hours and spread to EC2 and Lambda[^aws]."
+          "text": "Decide how the business keeps running and keep your data exportable. In October 2025, a DynamoDB fault in one AWS region caused 14.5 hours of disruption that spread to EC2 and Lambda[^aws]."
         }
       ]
     },
@@ -64,7 +64,7 @@
         },
         {
           "title": "Record the tier and review it.",
-          "text": "Two yes answers make a supplier top tier. Review tiers at least yearly and after significant changes, as ENISA advises[^enisatig]."
+          "text": "One yes answer makes a supplier top tier. Review tiers at least yearly and after significant changes, as ENISA advises[^enisatig]."
         }
       ]
     },
@@ -74,7 +74,7 @@
       "title": "What to ask for and what to sign",
       "navTitle": "Evidence and contract",
       "items": [
-        "**Read the audit report, not the logo.** Check that it covers your service, is current and tests whether key controls operate, as DORA requires of financial entities[^rtscontract]. Have every later C5 report sent to you, and run the customer controls it assigns you[^c5faq].",
+        "**Read the audit report, not the logo.** Check that it covers your service, is current and tests whether key controls operate, as DORA requires for critical or important functions[^rtscontract]. Get every later C5 report and run the customer controls it assigns you[^c5faq].",
         "**Ask about the product, not just the company.** CISA and the FBI suggest asking whether SSO and MFA come at no extra cost and whether SaaS security logs are kept for at least six months at no additional charge[^sbd].",
         "**Incident notice within hours.** Require notice of incidents that put your systems at risk[^nis2ir] within a fixed time, such as 24 hours. The GDPR sets processors no fixed deadline, so the EDPB suggests contracts require early notice[^edpb].",
         "**Vulnerabilities and audits.** Require vulnerability handling and audits or audit reports[^nis2ir], and patches within the patching sheet's deadlines.",
@@ -90,8 +90,8 @@
       "items": [
         "**Give MSP staff named accounts with MFA.** Keep them out of internal admin groups, limit them to the systems the MSP manages and disable them when not in use[^aa22131a]. No admin credential should serve several customers[^rasw].",
         "**Allow one remote access tool.** Allowlist the approved RMM tool, block the ports of others and keep log deletion out of its reach[^rasw]. In 2025, ransomware actors used a software provider's unpatched SimpleHelp RMM to reach its customers[^aa25163a].",
-        "**Take Global Administrator away from Microsoft partners.** Partners with DAP show it under **Settings** > **Partner relationships** in the Microsoft 365 admin center; Microsoft advises a quarterly review[^dap].",
-        "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes and avoid `full` access[^gtigdrift].",
+        "**Take Global Administrator away from Microsoft partners.** Check partner roles under **Settings** > **Partner relationships** and switch to least-privilege GDAP roles[^gdap]. Microsoft advises a quarterly review[^dap].",
+        "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes and avoid Salesforce's `full`[^gtigdrift].",
         "**Watch supplier activity.** Alert on sign-ins by supplier accounts, new app consents and new RMM agents, and keep your most important logs for at least six months[^aa22131a]."
       ]
     },
@@ -103,7 +103,7 @@
       "items": [
         {
           "title": "Cut its access, then rotate.",
-          "text": "Using your supplier list, disable its accounts, revoke its app consents and tokens and isolate its remote access server[^aa25163a]. Replace keys and secrets tied to it or found in data it held[^gtigdrift]."
+          "text": "Using your supplier list, disable its accounts and apps, revoke its tokens[^gtigdrift] and isolate its remote access server[^aa25163a]. Replace keys and secrets tied to it or found in data it held[^gtigdrift]."
         },
         {
           "title": "Hunt in your own logs.",
@@ -121,8 +121,8 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires them to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already on the market[^cra]. Give key vendors a monitored security contact.",
-        "**Integration token theft hit another SaaS vendor.** In June 2026, an attacker used a legacy credential at Klue to steal customers' OAuth tokens for Salesforce and other platforms and reach their data[^klue].",
+        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires makers of software and connected devices, but not standalone SaaS, to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already on the market[^cra]. Give key vendors a monitored security contact.",
+        "**Integration token theft hit another SaaS vendor.** In June 2026, an attacker used a stolen GitHub token to plant code in Klue's integration service and collect customers' Salesforce OAuth tokens[^klue].",
         "**The BSI published C5:2026.** Final since March 2026[^c5], it has 168 criteria instead of 121 and applies to attestations from 1 June 2027[^c5faq]. Ask cloud suppliers when their first report is due."
       ]
     },
@@ -131,9 +131,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Your own 300-question questionnaire.** Send low tiers a one-page form. For the top tier, accept standard evidence, such as the certifications and SIG or CAIQ reports ENISA names[^enisatig].",
+        "**Your own 300-question questionnaire.** Send low tiers a one-page form, or accept standard evidence ENISA names, such as certifications or a completed SIG or CAIQ[^enisatig]. The top tier gets audit reports.",
         "**Custom terms with hyperscalers.** Compare their standard terms and audit reports with your clauses and record the gaps. ENISA suggests negotiating jointly[^enisatig]; DORA allows pooled audits[^rtscontract].",
-        "**Mapping every fourth party.** NIS2 and the BSIG address direct suppliers[^bsifaq]. Ask the top tier which subcontractors touch your data.",
+        "**Mapping every fourth party.** NIS2 and the BSIG address direct suppliers[^bsifaq]; DORA adds subcontractors behind critical or important functions[^rtssub]. Ask the top tier which subcontractors touch your data.",
         "**A security rating feed before a supplier list.** No outside score tells you who holds admin rights in your tenant."
       ]
     },
@@ -144,7 +144,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Assuming outsourcing moves the duty.** The BSI says NIS-2 entities that outsource all IT remain responsible and that contracts alone aren't enough[^bsifaq]. DORA keeps financial entities fully responsible too[^dora].",
-        "**Leaving access behind when a contract ends.** CISA and partners note that disabling MSP accounts can be overlooked then[^aa22131a]. Klue's 2026 breach began with a legacy integration credential[^klue].",
+        "**Leaving access behind when a contract ends.** CISA and partners note that disabling MSP accounts can be overlooked then[^aa22131a]. Revoke its tokens too.",
         "**Tightening consent without cleanup.** New Entra consent settings leave existing grants in place[^consent]. Revoke the ones you don't need.",
         "**Letting your MSP hold your only backups.** One breach of its accounts then reaches both. Keep a copy it can't delete."
       ]
@@ -159,9 +159,9 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Get a list of every account, tool and token your IT provider uses with you, all with 2-step verification[^ncscmsp].",
+            "Require least privilege and 2-step verification on your IT provider's accounts[^ncscmsp], and get a list of them.",
             "Remove Global Administrator from Microsoft partners under **Settings** > **Partner relationships**[^dap].",
-            "Agree how fast your provider reports incidents and get a monthly health report[^ncscmsp]."
+            "Agree how fast your provider reports incidents and ask for regular health reports[^ncscmsp]."
           ]
         },
         {
@@ -214,14 +214,14 @@
     },
     {
       "id": "nis2ir",
-      "title": "Implementing Regulation (EU) 2024/2690, Article 1 and Annex point 5",
+      "title": "Implementing Regulation (EU) 2024/2690, Article 1 and Annex points 5.1.4 and 5.2",
       "publisher": "EUR-Lex",
       "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
     },
     {
       "id": "aws",
-      "title": "Summary of the Amazon DynamoDB service disruption in US-EAST-1",
+      "title": "Summary of the Amazon DynamoDB service disruption in the Northern Virginia (US-EAST-1) Region",
       "publisher": "AWS",
       "date": "Oct 2025",
       "url": "https://aws.amazon.com/message/101925/"
@@ -304,6 +304,13 @@
       "url": "https://learn.microsoft.com/en-us/microsoft-365/commerce/review-partner-admin-privileges"
     },
     {
+      "id": "gdap",
+      "title": "Manage Microsoft-certified solution provider partner relationships",
+      "publisher": "Microsoft Learn",
+      "date": "30 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/commerce/manage-partners"
+    },
+    {
       "id": "consent",
       "title": "Configure how users consent to applications",
       "publisher": "Microsoft Learn",
@@ -326,10 +333,10 @@
     },
     {
       "id": "klue",
-      "title": "An update on recent Klue security incident",
+      "title": "CrowdStrike investigation summary and security improvements",
       "publisher": "Klue",
-      "date": "18 Jun 2026",
-      "url": "https://klue.com/blog/an-update-on-recent-klue-security-incident"
+      "date": "1 Jul 2026",
+      "url": "https://klue.com/blog/crowdstrike-investigation-summary-and-security-improvements"
     },
     {
       "id": "bsifaq",
