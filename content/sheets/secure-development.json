@@ -28,7 +28,7 @@
         },
         {
           "title": "Block secrets before they reach the repository.",
-          "text": "Turn on push protection everywhere. On GitHub, private repositories need Secret Protection[^ghss]; on GitLab, it takes Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
+          "text": "Turn on push protection everywhere. On GitHub, private repositories need Secret Protection for it[^ghpush][^ghss]; on GitLab, it takes Ultimate[^glpush]. Rotate leaked secrets at once[^ghss], and load secrets from a secret manager, not code, images or environment variables[^owaspsec]."
         },
         {
           "title": "Require review and one precise scanner before merge.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Is it real?",
-          "text": "Acknowledge it within three working days and reproduce it before anyone spends a week. Expect noise: curl's share of confirmed reports fell below 5% in 2025 as AI-written reports surged[^curl]."
+          "text": "Acknowledge it within three business days and reproduce it before anyone spends a week. Expect noise: curl's share of confirmed reports fell below 5% in 2025 as AI-written reports surged[^curl]."
         },
         {
           "title": "Is it exploited?",
@@ -56,7 +56,7 @@
         },
         {
           "title": "When does the fix ship?",
-          "text": "Set the date by exploitation and exposure, then severity, and tell the reporter. Ship security fixes separately from feature updates where feasible, as the CRA requires[^cra]."
+          "text": "Set the date by exploitation and exposure, then severity, and tell the reporter. If the fix will take longer, publish a workaround first[^ssdf]. Ship security fixes separately from feature updates where feasible, as the CRA requires[^cra]."
         },
         {
           "title": "What do you publish?",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Where else is the same bug?",
-          "text": "Search for the pattern across the code base, add a regression test and a rule that catches the next one, as the SSDF advises[^ssdf]."
+          "text": "Search for the pattern across the code base, add a regression test and a rule that catches the next one, as the SSDF advises[^ssdf]. The TypeScript, Rust and Python sheets list rules per language."
         }
       ]
     },
@@ -101,7 +101,7 @@
       "items": [
         "**Answers to buyers' standard questions.** CISA's Secure by Demand guide tells buyers to ask for a disclosure policy, CVEs with CWE and CPE fields, a plan to end vulnerability classes, an SBOM and MFA by default[^demand].",
         "**A mapping to SSDF 1.1.** Name the task each practice meets, such as PW.7.2 for code review[^ssdf]. US agencies may still ask for the attestation form, though it's no longer required[^omb].",
-        "**CRA technical documentation, if you ship products.** Keep the risk assessment current, and keep both for 10 years or the support period, if longer. SaaS that isn't part of a product is outside the CRA[^cra]."
+        "**CRA technical documentation, if you ship products.** Keep the risk assessment current and the documentation for 10 years or the support period, if longer. SaaS that isn't part of a product is outside the CRA[^cra]."
       ]
     },
     {
@@ -227,6 +227,13 @@
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning"
+    },
+    {
+      "id": "ghpush",
+      "title": "About push protection",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
     },
     {
       "id": "glpush",

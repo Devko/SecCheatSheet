@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "Automate certificate renewal by March 2027.",
-          "text": "Public TLS certificates may last only 100 days from 15 March 2027[^br]. Renew with ACME and let ACME Renewal Information (ARI) set the timing, not a fixed interval[^le45]. Alert a week before any expiry."
+          "text": "Public TLS certificates issued from 15 March 2027 may last at most 100 days[^br]. Renew with ACME and let ACME Renewal Information (ARI) set the timing, not a fixed interval[^le45]. Alert a week before any expiry."
         },
         {
           "title": "Inventory your cryptography.",
-          "text": "List TLS endpoints, certificates, keys and who holds them, algorithms and trust stores. The EU calls this a no-regret first step, and it needn't be complete before you set priorities[^eufaq]."
+          "text": "List TLS endpoints, certificates, keys and who holds them, algorithms and trust stores. The EU roadmap calls this a no-regret first step that needn't be complete before you set priorities[^eufaq]."
         },
         {
           "title": "Turn on hybrid post-quantum key exchange.",
@@ -56,11 +56,11 @@
         },
         {
           "title": "What protects it, and who holds the key?",
-          "text": "Record the protocol and key exchange, the certificate and issuer, where the key lives (HSM, cloud KMS or a file) and who can use it. Load balancer connection logs show the negotiated key exchange[^albpol]."
+          "text": "Record the protocol and key exchange, the certificate and issuer, where the key lives (HSM, cloud KMS or a file) and who can use it. AWS load balancer connection logs record the negotiated key exchange[^albpol]."
         },
         {
           "title": "Which trust stores do your systems rely on?",
-          "text": "List the CA bundle in each runtime, container image and appliance, and how each one gets updated. Browsers update themselves; the rest is your job."
+          "text": "List the CA bundle in each runtime, container image and appliance, and how each one gets updated. For Python, see the secure-python sheet."
         },
         {
           "title": "What can't be upgraded?",
@@ -74,7 +74,7 @@
       "title": "TLS baseline",
       "items": [
         "**Offer TLS 1.3 and 1.2 only.** BSI prefers TLS 1.3, recommends TLS 1.2 only until the end of 2031 and doesn't recommend TLS 1.0 or 1.1[^tr2].",
-        "**Put hybrid groups first.** List `X25519MLKEM768` ahead of `X25519`, as OpenSSL 3.5 does by default[^ossl35]. Windows Schannel supports it but leaves it off; enable it with the ECC Curve Order group policy[^schannel]. On AWS load balancers, pick a policy with PQ in its name[^albpol].",
+        "**Put hybrid groups first.** List `X25519MLKEM768` ahead of `X25519`, as OpenSSL 3.5 does by default[^ossl35]. Recent Windows 11 and Server 2025 builds support it in Schannel but leave it off; enable it with the ECC Curve Order group policy[^schannel]. On AWS load balancers, pick a policy with PQ in its name[^albpol].",
         "**Meet BSI key lengths.** Use ECDSA keys of at least 250 bits, such as P-256, or RSA keys of at least 3000 bits[^tr1]. The usual RSA 2048 falls short."
       ]
     },
@@ -96,7 +96,7 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**A certificate authority lost its keys.** In October 2026 eight eMudhra intermediate CA keys proved recoverable, and Mozilla and Chrome dropped its emSign ECC Root CA - G3[^emudhra]. Update the trust store in every runtime and image (Python: see the secure-python sheet), and keep a second ACME CA ready.",
+        "**A certificate authority lost its keys.** In October 2026 eight eMudhra intermediate CA keys proved recoverable. Mozilla removed its emSign ECC Root CA - G3 and Chrome committed to do the same[^emudhra]. Update the trust store in every runtime and image, and keep a second ACME CA ready.",
         "**Public certificates are becoming server-only.** Chrome requires public certificates issued from 15 March 2027 to be for server authentication only[^crp]. Move mutual TLS to a private CA.",
         "**BSI and NIST set end dates for classical cryptography** in TR-02102 2026-01 and the final IR 8547 (dates below)[^tr1][^ir8547]."
       ]
@@ -140,7 +140,7 @@
             },
             {
               "at": "End 2031",
-              "what": "BSI: classical key exchange and TLS 1.2 end[^tr1][^tr2]"
+              "what": "BSI: TLS 1.2 and classical-only key exchange end[^tr1][^tr2]"
             },
             {
               "at": "End 2035",
@@ -155,9 +155,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Bigger symmetric keys for quantum.** NIST counts approved symmetric algorithms with at least 128-bit security as quantum-resistant[^ir8547].",
+        "**Bigger symmetric keys for quantum.** NIST says approved symmetric algorithms with at least 128-bit security already meet its lowest post-quantum security category[^ir8547].",
         "**Post-quantum certificates now.** Classical signatures stay trustworthy until a quantum computer exists, and BSI recommends them until the end of 2035[^tr1].",
-        "**Cloud keys in your own HSM.** AWS says the availability and latency risks of external key stores outweigh the benefit for most customers[^xks].",
+        "**Cloud keys in your own HSM.** AWS says the availability and latency risks of external key stores exceed the perceived benefit for most customers[^xks].",
         "**Rotating KMS keys more than yearly.** Wrapping keys are almost never used enough to wear out[^kmsrot]."
       ]
     },
@@ -168,7 +168,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Deleting a key something still uses.** A deleted AWS KMS key leaves its data unrecoverable. Disable it first and alarm on use during the 7 to 30 day waiting period[^kmsdel].",
-        "**Trusting infrastructure-as-code defaults.** AWS load balancers created from the CLI, CloudFormation or CDK get `ELBSecurityPolicy-2016-08`, which allows TLS 1.0 and 1.1[^albpol].",
+        "**Trusting infrastructure-as-code defaults.** AWS load balancer listeners created from the CLI, CloudFormation or CDK without a named policy get `ELBSecurityPolicy-2016-08`, which allows TLS 1.0 and 1.1[^albpol].",
         "**Turning off post-quantum key exchange for a middlebox.** Firefox warns this removes protection against later decryption of recorded traffic[^ffpq]. Fix the middlebox."
       ]
     },
