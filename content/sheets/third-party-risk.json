@@ -24,7 +24,7 @@
         },
         {
           "title": "Be able to cut any supplier off within an hour.",
-          "text": "For each top-tier supplier, write down how to disable its accounts, revoke its tokens and stop its remote access tool, and test it. Stolen Salesloft Drift tokens were used to export Salesforce data from 8 to at least 18 August 2025[^gtigdrift]."
+          "text": "For each top-tier supplier, write down how to disable its accounts, revoke its tokens and stop its remote access tool, and test it. Attackers used compromised Salesloft Drift tokens to export Salesforce data from 8 to at least 18 August 2025[^gtigdrift]."
         },
         {
           "title": "Ask the top tier for audit reports, not questionnaires.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Add five clauses at each renewal.",
-          "text": "Incident notice, vulnerability handling, audit rights, subcontractor rules, and exit with data return. NIS2's implementing rules make cloud and managed service providers require all five of their own suppliers[^nis2ir]."
+          "text": "Incident notice, vulnerability handling, audit rights, subcontractor rules, and exit with data return. NIS2's implementing rules require cloud and managed service providers to include all five where appropriate[^nis2ir]."
         },
         {
           "title": "Plan for a week without each critical supplier.",
-          "text": "Decide how the business keeps running and keep your data exportable. An AWS region failure in October 2025 disrupted EC2, Lambda and console sign-in for about 14.5 hours[^aws]."
+          "text": "Decide how the business keeps running and keep your data exportable. A DynamoDB disruption in one AWS region in October 2025 lasted about 14.5 hours and spread to EC2 and Lambda[^aws]."
         }
       ]
     },
@@ -76,7 +76,7 @@
       "items": [
         "**Read the audit report, not the logo.** Check that it covers your service, is current and tests whether key controls operate, as DORA requires of financial entities[^rtscontract]. Have every later C5 report sent to you, and run the customer controls it assigns you[^c5faq].",
         "**Ask about the product, not just the company.** CISA and the FBI suggest asking whether SSO and MFA come at no extra cost and whether SaaS security logs are kept for at least six months at no additional charge[^sbd].",
-        "**Incident notice within hours.** Require notice of incidents that put your systems at risk[^nis2ir] within a fixed time, such as 24 hours. The GDPR sets processors no deadline, so the EDPB suggests contracts require early notice[^edpb].",
+        "**Incident notice within hours.** Require notice of incidents that put your systems at risk[^nis2ir] within a fixed time, such as 24 hours. The GDPR sets processors no fixed deadline, so the EDPB suggests contracts require early notice[^edpb].",
         "**Vulnerabilities and audits.** Require vulnerability handling and audits or audit reports[^nis2ir], and patches within the patching sheet's deadlines.",
         "**Subcontractors.** Require the same security terms for subcontractors[^nis2ir] and notice of material changes with a right to object, as DORA requires for critical functions[^rtssub].",
         "**Exit and data return.** Require your data back in an easily accessible format on termination or insolvency, a transition period and incident help at a preset cost[^dora]. Remove supplier accounts and data flows at exit[^enisatig]."
@@ -91,7 +91,7 @@
         "**Give MSP staff named accounts with MFA.** Keep them out of internal admin groups, limit them to the systems the MSP manages and disable them when not in use[^aa22131a]. No admin credential should serve several customers[^rasw].",
         "**Allow one remote access tool.** Allowlist the approved RMM tool, block the ports of others and keep log deletion out of its reach[^rasw]. In 2025, ransomware actors used a software provider's unpatched SimpleHelp RMM to reach its customers[^aa25163a].",
         "**Take Global Administrator away from Microsoft partners.** Partners with DAP show it under **Settings** > **Partner relationships** in the Microsoft 365 admin center; Microsoft advises a quarterly review[^dap].",
-        "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes, never `full` access[^gtigdrift].",
+        "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes and avoid `full` access[^gtigdrift].",
         "**Watch supplier activity.** Alert on sign-ins by supplier accounts, new app consents and new RMM agents, and keep your most important logs for at least six months[^aa22131a]."
       ]
     },
@@ -121,9 +121,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires them to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already sold[^cra]. Give key vendors a monitored security contact.",
+        "**Manufacturers must now warn you about exploited flaws.** Since 11 September 2026, the CRA requires them to tell impacted users about actively exploited vulnerabilities and severe incidents, also for products already on the market[^cra]. Give key vendors a monitored security contact.",
         "**Integration token theft hit another SaaS vendor.** In June 2026, an attacker used a legacy credential at Klue to steal customers' OAuth tokens for Salesforce and other platforms and reach their data[^klue].",
-        "**The BSI published C5:2026.** It has 168 criteria instead of 121 and applies to attestations from 1 June 2027[^c5faq]. Ask cloud suppliers when their first one is due."
+        "**The BSI published C5:2026.** Final since March 2026[^c5], it has 168 criteria instead of 121 and applies to attestations from 1 June 2027[^c5faq]. Ask cloud suppliers when their first report is due."
       ]
     },
     {
@@ -144,7 +144,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Assuming outsourcing moves the duty.** The BSI says NIS-2 entities that outsource all IT remain responsible and that contracts alone aren't enough[^bsifaq]. DORA keeps financial entities fully responsible too[^dora].",
-        "**Leaving access behind when a contract ends.** CISA warns that disabling MSP accounts then is easy to overlook[^aa22131a]. Klue's 2026 breach began with a legacy integration credential[^klue].",
+        "**Leaving access behind when a contract ends.** CISA and partners note that disabling MSP accounts can be overlooked then[^aa22131a]. Klue's 2026 breach began with a legacy integration credential[^klue].",
         "**Tightening consent without cleanup.** New Entra consent settings leave existing grants in place[^consent]. Revoke the ones you don't need.",
         "**Letting your MSP hold your only backups.** One breach of its accounts then reaches both. Keep a copy it can't delete."
       ]
@@ -160,8 +160,8 @@
           "title": "Small team, no security staff",
           "items": [
             "Get a list of every account, tool and token your IT provider uses with you, all with 2-step verification[^ncscmsp].",
-            "In Microsoft 365, remove partners' Global Administrator role under **Settings** > **Partner relationships**[^dap].",
-            "Agree how fast your provider reports incidents, and ask for a monthly health report[^ncscmsp]."
+            "Remove Global Administrator from Microsoft partners under **Settings** > **Partner relationships**[^dap].",
+            "Agree how fast your provider reports incidents and get a monthly health report[^ncscmsp]."
           ]
         },
         {
@@ -263,10 +263,10 @@
     },
     {
       "id": "ncscmsp",
-      "title": "Choosing a managed service provider (MSP)",
+      "title": "Choosing a managed service provider",
       "publisher": "NCSC (UK)",
       "date": "24 Nov 2025",
-      "url": "https://www.ncsc.gov.uk/sites/default/files/2026-06/Choosing-a-managed-service-provider-MSP.pdf"
+      "url": "https://www.ncsc.gov.uk/guidance/choosing-a-managed-service-provider-msp"
     },
     {
       "id": "edpb",
@@ -309,6 +309,13 @@
       "publisher": "Microsoft Learn",
       "date": "15 Jun 2025",
       "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent"
+    },
+    {
+      "id": "c5",
+      "title": "C5:2026",
+      "publisher": "BSI",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Empfehlungen-nach-Angriffszielen/Cloud-Computing/Kriterienkatalog-C5/C5_2025/C5_2025_node.html"
     },
     {
       "id": "cra",

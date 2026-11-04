@@ -5,7 +5,7 @@
   "order": 19,
   "capability": "infrastructure/endpoint",
   "title": "Endpoints and email: which settings stop the attacks that actually land?",
-  "short": "Put EDR in block mode and users on standard accounts this month, then take every mail domain to DMARC reject within 90 days.",
+  "short": "Make EDR block, not just alert, and put users on standard accounts this month; take every mail domain to DMARC reject within 90 days.",
   "answer": "This month, make EDR block on every laptop, remove users' local admin rights and turn on Microsoft's three standard attack surface reduction rules; this quarter, take your mail domains to DMARC reject and confirm every bank detail change by phone. Judge the rest by whether it stops pasted commands, fake sign-in pages or fake payment requests.",
   "audience": "IT teams in small and mid-size organizations managing Windows and Mac laptops, phones and Microsoft 365 or Google Workspace mail, often without security staff",
   "version": "0.1",
@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "Run EDR that blocks, on every device.",
-          "text": "Defender for Endpoint Plan 1 has no EDR; Defender for Business, which Business Premium includes, and Plan 2 do[^mdb]. Turn on tamper protection: on Macs it starts in audit mode, so set it to block[^tamper]."
+          "text": "Defender for Endpoint Plan 1 lacks EDR; Defender for Business (in Business Premium) and Plan 2 have it[^mdb]. Turn on tamper protection, and on Macs move Defender's from audit mode to block[^tamper]."
         },
         {
           "title": "Take away local admin rights.",
-          "text": "Entra join makes the joining user a local admin by default[^localadmin]; turn that off in the device registration policy or Autopilot profile. Manage the built-in admin account with Windows LAPS, included in Intune Plan 1[^laps]."
+          "text": "Entra join makes the joining user a local admin by default[^localadmin]; turn that off in the device registration policy or Autopilot profile. Manage the built-in admin with Windows LAPS, which needs only Intune Plan 1[^laps]."
         },
         {
           "title": "Turn on attack surface reduction rules.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Take every mail domain to DMARC enforcement.",
-          "text": "Microsoft's goal is `p=reject` for every domain and subdomain, via `p=none` and `p=quarantine`[^dmarcms]. Today, publish `v=DMARC1; p=reject;` on domains that never send mail, including an unused onmicrosoft.com domain[^dmarcms]."
+          "text": "Set up SPF and DKIM for every sender, then step DMARC from `p=none` via `p=quarantine` to `p=reject`, Microsoft's goal for every domain[^dmarcms]. Today, publish `v=DMARC1; p=reject;` on domains that never send mail, including onmicrosoft.com if unused[^dmarcms]."
         },
         {
           "title": "Confirm payment changes on a known number.",
-          "text": "Call a known number before changing bank details or a payroll account. Microsoft saw over 46 million attacks posing as business contacts in a year, most opening with harmless small talk[^mddr]."
+          "text": "Call a known number before changing bank details or a payroll account. Microsoft saw over 46 million attacks posing as business contacts in a year, most opening with bland small talk[^mddr]."
         }
       ]
     },
@@ -64,7 +64,7 @@
         },
         {
           "title": "Encrypt, escrow the keys, then enforce.",
-          "text": "Require BitLocker to store its recovery key in Entra ID before it encrypts[^bitlocker], and have FileVault escrow its key to your device management. Then require encryption in the compliance policy and a compliant device in Conditional Access."
+          "text": "Require BitLocker to store its recovery key in Entra ID before it encrypts[^bitlocker], and FileVault to escrow its key. Then make encryption a compliance rule and require compliant devices, as the passkeys and MFA sheet describes."
         }
       ]
     },
@@ -75,10 +75,10 @@
       "navTitle": "Devices",
       "items": [
         "**Block macro and script paths.** Office on Windows blocks macros in files from the internet by default, but the enforcing policy needs Microsoft 365 Apps for enterprise[^macros]. Add the ASR rules against macro Win32 API calls, obfuscated scripts and scripts launching downloads[^asr].",
-        "**Limit what pasted commands can do.** ClickFix lures, which get users to paste a command into Run, Terminal or File Explorer, hit over 1.1 million devices from February to early May 2026. Restrict PowerShell and JavaScript and enforce application control in user-writable folders[^mddr].",
+        "**Limit what pasted commands can do.** ClickFix lures, which get users to paste a command into Run, Terminal or File Explorer, ran on over 1.1 million devices from February to early May 2026. Restrict PowerShell and JavaScript and enforce application control in user-writable folders[^mddr].",
         "**Allow remote support tools for IT only.** Vishing callers get victims to grant access through one, then finish reconnaissance in two minutes or less[^mddr]. Block the rest with application control.",
         "**Allowlist browser extensions.** Set Edge's ExtensionInstallBlocklist to `*` and list approved ones in ExtensionInstallAllowlist[^edgeext]. At the average company, over 15% of users had unauthorized AI extensions[^dbir].",
-        "**Give Macs the same baseline.** Atomic macOS Stealer was half the infostealer activity Defender Experts saw[^mddr]. macOS has no ASR rules[^asr], so rely on EDR, FileVault and standard accounts.",
+        "**Give Macs the same baseline.** Atomic macOS Stealer topped the infostealer families Defender Experts saw[^mddr]. macOS has no ASR rules[^asr], so rely on EDR, FileVault and standard accounts.",
         "**Protect work data on personal phones.** Intune app protection Level 2 blocks copy and paste to unmanaged apps, outdated OS versions and jailbroken devices. Require it in Conditional Access[^appprot]."
       ]
     },
@@ -89,10 +89,10 @@
       "navTitle": "Email",
       "items": [
         "**Turn on the preset policies.** Assign Microsoft's Standard preset security policy to everyone and Strict to admins, finance and executives; until you turn them on, they apply to no one[^preset]. In Google Workspace, turn on every option under Gmail **Safety**[^gws].",
-        "**Remove the Safe Links click-through.** Each month, 89% to 96% of malicious attachments led to phishing pages rather than malware, and Microsoft advises time-of-click URL checks without a user override[^mddr].",
+        "**Remove the Safe Links click-through.** Microsoft advises time-of-click URL checks without a user override; 89% to 96% of malicious attachments each month led to phishing pages, not malware[^mddr].",
         "**Mark external mail.** `Set-ExternalInOutlook -Enabled $true` adds an External tag in Outlook on every platform[^exttag].",
-        "**Block automatic external forwarding.** Set the outbound spam policy to **Off - Forwarding is disabled**; the default, Automatic, behaves differently from tenant to tenant. Forwarding rules can also come from a compromised account[^fwd]: the incident response sheet covers the cleanup.",
-        "**Reject Direct Send.** It's off by default. Run `Set-OrganizationConfig -RejectDirectSend $true` once no scanner or app relies on it[^directsend].",
+        "**Block automatic external forwarding.** Set the outbound spam policy to **Off - Forwarding is disabled**; the default, Automatic, varies by tenant. A compromised account can also add forwarding rules[^fwd]: see the incident response sheet.",
+        "**Reject Direct Send.** Run `Set-OrganizationConfig -RejectDirectSend $true` (off by default) once no scanner or app uses Direct Send[^directsend].",
         "**Require TLS with MTA-STS.** Publish the policy in testing mode, then enforce. Exchange Online already checks other domains' policies on outbound mail[^mtasts]."
       ]
     },
@@ -105,7 +105,7 @@
       "items": [
         "**DMARC became a standards-track RFC.** RFC 9989 replaced RFC 7489 in May 2026 and swaps the `pct` tag for `t` (testing). It says domains whose users post to mailing lists should not publish `p=reject`, so check your reports for list traffic first[^rfc9989].",
         "**Windows 11 24H2 Home and Pro lost support.** They no longer get updates, and Enterprise 23H2 stops on 10 November 2026[^w11].",
-        "**Administrator protection shipped.** The October 2026 update turns it on where Microsoft's Windows security baselines apply; Microsoft says not to use it on LAPS-managed devices[^adminprot]."
+        "**Administrator protection shipped.** The October 2026 update turns it on where Microsoft's Windows security baselines apply. Microsoft says not to use it on LAPS-managed devices[^adminprot], so set the policy explicitly."
       ]
     },
     {
@@ -140,7 +140,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Turn on Business Premium's Defender for Business[^mdb], the standard ASR rules and the Standard email preset.",
+            "Use Business Premium's Defender for Business[^mdb] and the Standard email preset.",
             "Make every user a standard user.",
             "Use a DMARC reporting service and a call-back rule for every payment change."
           ]

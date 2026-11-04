@@ -24,7 +24,7 @@
         },
         {
           "title": "Keep the copy where your admins can't delete it.",
-          "text": "Attackers delete local logs to hide[^asd]. Use a separate Azure subscription or AWS account with its own admins[^ctbp], on immutable storage that even account administrators can't delete[^immutable]."
+          "text": "Attackers delete local logs to hide[^asd]. Use a separate AWS log archive account[^ctbp] or Azure subscription with its own admins, on immutable storage that even account administrators can't delete[^immutable]."
         },
         {
           "title": "Turn on the Windows logging that's off by default.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Alert when a source goes quiet, and test monthly.",
-          "text": "Alert on unexpected log termination, as Mandiant advises[^mtrends]. Monthly, run Defender for Endpoint's detection test on a server, which alerts within about 10 minutes[^mdetest], and check that a person saw it."
+          "text": "Alert on unexpected log termination, as Mandiant advises[^mtrends]. Monthly, run Defender for Endpoint's detection test on a server, which raises an alert in about 10 minutes[^mdetest], and check that a person saw it."
         }
       ]
     },
@@ -75,10 +75,10 @@
       "navTitle": "Priority logs",
       "items": [
         "**Rank by what attackers want.** ASD's top three are critical systems and data, internet-facing services, and identity servers[^asd].",
-        "**Entra ID.** Export sign-in logs, including non-interactive and service principal sign-ins, audit logs and Graph activity logs[^entralogs], which aren't kept unless exported[^entraret]. For Microsoft 365, see the incident response sheet.",
-        "**Linux.** Load audit rules from `/usr/share/audit/sample-rules` with `augenrules --load`[^rhaudit], and log use of curl, systemctl and python[^asd].",
+        "**Entra ID.** Export sign-in logs, including non-interactive and service principal ones, audit logs and Graph activity logs (P1 or P2)[^entralogs], kept only if exported[^entraret]. For Microsoft 365, see the incident response sheet.",
+        "**Linux.** Copy rule files from `/usr/share/audit/sample-rules` to `/etc/audit/rules.d/` and run `augenrules --load`[^rhaudit]. Log use of curl, systemctl and python[^asd].",
         "**Cloud.** In AWS, use a multi-Region trail with log file integrity validation[^ctbp]. In Azure, add an Activity log diagnostic setting per subscription; a management group setting misses some events[^activity].",
-        "**Hypervisors and edge devices.** Mandiant calls hypervisor logs the only way to detect snapshot tampering or rogue VMs[^mtrends]. For firewalls and VPNs, see the edge devices sheet."
+        "**Hypervisors.** Mandiant calls their logs the only way to detect snapshot tampering or rogue virtual machines[^mtrends]."
       ]
     },
     {
@@ -88,7 +88,7 @@
       "navTitle": "Alerts",
       "items": [
         "**Logging stopped or cleared.** Windows events 1102 and 104 mean a log was cleared[^wef]. Also alert on deleted diagnostic settings and stopped trails.",
-        "**New admin rights.** Use the privileged access sheet's list for AD groups and Entra roles. For edge devices, see the edge devices sheet.",
+        "**New admin rights.** Use the privileged access sheet's list for AD groups and Entra roles. For firewalls and VPNs, see the edge devices sheet.",
         "**Mail forwarded outside.** The default policy **Suspicious email forwarding activity** is High severity and on by default in E1, E3 and E5[^alertpol]. Add your alert mailbox as a recipient.",
         "**Security tools changed.** Alert when someone changes Defender or logging settings or disables monitoring services[^asd].",
         "**High-severity incidents.** Create a Defender XDR email rule for High and Medium incidents and use **Send test email**[^xdrmail].",
@@ -105,7 +105,7 @@
         "**Tier the storage.** Keep recent logs hot and older ones cold[^asd]. Sentinel keeps analytics data free for 90 days and has a cheaper lake tier[^sentbill].",
         "**Start with what's free.** Sentinel ingests Azure Activity, Office 365 audit logs and Defender alerts free; raw Entra ID and Defender logs cost extra[^sentbill].",
         "**Filter at the source.** Collect Windows security events with the Common or Minimal set, and keep non-security data in a separate workspace[^sentcost].",
-        "**Write the period down.** NIS2 requires a predefined period[^enisa]. The BSI suggests 90 days for federal log data but lets security events without personal data stay longer[^bsipd]."
+        "**Write the period down.** NIS2 rules for digital providers require one[^enisa]. The BSI suggests 90 days for federal logs but lets you keep security events without personal data longer[^bsipd]."
       ]
     },
     {
@@ -114,8 +114,8 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The US federal baseline was cut back.** OMB's M-26-14 of 22 May 2026 replaced M-21-31, whose retention of vast amounts of log data proved neither feasible nor cost-effective for most agencies[^m2614].",
-        "**CISA published a logging reference architecture.** Its August 2026 guide lists health and completeness monitoring, synthetic tests and automated threat emulation as needed features[^lra].",
+        "**The US federal baseline was cut.** In May 2026, OMB's M-26-14 replaced M-21-31, whose retention of vast log volumes proved neither feasible nor cost-effective for most agencies[^m2614].",
+        "**CISA published a logging reference architecture.** Its August 2026 guide calls for health monitoring, synthetic tests and threat emulation[^lra].",
         "**CISA retired Logging Made Easy.** Support ended on 22 May 2026 and the repository is read-only[^lme]. If you run it, plan a replacement.",
         "**Sysmon is built into Windows.** Windows 11 and Windows Server 2025 include it as an optional feature. Uninstall standalone Sysmon first, and parse the XML, as event text is now localized[^sysmon]."
       ]
@@ -128,7 +128,7 @@
         "**Sending everything to the SIEM.** CISA notes that SIEM-first designs get costly as volume grows[^lra]. Keep bulky logs in cheaper storage.",
         "**Microsoft service principal sign-in logs.** Microsoft calls this preview log high-volume and not essential for security investigations[^entralogs].",
         "**Data access logs everywhere.** Google Cloud leaves them off, except for BigQuery, because of their volume[^gcpaudit]. Enable them only for sensitive data.",
-        "**Hundreds of imported rules.** Ten alerts that someone answers beat hundreds that nobody reads."
+        "**Hundreds of imported rules.** Ten answered alerts beat hundreds ignored."
       ]
     },
     {
@@ -138,8 +138,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Basic audit policy overwriting the advanced one.** Enable **Audit: Force audit policy subcategory settings**; event 4719 shows an overwrite[^cmdline].",
-        "**Local logs too small.** Event forwarding buffers in the local log, and events overwritten while the collector is offline vanish without notice[^wef]. Raise maximum sizes[^asd].",
-        "**Expecting a license upgrade to bring back history.** Entra retention changes aren't retroactive; expired data is gone unless you archived it[^entraret].",
+        "**Local logs too small.** Events overwritten before they are forwarded are lost without notice[^wef]. Raise maximum log sizes[^asd].",
+        "**Counting on a license upgrade.** Entra retention isn't retroactive[^entraret].",
         "**Letting everyone read the logs.** Command lines and script blocks can expose passwords and other credentials[^cmdline][^pslog]. Limit who can read them."
       ]
     },
@@ -163,7 +163,7 @@
           "items": [
             "Run one SIEM workspace: free sources first, then Entra sign-ins and server security events.",
             "Write one rule per item in the alert list, each with an owner, and test them monthly.",
-            "Use a managed detection service for nights and weekends."
+            "Buy managed detection for nights and weekends."
           ]
         },
         {
@@ -171,7 +171,7 @@
           "items": [
             "Under NIS2, digital providers must sync clocks and monitor logging availability independently[^enisa].",
             "Keep a year or more in a cheaper lake tier and only recent data in analytics[^sentbill].",
-            "Inject synthetic events per source and track failures to a fix[^lra]."
+            "Inject synthetic events for each source monthly[^lra]."
           ]
         }
       ]
