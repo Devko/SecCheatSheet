@@ -105,7 +105,7 @@
         "**Tier the storage.** Keep recent logs hot and older ones cold[^asd]. Sentinel's first 90 days of retention are free, and its lake tier is cheaper[^sentbill].",
         "**Start with what's free.** Sentinel ingests Azure Activity, Office 365 audit logs and Defender alerts free; raw Entra ID and Defender logs cost extra[^sentbill].",
         "**Filter at the source.** Collect Windows security events with the Common or Minimal set, and keep non-security data in a separate workspace[^sentcost].",
-        "**Write the period down.** NIS2 rules for digital providers require one[^enisa]. The BSI's federal standard gives 90 days as an example and requires deletion afterward, except for security events without personal data and events tied to an attack[^bsipd]."
+        "**Write the period down.** NIS2 rules for digital providers require one[^enisa]. The BSI suggests 90 days for federal logs, then requires deletion, except for attack-related events and security events without personal data[^bsipd]."
       ]
     },
     {
@@ -154,7 +154,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Send Defender XDR incident emails for High and Medium severity to a shared mailbox[^xdrmail].",
-            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable], then check that new logs still arrive.",
+            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable].",
             "Ask your IT provider for the last alert it acted on."
           ]
         },
@@ -169,9 +169,9 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Under NIS2, digital providers must sync clocks where feasible and monitor logging availability independently[^enisa].",
+            "Under NIS2, digital providers must sync clocks where feasible and watch logging uptime independently[^enisa].",
             "Keep a year or more in a cheaper lake tier and only recent data in analytics[^sentbill].",
-            "Each month, inject synthetic events[^lra] for every source."
+            "Inject synthetic events[^lra] for each source monthly."
           ]
         }
       ]
