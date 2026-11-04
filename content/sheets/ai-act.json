@@ -8,7 +8,7 @@
   "short": "List every AI system with your role and its risk class; Annex III high-risk duties start 2 December 2027.",
   "answer": "This quarter, list every AI system you use, build or sell with your role and its risk class, and check that none is banned and that chatbots and AI content are disclosed as required since 2 August 2026. Then prepare the duties for any Annex III use, such as hiring or credit scoring, before they apply on 2 December 2027.",
   "audience": "Compliance, legal, security and IT leads in EU organizations that use or build AI, including providers of AI systems and models",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -106,7 +106,7 @@
       "span": "full",
       "items": [
         "**The Digital Omnibus on AI took effect on 27 July 2026.** It moved Annex III high-risk duties from 2 August 2026 to 2 December 2027, softened AI literacy, added the intimate-deepfake ban and extended SME relief to small mid-caps[^omnibus][^aiact].",
-        "**Transparency guidance arrived.** A code of practice of 10 June covers marking and labeling[^cop50]; guidelines of 20 July give examples[^transp].",
+        "**Transparency guidance arrived.** A code of practice of 10 June covers marking and labeling[^cop50]; draft guidelines approved on 20 July give examples[^transp].",
         "**The first harmonized standard was published.** Since October 2026, EN 18286 gives high-risk providers a presumption of conformity for quality management[^hsec]."
       ]
     },
@@ -193,6 +193,11 @@
   "changes": [
     {
       "date": "2026-11-04",
+      "version": "1.1",
+      "text": "Marked the Commission's Article 50 transparency guidelines as a draft: their content is approved, but they aren't formally adopted yet."
+    },
+    {
+      "date": "2026-11-04",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check against the consolidated AI Act, which narrowed 13 statements to what the sources say."
     },
@@ -219,7 +224,7 @@
     },
     {
       "id": "transp",
-      "title": "Guidelines on Article 50 transparency obligations, C(2026) 5054",
+      "title": "Draft guidelines on Article 50 transparency obligations, C(2026) 5054",
       "publisher": "European Commission",
       "date": "20 Jul 2026",
       "url": "https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems"

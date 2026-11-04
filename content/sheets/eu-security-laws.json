@@ -8,7 +8,7 @@
   "short": "Map each legal entity and product to NIS2, DORA and the CRA, and set up one process that can report within 24 hours.",
   "answer": "Check which of your legal entities fall under NIS2 or DORA and which products under the CRA, since all three require a first report within 24 hours[^nis2][^dorarts][^cra]. Then resolve overlaps by role: DORA replaces NIS2's risk and reporting rules for financial entities[^nis2] and the CRA adds product duties, so one group can face all three.",
   "audience": "IT, security and compliance leads in EU organizations, especially in Germany",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-02",
   "reviewEveryDays": 30,
   "blocks": [
@@ -106,7 +106,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Waiting for the proposed changes.** Neither the Digital Omnibus reporting rules nor the NIS2 amendments are law yet[^council][^oeil], and the proposed single entry point would keep today's reporting duties and recipients[^ecdigital].",
+        "**Waiting for the proposed changes.** Neither the reporting rules in the general Digital Omnibus nor the NIS2 amendments are law yet[^council][^oeil], and the proposed single entry point would keep today's reporting duties and recipients[^ecdigital].",
         "**A separate compliance program for each law.** Keep one risk register for all three and add law-specific steps only where the duties differ.",
         "**Reporting every alert.** NIS2 requires reports only for incidents that cause or could cause severe operational disruption, financial loss or considerable damage to others[^nis2]. Give the on-call team written thresholds."
       ]
@@ -208,11 +208,16 @@
       "items": [
         "**CRA reporting started.** Since 11 September 2026 manufacturers must report actively exploited vulnerabilities and severe incidents[^cra].",
         "**The Commission proposed NIS2 amendments.** Its proposal of 20 January 2026 would clarify the scope to ease compliance for 28,700 companies, add a small mid-cap category and simplify jurisdiction rules[^ecqa]. It still awaits a committee decision in Parliament[^oeil].",
-        "**The Council wants national reporting entry points.** The Digital Omnibus would let you file NIS2, DORA, GDPR and other reports through one ENISA entry point[^ecdigital]. The Council's position of 21 October 2026 swaps it for one national entry point per Member State and backs a longer GDPR breach deadline; Parliament has not adopted its position yet[^council]."
+        "**The Council wants national reporting entry points.** The general Digital Omnibus, separate from the one on AI, would let you file NIS2, DORA, GDPR and other reports through one ENISA entry point[^ecdigital]. The Council's position of 21 October 2026 swaps it for one national entry point per Member State and backs a longer GDPR breach deadline; Parliament has not adopted its position yet[^council]."
       ]
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.1",
+      "text": "Clarified that the general Digital Omnibus, still a proposal, is separate from the Digital Omnibus on AI, which is in force."
+    },
     {
       "date": "2026-11-02",
       "version": "1.0",
