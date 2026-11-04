@@ -99,7 +99,7 @@
       "navTitle": "Outage lessons",
       "span": "full",
       "items": [
-        "**One update can stop all your Windows devices.** A faulty CrowdStrike update on 19 July 2024 affected 8.5 million Windows devices[^msweston], and the manual fix could ask for each BitLocker recovery key[^kb]. Stage such updates, which customers can now control[^csrca], and make sure the help desk can read keys with servers down.",
+        "**One update can stop all your Windows devices.** A faulty CrowdStrike update on 19 July 2024[^csrca] affected an estimated 8.5 million Windows devices[^msweston], and the manual fix could ask for each BitLocker recovery key[^kb]. Stage such updates, which customers can now control[^csrca], and make sure the help desk can read keys with servers down.",
         "**Sign-in and phones are dependencies.** In AWS's October 2025 outage, Identity Center users in us-east-1 couldn't sign in and callers to Amazon Connect contact centers got busy tones[^aws]. Test emergency access to each cloud console and keep a fallback phone number."
       ]
     },
@@ -119,7 +119,7 @@
         },
         {
           "title": "Do the workarounds work?",
-          "text": "Walk through each with the people who would run it, then try one for half a day."
+          "text": "Walk through each with its users, then run one for half a day."
         },
         {
           "title": "Does failover work under load?",
@@ -146,7 +146,7 @@
       "items": [
         "**A power failure in one zone slowed a cloud region.** On 20 October 2026, generators at Google Cloud's London zone europe-west2-b failed to start; other zones were affected and some failovers failed for lack of capacity[^gcp]. Test failover at full capacity.",
         "**The NCSC published guidance on recovering to minimum viable operations:** the lowest level at which you can operate safely, meet legal duties and keep trust[^ncscrec2]. Set one per critical process.",
-        "**Germany's KRITIS umbrella act took effect** on 17 March 2026, but the ordinance defining critical facilities is still being drafted[^bbkfaq]. Once registered, most operators outside IT, telecom and finance need a resilience plan within 10 months, with recovery measures such as emergency power[^kritis]."
+        "**Germany's KRITIS umbrella act took effect** on 17 March 2026; the ordinance setting its scope is still a draft[^bbkfaq]. Most registered operators outside IT, telecom and finance have 10 months for a resilience plan[^kritis]."
       ]
     },
     {
@@ -186,8 +186,8 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "NIS2 requires business continuity and crisis management[^nis2]; point 4 of Implementing Regulation 2024/2690 details it for digital providers[^nis2ir].",
-            "Under DORA, test yearly. Unless you're a microenterprise, include cyberattack and switchover scenarios and keep a crisis management function[^dora].",
+            "NIS2 requires business continuity and crisis management[^nis2]; point 4 of Implementing Regulation 2024/2690 details it for cloud, managed service and other digital providers[^nis2ir].",
+            "Under DORA, all but microenterprises test yearly with cyberattack and switchover scenarios and keep a crisis management function[^dora].",
             "Exercise the loss of a cloud zone and region, and check which SaaS suppliers share them."
           ]
         }
@@ -267,7 +267,7 @@
     },
     {
       "id": "kritis",
-      "title": "KRITIS-Dachgesetz, §§ 8 and 13",
+      "title": "KRITIS-Dachgesetz, §§ 4, 8 and 13",
       "publisher": "BMJV (Germany)",
       "date": "checked 4 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/kritisdachg/BJNR0420B0026.html"
@@ -275,7 +275,7 @@
     {
       "id": "bbkfaq",
       "title": "FAQ zum KRITIS-Dachgesetz",
-      "publisher": "BBK (Germany)",
+      "publisher": "BBK",
       "date": "checked 4 Nov 2026",
       "url": "https://www.bbk.bund.de/DE/Themen/Kritische-Infrastrukturen/Strategien-und-rechtlicher-Rahmen/KRITISDachG/FAQ/faq_node.html"
     },
