@@ -124,7 +124,7 @@
       "navTitle": "What changed",
       "items": [
         "**Microsoft 365 Backup restores single files and keeps longer.** Granular file restore has been generally available since September 2026, for the last 14 days. Recovery windows have been configurable since September, and since 31 October reach 10 years for SharePoint and OneDrive[^m365new].",
-        "**Microsoft 365 Backup catches new items.** Full Workload Backup, in preview since September 2026, adds sites, OneDrives and mailboxes that no policy covers. Daily email digests of backup events can go to up to 20 recipients[^m365new].",
+        "**Microsoft 365 Backup catches new items.** Full Workload Backup, in preview since September 2026, adds sites, OneDrives and mailboxes that no policy covers[^m365new].",
         "**AWS air-gapped vaults take more workloads.** Since March 2026 they accept Amazon EKS backups, which can be shared for recovery across accounts and AWS Organizations[^awseks]."
       ],
       "span": "full"
@@ -146,7 +146,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Deleting a leaver's account first.** The mailbox is gone 30 days later[^exodel], a Google account after 20 days[^guser]. The joiners and leavers sheet has the order.",
+        "**Deleting a leaver's account first.** The mailbox is gone 30 days later[^exodel], a Google account after 20 days[^guser].",
         "**Counting RAID or replication as a backup.** A mirror changes with the original, so overwrites and malware hit both[^bsicon3].",
         "**Keeping cloud backups in one region.** Azure's Cross Region Restore needs a geo-redundant vault, set before the first backup[^azvault].",
         "**Trusting a green dashboard.** Jobs can succeed while skipping new systems. Only a restore proves a backup."
@@ -180,7 +180,7 @@
           "items": [
             "NIS2 digital providers need backup plans covering configuration and cloud data, distant copies, retention periods and integrity checks[^enisa].",
             "Report measured restore times against RPO and RTO per system each quarter.",
-            "Keep critical SaaS and cloud data with a second provider and test restores from it."
+            "Copy critical SaaS and cloud data to a second provider and restore from it yearly."
           ]
         }
       ]

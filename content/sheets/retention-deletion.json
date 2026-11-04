@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Write one retention schedule.",
-          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. In the EDPB's 2025 review, many controllers struggled to define retention periods at all[^cef25]."
+          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. The EDPB found that controllers, especially small ones, struggle to set periods[^cef25]."
         },
         {
           "title": "Delete by default, keep by exception.",
@@ -28,7 +28,7 @@
         },
         {
           "title": "Answer erasure requests within a month.",
-          "text": "Search every system, including email and backups, and tell anyone you passed the data to[^gdpr]. Many controllers the EDPB reviewed excluded backups by default without a justification[^cef25]."
+          "text": "Search every system, including email and backups, and tell anyone you passed the data to[^gdpr]. Refuse only under a named exception, such as a legal duty to keep the record or legal claims[^gdpr]."
         },
         {
           "title": "Let backups expire, then delete again after a restore.",
@@ -48,66 +48,50 @@
       "items": [
         {
           "title": "List record types, not systems.",
-          "text": "Group data into types such as invoices, contracts, personnel files, applications, customer contacts and logs, and note every system and copy that holds each type. Deletion must reach every copy, including offline copies on devices and in the cloud[^sdm60]."
+          "text": "Group data into types such as invoices, contracts, personnel files, applications and logs, and note every system and copy that holds each. Deletion must reach every copy, including offline copies on devices and in the cloud[^sdm60]."
         },
         {
           "title": "Find the minimum and the maximum.",
-          "text": "Take the minimum from tax, commercial, labor and sector law. Take the maximum from the purpose: personal data may be kept no longer than the purpose needs[^gdpr]."
+          "text": "The minimum comes from tax, commercial, labor and sector law. The maximum comes from the purpose: no longer than it needs[^gdpr]."
         },
         {
           "title": "Group the periods into deletion classes.",
-          "text": "Write each rule as a period plus the event that starts it, as the regulators' Standard Data Protection Model recommends for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398, the usual German template, in September 2025[^din27555]."
+          "text": "Write each rule as a period plus the event that starts it, as the German regulators' Standard Data Protection Model recommends for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398 as the standard for it in September 2025[^din27555]."
         },
         {
           "title": "Assign each class to a tool.",
-          "text": "Map it to a retention policy or label in Microsoft Purview, a rule in Google Vault, or a deletion job in each business system and file share, with an owner."
+          "text": "Map it to a Purview retention policy or label, a Google Vault rule, or a deletion job in each business system and file share, with an owner."
         },
         {
           "title": "Log every run and check it.",
-          "text": "Record what was deleted, when and under which rule, without copying the deleted data into the log[^sdm60]. Once a year, pick a few expired records per system and confirm they're gone."
+          "text": "Record what was deleted, when and under which rule, without copying the deleted data into the log[^sdm60]. Once a year, check a few expired records per system."
         }
       ]
     },
     {
       "type": "timelines",
       "id": "periods",
-      "title": "Periods that set your schedule",
+      "title": "German periods that set your schedule",
       "navTitle": "Periods",
       "span": "full",
       "items": [
         {
-          "name": "Books and business records (Germany)",
-          "scope": "Periods run from the end of the calendar year of the last entry or document[^hgb][^ao], so January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is still open[^ao]. Banks, insurers and securities institutions keep vouchers 10 years[^hgb].",
+          "name": "Books and business records",
+          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao], so January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is still open[^ao]. Banks and insurers keep vouchers 10 years[^hgb].",
           "steps": [
-            { "at": "6 years", "what": "Business letters sent and received, other tax-relevant papers[^hgb][^ao]" },
+            { "at": "6 years", "what": "Business letters, other tax-relevant papers[^hgb][^ao]" },
             { "at": "8 years", "what": "Booking vouchers, since 2025 for all not yet expired[^egao]" },
             { "at": "10 years", "what": "Books, annual accounts, inventories and the documentation to read them[^hgb]" }
           ]
         },
         {
-          "name": "Applicants and employees (Germany)",
+          "name": "Applicants and employees",
           "scope": "Common minimums. Collective agreements and sector law can require more.",
           "steps": [
             { "at": "2 months", "what": "Rejected applicants must claim discrimination in writing[^agg]" },
-            { "at": "6 months", "what": "Delete or return rejected applications, the BfDI's maximum[^bfdi]" },
+            { "at": "6 months", "what": "Delete rejected applications, the BfDI's maximum[^bfdi]" },
             { "at": "2 years", "what": "Overtime records[^arbzg]" },
-            { "at": "End of 6th year", "what": "Payroll account (Lohnkonto) after the last payment[^estg]" }
-          ]
-        },
-        {
-          "name": "Erasure requests (GDPR)",
-          "scope": "Erase without undue delay unless an exception applies, such as a legal duty to keep the data or legal claims[^gdpr].",
-          "steps": [
-            { "at": "1 month", "what": "Tell the person what you did, or why not[^gdpr]" },
-            { "at": "3 months", "what": "Latest answer for complex cases, if you announced the delay in month 1[^gdpr]" }
-          ]
-        },
-        {
-          "name": "EU pay transparency",
-          "scope": "Check your country's transposing law before you shorten pay or recruitment records.",
-          "steps": [
-            { "at": "7 Jun 2026", "what": "Deadline for national law[^ptd]" },
-            { "at": "3 years", "what": "Shortest allowed limitation period for equal pay claims[^ptd]" }
+            { "at": "End of 6th year", "what": "Payroll account after the last payment[^estg]" }
           ]
         }
       ]
@@ -118,12 +102,12 @@
       "title": "Where deleted data lives on",
       "navTitle": "Hidden copies",
       "items": [
-        "**SharePoint and OneDrive.** Files edited or deleted under a retain policy move to the hidden Preservation Hold library, which counts against the site's storage[^retention]. Expired files then spend 93 days in the recycle bins[^spret].",
-        "**Leavers' mailboxes.** A mailbox under a retention policy becomes inactive when the account is deleted, and it isn't deleted automatically when retention ends[^exret]. Removing the last hold adds a 30-day delay hold, then 30 days as a soft-deleted mailbox[^inactive].",
+        "**SharePoint and OneDrive.** Under a retain policy, edited and deleted files go to the hidden Preservation Hold library, which counts against the site's storage[^retention].",
+        "**Leavers' mailboxes.** Under a retention policy they become inactive mailboxes, which aren't deleted automatically when retention ends[^exret].",
         "**Teams call logs.** They're kept indefinitely unless you create a call logs retention policy[^teamsret].",
-        "**Microsoft 365 Backup.** Purview retention and deletion policies don't reach its restore points, which it keeps for 1 year by default[^m365backup]. The backups sheet covers how long to keep backups.",
+        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default[^m365backup]. The backups sheet covers backup retention.",
         "**Google Vault.** Expired data stays available to Vault for about 30 days before it's purged[^vault].",
-        "**Providers and processors.** Microsoft keeps deleted content for up to 30 days, and up to 180 days after a subscription ends[^msdel]. Processors must delete or return your data when the service ends[^gdpr]; the third-party risk sheet covers exit clauses."
+        "**Providers and processors.** Microsoft keeps deleted content up to 30 days[^msdel]. Processors must delete or return your data at contract end[^gdpr], as the third-party risk sheet covers."
       ]
     },
     {
@@ -132,25 +116,11 @@
       "title": "If you run Microsoft Purview",
       "navTitle": "Purview",
       "items": [
-        "**Know what E3 covers.** Retention policies and manually applied retention labels come with Microsoft 365 E3 and Business Premium. Auto-applied labels, default labels for SharePoint libraries, adaptive scopes, event-based retention, disposition review and records need E5 or an add-on[^purviewsd].",
-        "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, a label beats a policy, a scoped policy beats an org-wide one, and then the shortest period wins[^retention].",
-        "**Use labels for exceptions.** A label applies per item and moves with it inside the tenant; a policy applies to a whole location and stays there[^retention].",
-        "**Cover the new locations.** Copilot and AI app interactions and Teams call logs have their own retention locations[^retention][^teamsret].",
-        "**Lock only what a regulator demands.** Preservation Lock stops anyone, admins included, from turning off or shortening a policy[^retention]. A locked 10-year policy couldn't have followed the 2025 cut to 8 years for vouchers[^egao].",
-        "**Expect delays.** Holds can take 24 hours to apply[^hold], and a policy that deletes Teams messages after 1 day can take 16 days to remove them for good[^teamsret]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "holds",
-      "title": "Holds and erasure requests",
-      "navTitle": "Holds and erasure",
-      "items": [
-        "**Create holds in an eDiscovery case.** Group membership is captured when you create the hold, so add new members yourself[^hold]. Microsoft advises retention policies and labels, not holds, for long-term retention[^hold].",
-        "**Refuse erasure only for a named reason.** A legal duty to keep the data or legal claims justify refusal[^gdpr]. Where a contract sets the retention period, German law replaces erasure with restricted processing[^bdsg].",
-        "**Override retention when you must.** Priority cleanup, in preview and licensed with E5, deletes chosen mail despite retention and holds, after three approvals[^cleanup][^purviewsd].",
-        "**Don't call masking deletion.** The EDPB found controllers relying on partial masking or basic pseudonymization, which doesn't meet the GDPR's requirements for deletion[^cef25].",
-        "**Keep proof.** The EDPB recommends verifying each erasure and being able to demonstrate it, for example with records your systems generate automatically[^cef25]."
+        "**Know what E3 covers.** Retention policies and manually applied labels come with E3 and Business Premium. Auto-applied and default labels, adaptive scopes, event-based retention, disposition review and records need E5 or an add-on[^purviewsd].",
+        "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, a label beats a policy, a scoped policy beats an org-wide one, then the shortest period wins[^retention].",
+        "**Use labels for exceptions.** A label applies to one item and moves with it inside the tenant; a policy applies to a whole location[^retention].",
+        "**Lock only what a regulator demands.** Preservation Lock stops anyone, admins included, from turning off or shortening a policy[^retention], so a locked 10-year policy couldn't follow the 2025 cut to 8 years[^egao].",
+        "**Put holds in eDiscovery cases.** A hold can take 24 hours to apply and captures group membership only once[^hold]."
       ]
     },
     {
@@ -158,12 +128,13 @@
       "id": "changed",
       "title": "What changed in 2026",
       "navTitle": "What changed",
+      "span": "full",
       "items": [
         "**The EDPB reported on erasure.** Its February 2026 report on 764 controllers found missing procedures, trouble setting retention periods and inconsistent deletion in backups[^cef25].",
-        "**Anonymization has a test.** The EDPB's July 2026 draft, whose consultation closed on 30 October, checks for record isolation, linkage and inference, and says anonymizing without deleting the original doesn't help storage limitation[^anon].",
-        "**Privacy notices are under review.** 25 data protection authorities are checking transparency duties in 2026[^cef26]. Notices must state the storage period or the criteria for it[^gdpr].",
+        "**Anonymization has a test.** The EDPB's July 2026 draft checks for record isolation, linkage and inference, and says anonymizing without deleting the original doesn't help storage limitation[^anon].",
+        "**Pay records may need to last longer.** The EU pay transparency directive was due in national law by 7 June 2026 and allows no less than 3 years to bring equal pay claims[^ptd]. Check your country's law before you shorten pay or recruitment records.",
         "**Teams call records need their own policy.** Since April 2026, new call records fall under separate call logs retention policies, created in PowerShell[^whatsnew].",
-        "**Priority cleanup reaches files.** In preview since August 2026, it can permanently delete selected SharePoint and OneDrive files, bypassing the recycle bins[^whatsnew]."
+        "**Priority cleanup can override holds.** It deletes chosen items despite retention and eDiscovery holds, needs three approvals since July 2026 and reaches SharePoint and OneDrive files in preview since August[^whatsnew]. It needs E5[^purviewsd]."
       ]
     },
     {
@@ -173,8 +144,7 @@
       "items": [
         "**Keeping all email for 10 years.** Only business letters, which concern a transaction, and other tax-relevant documents carry a 6-year duty[^hgb][^ao]. Give ordinary mail a short default.",
         "**Running the old ERP for a decade.** Five calendar years after a system change, a machine-readable and analyzable export is enough, unless a tax audit has started[^ao].",
-        "**Editing backups for each request.** Let them expire on schedule and delete again after restores. Only high-risk data, such as health records, may need extra cleanup runs[^sdm60].",
-        "**Disposition review for routine records.** It needs E5[^purviewsd] and a reviewer for every batch. Use it for contracts and other records whose deletion needs sign-off."
+        "**Disposition review for routine records.** It needs E5[^purviewsd] and a reviewer for every batch. Keep it for contracts and other records whose deletion needs sign-off."
       ]
     },
     {
@@ -183,9 +153,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**One org-wide \"retain forever\" policy.** Retention always beats deletion[^retention], so it silently cancels every delete rule and keeps every leaver's mailbox as an inactive mailbox[^exret].",
-        "**Applying the longest period to everything.** The EDPB cites a controller that applied its longest period to all processing instead of setting one per purpose[^cef25].",
-        "**Assuming Google Vault works like Purview.** In Vault a custom rule beats the default rule even when it's shorter[^vault], while in Purview the longest retention wins[^retention]."
+        "**One org-wide \"retain forever\" policy.** Retention always beats deletion[^retention], so it cancels every delete rule and keeps every leaver's mailbox[^exret].",
+        "**Applying the longest period to everything.** The EDPB cites a controller that did this instead of setting a period per purpose[^cef25].",
+        "**Masking and calling it deletion.** Partial masking or basic pseudonymization doesn't meet the GDPR's requirements for deletion[^cef25].",
+        "**Assuming Vault works like Purview.** In Vault a custom rule beats the default rule even when it's shorter[^vault]."
       ]
     },
     {
@@ -199,16 +170,16 @@
           "title": "Small team, no security staff",
           "items": [
             "Keep the schedule as a one-page table: record type, period, start event, system and owner.",
-            "Use one retain-then-delete policy per Microsoft 365 workload and a few published labels, which E3 and Business Premium include[^purviewsd].",
+            "Use one retain-then-delete policy per Microsoft 365 workload and a few published labels.",
             "Each January, ask your tax advisor which years you may delete, then delete them."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Write a deletion concept along DIN EN ISO/IEC 27555 and link each class to the record of processing activities.",
+            "Write a deletion concept along DIN EN ISO/IEC 27555 and link it to the record of processing activities.",
             "Add deletion jobs to CRM, ERP and HR systems, and keep their logs.",
-            "Test erasure once a year: find one test person's data in every system within a week."
+            "Once a year, find one test person's data in every system within a week."
           ]
         },
         {
@@ -216,7 +187,7 @@
           "items": [
             "Use adaptive scopes, event-based labels and disposition review, which need E5[^purviewsd].",
             "Let legal own holds and review every open hold each quarter.",
-            "Report deletion runs, overdue records and open holds to the data protection officer and internal audit."
+            "Report deletion runs, overdue records and open holds to the data protection officer."
           ]
         }
       ]
@@ -232,14 +203,14 @@
   "sources": [
     {
       "id": "gdpr",
-      "title": "Regulation (EU) 2016/679 (GDPR), Articles 5, 12, 13, 17, 19, 28 and 30",
+      "title": "Regulation (EU) 2016/679 (GDPR), Articles 5, 12, 17, 19, 28 and 30",
       "publisher": "EUR-Lex",
       "date": "2016",
       "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
     },
     {
       "id": "cef25",
-      "title": "2025 Coordinated Enforcement Action: Implementation of the right to erasure",
+      "title": "2025 Coordinated Enforcement Action: right to erasure",
       "publisher": "EDPB",
       "date": "10 Feb 2026",
       "url": "https://www.edpb.europa.eu/system/files/documents/2026-02/edpb_cef-report_2025_right-to-erasure_en.pdf"
@@ -254,7 +225,7 @@
     {
       "id": "sdm60",
       "title": "SDM Baustein 60: Löschen und Vernichten, V1.0a",
-      "publisher": "Datenschutzkonferenz (DSK)",
+      "publisher": "DSK",
       "date": "2 Sep 2020",
       "url": "https://www.datenschutz-mv.de/static/DS/Dateien/Datenschutzmodell/Bausteine/SDM-V2.0_L%C3%B6schen_und_Vernichten_V1.0a.pdf"
     },
@@ -267,7 +238,7 @@
     },
     {
       "id": "din27555",
-      "title": "DIN EN ISO/IEC 27555:2025-09, Guidelines on personally identifiable information deletion",
+      "title": "DIN EN ISO/IEC 27555:2025-09",
       "publisher": "DIN Media",
       "date": "Sep 2025",
       "url": "https://www.dinmedia.de/en/standard/din-en-iso-iec-27555/390032326"
@@ -288,7 +259,7 @@
     },
     {
       "id": "egao",
-      "title": "EGAO, Art. 97 § 19a (transition to the 8-year period)",
+      "title": "EGAO, Art. 97 § 19a",
       "publisher": "BMJV (Germany)",
       "date": "checked 4 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/aoeg_1977/art_97__19a.html"
@@ -322,32 +293,11 @@
       "url": "https://www.gesetze-im-internet.de/estg/__41.html"
     },
     {
-      "id": "ptd",
-      "title": "Directive (EU) 2023/970 (pay transparency), Articles 21 and 34",
-      "publisher": "EUR-Lex",
-      "date": "10 May 2023",
-      "url": "https://eur-lex.europa.eu/eli/dir/2023/970/oj"
-    },
-    {
-      "id": "spret",
-      "title": "Learn about retention for SharePoint and OneDrive",
-      "publisher": "Microsoft Learn",
-      "date": "22 Sep 2025",
-      "url": "https://learn.microsoft.com/en-us/purview/retention-policies-sharepoint"
-    },
-    {
       "id": "exret",
       "title": "Learn about retention for Exchange",
       "publisher": "Microsoft Learn",
       "date": "15 Sep 2024",
       "url": "https://learn.microsoft.com/en-us/purview/retention-policies-exchange"
-    },
-    {
-      "id": "inactive",
-      "title": "Delete an inactive mailbox",
-      "publisher": "Microsoft Learn",
-      "date": "5 Aug 2026",
-      "url": "https://learn.microsoft.com/en-us/purview/delete-an-inactive-mailbox"
     },
     {
       "id": "teamsret",
@@ -392,32 +342,18 @@
       "url": "https://learn.microsoft.com/en-us/purview/edisc-hold-create"
     },
     {
-      "id": "bdsg",
-      "title": "Bundesdatenschutzgesetz (BDSG), § 35",
-      "publisher": "BMJV (Germany)",
-      "date": "checked 4 Nov 2026",
-      "url": "https://www.gesetze-im-internet.de/bdsg_2018/__35.html"
-    },
-    {
-      "id": "cleanup",
-      "title": "Use priority cleanup to expedite the permanent deletion of sensitive information from mailboxes",
-      "publisher": "Microsoft Learn",
-      "date": "3 Dec 2025",
-      "url": "https://learn.microsoft.com/en-us/purview/priority-cleanup"
-    },
-    {
       "id": "anon",
-      "title": "Guidelines 02/2026 on Anonymisation, version 1.0 (for public consultation)",
+      "title": "Guidelines 02/2026 on Anonymisation, version 1.0 (draft)",
       "publisher": "EDPB",
       "date": "7 Jul 2026",
       "url": "https://www.edpb.europa.eu/system/files/2026-07/edpb_guidelines_202602_anonymisation_v1_en_0.pdf"
     },
     {
-      "id": "cef26",
-      "title": "CEF 2026: EDPB launches coordinated enforcement action on transparency and information obligations",
-      "publisher": "EDPB",
-      "date": "19 Mar 2026",
-      "url": "https://www.edpb.europa.eu/news/cef-2026-edpb-launches-coordinated-enforcement-action-on-transparency-and-information_en"
+      "id": "ptd",
+      "title": "Directive (EU) 2023/970 (pay transparency), Articles 21 and 34",
+      "publisher": "EUR-Lex",
+      "date": "10 May 2023",
+      "url": "https://eur-lex.europa.eu/eli/dir/2023/970/oj"
     },
     {
       "id": "whatsnew",

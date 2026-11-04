@@ -60,7 +60,7 @@
         },
         {
           "title": "Hand over mail and files.",
-          "text": "Apply a retention policy before you delete the account, or the mailbox is gone after 30 days[^inactivembx]. Move OneDrive files to a successor: unlicensed OneDrives turn read-only after 60 days and are archived after 93[^onedrive]."
+          "text": "Apply a retention policy before you delete the account, or the mailbox is gone after 30 days[^inactivembx]. Move OneDrive files to a successor: unlicensed OneDrives turn read-only after 60 days and are archived after 93[^onedrive]. In Google Workspace, suspend or archive the user until the transfer is done[^gwsdelete]."
         },
         {
           "title": "Close what the directory doesn't reach.",
@@ -110,10 +110,10 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Unlicensed OneDrives now get deleted.** Since 1 July 2026, an unlicensed OneDrive without paid storage faces deletion after 365 cumulative days, even under a retention policy or hold[^onedrive].",
-        "**Entra ID finds orphan accounts in connected apps.** Account discovery, generally available with Entra ID Governance since May 2026, lists accounts in provisioned apps, including orphan accounts[^entranew].",
-        "**Guest governance needs its own billing.** Since January 2026, Entra ID Governance features for guests, such as inactive-guest reviews, need a linked Azure subscription[^entranew].",
-        "**AI agents get a new sponsor when people leave.** Since May 2026, lifecycle workflows can move a leaver's agent sponsorships to their manager[^entranew], with Microsoft Agent 365[^lcwtemplates]."
+        "**Unlicensed OneDrives now get deleted.** Since 1 July 2026, an unpaid, unlicensed OneDrive faces deletion after 365 days, even under a hold[^onedrive].",
+        "**Entra ID finds orphan accounts in apps.** Account discovery, generally available since May 2026 with ID Governance, lists them for provisioned apps[^entranew].",
+        "**Guest governance needs Azure billing.** Since January 2026, ID Governance features for guests, such as inactive-guest reviews, need a linked Azure subscription[^entranew].",
+        "**Agents get a new sponsor when people leave.** Since May 2026, lifecycle workflows can hand a leaver's agent sponsorships to their manager, with Agent 365[^entranew][^lcwtemplates]."
       ]
     },
     {
@@ -121,9 +121,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A company-wide role model before you automate.** Start with birthright groups per department and location, and refine them from what people request.",
-        "**Reviews of every group by every manager.** Bulk approvals catch little. Review guests, sensitive apps and inactive users, with the **No sign-in within 30 days** recommendation on[^review].",
-        "**Short inactivity cutoffs.** 30 days hits people on vacation or parental leave. Microsoft calls 90 to 180 days reasonable in many organizations[^inactive].",
+        "**A company-wide role model before you automate.** Start with birthright groups per department and location, and refine them from requests.",
+        "**Reviews of every group by every manager.** Review guests, sensitive apps and inactive users, with the **No sign-in within 30 days** helper on[^review].",
+        "**Short inactivity cutoffs.** 30 days catches people on vacation or parental leave. Microsoft calls 90 to 180 days reasonable in many organizations[^inactive].",
         "**Deleting accounts on the last day.** Disable first: ENISA notes that disabling may be needed to keep audit trails[^enisa]."
       ]
     },
@@ -133,10 +133,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Disabling only in Active Directory.** Entra ID keeps the account and its sessions until the next sync. Disable and revoke there too[^revoke].",
-        "**Trusting lifecycle workflows with admins.** Their **Disable user account** task skips users with Entra roles or role-assignable groups[^lcwtasks]. See the privileged access sheet.",
-        "**Deleting a Google user before the handover.** Data only they owned is deleted, Vault holds stop applying and their group calendars go too[^gwsdelete]. Suspend or archive them first.",
-        "**Skipping the exit review.** Verizon found that an activity review when someone with sensitive access leaves has caught numerous breaches[^dbir]. In Germany, the works council co-determines systems designed to monitor employees[^betrvg]."
+        "**Disabling only in Active Directory.** Entra ID keeps the account and its sessions until the next sync, so disable and revoke there too[^revoke].",
+        "**Trusting lifecycle workflows with admins.** Their **Disable user account** task skips users with Entra roles or role-assignable groups[^lcwtasks].",
+        "**Deleting a Google user too early.** Data only they owned, Vault holds and group calendars go with the account[^gwsdelete].",
+        "**Skipping the exit review.** Verizon found that reviewing activity when someone with sensitive access leaves has caught numerous breaches[^dbir]."
       ]
     },
     {
@@ -149,7 +149,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Keep a one-page leaver checklist that HR starts on notice. BSI says IT must hear of every departure[^bsiorp2].",
+            "Keep a one-page leaver checklist that HR starts on notice and IT signs off.",
             "List every app with its own login, and keep shared passwords in a team password manager.",
             "In the Microsoft 365 admin center, reset the password, sign out all sessions and block sign-in[^m365block]."
           ]
@@ -158,16 +158,16 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Connect HR to Entra ID and set `employeeLeaveDateTime` for every leaver.",
-            "Turn on SCIM for the apps holding the most data, and make SSO and SCIM a buying requirement.",
-            "Review identities at least quarterly, as ENISA suggests[^enisa], and disable accounts unused for 90 days."
+            "Turn on SCIM for the apps holding the most data, and require SSO and SCIM when buying.",
+            "Review identities quarterly, as ENISA suggests[^enisa], and disable accounts unused for 90 days."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
             "Run lifecycle workflows and account discovery, and report the hours from HR termination to the last access removed.",
-            "Cloud, MSP and other digital providers under NIS2 must keep a register of access rights and log changes to it[^nis2ir].",
-            "In Germany, agree inactivity reports and exit reviews with the works council before rollout[^betrvg]."
+            "NIS2 rules make cloud, MSP and other digital providers keep a register of access rights and log its changes[^nis2ir].",
+            "In Germany, agree inactivity reports and exit reviews with the works council[^betrvg]."
           ]
         }
       ]
@@ -201,13 +201,6 @@
       "publisher": "BSI",
       "date": "Edition 2023",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/02_ORP_Organisation_und_Personal/ORP_4_Identitaets_und_Berechtigungsmanagement_Editon_2023.pdf?__blob=publicationFile&v=3"
-    },
-    {
-      "id": "bsiorp2",
-      "title": "IT-Grundschutz ORP.2 Personal",
-      "publisher": "BSI",
-      "date": "Edition 2023",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/02_ORP_Organisation_und_Personal/ORP_2_Personal_Editon_2023.pdf?__blob=publicationFile&v=3"
     },
     {
       "id": "cae",
