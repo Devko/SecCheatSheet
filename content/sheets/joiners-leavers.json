@@ -1,14 +1,14 @@
 {
   "slug": "joiners-leavers",
   "topic": "Joiners, movers and leavers",
-  "status": "draft",
+  "status": "published",
   "order": 26,
   "capability": "identity/lifecycle",
   "title": "Joiners, movers and leavers: does access end with the job?",
   "short": "Drive accounts from HR dates, cut every access on the last day, and review guests and dormant accounts every quarter.",
-  "answer": "Feed hire, move and leave dates from HR into Entra ID or Google Workspace this quarter, and on each last day disable the account and revoke its sessions. Then chase what the directory doesn't reach: apps outside SSO, shared passwords and keys, and guests, contractors and service accounts without an owner and an end date.",
+  "answer": "Feed hire, move and leave dates from HR into Entra ID, or into Google Workspace through your identity provider, this quarter, and on each last day disable the account and revoke its sessions. Then chase what the directory doesn't reach: apps outside SSO, shared passwords and keys, and guests, contractors and service accounts without an owner and an end date.",
   "audience": "IT, HR-IT and security teams, mostly on Microsoft Entra ID and Microsoft 365, some on Google Workspace",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -32,7 +32,7 @@
         },
         {
           "title": "Put every SaaS app behind SSO and SCIM.",
-          "text": "SCIM provisioning disables the app account when the user is disabled or unassigned, typically within 20 to 40 minutes[^revoke][^provworks]. Entra ID can't end sessions an app issued itself[^revoke], so give each app without SCIM an owner who removes accounts."
+          "text": "SCIM provisioning disables the app account when the user is disabled or unassigned, at its next cycle, typically every 20 to 40 minutes[^revoke][^provworks]. Entra ID can't end sessions an app issued itself[^revoke], so give each app without SCIM an owner who removes accounts."
         },
         {
           "title": "Give every guest, contractor and service account an owner and an end date.",
@@ -52,11 +52,11 @@
         },
         {
           "title": "Disable the account and sign it out.",
-          "text": "Disable the user in AD and in Entra ID, then select **Revoke sessions**[^revoke]. Blocking sign-in can take up to 24 hours to take effect, so also reset the password[^m365block]."
+          "text": "Disable the user in AD and in Entra ID, then select **Revoke sessions**[^revoke]. Microsoft 365 warns that a block can take up to 24 hours to take effect, so also reset the password[^m365block], in AD for synced users[^revoke]."
         },
         {
           "title": "Remove what lets the person back in.",
-          "text": "Delete their sign-in methods, disable their devices[^revoke], remove groups, roles and access packages, and turn off POP, IMAP and ActiveSync[^m365block]. In Google Workspace, reset sign-in cookies and revoke OAuth tokens, security keys and app passwords[^gwssecure]."
+          "text": "Disable their devices and wipe company data[^revoke], delete their sign-in methods, remove groups, roles and access packages, and turn off POP, IMAP and ActiveSync[^m365block]. In Google Workspace, remove recovery options, reset sign-in cookies and revoke OAuth tokens, security keys and app passwords[^gwssecure]."
         },
         {
           "title": "Hand over mail and files.",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Close what the directory doesn't reach.",
-          "text": "Remove local accounts in apps outside SSO, rotate shared passwords and API keys the person knew[^sp80053], and give their apps, automations and files a new owner."
+          "text": "Collect laptops, badges and security keys, remove local accounts in apps outside SSO, rotate shared passwords and API keys the person knew[^sp80053], and give their apps, automations and files a new owner."
         }
       ]
     },
@@ -74,7 +74,7 @@
       "title": "Joiners: the right access on day one",
       "navTitle": "Joiners",
       "items": [
-        "**Create the account from the HR record, before day one.** Lifecycle workflows can email the manager a Temporary Access Pass 7 days before `employeeHireDate` and enable the account on the day[^lcwtemplates], with Entra ID Governance[^govlic]. The passkeys sheet covers first sign-in.",
+        "**Create the account from the HR record, before day one.** Lifecycle workflows can email the manager a Temporary Access Pass 7 days before `employeeHireDate`, valid from that date[^lcwtasks], and enable the account on the day[^lcwtemplates], with Entra ID Governance[^govlic]. The passkeys sheet covers first sign-in.",
         "**Verify remote hires before the account goes live.** Mandiant measured a median dwell time of 122 days for North Korean IT worker and espionage incidents[^mtrends].",
         "**Never clone a colleague.** Copying a long-tenured colleague's access copies everything they collected."
       ]
@@ -85,7 +85,7 @@
       "title": "Movers: take the old access away",
       "navTitle": "Movers",
       "items": [
-        "**Trigger on the HR change.** Entra's **Employee job profile change** template notifies the manager and removes old access packages after 15 days by default[^lcwtemplates].",
+        "**Trigger on the HR change.** Entra's **Employee job profile change** template notifies the manager and removes all their access packages after 15 days by default[^lcwtemplates].",
         "**Remove old access on a date, not on request.** NIST asks you to confirm the ongoing need for current access at every transfer[^sp80053].",
         "**Let groups follow HR attributes.** Dropping out of a dynamic group assigned to an app counts as a deprovisioning event for SCIM[^provworks]."
       ]
@@ -96,8 +96,8 @@
       "title": "Guests, contractors and service accounts",
       "navTitle": "Non-employees",
       "items": [
-        "**Give contractors an end date at creation.** NIST asks suppliers to report when their staff with your credentials leave[^sp80053]; put a deadline for it in the contract.",
-        "**Review guests by inactivity.** Entra access reviews can target guests inactive for up to 730 days, block them for 30 days, then delete them[^review]. Inactive-user reviews need Entra ID Governance[^govlic].",
+        "**Give contractors an end date at creation.** NIST says to require suppliers to report when their staff with your credentials leave or move[^sp80053]; put a deadline for it in the contract.",
+        "**Review guests by inactivity.** Entra group access reviews can target guests inactive for up to 730 days, block them for 30 days, then delete them[^review]. Inactive-user reviews need Entra ID Governance[^govlic].",
         "**Remove guest access in your own tenant.** Revoking refresh tokens doesn't end a guest's home-tenant session[^lcwtasks], and continuous access evaluation doesn't cover guests[^cae].",
         "**Give service accounts a named owner.** Record owner, purpose and review date, prefer managed identities, and disable without deleting when the owner doesn't confirm[^svcgov]."
       ],
@@ -110,7 +110,7 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Unlicensed OneDrives are on a deletion clock.** Since 1 July 2026, an unlicensed OneDrive faces deletion after 365 unpaid days, even under a hold[^onedrive]. Move leavers' files first.",
+        "**Unlicensed OneDrives are on a deletion clock.** Since 1 July 2026, an unpaid unlicensed OneDrive drops out of eDiscovery after 275 days and faces deletion after 365, even under a hold[^onedrive]. Move leavers' files first.",
         "**Entra ID finds orphan accounts in apps.** Account discovery, generally available since May 2026 with ID Governance, lists them for provisioned apps[^entranew].",
         "**Guest governance needs Azure billing.** Since early 2026, ID Governance features for guests, such as lifecycle workflows and inactive-guest reviews, need a linked Azure subscription[^entranew].",
         "**Agents get a new sponsor when people leave.** Since May 2026, lifecycle workflows can hand a leaver's agent sponsorships to their manager, with Agent 365[^entranew][^lcwtemplates]."
@@ -123,8 +123,8 @@
       "items": [
         "**A company-wide role model before you automate.** Start with birthright groups per department and location, and refine them from requests.",
         "**Reviews of every group by every manager.** Review guests, sensitive apps and inactive users, with the **No sign-in within 30 days** helper on[^review].",
-        "**Short inactivity cutoffs.** 30 days catches people on vacation or parental leave. Microsoft calls 90 to 180 days reasonable in many organizations[^inactive].",
-        "**Deleting accounts on the last day.** Disable first: ENISA notes that disabling may be needed to keep audit trails[^enisa]."
+        "**Short cutoffs for disabling inactive accounts.** 30 days catches people on vacation or parental leave. Microsoft calls 90 to 180 days reasonable in many organizations[^inactive].",
+        "**Deleting accounts on the last day.** Disable first: ENISA notes that disabling may be needed to keep audit trails[^enisa]. Microsoft's real-time termination template deletes the account, so swap that task for disable[^lcwtemplates]."
       ]
     },
     {
@@ -135,7 +135,7 @@
       "items": [
         "**Disabling only in Active Directory.** Microsoft's steps for hybrid accounts also disable the user in Entra ID and revoke sessions there[^revoke].",
         "**Trusting lifecycle workflows with admins.** Their **Disable user account** task doesn't handle users with Entra roles or role-assignable groups[^lcwtasks].",
-        "**Deleting a Google user too early.** Data only they owned, Vault holds and group calendars go with the account[^gwsdelete].",
+        "**Deleting a Google user too early.** Data only they owned and group calendars they own are deleted, and Vault retention rules stop applying[^gwsdelete].",
         "**Skipping the exit review.** Verizon found that reviewing activity when someone with sensitive access leaves has caught numerous breaches[^dbir]."
       ]
     },
@@ -174,6 +174,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 11 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
