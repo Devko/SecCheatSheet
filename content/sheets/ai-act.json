@@ -1,0 +1,349 @@
+{
+  "slug": "ai-act",
+  "topic": "AI governance and the AI Act",
+  "status": "draft",
+  "order": 23,
+  "capability": "ai/governance",
+  "title": "AI Act: what do you owe for each AI system, and by when?",
+  "short": "List every AI system with your role and its risk class; Annex III high-risk duties start 2 December 2027.",
+  "answer": "This quarter, list every AI system you use, build or sell with your role and its risk class, and check that none is banned and that chatbots and AI content are disclosed as required since 2 August 2026. Then prepare the duties for any Annex III use, such as hiring or credit scoring, before they apply on 2 December 2027.",
+  "audience": "Compliance, legal, security and IT leads in EU organizations that use or build AI, including providers of AI systems and models",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "List every AI system and your role in it.",
+          "text": "Record owner, vendor, purpose, data and who it affects, and whether you are its provider, deployer, importer or distributor[^aiact]. A chatbot you build and run under your own name makes you its provider[^transp]."
+        },
+        {
+          "title": "Rule out the banned practices.",
+          "text": "Eight have applied since February 2025, including emotion recognition at work: watching call center staff's emotions is banned, customers' is not[^aiact][^prohib]. AI that makes intimate deepfakes without consent is banned from 2 December 2026[^omnibus]."
+        },
+        {
+          "title": "Disclose AI where the law requires it.",
+          "text": "Since 2 August 2026, deployers must disclose deepfakes, and AI text published on public-interest matters that no one edited under editorial responsibility[^aiact]. Customer chatbots must say they are AI; internal assistants for trained staff needn't[^transp]."
+        },
+        {
+          "title": "Train staff by role and keep a record.",
+          "text": "Since July 2026 you must support AI literacy, not guarantee a level of it[^omnibus]. Give everyone the basics, give people who configure or oversee AI more, and keep attendance lists."
+        },
+        {
+          "title": "Find your Annex III uses now.",
+          "text": "Hiring, staff management, credit scoring, life and health insurance pricing, education and biometrics are high-risk[^aiact]. Their duties start on 2 December 2027[^omnibus]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "classify",
+      "title": "Classify one AI system",
+      "navTitle": "Classify a system",
+      "items": [
+        {
+          "title": "Is it an AI system at all?",
+          "text": "Rule-based software, spreadsheets without AI features and forecasts that just use averages are not[^aidef]. Mark them out of scope."
+        },
+        {
+          "title": "Which role do you hold?",
+          "text": "Provider if you develop it, or have it developed, and supply or run it under your name; deployer if you use it[^aiact]. Rebranding or substantially modifying a high-risk system, or turning a general-purpose one to a high-risk use, makes you its provider[^aiact]."
+        },
+        {
+          "title": "Is the use banned or high-risk?",
+          "text": "Check Article 5 and Annex III. An Annex III system isn't high-risk if it only does a narrow procedural or preparatory task, improves finished human work or flags deviations for human review, unless it profiles people; the provider documents this and registers the system[^aiact]. The Commission's draft guidelines give examples[^hrdraft]."
+        },
+        {
+          "title": "Does a disclosure duty apply?",
+          "text": "Chatbots, generated content, deepfakes and emotion recognition each carry one[^aiact]. Record the result, the reasoning and a review date in the inventory."
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "duties",
+      "title": "What each role owes",
+      "navTitle": "Duties by role",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Deployers (most organizations)",
+          "items": [
+            "**High-risk, from 2 December 2027.** Follow the instructions for use, assign trained oversight staff with authority, keep logs at least 6 months, report serious incidents to the provider and inform workers and the people affected[^aiact].",
+            "**Impact assessment.** Public bodies, providers of public services and users of credit scoring or life and health insurance pricing assess fundamental rights impacts before first use and notify the authority[^aiact]. It may cross-reference the DPIA[^omnibus]."
+          ]
+        },
+        {
+          "title": "Providers of AI systems",
+          "items": [
+            "**Chatbots and generative AI.** Say it is AI unless that is obvious, and mark generated content machine-readably; systems on the market before 2 August 2026 have until 2 December 2026[^aiact][^omnibus].",
+            "**High-risk.** Risk management, data governance, documentation, logging, human oversight, accuracy and cybersecurity, a quality management system, conformity assessment, CE marking and registration[^aiact].",
+            "**Incidents.** Report serious ones within 15 days, 10 after a death and 2 if widespread or disrupting critical infrastructure[^aiact]."
+          ]
+        },
+        {
+          "title": "Providers of general-purpose AI models",
+          "items": [
+            "**Who.** Indicatively, models trained with over 10²³ FLOP that generate language, images or video. Fine-tuning makes you a provider only if it uses over a third of the original training compute[^gpaiguide].",
+            "**Duties.** Documentation, information for downstream providers, a copyright policy and a public training-content summary; open-source models skip the first two unless systemic[^aiact]. The Commission accepts the Code of Practice as a way to comply[^gpaicop].",
+            "**Systemic risk.** Presumed above 10²⁵ FLOP: evaluations with adversarial testing, risk mitigation, incident reporting and cybersecurity[^aiact]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**The Digital Omnibus on AI took effect on 27 July 2026.** It moved Annex III high-risk duties from 2 August 2026 to 2 December 2027, softened AI literacy, added the intimate-deepfake ban and extended SME relief to small mid-caps[^omnibus][^aiact].",
+        "**Transparency guidance arrived.** A code of practice of 10 June covers marking for providers and labeling for deployers[^cop50]; guidelines of 20 July give examples[^transp].",
+        "**The first harmonized standard was published.** Since October 2026, EN 18286 gives high-risk providers a presumption of conformity for their quality management system[^hsec]."
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "dates",
+      "title": "Provider dates",
+      "navTitle": "Provider dates",
+      "span": "full",
+      "intro": "Deployer dates are on the agentic AI sheet.",
+      "items": [
+        {
+          "name": "Providers of AI systems",
+          "scope": "Older high-risk systems are covered after a significant design change, or by 2 August 2030 if used by public authorities[^omnibus].",
+          "steps": [
+            {
+              "at": "2 Aug 2026",
+              "what": "Chatbot notice; marks on new systems"
+            },
+            {
+              "at": "2 Dec 2026",
+              "what": "Marks on older systems"
+            },
+            {
+              "at": "2 Dec 2027",
+              "what": "Annex III high-risk rules"
+            },
+            {
+              "at": "2 Aug 2028",
+              "what": "High-risk AI in regulated products"
+            }
+          ]
+        },
+        {
+          "name": "General-purpose AI models",
+          "scope": "Supervised by the Commission's AI Office[^aiact].",
+          "steps": [
+            {
+              "at": "2 Aug 2025",
+              "what": "Duties for new models[^aiact]"
+            },
+            {
+              "at": "2 Aug 2026",
+              "what": "Fines up to 3% or €15 million[^aiact]"
+            },
+            {
+              "at": "2 Aug 2027",
+              "what": "Older models comply[^aiact]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "enforcement",
+      "title": "Who enforces it, and in Germany",
+      "navTitle": "Enforcement",
+      "items": [
+        "**Fines scale with the duty.** Up to €35 million or 7% of worldwide turnover for banned practices, €15 million or 3% for most other duties and €7.5 million or 1% for misleading authorities[^aiact].",
+        "**The AI Office handles general-purpose AI.** It supervises the models and the systems providers build on their own models; national authorities enforce the rest[^aiact][^omnibus].",
+        "**Germany: the Bundesnetzagentur.** Since 29 July 2026 it is the market surveillance authority, contact point and complaints office; BaFin covers AI tied to regulated financial activities[^kimig].",
+        "**Germany: the works council.** Inform it in time about planned AI use; it co-determines tools designed to monitor behavior or performance[^betrvg]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "gdpr-cra",
+      "title": "Where the AI Act meets the GDPR and the CRA",
+      "navTitle": "GDPR and CRA",
+      "items": [
+        "**Run one assessment, not two.** The GDPR applies in full[^aiact][^omnibus]. High-risk deployers use the provider's information for the DPIA[^aiact], and the fundamental rights impact assessment may cross-reference it[^omnibus].",
+        "**Ask where the model came from.** Models trained on personal data aren't always anonymous. Check that a model wasn't developed unlawfully, starting with its data sources and any regulator findings[^edpb28].",
+        "**Bias testing has a legal basis.** Special categories of personal data may be processed where strictly necessary to find and correct bias, under safeguards such as pseudonymization[^omnibus].",
+        "**CRA compliance covers AI cybersecurity.** A high-risk system that meets the CRA's essential requirements meets the AI Act's cybersecurity requirement[^omnibus]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**ISO/IEC 42001 certification as AI Act proof.** Only EN 18286, which sits on top of ISO/IEC 42001, gives a presumption of conformity for a quality management system[^hsec]. Deployers need neither.",
+        "**Inventorying every macro and rule engine.** They aren't AI systems[^aidef].",
+        "**AI literacy exams and certificates.** The law asks for measures, not a guaranteed level[^omnibus].",
+        "**Labeling internal drafts.** Posts on internal networks and professional correspondence aren't published[^transp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Building CV screening on a general assistant.** It can make you the provider of a high-risk system, with every provider duty[^aiact].",
+        "**Emotion analytics on staff.** Inferring employees' or candidates' emotions from calls or meeting video is banned, even during probation[^prohib].",
+        "**Relying on the vendor's compliance.** Oversight, logs and worker information are deployer duties[^aiact]. Put instructions for use, log access and incident notice in the contract.",
+        "**Counting only what IT bought.** AI features arrive in tools you already use. Add them from the release notes."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Keep the inventory in a spreadsheet: tool, owner, purpose, data, role and risk class.",
+            "Publish a one-page AI policy (see the AI inputs sheet) and run a short AI basics session each year.",
+            "In Germany, use the Bundesnetzagentur's KI-Service Desk for a first risk check[^bnetza]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Name one owner for AI governance and send new AI uses through a short intake form.",
+            "Run the AI Act check, the DPIA and the vendor review as one workflow.",
+            "Map Annex III uses and plan oversight training before December 2027."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run AI governance in an existing management system such as ISO/IEC 42001, and add EN 18286 for high-risk systems you provide[^hsec].",
+            "Prepare fundamental rights impact assessments for credit scoring, insurance pricing and public services[^aiact].",
+            "Track fine-tuning compute against the one-third threshold for general-purpose models[^gpaiguide]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on the AI Act, the Digital Omnibus on AI, the Commission's guidelines and codes of practice, EN 18286 and the KI-MIG."
+    }
+  ],
+  "sources": [
+    {
+      "id": "aiact",
+      "title": "Regulation (EU) 2024/1689 (AI Act), Articles 2 to 6, 25 to 27, 50 to 55, 73, 99, 101, 111 and 113, Annex III",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+    },
+    {
+      "id": "omnibus",
+      "title": "Regulation (EU) 2026/1744 (Digital Omnibus on AI), Articles 1 and 4",
+      "publisher": "EUR-Lex",
+      "date": "24 Jul 2026",
+      "url": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj"
+    },
+    {
+      "id": "transp",
+      "title": "Guidelines on Article 50 transparency obligations, C(2026) 5054",
+      "publisher": "European Commission",
+      "date": "20 Jul 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/guidelines-transparency-obligations-providers-and-deployers-ai-systems"
+    },
+    {
+      "id": "cop50",
+      "title": "Code of Practice on Transparency of AI-generated Content",
+      "publisher": "European Commission",
+      "date": "updated 19 Oct 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content"
+    },
+    {
+      "id": "prohib",
+      "title": "Guidelines on prohibited AI practices, C(2025) 5052",
+      "publisher": "European Commission",
+      "date": "29 Jul 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-prohibited-artificial-intelligence-ai-practices-defined-ai-act"
+    },
+    {
+      "id": "aidef",
+      "title": "Guidelines on the definition of an AI system, C(2025) 5053",
+      "publisher": "European Commission",
+      "date": "29 Jul 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-guidelines-ai-system-definition-facilitate-first-ai-acts-rules-application"
+    },
+    {
+      "id": "gpaiguide",
+      "title": "Guidelines on obligations for general-purpose AI model providers, C(2025) 7719",
+      "publisher": "European Commission",
+      "date": "19 Nov 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/guidelines-scope-obligations-providers-general-purpose-ai-models-under-ai-act"
+    },
+    {
+      "id": "gpaicop",
+      "title": "The General-Purpose AI Code of Practice",
+      "publisher": "European Commission",
+      "date": "10 Jul 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai"
+    },
+    {
+      "id": "hrdraft",
+      "title": "Draft Commission guidelines on the classification of high-risk AI systems",
+      "publisher": "European Commission",
+      "date": "19 May 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/draft-commission-guidelines-classification-high-risk-ai-systems"
+    },
+    {
+      "id": "hsec",
+      "title": "First harmonised standard supporting the AI Act published in the Official Journal",
+      "publisher": "European Commission",
+      "date": "19 Oct 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/first-harmonised-standard-supporting-ai-act-published-official-journal"
+    },
+    {
+      "id": "kimig",
+      "title": "KI-Marktüberwachungs- und Innovationsförderungs-Gesetz (KI-MIG), Section 2",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "22 Jul 2026",
+      "url": "https://www.gesetze-im-internet.de/ki-mig/"
+    },
+    {
+      "id": "bnetza",
+      "title": "Bundesnetzagentur übernimmt zentrale Rolle bei der Umsetzung der KI-Verordnung",
+      "publisher": "Bundesnetzagentur",
+      "date": "29 Jul 2026",
+      "url": "https://www.bundesnetzagentur.de/SharedDocs/Pressemitteilungen/DE/2026/20260729_KI_VO.html"
+    },
+    {
+      "id": "betrvg",
+      "title": "Betriebsverfassungsgesetz, Sections 80, 87 and 90",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "as amended 19 Jul 2024",
+      "url": "https://www.gesetze-im-internet.de/betrvg/"
+    },
+    {
+      "id": "edpb28",
+      "title": "Opinion 28/2024 on data protection aspects of AI models",
+      "publisher": "European Data Protection Board",
+      "date": "18 Dec 2024",
+      "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en"
+    }
+  ]
+}

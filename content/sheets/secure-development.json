@@ -1,0 +1,435 @@
+{
+  "slug": "secure-development",
+  "topic": "Secure development",
+  "status": "draft",
+  "order": 21,
+  "capability": "software/secure-development",
+  "title": "Secure development: which practices prevent vulnerabilities, and can you prove it?",
+  "short": "Publish a disclosure policy, block secrets at push and fix reported flaws within 90 days, or 7 if exploited.",
+  "answer": "This quarter, publish a vulnerability disclosure policy with a security.txt contact, block secrets at push and make review plus one precise static analysis check required before merge. Judge every other practice by whether it removes a whole class of bug by default or leaves evidence that a customer or regulator can check.",
+  "audience": "Engineering leads, product security teams and developers who build and run their own software, from small product teams to regulated enterprises",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Publish a disclosure policy and a contact.",
+          "text": "Authorize good-faith testing, promise not to take legal action against it, give a reporting channel and allow coordinated publication[^pledge]. Serve `/.well-known/security.txt` over HTTPS with `Contact`, `Policy` and an `Expires` date less than a year away[^rfc9116]. The CRA requires both a disclosure policy and a reporting contact[^cra]."
+        },
+        {
+          "title": "Make the safe way the default way.",
+          "text": "Cross-site scripting and SQL injection top the 2025 CWE Top 25[^cwe]. Provide parameterized queries, auto-escaping templates and command APIs without a shell, so the class can't recur[^badprac]. Write new components in memory-safe languages: memory safety bugs fell below 20% of Android's vulnerabilities in 2025[^android]."
+        },
+        {
+          "title": "Block secrets before they reach the repository.",
+          "text": "Turn on push protection for every repository; private ones need GitHub Secret Protection[^ghss] or GitLab Ultimate[^glpush]. Rotate a leaked secret at once[^ghss], and load secrets from a secret manager at runtime rather than from code, images or environment variables[^owaspsec]."
+        },
+        {
+          "title": "Require review and one precise scanner before merge.",
+          "text": "On the default branch, require a pull request, **Require approval of the most recent reviewable push** and passing status checks[^rules]. Run CodeQL's `default` suite, whose queries are highly precise[^cqlsuites], and use **Require code scanning results** to block high and critical security alerts[^mergeprot]."
+        },
+        {
+          "title": "Fix by exploitation and publish what you fixed.",
+          "text": "Plan to ship fixes within 90 days of a report, or 7 days once a flaw is exploited, the deadlines Google Project Zero discloses on[^p0]. Issue a CVE with CWE and CPE fields for every critical or high flaw[^pledge], and patch a known exploited flaw in a component within 30 days of its fix[^badprac]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "reports",
+      "title": "Handle a vulnerability report",
+      "navTitle": "Handle a report",
+      "items": [
+        {
+          "title": "Is it real?",
+          "text": "Acknowledge it within three working days and reproduce it before anyone spends a week. Expect noise: curl's share of confirmed reports fell below 5% in 2025 as AI-written reports surged[^curl]."
+        },
+        {
+          "title": "Is it exploited?",
+          "text": "Check CISA KEV, ENISA's EU KEV catalogue[^enisavd] and your own logs. If it is and the product is on the EU market, send an early warning through ENISA's platform within 24 hours[^cra][^srp]. The EU security laws sheet has the later clocks."
+        },
+        {
+          "title": "When does the fix ship?",
+          "text": "Set the date by exploitation and exposure, then severity, and tell the reporter. Ship security fixes separately from feature updates where feasible, as the CRA requires[^cra]."
+        },
+        {
+          "title": "What do you publish?",
+          "text": "An advisory with a CVE, a CVSS score and a CWE, crediting the reporter. NVD no longer adds its own score where the CNA gave one and doesn't schedule most other CVEs for enrichment[^nvd], so your record is what customers see. GitHub can assign CVEs for advisories in public repositories[^ghadv]."
+        },
+        {
+          "title": "Where else is the same bug?",
+          "text": "Search for the pattern across the code base, add a regression test and a rule that catches the next one, as the SSDF advises[^ssdf]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "checks",
+      "title": "Automated checks that earn their place",
+      "navTitle": "Automated checks",
+      "items": [
+        "**Secret scanning with push protection.** It scans the full Git history, issues and pull requests, and validity checks show which secrets still work[^ghss]. Give bypass rights to named reviewers only[^ghpush].",
+        "**Dependency scanning.** Shipping a component with a known exploited flaw is on CISA's list of bad practices[^badprac]. The supply-chain sheet covers cooldowns, lockfiles and malware checks.",
+        "**SAST with a precise rule set.** Start with CodeQL's `default` suite. `security-extended` adds less precise queries with more false positives[^cqlsuites]; add it once the backlog is clear.",
+        "**A DAST baseline in CI.** ZAP's baseline scan spiders for a minute and doesn't attack, so it can run against production. Set each rule to `FAIL`, `WARN` or `IGNORE` in its config file[^zap].",
+        "**Tests for what tools miss.** Tools can't verify business logic or access control[^asvsassess], the top risk in the OWASP Top 10:2025[^top10]. Test that one user can't read another's records.",
+        "**A monthly look at dismissals.** Untuned tools bury real issues in noise[^asvsassess]. Turn off any rule whose findings you mostly dismiss, and give every alert an owner and a date."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "design",
+      "title": "Before a risky change ships",
+      "navTitle": "Risky changes",
+      "items": [
+        "**Decide what counts as risky.** Authentication, authorization, payments, uploads, parsers, new external interfaces and secrets. The NCSC advises more oversight for such code, including when an AI assistant wrote it[^ncscvibe].",
+        "**Threat model it in half an hour.** Ask what you're working on, what can go wrong, what you'll do about it and whether you did a good enough job. Use STRIDE's six categories as prompts[^owasptm].",
+        "**Pick requirements from ASVS 5.0.** It has about 350 requirements; Level 1 holds about 20% of them, and most applications should aim for Level 2[^asvs]. Cite them as `v5.0.0-1.2.5`, since numbers change between versions[^asvs].",
+        "**Ship secure defaults.** No shared default passwords, MFA on for admin accounts and logs available to customers[^badprac]. The CRA requires a secure default configuration and a way to reset to it[^cra].",
+        "**Record the decision.** Keep the threat model and accepted risks next to the code. The CRA's risk assessment must be documented and kept up to date during the support period[^cra]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "evidence",
+      "title": "Evidence customers and regulators ask for",
+      "navTitle": "Evidence",
+      "items": [
+        "**Answers to buyers' standard questions.** CISA's Secure by Demand guide tells buyers to ask for a disclosure policy, CVEs with accurate CWE and CPE fields, a plan to eliminate vulnerability classes, an SBOM and MFA by default[^demand].",
+        "**A mapping to SSDF 1.1.** Name the task each practice meets, such as PW.7.2 for code review and RV.1.3 for disclosure[^ssdf]. US agencies no longer require the federal attestation form but may still use it and ask for an SBOM[^omb].",
+        "**CRA technical documentation, if you ship products.** Keep it and the risk assessment for 10 years or the support period, if longer; the support period is at least 5 years unless the product's expected use is shorter[^cra]. SaaS on its own falls under NIS2, not the CRA[^cra].",
+        "**Numbers from your own pipeline.** Time to fix by severity, fixes past their date and CWE counts over time. CISA's pledge suggests publishing root-cause trends[^pledge].",
+        "**Test reports with their scope.** OWASP favors source-led penetration tests over black-box ones and certifies no one for ASVS[^asvsassess]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**CRA reporting started.** Since 11 September, manufacturers report actively exploited vulnerabilities through ENISA's Single Reporting Platform[^srp]. The Commission's first CRA guidance, on 27 July, covers support periods and risk assessment with 67 examples[^craguide].",
+        "**AI finds flaws at scale.** The NCSC expects a forced correction of technical debt and an influx of updates of every severity[^ncscwave]. Before you point a model at your code, plan who will fix what it finds, and fix causes, not just instances[^ncsc10q].",
+        "**EU vendors can issue CVEs under ENISA.** ENISA became a CVE Root on 20 November 2025[^enisavd] and onboards vendors and open-source projects as CNAs[^enisaroot].",
+        "**US agencies dropped the attestation form.** OMB rescinded the requirement on 23 January and asked agencies for risk-based checks instead[^omb]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A maturity assessment before the basics.** OWASP SAMM's 15 practices[^samm] make a good map later. A disclosure policy, push protection and required review come first.",
+        "**Threat modeling every pull request.** Spend the time on the risky changes above; ordinary changes need review.",
+        "**A paid bug bounty before you can triage.** curl ended its bounty on 31 January after AI-written reports swamped it[^curl]. A disclosure policy costs nothing.",
+        "**Rewriting history after a leak.** Revoke the secret. GitHub calls scrubbing it from history time-consuming and often unnecessary[^ghss].",
+        "**Waiting for SSDF 1.2.** NIST's December 2025 draft adds practices for continuous improvement and for staged updates with rollback[^ssdf12]. Map to 1.1 now."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Fixing silently.** Without an advisory, customers can't tell they need the update. The CRA requires public information on fixed vulnerabilities once the update is out[^cra].",
+        "**Letting security.txt expire.** `Expires` is required[^rfc9116]. Put its renewal in the release calendar.",
+        "**Trusting a quiet scanner.** Missing authorization ranks 4th in the CWE Top 25[^cwe], and scanners can't check access control[^asvsassess]. Review every new endpoint for who may call it.",
+        "**Merging AI-written code nobody read.** Review, understand and check it where the stakes are high[^ncscvibe]. GitHub doesn't let the person who asked Copilot's agent approve its pull request[^copilotrisk]; require that for every agent."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on private vulnerability reporting, push protection, Dependabot and CodeQL default setup in every repository.",
+            "Publish security.txt with a mailbox two people read, and require one approving review on the default branch.",
+            "Keep one list of open vulnerabilities, each with its ship date and the advisory you will publish."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Name a product security owner and write playbooks for zero-days and exploited flaws, as the SSDF suggests[^ssdf].",
+            "Threat model risky changes in design review and take ASVS Level 2 requirements for internet-facing apps.",
+            "Add a ZAP baseline scan against staging and report time to fix by severity every month."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Become a CNA, under ENISA's Root if you're in the EU, and publish CVEs with CWE and CPE fields.",
+            "Keep CRA technical documentation per product, with its risk assessment, support period and vulnerability records.",
+            "Fork ASVS into an internal standard that names your approved libraries[^asvs], and report CWE trends to leadership."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on NIST SSDF 1.1 and the 1.2 draft, CISA Secure by Design material, OWASP ASVS 5.0, the CRA and ENISA's reporting platform, RFC 9116, NCSC guidance on AI-assisted development and GitHub and GitLab docs."
+    }
+  ],
+  "sources": [
+    {
+      "id": "pledge",
+      "title": "Secure by Design Pledge",
+      "publisher": "CISA",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.cisa.gov/securebydesign/pledge"
+    },
+    {
+      "id": "rfc9116",
+      "title": "RFC 9116: A File Format to Aid in Security Vulnerability Disclosure",
+      "publisher": "IETF",
+      "date": "Apr 2022",
+      "url": "https://www.rfc-editor.org/rfc/rfc9116.html"
+    },
+    {
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 13, 14 and 71, recital 12 and Annex I",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    },
+    {
+      "id": "cwe",
+      "title": "2025 CWE Top 25 Most Dangerous Software Weaknesses",
+      "publisher": "MITRE",
+      "date": "updated 15 Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "badprac",
+      "title": "Product Security Bad Practices, version 2",
+      "publisher": "CISA and FBI",
+      "date": "17 Jan 2025",
+      "url": "https://www.cisa.gov/resources-tools/resources/product-security-bad-practices"
+    },
+    {
+      "id": "android",
+      "title": "Rust in Android: move fast and fix things",
+      "publisher": "Google Security Blog",
+      "date": "13 Nov 2025",
+      "url": "https://blog.google/security/rust-in-android-move-fast-fix-things/"
+    },
+    {
+      "id": "ghss",
+      "title": "About secret scanning",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning"
+    },
+    {
+      "id": "ghpush",
+      "title": "About push protection",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection"
+    },
+    {
+      "id": "glpush",
+      "title": "Secret push protection",
+      "publisher": "GitLab Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.gitlab.com/user/application_security/secret_detection/secret_push_protection/"
+    },
+    {
+      "id": "owaspsec",
+      "title": "Secrets Management Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 4 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+    },
+    {
+      "id": "rules",
+      "title": "Available rules for rulesets",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets"
+    },
+    {
+      "id": "cqlsuites",
+      "title": "CodeQL query suites",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/codeql-query-suites"
+    },
+    {
+      "id": "mergeprot",
+      "title": "Set code scanning merge protection",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/code-scanning/managing-your-code-scanning-configuration/set-code-scanning-merge-protection"
+    },
+    {
+      "id": "p0",
+      "title": "Vulnerability Disclosure Policy",
+      "publisher": "Google Project Zero",
+      "date": "checked 4 Nov 2026",
+      "url": "https://projectzero.google/vulnerability-disclosure-policy.html"
+    },
+    {
+      "id": "curl",
+      "title": "The end of the curl bug-bounty",
+      "publisher": "Daniel Stenberg (curl)",
+      "date": "26 Jan 2026",
+      "url": "https://daniel.haxx.se/blog/2026/01/26/the-end-of-the-curl-bug-bounty/"
+    },
+    {
+      "id": "enisavd",
+      "title": "Vulnerability disclosure (CNA, CVE Root, EUVD, EU KEV)",
+      "publisher": "ENISA",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.enisa.europa.eu/topics/vulnerability-disclosure"
+    },
+    {
+      "id": "srp",
+      "title": "The CRA Single Reporting Platform is launched",
+      "publisher": "ENISA",
+      "date": "11 Sep 2026",
+      "url": "https://www.enisa.europa.eu/news/the-cra-single-reporting-platform-is-launched"
+    },
+    {
+      "id": "nvd",
+      "title": "NIST Updates NVD Operations to Address Record CVE Growth",
+      "publisher": "NIST",
+      "date": "15 Apr 2026",
+      "url": "https://www.nist.gov/node/1910421"
+    },
+    {
+      "id": "ghadv",
+      "title": "About repository security advisories",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/security-advisories/working-with-repository-security-advisories/about-repository-security-advisories"
+    },
+    {
+      "id": "ssdf",
+      "title": "SP 800-218, Secure Software Development Framework (SSDF) Version 1.1",
+      "publisher": "NIST",
+      "date": "Feb 2022",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final"
+    },
+    {
+      "id": "zap",
+      "title": "ZAP Baseline Scan",
+      "publisher": "ZAP Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.zaproxy.org/docs/docker/baseline-scan/"
+    },
+    {
+      "id": "asvsassess",
+      "title": "ASVS 5.0.0: Assessment and Certification",
+      "publisher": "OWASP",
+      "date": "30 May 2025",
+      "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x04-Assessment_and_Certification.md"
+    },
+    {
+      "id": "top10",
+      "title": "OWASP Top 10:2025, Introduction",
+      "publisher": "OWASP",
+      "date": "2025",
+      "url": "https://owasp.org/Top10/2025/0x00_2025-Introduction/"
+    },
+    {
+      "id": "ncscvibe",
+      "title": "The 'vibe coding spectrum' approach to AI-assisted software development",
+      "publisher": "NCSC (UK)",
+      "date": "18 Jun 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/the-vibe-coding-spectrum-approach-to-ai-assisted-software-development"
+    },
+    {
+      "id": "owasptm",
+      "title": "Threat Modeling Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 4 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+    },
+    {
+      "id": "asvs",
+      "title": "ASVS 5.0.0: What is the ASVS?",
+      "publisher": "OWASP",
+      "date": "30 May 2025",
+      "url": "https://github.com/OWASP/ASVS/blob/v5.0.0/5.0/en/0x03-What-is-the-ASVS.md"
+    },
+    {
+      "id": "demand",
+      "title": "Secure by Demand Guide",
+      "publisher": "CISA and FBI",
+      "date": "Aug 2024",
+      "url": "https://www.cisa.gov/resources-tools/resources/secure-demand-guide"
+    },
+    {
+      "id": "omb",
+      "title": "M-26-05: Adopting a Risk-based Approach to Software and Hardware Security",
+      "publisher": "OMB (White House)",
+      "date": "23 Jan 2026",
+      "url": "https://www.whitehouse.gov/wp-content/uploads/2026/01/M-26-05-Adopting-a-Risk-based-Approach-to-Software-and-Hardware-Security.pdf"
+    },
+    {
+      "id": "craguide",
+      "title": "Commission publishes new guidance to support timely Cyber Resilience Act implementation",
+      "publisher": "European Commission",
+      "date": "27 Jul 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/commission-publishes-new-guidance-support-timely-cyber-resilience-act-implementation"
+    },
+    {
+      "id": "ncscwave",
+      "title": "Preparing for a 'vulnerability patch wave'",
+      "publisher": "NCSC (UK)",
+      "date": "1 May 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/prepare-for-vulnerability-patch-wave"
+    },
+    {
+      "id": "ncsc10q",
+      "title": "10 questions to ask when using AI models to find vulnerabilities",
+      "publisher": "NCSC (UK)",
+      "date": "11 May 2026",
+      "url": "https://www.ncsc.gov.uk/blogs/10-questions-ask-using-ai-models-find-vulnerabilities"
+    },
+    {
+      "id": "enisaroot",
+      "title": "Join the global CVE Program under the ENISA Root",
+      "publisher": "ENISA",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.enisa.europa.eu/topics/vulnerability-services/join-the-global-cve-program-under-the-enisa-root"
+    },
+    {
+      "id": "samm",
+      "title": "OWASP SAMM v2: The model",
+      "publisher": "OWASP",
+      "date": "checked 4 Nov 2026",
+      "url": "https://owaspsamm.org/model/"
+    },
+    {
+      "id": "ssdf12",
+      "title": "SP 800-218 Rev. 1 (SSDF Version 1.2), initial public draft",
+      "publisher": "NIST",
+      "date": "17 Dec 2025",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/r1/ipd"
+    },
+    {
+      "id": "copilotrisk",
+      "title": "Risks and mitigations for GitHub Copilot cloud agent",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/risks-and-mitigations"
+    }
+  ]
+}

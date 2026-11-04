@@ -1,0 +1,341 @@
+{
+  "slug": "attack-surface",
+  "topic": "Attack surface management",
+  "status": "draft",
+  "order": 24,
+  "capability": "exposure/attack-surface",
+  "title": "Attack surface: what do you expose to the internet that you don't know about?",
+  "short": "Rebuild your list of internet-facing assets from registrars, DNS, certificate logs and cloud accounts, rescan it every week and give each exposed service an owner.",
+  "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and sign up for free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
+  "audience": "IT and security teams in organizations of any size that need to know what they expose to the internet",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Build the inventory from records, not memory.",
+          "text": "List every domain, DNS record, cloud endpoint and IP range you hold. The patching sheet's deadlines only work on systems someone knows about."
+        },
+        {
+          "title": "Get the free outside view this week.",
+          "text": "Send your IP ranges and domains to Shadowserver[^shadow] and to your national service. CISA says Cyber Hygiene users typically cut risk and exposure by 40% in 12 months[^cyhy]."
+        },
+        {
+          "title": "Give every exposed service an owner and a reason.",
+          "text": "CISA advises closing or restricting every port without a documented operational need[^cisaerg]. If nobody claims a service within two weeks, block it and see who asks."
+        },
+        {
+          "title": "Take remote access and databases off the internet.",
+          "text": "Put them behind a VPN or access gateway. Exploits opened 32% of Mandiant's 2025 intrusions, with an estimated mean time to exploit of -7 days[^mtrends]."
+        },
+        {
+          "title": "Watch for leaked secrets and passwords.",
+          "text": "Turn on secret scanning and leaked credential alerts. Of the ransomware victims Verizon linked to a credential or infostealer leak, half had one in the 95 days before they were named[^dbir]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "inventory",
+      "title": "Build the external inventory",
+      "navTitle": "Inventory",
+      "items": [
+        {
+          "title": "Start from what you pay for.",
+          "text": "Pull domains from registrar accounts, IP ranges from your regional internet registry and provider contracts, and cloud and SaaS accounts from finance records."
+        },
+        {
+          "title": "Export every DNS zone.",
+          "text": "Flag CNAMEs that point at cloud services: that is where takeovers start[^azdangling]."
+        },
+        {
+          "title": "Search certificate transparency logs.",
+          "text": "Public CAs are expected to log every certificate they issue, so a search for your domains, for example on [crt.sh](https://crt.sh/), shows hostnames nobody listed. Attackers read the same logs[^rfc9162]."
+        },
+        {
+          "title": "Export public endpoints from each cloud.",
+          "text": "List public IPs, load balancers, CDN, storage and app hostnames with Azure Resource Graph[^azdangling], AWS Config[^awstakeover] or your cloud's equivalent."
+        },
+        {
+          "title": "Claim your SaaS tenants.",
+          "text": "Self-service sign-ups with work addresses create unmanaged Entra directories on your domain; take them over by verifying the domain[^entratakeover]. Do the same in other SaaS that verifies domains."
+        },
+        {
+          "title": "Scan it all and compare.",
+          "text": "Scan from outside every week. Anything that answers but isn't listed gets an owner or gets switched off."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "look-for",
+      "title": "What to look for in every scan",
+      "navTitle": "What to look for",
+      "items": [
+        "**Remote access and OT protocols.** RDP, SSH, VNC, TeamViewer, Modbus, DNP3 and BACnet are on CISA's list of ports to investigate[^cisaerg]. Firewall and VPN admin pages are in the edge devices sheet.",
+        "**Databases.** Elasticsearch, MongoDB and other data stores should never answer from the internet; Shadowserver reports open ones daily[^shadow]. Cloud storage is in the cloud configuration sheet.",
+        "**Forgotten and temporary systems.** File transfer servers, remote management tools, dev and test sites, and services that should have been decommissioned or kept internal[^easm].",
+        "**Dangling DNS.** A CNAME to a deleted resource lets an attacker claim the name, serve content and get a valid certificate on your subdomain[^azdangling]. Any AWS account can claim a deleted S3 bucket or Elastic Beanstalk name[^awstakeover]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "secrets",
+      "title": "Leaked credentials and secrets",
+      "navTitle": "Leaked secrets",
+      "items": [
+        "**Scan every repository and its history.** GitHub scans all branches and history for free on public repositories; private ones need Secret Protection, but a one-off assessment is free[^ghss]. GitGuardian counted 28.6 million new secrets in public GitHub commits in 2025[^gg].",
+        "**Revoke first, then clean up.** Rewritten history still lives in forks and clones[^ghremove]. GitGuardian found 64% of valid secrets from 2022 still working four years later[^gg].",
+        "**Look beyond code.** About 28% of GitGuardian's secret incidents came only from collaboration and productivity tools[^gg].",
+        "**Act on leaked password alerts.** Entra ID's leaked credentials detection works with Entra ID Free; on-premises passwords need password hash sync[^entrarisk]. Reset the password and revoke sessions when it fires."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "span": "full",
+      "items": [
+        "**The NCSC retired Web Check and Mail Check** on 31 March 2026 and recommends commercial EASM instead[^ncscretire].",
+        "**Exposed PLCs at US water utilities came under attack.** CISA saw more than 100 water sector entities targeted in July 2026, often via PLCs on cellular modems[^cisaerg], which may not show up in routine scans[^cisaplc].",
+        "**Exposure now drives US federal patch deadlines.** Under BOD 26-04, a system counts as exposed if any method finds it so, and agencies attest their public IPs and domains every quarter[^bod2604].",
+        "**New S3 buckets can avoid name squatting.** Buckets in S3's new account regional namespaces can't be claimed by another account after deletion; keep checking older ones[^awstakeover]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "free",
+      "title": "Free help from outside",
+      "navTitle": "Free services",
+      "items": [
+        "**Shadowserver.** Free daily reports on exposed services for the IP ranges and domains you control[^shadow].",
+        "**CISA Cyber Hygiene (US).** Free weekly scan reports and urgent alerts for US governments and critical infrastructure[^cyhy].",
+        "**NCSC Early Warning (UK).** Free alerts on vulnerable or exposed services for any UK organization that registers its IPs and domains[^ncscew].",
+        "**CERT-Bund (Germany).** It sends daily reports to network operators by IP address and asks providers to pass them on[^certbund]. Essential and important entities can ask the BSI to scan them[^bsig].",
+        "**Commercial EASM.** It adds continuous discovery, takeover checks and history. Ask how it validates findings and how fresh its data is[^easm]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "measure",
+      "title": "Measure exposure over time",
+      "navTitle": "Measure",
+      "items": [
+        "**Exposed services without an owner.** Aim for zero, counted weekly.",
+        "**High-risk exposures.** Remote access, databases, admin pages and OT protocols on the internet, each with an approved exception that expires.",
+        "**Found by someone else first.** New assets you learned about from a scanner, CERT or supplier instead of your own records. This should fall each quarter.",
+        "**Time to close.** From first sighting to closed or shielded. Aim for one working day for high-risk exposures.",
+        "**Valid leaked secrets.** Count them and name the oldest."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A commercial EASM before you have owners.** Discovery without owners makes a longer list, not a smaller attack surface. Use the free sources first.",
+        "**Hiding from scanners.** Exposed services are scanned daily anyway[^easm]. BOD 26-04 even has agencies unblock CISA's scanners[^bod2604].",
+        "**Perfect TLS grades on brochure sites.** Close exposed remote access, databases and dangling DNS first."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Scanning only the ranges you know.** Cloud, SaaS and supplier systems sit on other addresses, and vendor-installed modems may not show up in routine scans[^cisaplc]. Discover from DNS and certificates too.",
+        "**Deleting the resource before its DNS record.** Delete the record, wait out the TTL, then delete the resource[^awstakeover].",
+        "**Notices to a mailbox nobody reads.** CERT-Bund reaches you only through your network operator[^certbund]. Check that providers forward its reports and that abuse contacts reach a person."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Ask your IT provider for one list of domains, DNS records, public IPs and cloud accounts, each with an owner.",
+            "Keep all domains in one registrar account with MFA, and subscribe to Shadowserver and your national service.",
+            "Turn on secret scanning for your GitHub organization and run the free assessment[^ghss]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Run discovery weekly from DNS exports, CT logs and cloud inventories, and compare it with the inventory.",
+            "Open a ticket with an owner for every new exposure, and add a dangling DNS check to decommissioning.",
+            "Report the five measures above every month."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Choose a commercial EASM with the NCSC's buyer questions and feed it your cloud and asset inventories[^easm].",
+            "Have each business unit attest its public IPs and domains quarterly, including systems suppliers host, as BOD 26-04 requires of agencies[^bod2604].",
+            "Add acquisitions, subsidiaries and OT sites, including vendor-installed modems, to discovery."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on CISA's Internet Exposure Reduction Guidance and BOD 26-04, the NCSC's EASM buyer's guide, CERT-Bund and BSIG § 15, Microsoft and AWS guidance on dangling DNS, M-Trends 2026, the 2026 DBIR and GitGuardian's 2026 secrets data."
+    }
+  ],
+  "sources": [
+    {
+      "id": "shadow",
+      "title": "Subscribe to Reports",
+      "publisher": "Shadowserver",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
+    },
+    {
+      "id": "cyhy",
+      "title": "Cyber Hygiene Services",
+      "publisher": "CISA",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.cisa.gov/cyber-hygiene-services"
+    },
+    {
+      "id": "cisaerg",
+      "title": "Internet Exposure Reduction Guidance",
+      "publisher": "CISA",
+      "date": "revised 21 Aug 2026",
+      "url": "https://www.cisa.gov/resources-tools/resources/stuff-search"
+    },
+    {
+      "id": "cisaplc",
+      "title": "CISA Urges Water and Wastewater Systems Sector to Protect OT Against Activity Targeting PLCs",
+      "publisher": "CISA",
+      "date": "30 Jul 2026",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/07/30/cisa-urges-water-and-wastewater-systems-sector-protect-ot-against-activity-targeting-plcs"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "azdangling",
+      "title": "Prevent dangling DNS entries and avoid subdomain takeover",
+      "publisher": "Microsoft Learn",
+      "date": "20 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/subdomain-takeover"
+    },
+    {
+      "id": "rfc9162",
+      "title": "RFC 9162: Certificate Transparency Version 2.0",
+      "publisher": "IETF",
+      "date": "Dec 2021",
+      "url": "https://www.rfc-editor.org/rfc/rfc9162"
+    },
+    {
+      "id": "entratakeover",
+      "title": "Admin takeover of an unmanaged directory",
+      "publisher": "Microsoft Learn",
+      "date": "18 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/users/domains-admin-takeover"
+    },
+    {
+      "id": "awstakeover",
+      "title": "Threat tactic spotlight: Subdomain takeover",
+      "publisher": "AWS Security Blog",
+      "date": "16 Jun 2026",
+      "url": "https://aws.amazon.com/blogs/security/threat-tactic-spotlight-subdomain-takeover/"
+    },
+    {
+      "id": "easm",
+      "title": "External attack surface management (EASM) buyer's guide",
+      "publisher": "NCSC (UK)",
+      "date": "18 Sep 2025",
+      "url": "https://www.ncsc.gov.uk/guidance/external-attack-surface-management-buyers-guide"
+    },
+    {
+      "id": "ghss",
+      "title": "Secret scanning",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning"
+    },
+    {
+      "id": "gg",
+      "title": "The State of Secrets Sprawl 2026 (vendor research report)",
+      "publisher": "GitGuardian",
+      "date": "2026",
+      "url": "https://www.gitguardian.com/state-of-secrets-sprawl-report-2026"
+    },
+    {
+      "id": "ghremove",
+      "title": "Removing sensitive data from a repository",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository"
+    },
+    {
+      "id": "entrarisk",
+      "title": "Risk detections in Microsoft Entra ID Protection",
+      "publisher": "Microsoft Learn",
+      "date": "21 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-protection/concept-identity-protection-risks"
+    },
+    {
+      "id": "ncscew",
+      "title": "Early Warning",
+      "publisher": "NCSC (UK)",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.ncsc.gov.uk/section/active-cyber-defence/early-warning"
+    },
+    {
+      "id": "certbund",
+      "title": "CERT-Bund Reports",
+      "publisher": "BSI",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Reaktion/CERT-Bund/CERT-Bund-Reports/cert-bund-reports_node.html"
+    },
+    {
+      "id": "bsig",
+      "title": "BSI-Gesetz (BSIG), § 15",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/__15.html"
+    },
+    {
+      "id": "ncscretire",
+      "title": "NCSC to retire Web Check and Mail Check",
+      "publisher": "NCSC (UK)",
+      "date": "6 Nov 2025",
+      "url": "https://www.ncsc.gov.uk/blog-post/retiring-mail-check-web-check"
+    },
+    {
+      "id": "bod2604",
+      "title": "BOD 26-04: Prioritizing Security Updates Based on Risk",
+      "publisher": "CISA",
+      "date": "10 Jun 2026",
+      "url": "https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk"
+    }
+  ]
+}

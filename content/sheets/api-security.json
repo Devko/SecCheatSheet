@@ -1,0 +1,330 @@
+{
+  "slug": "api-security",
+  "topic": "API security",
+  "status": "draft",
+  "order": 22,
+  "capability": "software/api",
+  "title": "API security: is every request authorized for the exact object it touches?",
+  "short": "Check the caller's right to each object in code on every request, and replay every call with a second tenant's token before each release.",
+  "answer": "Check in code, on every request, that the caller may act on the exact object and fields it names, and add tests this month that replay each endpoint with a second tenant's token. Use the gateway for token checks, rate limits, schema checks and the version inventory, and switch off any API that isn't in that inventory.",
+  "audience": "Developers, architects and platform teams that build web, mobile or partner APIs (REST, GraphQL, gRPC, webhooks), and the security staff who review them",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Authorize every object in the handler.",
+          "text": "Look up records by tenant and ID together. OWASP calls broken object level authorization extremely common[^owaspapi1]. In July 2026 CISA listed as exploited a Langflow flaw that let users run other users' flows by ID[^kev]."
+        },
+        {
+          "title": "Accept and return only allowlisted fields.",
+          "text": "Bind each request to an input schema per endpoint, and build responses from an explicit output type, not a generic `to_json()` of the database object[^owaspapi3]."
+        },
+        {
+          "title": "Validate every token fully at the API.",
+          "text": "Check signature, algorithm, issuer, audience, expiry and scope[^asvs]. In 2026 attackers exploited SimpleHelp skipping OIDC signature checks and JFrog Artifactory ignoring token scope[^kev]."
+        },
+        {
+          "title": "Inventory every API and switch off the rest.",
+          "text": "List each host, version and owner, including beta and partner hosts, and block retired versions. The NCSC traces the Optus breach to a forgotten API that stayed online for years[^ncscblog]."
+        },
+        {
+          "title": "Test with a second tenant before each release.",
+          "text": "Replay every call with another tenant's token, a lower role and no token, and block the release on any success[^owaspapi1]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "test",
+      "title": "Test an API for authorization flaws",
+      "navTitle": "Authorization tests",
+      "items": [
+        {
+          "title": "Set up two tenants.",
+          "text": "Give each an admin, a basic user and one object of every type. CISA advises testing with users of different privilege levels[^aa23208a]."
+        },
+        {
+          "title": "Collect every call.",
+          "text": "Take them from the spec, the gateway and recorded web and mobile traffic, including old versions and GraphQL operations."
+        },
+        {
+          "title": "Swap the caller.",
+          "text": "Send each request with the other tenant's token, the basic user's token and no token. Expect 401, 403 or 404."
+        },
+        {
+          "title": "Swap the IDs and fields.",
+          "text": "Change IDs in paths, bodies and batches. Add `role`, `tenantId` or `isAdmin` to writes and check they are ignored."
+        },
+        {
+          "title": "Keep each case as a CI test.",
+          "text": "Run them for every route. NIST suggests deploying an endpoint only once it carries a permission annotation[^nist228]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "attacks",
+      "title": "How API attacks work now",
+      "navTitle": "Attacks now",
+      "span": "full",
+      "items": [
+        "**Logged-in users reach other users' data.** In OWASP's 2025 Top 10 data, 100% of applications tested had some form of broken access control[^owasptop10]. Three of the API Top 10's first five risks are about authorization[^nist228].",
+        "**Old and side-door endpoints carry the breach.** Attackers usually get in through old API versions or endpoints left unpatched[^owaspapi9]. Insufficient authentication and no rate limiting in Dell's partner portal API let attackers take personal details of 49 million customers[^ncscblog]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tokens",
+      "title": "Tokens and sign-in",
+      "navTitle": "Tokens",
+      "items": [
+        "**Use the code flow with PKCE.** RFC 9700 forbids the password grant, advises against the implicit grant and requires PKCE for public clients[^rfc9700].",
+        "**Bind each token to one API.** Restrict access tokens to one audience and the least privilege; an API must refuse tokens meant for another[^rfc9700]. Identify users by `iss` plus `sub`[^asvs].",
+        "**Sender-constrain high-value tokens.** RFC 9700 recommends mutual TLS or DPoP, and requires sender-constrained or rotated refresh tokens for public clients[^rfc9700].",
+        "**Keep lifetimes short.** Authorization codes last at most 10 minutes and refresh tokens need an absolute expiry[^asvs]. Keep access tokens to minutes. Give outside callers opaque tokens, not JWTs that reveal internal claims[^nist228].",
+        "**Don't rely on API keys alone.** The NCSC calls them shared bearer tokens, often broad and without expiry[^ncscauth]. Authenticate partners and services with `private_key_jwt` or mutual TLS[^asvs]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "gateway",
+      "title": "Gateway or code: what goes where",
+      "navTitle": "Gateway or code",
+      "items": [
+        "**The gateway checks who and how much.** Validate tokens, reject requests outside the schema, cap payload size and time, and log every call[^nist228][^ncscexposure].",
+        "**The code checks which object.** Ownership, tenant, record state and field rules need the data, so the service decides.",
+        "**Make the gateway impossible to skip.** Accept traffic only from the gateway, by network policy or a credential it attaches[^nist228]. In January 2026 CISA listed a Versa Concerto proxy flaw that exposed admin endpoints[^kev].",
+        "**Strip identity headers at the edge.** Clients must not be able to set headers such as `X-User-ID` that the gateway sets[^asvs].",
+        "**Rate-limit per caller.** Key limits to the user or credential over 1 to 5 minutes and cap concurrent requests; a total limit lets one caller crowd out the rest[^nist228]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "special",
+      "title": "Webhooks, GraphQL and gRPC",
+      "navTitle": "Webhooks, GraphQL",
+      "items": [
+        "**Verify every webhook you receive.** Check the HMAC over the raw body in constant time[^ghwebhook][^stripe], reject old timestamps (Stripe's libraries allow 5 minutes by default) and skip event IDs already processed[^stripe].",
+        "**Treat webhook URLs you call as hostile.** CISA listed a GitLab webhook SSRF as exploited in February 2026[^kev]. Allowlist hosts and check the address you connect to, as the TypeScript sheet explains.",
+        "**Cap GraphQL query cost.** Use depth and amount limits or cost analysis[^asvs], limit batching and check authorization on both edges and nodes[^owaspgql].",
+        "**Hide the schema on public endpoints.** Turn off introspection unless outside parties use the API[^asvs], and GraphiQL in production[^owaspgql]. gRPC's docs flag the reflection service as a possible security issue on public APIs[^grpcrefl]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Checking the role but not the record.** NIST counts checks against the wrong user, permission or resource as incorrect authorization[^nist228].",
+        "**Letting the app hide fields.** Attackers read the raw API, and decompile mobile apps to find endpoints and keys[^ncscexposure].",
+        "**Leaving a beta host behind.** In OWASP's example, a rate limit in front of the production reset API didn't cover a beta host running the same code, where a researcher brute-forced the 6-digit token[^owaspapi9].",
+        "**Calling other services with the backend's own token.** Base each decision on the original caller's permissions[^asvs], or one bug in the first service reaches every service behind it."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Browser apps should keep tokens on a backend.** RFC 10017, a Best Current Practice since August 2026, strongly recommends a backend for frontend, which keeps tokens out of the browser, for business apps and apps that handle personal data[^rfc10017].",
+        "**Agent-facing APIs need the same checks.** MCP's July 2026 specification deprecates Dynamic Client Registration[^mcpchange], and in September CISA listed a LiteLLM MCP endpoint that accepted any bearer token[^kev]. Inventory and test MCP servers like any other API.",
+        "**NIST's API guidance gained checklists.** The March 2026 update of SP 800-228 adds tables of API risks and of controls by lifecycle stage[^nist228]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Waiting for OAuth 2.1.** It is still a draft, at version 17 in October 2026[^oauth21]. RFC 9700 already sets the rules[^rfc9700].",
+        "**Random IDs instead of checks.** CISA says UUIDs and GUIDs should not be used for security capabilities[^aa23208a]. Use them, and check access anyway.",
+        "**An API security platform before an inventory and tests.** No traffic product knows that order 1042 belongs to tenant B.",
+        "**Signing every message.** ASVS asks for per-message signatures only at its highest level, for highly sensitive requests[^asvs]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Write one `canAccess(user, object, action)` check and call it in every handler that takes an ID.",
+            "Use a hosted identity provider with the code flow and PKCE.",
+            "Put the API behind your cloud's managed gateway with per-key rate limits."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Generate the inventory from specs and gateway routes, with owners and retirement dates.",
+            "Run the two-tenant tests in CI, and turn off introspection and reflection by default.",
+            "Alert on bursts of 403 and 404 from one caller, a sign of enumeration[^aa23208a]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Annotate each endpoint with its permission and enforce it at the gateway via a policy service[^nist228].",
+            "Require sender-constrained tokens for payment, health and admin APIs[^asvs].",
+            "Pen-test each major release with users of different roles in different tenants."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on the OWASP API Security Top 10 2023, OWASP ASVS 5.0, RFC 9700, RFC 10017, NIST SP 800-228 (March 2026 update), NCSC guidance on HTTP-based APIs and CISA's Known Exploited Vulnerabilities catalog."
+    }
+  ],
+  "sources": [
+    {
+      "id": "owaspapi1",
+      "title": "API1:2023 Broken Object Level Authorization",
+      "publisher": "OWASP",
+      "date": "2023",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization"
+    },
+    {
+      "id": "owaspapi3",
+      "title": "API3:2023 Broken Object Property Level Authorization",
+      "publisher": "OWASP",
+      "date": "2023",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa3-broken-object-property-level-authorization"
+    },
+    {
+      "id": "owaspapi9",
+      "title": "API9:2023 Improper Inventory Management",
+      "publisher": "OWASP",
+      "date": "2023",
+      "url": "https://api-security.owasp.org/editions/2023/en/0xa9-improper-inventory-management"
+    },
+    {
+      "id": "owasptop10",
+      "title": "A01:2025 Broken Access Control",
+      "publisher": "OWASP Top 10",
+      "date": "2025",
+      "url": "https://top10.owasp.org/2025/A01_2025-Broken_Access_Control/"
+    },
+    {
+      "id": "asvs",
+      "title": "ASVS 5.0.0, chapters V4 and V8 to V10",
+      "publisher": "OWASP",
+      "date": "30 May 2025",
+      "url": "https://github.com/OWASP/ASVS/tree/v5.0.0/5.0/en"
+    },
+    {
+      "id": "rfc9700",
+      "title": "RFC 9700, OAuth 2.0 Security Best Current Practice",
+      "publisher": "IETF",
+      "date": "Jan 2025",
+      "url": "https://www.rfc-editor.org/rfc/rfc9700.html"
+    },
+    {
+      "id": "rfc10017",
+      "title": "RFC 10017, OAuth 2.0 for Browser-Based Applications",
+      "publisher": "IETF",
+      "date": "Aug 2026",
+      "url": "https://www.rfc-editor.org/rfc/rfc10017.html"
+    },
+    {
+      "id": "oauth21",
+      "title": "The OAuth 2.1 Authorization Framework, draft 17",
+      "publisher": "IETF",
+      "date": "31 Oct 2026",
+      "url": "https://datatracker.ietf.org/doc/draft-ietf-oauth-v2-1/"
+    },
+    {
+      "id": "nist228",
+      "title": "SP 800-228 upd1, Guidelines for API Protection for Cloud-Native Systems",
+      "publisher": "NIST",
+      "date": "13 Mar 2026",
+      "url": "https://csrc.nist.gov/pubs/sp/800/228/upd1/final"
+    },
+    {
+      "id": "ncscblog",
+      "title": "New guidance on securing HTTP-based APIs",
+      "publisher": "NCSC (UK)",
+      "date": "3 Apr 2025",
+      "url": "https://www.ncsc.gov.uk/blog-post/new-guidance-on-securing-http-based-apis"
+    },
+    {
+      "id": "ncscauth",
+      "title": "Securing HTTP-based APIs: authentication and authorisation",
+      "publisher": "NCSC (UK)",
+      "date": "3 Apr 2025",
+      "url": "https://www.ncsc.gov.uk/collection/securing-http-based-apis/2-api-authentication-and-authorisation"
+    },
+    {
+      "id": "ncscexposure",
+      "title": "Securing HTTP-based APIs: limiting exposure",
+      "publisher": "NCSC (UK)",
+      "date": "3 Apr 2025",
+      "url": "https://www.ncsc.gov.uk/collection/securing-http-based-apis/7-limiting-exposure"
+    },
+    {
+      "id": "aa23208a",
+      "title": "Preventing Web Application Access Control Abuse (AA23-208A)",
+      "publisher": "ACSC, CISA and NSA",
+      "date": "27 Jul 2023",
+      "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-208a"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "3 Nov 2026",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "owaspgql",
+      "title": "GraphQL Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 4 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/GraphQL_Cheat_Sheet.html"
+    },
+    {
+      "id": "grpcrefl",
+      "title": "Reflection",
+      "publisher": "gRPC docs",
+      "date": "11 May 2026",
+      "url": "https://grpc.io/docs/guides/reflection/"
+    },
+    {
+      "id": "ghwebhook",
+      "title": "Validating webhook deliveries",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries"
+    },
+    {
+      "id": "stripe",
+      "title": "Receive Stripe events in your webhook endpoint",
+      "publisher": "Stripe Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.stripe.com/webhooks"
+    },
+    {
+      "id": "mcpchange",
+      "title": "Key Changes, specification 2026-07-28",
+      "publisher": "Model Context Protocol",
+      "date": "28 Jul 2026",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
+    }
+  ]
+}

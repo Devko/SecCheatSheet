@@ -1,0 +1,412 @@
+{
+  "slug": "encryption",
+  "topic": "Encryption and key management",
+  "status": "draft",
+  "order": 25,
+  "capability": "data/encryption",
+  "title": "Encryption: who can decrypt your data, and what must you start for post-quantum?",
+  "short": "Automate certificate renewal before the 100-day limit on 15 March 2027, and inventory your cryptography for the post-quantum move.",
+  "answer": "Automate renewal of every public TLS certificate before the maximum lifetime drops to 100 days on 15 March 2027[^br], and make a first cryptographic inventory this quarter so data that must stay secret for ten years or more gets hybrid post-quantum key exchange first. Then judge each encryption measure by two questions: who can use the key, and could you still decrypt if it were deleted?",
+  "audience": "IT, security and platform teams in EU organizations that run TLS, certificates, disk and database encryption, cloud key management and secrets",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Automate every public certificate renewal by March 2027.",
+          "text": "Public TLS certificates have been limited to 200 days since 15 March 2026, and the limit falls to 100 days on 15 March 2027 and 47 days in 2029[^br]. Renew with ACME, let ACME Renewal Information (ARI) pick the time[^le45] and alert on any certificate a week from expiry."
+        },
+        {
+          "title": "Inventory your cryptography, starting with long-lived data.",
+          "text": "List TLS endpoints, certificates and issuers, keys and who holds them, algorithms and trust stores. The EU roadmap calls this a no-regret first step for at least every NIS2 entity, and you can start prioritizing before it's complete[^eufaq]."
+        },
+        {
+          "title": "Turn on hybrid post-quantum key exchange.",
+          "text": "Traffic recorded today can be decrypted once a large quantum computer exists, so BSI recommends hybrid key agreement for long-term confidentiality[^tr1] and accepts `X25519MLKEM768` in TLS 1.3[^bsitr]. Chrome, Firefox and Apple's version 26 systems already offer it[^chrome][^ffpq][^apple]."
+        },
+        {
+          "title": "Separate who manages keys from who uses them.",
+          "text": "AWS KMS key administrators can't use a key but can rewrite its policy to give themselves access[^kmspol]. Activate key admin roles just in time with approval, and turn on Key Vault purge protection[^akvsec]."
+        },
+        {
+          "title": "Get secrets out of code and into a vault.",
+          "text": "Give apps managed identities instead of stored credentials, keep one vault per application and environment[^akvsec], and revoke and rotate any exposed secret at once[^owaspsec]. CI tokens are in the supply-chain sheet."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "inventory",
+      "title": "Build a first cryptographic inventory",
+      "navTitle": "Inventory",
+      "items": [
+        {
+          "title": "Which data must stay secret for ten years or more?",
+          "text": "The EU roadmap counts it as high-risk and wants it protected from quantum attacks by the end of 2030[^euroadmap]. Think of health and HR records, contracts, designs and their backups."
+        },
+        {
+          "title": "Where does it travel and where is it stored?",
+          "text": "Follow it through load balancers, VPNs, SSH, APIs, databases and backups, including systems your managed service providers run[^ncscpqc]."
+        },
+        {
+          "title": "What protects it, and who holds the key?",
+          "text": "Record the protocol and key exchange, the certificate and issuer, where the key lives (HSM, cloud KMS or a file) and who can use it. Load balancer connection logs show the negotiated key exchange[^albpol]."
+        },
+        {
+          "title": "Which trust stores do your systems rely on?",
+          "text": "Browsers and operating systems update theirs; Java, Go, Python and container images often carry their own. After the eMudhra compromise, Red Hat told customers to rebuild containers on updated base images[^rhsb]."
+        },
+        {
+          "title": "What can't be upgraded?",
+          "text": "Ask suppliers when they will support ML-KEM. BSI strongly recommends that products expected to run beyond 2030 can be upgraded to quantum-safe methods[^tr1]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tls",
+      "title": "TLS baseline",
+      "items": [
+        "**Offer TLS 1.3 and 1.2 only.** BSI prefers TLS 1.3, recommends TLS 1.2 only until the end of 2031 and doesn't recommend TLS 1.0 or 1.1[^tr2].",
+        "**Put hybrid groups first.** List `X25519MLKEM768` ahead of `X25519`, as OpenSSL 3.5 does by default[^ossl35]. Windows Schannel supports it but leaves it off; enable it with the ECC Curve Order group policy[^schannel]. On AWS load balancers, pick a policy with PQ in its name[^albpol].",
+        "**Meet BSI key lengths.** Use ECDSA keys of at least 250 bits, such as P-256, or RSA keys of at least 3000 bits[^tr1]. The usual RSA 2048 falls short.",
+        "**Move SSH too.** OpenSSH 10.0 made `mlkem768x25519-sha256` its default, and 10.1 warns when a connection falls back to a classical method[^openssh]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "keys",
+      "title": "Who holds the keys",
+      "navTitle": "Keys",
+      "items": [
+        "**Encryption at rest stops disk thieves, not logins.** It protects against someone who has the hardware but not the key[^azrest]. S3 decrypts for any authenticated request with permission, so stolen credentials read encrypted data as easily as plain data[^s3sse].",
+        "**Platform-managed keys are enough for most data.** Microsoft says most organizations can rely on them[^azrest]. Use customer-managed keys where a contract or regulator requires you to control the key.",
+        "**A customer-managed key makes availability your job.** Disable it and every read and write to the Azure storage account fails[^azcmk].",
+        "**Back up keys you can't recreate, and test the restore.** A restored copy keeps working when you disable the original, so after a compromise rotate and migrate before disabling the old key[^akvsec].",
+        "**Rotate wrapping keys automatically, about yearly.** That is AWS's default. Rotation doesn't re-encrypt data or undo a compromised data key[^kmsrot]."
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "deadlines",
+      "title": "Post-quantum dates that set your schedule",
+      "navTitle": "PQC dates",
+      "span": "full",
+      "items": [
+        {
+          "name": "Post-quantum migration",
+          "scope": "EU roadmap milestones. NIS2 entities should at least inventory, map dependencies and analyze quantum risk[^euroadmap][^eufaq]. NCSC, BSI and NIST dates broadly match.",
+          "steps": [
+            {
+              "at": "End 2026",
+              "what": "Planning and pilots for high- and medium-risk uses started[^euroadmap]"
+            },
+            {
+              "at": "2028",
+              "what": "NCSC: discovery done, migration plan ready[^ncscpqc]"
+            },
+            {
+              "at": "End 2030",
+              "what": "High-risk uses migrated[^euroadmap]; BSI's date for very high protection needs[^tr1]"
+            },
+            {
+              "at": "End 2031",
+              "what": "BSI stops recommending TLS 1.2 and classical-only key exchange[^tr1][^tr2]"
+            },
+            {
+              "at": "End 2035",
+              "what": "Medium-risk uses migrated[^euroadmap]; NIST disallows quantum-vulnerable public-key algorithms[^ir8547]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**A certificate authority lost its keys.** In October 2026 eight eMudhra intermediate CA keys proved recoverable. Mozilla removed the emSign ECC Root CA - G3, Chrome committed to the same and eMudhra left the public TLS business[^emudhra]. Update the trust store in every runtime and image (Python: see the secure-python sheet) and keep a second CA set up in your ACME client.",
+        "**Public certificates are becoming server-only.** Chrome requires every public certificate issued from 15 March 2027 to be for server authentication only[^crp]. Move mutual TLS and other client certificates to a private CA.",
+        "**BSI set end dates for classical cryptography.** TR-02102 version 2026-01 recommends classical-only key exchange and TLS 1.2 until the end of 2031 at most, and classical signatures until the end of 2035[^tr1][^tr2].",
+        "**NIST finalized its deprecation schedule.** IR 8547 deprecates every quantum-vulnerable public-key algorithm after 2030 and disallows them after 2035, whatever the key size[^ir8547]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Bigger symmetric keys for quantum.** NIST counts approved symmetric algorithms with at least 128-bit security as quantum-resistant[^ir8547], and the EU sees no practical attack on AES-128 in the foreseeable future[^eufaq].",
+        "**Post-quantum certificates now.** Classical signatures stay trustworthy until a quantum computer exists, and BSI recommends them until the end of 2035[^tr1]. Key exchange comes first.",
+        "**Cloud keys in your own HSM.** AWS says the availability and latency risks of external key stores exceed the perceived benefit for most customers[^xks]. Use them only where a regulator or contract demands it.",
+        "**Rotating KMS keys more often.** Wrapping keys are almost never used enough to wear out[^kmsrot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Deleting a key something still uses.** A deleted AWS KMS key leaves its data unrecoverable. Disable it first and alarm on use during the 7 to 30 day waiting period[^kmsdel].",
+        "**Trusting infrastructure-as-code defaults.** Load balancers created with the AWS CLI, CloudFormation or CDK get `ELBSecurityPolicy-2016-08`, which allows TLS 1.0 and 1.1[^albpol]. Set the policy explicitly.",
+        "**Turning off post-quantum key exchange for a middlebox.** Firefox warns that this removes protection against later decryption of recorded traffic[^ffpq]. Some legacy servers can't read the larger handshake[^apple]; fix them instead.",
+        "**Hard-coding a renewal interval.** A fixed 60-day renewal won't keep up with 45-day certificates[^le45]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Use your host's or CDN's managed certificates, or an ACME client with ARI, and turn on expiry alerts.",
+            "Keep the cloud's default encryption, and keep passwords and API keys in a vault, not in code or wikis.",
+            "Ask your IT provider and main SaaS vendors when they will support hybrid post-quantum TLS."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Build the inventory from load balancer logs, certificate transparency and configuration scans, and give every certificate and key an owner.",
+            "Enable `X25519MLKEM768` on internet-facing TLS and SSH, and watch connection logs for clients that fall back.",
+            "Run a private CA for client certificates and put key admin roles behind just-in-time access."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Write the cryptography policy NIS2 requires, with approved algorithms, key management from generation to destruction, and planned reviews[^enisa].",
+            "Keep the inventory in a standard format such as CBOM[^euroadmap] and put quantum risk on the board's risk register.",
+            "Start with the PKI, the slowest to migrate, and write PQC support into supplier contracts."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on the CA/Browser Forum Baseline Requirements, BSI TR-02102 (2026-01), the EU PQC roadmap and FAQ, NCSC PQC timelines, NIST IR 8547, the eMudhra incident record and Microsoft, AWS and Google Cloud key management documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "br",
+      "title": "Baseline Requirements for TLS Server Certificates, v2.3.1, sections 4.2.1 and 6.3.2",
+      "publisher": "CA/Browser Forum",
+      "date": "4 Oct 2026",
+      "url": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/"
+    },
+    {
+      "id": "le45",
+      "title": "Decreasing Certificate Lifetimes to 45 Days",
+      "publisher": "Let's Encrypt",
+      "date": "2 Dec 2025",
+      "url": "https://letsencrypt.org/2025/12/02/from-90-to-45"
+    },
+    {
+      "id": "crp",
+      "title": "Chrome Root Program Policy, version 1.8",
+      "publisher": "Google Chrome",
+      "date": "5 Feb 2026",
+      "url": "https://googlechrome.github.io/chromerootprogram/crp/policy"
+    },
+    {
+      "id": "emudhra",
+      "title": "Bug 2083449: eMudhra: Private key compromise of Intermediate Certificates",
+      "publisher": "Mozilla Bugzilla",
+      "date": "opened 17 Oct 2026",
+      "url": "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449"
+    },
+    {
+      "id": "rhsb",
+      "title": "RHSB-2026-012 Certificate compromise - eMudhra",
+      "publisher": "Red Hat",
+      "date": "updated 31 Oct 2026",
+      "url": "https://access.redhat.com/security/vulnerabilities/RHSB-2026-012"
+    },
+    {
+      "id": "tr1",
+      "title": "TR-02102-1: Cryptographic Mechanisms: Recommendations and Key Lengths, version 2026-01",
+      "publisher": "BSI",
+      "date": "23 Jan 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "tr2",
+      "title": "TR-02102-2: Use of Transport Layer Security (TLS), version 2026-01",
+      "publisher": "BSI",
+      "date": "27 Jan 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "bsitr",
+      "title": "BSI TR-02102 Cryptographic Mechanisms (note on TLS 1.3 hybrid groups)",
+      "publisher": "BSI",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Technische-Richtlinien/TR-nach-Thema-sortiert/tr02102/tr02102_node.html"
+    },
+    {
+      "id": "euroadmap",
+      "title": "A Coordinated Implementation Roadmap for the Transition to Post-Quantum Cryptography",
+      "publisher": "NIS Cooperation Group",
+      "date": "23 Jun 2025",
+      "url": "https://digital-strategy.ec.europa.eu/en/library/coordinated-implementation-roadmap-transition-post-quantum-cryptography"
+    },
+    {
+      "id": "eufaq",
+      "title": "EU Roadmap on PQC: Frequently Asked Questions",
+      "publisher": "NIS Cooperation Group",
+      "date": "15 Apr 2026",
+      "url": "https://ec.europa.eu/newsroom/dae/redirection/document/132120"
+    },
+    {
+      "id": "ncscpqc",
+      "title": "Timelines for migration to post-quantum cryptography",
+      "publisher": "NCSC (UK)",
+      "date": "20 Mar 2025",
+      "url": "https://www.ncsc.gov.uk/guidance/pqc-migration-timelines"
+    },
+    {
+      "id": "ir8547",
+      "title": "NIST IR 8547: Transition to Post-Quantum Cryptography Standards",
+      "publisher": "NIST",
+      "date": "Oct 2026",
+      "url": "https://csrc.nist.gov/pubs/ir/8547/final"
+    },
+    {
+      "id": "chrome",
+      "title": "A new path for Kyber on the web",
+      "publisher": "Google Security Blog",
+      "date": "13 Sep 2024",
+      "url": "https://security.googleblog.com/2024/09/a-new-path-for-kyber-on-web.html"
+    },
+    {
+      "id": "ffpq",
+      "title": "PostQuantumKeyAgreementEnabled",
+      "publisher": "Firefox administrator reference",
+      "date": "updated 4 Nov 2026",
+      "url": "https://firefox-admin-docs.mozilla.org/reference/policies/postquantumkeyagreementenabled/"
+    },
+    {
+      "id": "apple",
+      "title": "Prepare your network for quantum-secure encryption in TLS",
+      "publisher": "Apple Support",
+      "date": "18 Jun 2026",
+      "url": "https://support.apple.com/en-us/122756"
+    },
+    {
+      "id": "ossl35",
+      "title": "OpenSSL 3.5 release notes",
+      "publisher": "OpenSSL",
+      "date": "8 Apr 2025",
+      "url": "https://openssl-library.org/news/openssl-3.5-notes/"
+    },
+    {
+      "id": "openssh",
+      "title": "OpenSSH release notes (10.0 and 10.1)",
+      "publisher": "OpenSSH",
+      "date": "9 Apr and 6 Oct 2025",
+      "url": "https://www.openssh.org/releasenotes.html"
+    },
+    {
+      "id": "schannel",
+      "title": "TLS Supported Groups in Windows 11 versions 24H2, Windows Server 2025, and later",
+      "publisher": "Microsoft Learn",
+      "date": "20 May 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/secauthn/tls-supported-groups-in-windows-11-24h2-and-later"
+    },
+    {
+      "id": "albpol",
+      "title": "Security policies for your Application Load Balancer",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html"
+    },
+    {
+      "id": "akvsec",
+      "title": "Secure your Azure Key Vault",
+      "publisher": "Microsoft Learn",
+      "date": "10 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/key-vault/general/secure-key-vault"
+    },
+    {
+      "id": "azrest",
+      "title": "Azure data encryption at rest",
+      "publisher": "Microsoft Learn",
+      "date": "8 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest"
+    },
+    {
+      "id": "azcmk",
+      "title": "Customer-managed keys for account encryption (Azure Storage)",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/common/customer-managed-keys-overview"
+    },
+    {
+      "id": "kmspol",
+      "title": "Default key policy",
+      "publisher": "AWS KMS Developer Guide",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html"
+    },
+    {
+      "id": "kmsdel",
+      "title": "Delete an AWS KMS key",
+      "publisher": "AWS KMS Developer Guide",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html"
+    },
+    {
+      "id": "kmsrot",
+      "title": "Rotate AWS KMS keys",
+      "publisher": "AWS KMS Developer Guide",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html"
+    },
+    {
+      "id": "xks",
+      "title": "External key stores",
+      "publisher": "AWS KMS Developer Guide",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/kms/latest/developerguide/keystore-external.html"
+    },
+    {
+      "id": "s3sse",
+      "title": "Protecting data with server-side encryption",
+      "publisher": "Amazon S3 User Guide",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html"
+    },
+    {
+      "id": "owaspsec",
+      "title": "Secrets Management Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 4 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html"
+    },
+    {
+      "id": "enisa",
+      "title": "NIS2 technical implementation guidance (Implementing Regulation 2024/2690), v1.0, point 9",
+      "publisher": "ENISA",
+      "date": "26 Jun 2025",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
+    }
+  ]
+}
