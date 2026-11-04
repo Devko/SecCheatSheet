@@ -1,14 +1,14 @@
 {
   "slug": "retention-deletion",
   "topic": "Retention and deletion",
-  "status": "draft",
+  "status": "published",
   "order": 29,
   "capability": "data/retention",
   "title": "Retention and deletion: how long must you keep data, and can you prove you deleted the rest?",
   "short": "Give every record type a period (in Germany 10 years for books, 8 for vouchers, 6 for letters) and delete whatever has expired each January.",
   "answer": "By January 2027, write a retention schedule that gives every record type a reason, a period and a start event, and set Microsoft 365, Google Workspace and your business systems to delete automatically when the period ends. Keep data past its period only under a documented hold, and make sure backups and other hidden copies run out on the same schedule.",
   "audience": "IT, security, data protection and compliance leads in EU organizations, especially in Germany, on Microsoft 365 or Google Workspace",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Write one retention schedule.",
-          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. The EDPB found that some controllers, especially small ones, struggle to set periods[^cef25]."
+          "text": "List each record type with its owner, legal basis, period and start event, and copy the periods into your record of processing activities, as the GDPR expects where possible[^gdpr]. The EDPB found some controllers, especially small ones, struggle to set periods[^cef25]."
         },
         {
           "title": "Delete by default, keep by exception.",
@@ -28,7 +28,7 @@
         },
         {
           "title": "Answer erasure requests within a month.",
-          "text": "Search every system, including email and backups, and tell anyone you passed the data to[^gdpr]. Refuse only under a named exception, such as a legal duty to keep the record or legal claims[^gdpr]."
+          "text": "Search every system, including email and archives, and tell anyone you passed the data to[^gdpr]. Refuse only under a named exception, such as a legal duty to keep the record or legal claims[^gdpr]."
         },
         {
           "title": "Let backups expire, then delete again after a restore.",
@@ -56,7 +56,7 @@
         },
         {
           "title": "Group the periods into deletion classes.",
-          "text": "Write each rule as a period plus the event that starts it, as DIN 66398 recommends and the German regulators' Standard Data Protection Model endorses for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398 in September 2025[^din27555]."
+          "text": "Write each rule as a period plus the event that starts it, as DIN 66398 recommends and the German regulators' Standard Data Protection Model points to for a deletion concept (Löschkonzept)[^sdm60]. DIN EN ISO/IEC 27555 replaced DIN 66398 in September 2025[^din27555]."
         },
         {
           "title": "Assign each class to a tool.",
@@ -77,7 +77,7 @@
       "items": [
         {
           "name": "Books and business records",
-          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao]. January 2027 frees books from 2016, vouchers from 2018 and letters from 2020, unless a tax assessment is open[^ao]. Banks, insurers and investment firms keep vouchers 10 years[^hgb].",
+          "scope": "Periods run from the end of the year of the last entry or document[^hgb][^ao]. January 2027 frees books last written in 2016, vouchers from 2018, letters from 2020, unless a tax they affect can still be assessed[^ao]. Credit and financial services institutions, insurers and investment firms keep vouchers 10 years[^hgb][^egao].",
           "steps": [
             {
               "at": "6 years",
@@ -107,7 +107,7 @@
             },
             {
               "at": "2 years",
-              "what": "Overtime records[^arbzg]"
+              "what": "Records of hours over 8 a workday[^arbzg]"
             },
             {
               "at": "End of 6th year",
@@ -125,9 +125,9 @@
       "items": [
         "**SharePoint and OneDrive.** Under a retain policy, edited and deleted files go to the hidden Preservation Hold library, using site storage[^retention].",
         "**Leavers' mailboxes.** Under a retention policy they become inactive mailboxes, which aren't deleted automatically when retention ends[^exret].",
-        "**Teams call logs.** They're kept indefinitely[^teamsret], and since April 2026 only a separate call logs policy, set in PowerShell, deletes new ones[^whatsnew].",
-        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default[^m365backup]. See the backups sheet.",
-        "**Google Vault.** Expired data stays available to Vault for about 30 days[^vault].",
+        "**Teams call logs.** They're kept indefinitely by default[^teamsret]. Since April 2026, only a call logs policy set in PowerShell deletes new ones[^whatsnew].",
+        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default and up to 10[^m365backup]. See the backups sheet.",
+        "**Google Vault.** Expired mail and chats stay in Vault about 30 more days[^vault].",
         "**Processors.** They must delete or return your data at contract end[^gdpr]; see the third-party risk sheet."
       ]
     },
@@ -137,10 +137,10 @@
       "title": "If you run Microsoft Purview",
       "navTitle": "Purview",
       "items": [
-        "**Know what E3 covers.** Retention policies and manual labels come with E3 and Business Premium. Auto-applied labels, default labels for SharePoint libraries, adaptive scopes, event-based retention, disposition review and records need E5[^purviewsd].",
+        "**Know what E3 covers.** Retention policies and manual labels come with E3 and Business Premium. Auto-applied labels, SharePoint default labels, adaptive scopes, event-based retention, disposition review and records need E5 or an add-on[^purviewsd].",
         "**Learn the principles.** Retention beats deletion and the longest retention wins. For deletion, labels beat scoped policies, which beat org-wide ones[^retention].",
         "**Lock only what a regulator demands.** No one can turn off or shorten a locked policy[^retention], not even for the 2025 cut from 10 to 8 years[^egao].",
-        "**Put holds in eDiscovery cases.** A hold can take 24 hours to apply and captures group membership only once[^hold]."
+        "**Put holds in eDiscovery cases.** A hold can take up to 24 hours to apply and captures group members only when created[^hold]."
       ]
     },
     {
@@ -150,10 +150,11 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**The EDPB reported on erasure.** Its February 2026 report on 764 controllers found missing procedures, unclear retention periods and inconsistent deletion in backups[^cef25].",
+        "**The EDPB reported on erasure.** Its February report on 764 controllers found missing procedures, unclear periods and patchy backup deletion[^cef25].",
+        "**Pay records may need longer.** The EU pay transparency directive, due by 7 June 2026, gives equal pay claims at least 3 years from when the worker can know of the breach[^ptd]. Check your national law.",
+        "**Holds don't save unpaid OneDrives.** Since July 2026, an unlicensed OneDrive without billing can be deleted after 365 days, even on hold[^odunlic].",
         "**Anonymization has a test.** The EDPB's July 2026 draft checks record isolation, linkage and inference; anonymizing without deleting the original doesn't help storage limitation[^anon].",
-        "**Pay records may need longer.** The EU pay transparency directive, due by 7 June 2026, allows at least 3 years for equal pay claims[^ptd]. Check national law before you shorten pay records.",
-        "**Priority cleanup overrides holds.** The E5 feature[^purviewsd] needs three approvals since July 2026 and, in preview since August, also deletes SharePoint and OneDrive files[^whatsnew]."
+        "**Priority cleanup overrides holds.** The E5 feature[^purviewsd] needs three approvals for mailbox items since July 2026, and a preview since August deletes SharePoint and OneDrive files past the recycle bins[^whatsnew]."
       ]
     },
     {
@@ -162,7 +163,7 @@
       "title": "What you can skip",
       "items": [
         "**Keeping all email for 10 years.** Only business letters, invoices and other tax-relevant mail need keeping[^hgb][^ao]. Give the rest a short default.",
-        "**Running the old ERP for a decade.** Five years after a system change, an analyzable export is enough, unless a tax audit has started[^ao].",
+        "**Running the old ERP for a decade.** From the sixth year after a system change, an analyzable export is enough, unless a tax audit has started[^ao].",
         "**Disposition review for routine records.** It needs E5[^purviewsd] and people to review items first[^retention]. Save it for records that need sign-off."
       ]
     },
@@ -203,7 +204,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Use adaptive scopes, event-based labels and disposition review, which need E5[^purviewsd].",
+            "Use adaptive scopes, event-based labels and disposition review, which need E5 or an add-on[^purviewsd].",
             "Let legal own holds and review every open hold each quarter.",
             "Report deletion runs, overdue records and open holds to the data protection officer."
           ]
@@ -212,6 +213,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check against the statutes, which corrected when books become free to delete and narrowed 13 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
@@ -365,6 +371,13 @@
       "publisher": "EUR-Lex",
       "date": "10 May 2023",
       "url": "https://eur-lex.europa.eu/eli/dir/2023/970/oj"
+    },
+    {
+      "id": "odunlic",
+      "title": "Manage unlicensed OneDrive user accounts",
+      "publisher": "Microsoft Learn",
+      "date": "26 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/unlicensed-onedrive-accounts"
     },
     {
       "id": "whatsnew",
