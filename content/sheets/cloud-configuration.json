@@ -56,11 +56,11 @@
         },
         {
           "title": "Check the impact, then fix.",
-          "text": "Start with the policies CISA marks as BOD 25-01 requirements[^bod], and turn on each Baseline Security Mode setting whose impact report shows zero impact[^bsm]."
+          "text": "Start with the policies CISA marks as BOD 25-01 requirements[^bod], and turn on each Baseline Security Mode setting whose impact report shows zero impact[^bsm]. For MFA settings, use the passkeys and MFA sheet."
         },
         {
           "title": "Enforce at the top of each cloud.",
-          "text": "In AWS, SCPs cap what roles can do, RCPs what resources allow, and declarative policies set defaults such as IMDSv2[^orgpol]. In Azure, assign deny policies at a management group. In Google Cloud, add the baseline constraints if your organization predates 3 May 2024[^gcpbase]. Test each on one account first."
+          "text": "In AWS, SCPs cap what roles can do, RCPs what resources allow, and declarative policies set defaults such as IMDSv2[^orgpol][^imds]. In Azure, assign deny policies at a management group. In Google Cloud, add the baseline constraints if your organization predates 3 May 2024[^gcpbase]. Test each on one account first."
         },
         {
           "title": "Diff every week.",
@@ -75,7 +75,7 @@
       "navTitle": "Key settings",
       "span": "full",
       "items": [
-        "**Public storage.** Google's public access prevention revokes existing public access the moment you enforce it[^gcpcons]. Move public sites and downloads to a separate account or project first.",
+        "**Public storage.** Google's public access prevention revokes existing public access once you enforce it[^gcpcons]. Move public sites and downloads to a separate account or project first.",
         "**Access keys and shared keys.** Attackers reach Azure Blob Storage with exposed credentials, shared keys and SAS tokens[^mddr]; accounts accept keys until `AllowSharedKeyAccess` is false[^azshared]. Google Cloud blocks service account keys in organizations created since May 2024[^gcpbase] and disables exposed ones[^th].",
         "**Instance metadata.** Require IMDSv2, which uses token-backed sessions, by account default or declarative policy. Find instances that still allow IMDSv1 with the `ImdsV1Enabled` metric, and add `ec2:RoleDelivery` to an SCP so IMDSv1 credentials stop working[^imds].",
         "**Broad roles for workloads.** Remove wildcard actions (Security Hub controls IAM.1 and IAM.21)[^fsbp] and pin GitHub OIDC trust to one repository and branch or environment[^ghoidc]. An over-broad deploy role took UNC6426 from a stolen GitHub token to AWS administrator in under 72 hours[^th].",
@@ -90,9 +90,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of the Google Cloud intrusions in Google's data and weak or missing credentials 27.2%; misconfiguration fell to 21%. Google thinks its secure defaults explain part of the shift[^th]. Patch within the patching sheet's deadlines.",
+        "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of the Google Cloud intrusions in Google's data and weak or missing credentials 27.2%; misconfiguration fell to 21%. Google suggests its secure defaults may have driven the shift[^th]. Patch within the patching sheet's deadlines.",
         "**ScubaGear 2.0 is out.** The October 2026 release adds a Security Suite baseline for Defender, Purview, Exchange Online and Teams[^scubanews], and the Entra baseline now requires blocking risky AI agents[^scuba]. Update your config and re-run it.",
-        "**Microsoft 365 moved toward secure defaults.** Baseline Security Mode, in the admin center since November 2025, covers admin MFA, legacy authentication and app consent[^bsm]. Tenant Configuration Management, generally available since April 2026, monitors over 200 settings in six workloads[^tcmga].",
+        "**Microsoft 365 moved toward secure defaults.** Baseline Security Mode, in the admin center since November 2025, covers phishing-resistant MFA for admins, legacy authentication and app consent[^bsm]. Tenant Configuration Management, generally available since April 2026, monitors over 200 settings in six workloads[^tcmga].",
         "**S3 public access can be blocked for a whole organization.** Since November 2025 one AWS Organizations policy enforces Block Public Access for every account, including new ones[^s3org]."
       ]
     },
@@ -112,8 +112,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Trusting a new default to fix old resources.** An IMDSv2 account default skips existing instances[^imds], and consent changes keep old grants[^consent].",
-        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol].",
+        "**Trusting a new default to fix old resources.** Enforcing IMDSv2 for an account leaves instances that already allow IMDSv1 alone[^imds], and consent changes keep old grants[^consent].",
+        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol]. The privileged access sheet covers its root user.",
         "**Exposing a test resource \"just for a day.\"** Microsoft measured a median of 5.3 hours from an exposed container's start to the first exploit attempt[^mddr]."
       ]
     },
