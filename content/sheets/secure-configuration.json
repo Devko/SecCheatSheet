@@ -24,15 +24,15 @@
         },
         {
           "title": "Remove default and shared credentials.",
-          "text": "Give each Windows server its own local admin password with Windows LAPS, built into Server 2019 and later[^laps]. Replace default passwords on iLO, iDRAC and other management controllers[^vcfscg], and keep SQL Server's `sa` login disabled[^sqlbp]."
+          "text": "Give each Windows server its own local admin password with Windows LAPS, built into Server 2019 and later[^laps]. Replace default passwords on iLO, iDRAC and other management controllers[^vcfscg], and don't use or enable SQL Server's `sa` login[^sqlbp]."
         },
         {
           "title": "Switch off what relay attacks need.",
-          "text": "Require SMB signing, LDAP signing and LDAP channel binding, and remove SMBv1, NTLMv1, LLMNR and NetBIOS. Microsoft handled nearly six times as many NTLM-related security cases as a decade ago, and more in the first half of 2026 than in all of 2025[^mddr]."
+          "text": "Require SMB signing, LDAP signing and LDAP channel binding, and remove SMBv1, NTLMv1, LLMNR and NetBIOS. Microsoft's data shows nearly six times as many NTLM-related security cases as a decade ago, and more in the first half of 2026 than in all of 2025[^mddr]."
         },
         {
           "title": "Lock down hypervisor management.",
-          "text": "Turn on ESXi lockdown mode, which is off by default, limit the host firewall to admin networks and keep SSH stopped[^vcfscg]. Mandiant advises taking hypervisors and backups out of the corporate domain[^mtrends]."
+          "text": "Turn on ESXi lockdown mode, which is off by default, limit the host firewall to admin networks and keep SSH stopped[^vcfscg]. Mandiant advises taking hypervisors and backups out of the corporate Active Directory domain[^mtrends]."
         },
         {
           "title": "Apply it from code and check for drift.",
@@ -52,11 +52,11 @@
         },
         {
           "title": "Turn on the audit events and wait.",
-          "text": "Log for two to four weeks, including a month end: SMB server audit events 3021 and 3022[^smbsign], NTLM events 4020 to 4033[^ntlmaudit], LDAP events 2889 and 3074 to 3075[^ldapsign][^ldapcbt] and LSA protection events 3065 and 3066[^lsa]."
+          "text": "Log for two to four weeks, including a month end: SMB's **Audit client does not support signing**[^wsbase2602], NTLM events 4020 to 4023 and 4030 to 4033[^ntlmaudit], LDAP events 2889, 3074 and 3075[^ldapsign][^ldapcbt] and LSA protection events 3065 and 3066[^lsa]."
         },
         {
           "title": "Enforce in rings, with an exception list.",
-          "text": "Start with IT's own servers. Give each exception an owner, a reason and an end date; BSI asks you to document every setting you can't apply[^bsisys11]."
+          "text": "Start with IT's own servers. Give each exception an owner, a reason and an end date; BSI asks you to document and justify settings you can't apply[^bsisys11]."
         },
         {
           "title": "Plan the rollback before you remediate.",
@@ -75,9 +75,9 @@
       "navTitle": "Windows Server",
       "items": [
         "**SMB.** Remove SMBv1, which Server 2019 and later don't install[^smb1]. Server 2025 requires signing only outbound[^smbsign]; after the audit, set **Microsoft network server: Digitally sign communications (always)**, as the 2602 baseline does[^wsbase2602].",
-        "**LDAP signing and channel binding.** Only new Server 2025 forests require signing by default; channel binding defaults to **When supported** there and **Never** on 2022 and earlier[^ldapsign][^ldapcbt]. Once the audit events stop, set **Require signature** and **Always**.",
-        "**NTLMv1, LLMNR, NetBIOS and old TLS.** The Server 2025 OSConfig baseline allows only NTLMv2, turns off LLMNR and NetBIOS and requires TLS 1.2 or later[^osconfig]. Do the same on older servers: even Server 2025 enables TLS 1.0 and 1.1 by default[^schannel].",
-        "**LSA protection.** Windows 11 enables it by default, Windows Server doesn't[^lsa]. Turn it on once the audit events are clean."
+        "**LDAP signing and channel binding.** Only new Active Directory deployments on Server 2025 require signing by default; channel binding defaults to **When supported** there and **Never** on 2022 and earlier[^ldapsign][^ldapcbt]. Once the audit events stop, set **Require signing** and **Always**.",
+        "**NTLMv1, LLMNR, NetBIOS and old TLS.** The Server 2025 OSConfig baseline allows only NTLMv2, turns off LLMNR and NetBIOS and requires TLS 1.2 or later[^osconfig]. Set the same on older servers. Windows enables TLS 1.0 and 1.1 by default, even on Server 2025[^schannel].",
+        "**LSA protection.** New Windows 11 installs turn it on[^lsa]; on servers, the OSConfig baseline runs LSASS as a protected process[^osconfig]. Turn it on once the audit events are clean."
       ]
     },
     {
@@ -89,7 +89,7 @@
         "**Unused roles and services.** Remove what a server doesn't need, including firmware functions[^bsisys11]. On Windows, start with the Print Spooler on domain controllers and servers that don't print[^spooler].",
         "**Linux.** RHEL 10's SCAP Security Guide has CIS, DISA STIG, PCI DSS and BSI SYS.1.1 and SYS.1.3 profiles[^rhel]. Ubuntu's USG has CIS and STIG profiles for 20.04 to 24.04 and needs an Ubuntu Pro subscription[^usg].",
         "**Databases.** Prefer Active Directory logins to SQL Server logins, keep `sa` disabled, leave `xp_cmdshell` off and enable only the features you use[^sqlbp].",
-        "**ESXi.** Use a site-specific admin group instead of the default **ESX Admins**, turn on audit records, which are off by default, and forward them[^vcfscg]. Google advises not joining hosts to Active Directory and encrypting Tier 0 VMs[^gtigvs].",
+        "**ESXi.** Google advises not joining hosts to Active Directory[^gtigvs]; if you must, replace the default **ESX Admins** group with a site-specific one. Turn on audit records, which are off by default, and forward them[^vcfscg]. Encrypt Tier 0 VMs[^gtigvs].",
         "**Management controllers.** Put iLO, iDRAC and other BMCs on an isolated network with local accounts outside your main directory, disable IPMI Cipher 0 and unused services[^vcfscg]."
       ]
     },
@@ -101,9 +101,9 @@
       "span": "full",
       "items": [
         "**The Windows Server 2025 baseline turned on NTLM auditing and SMB server signing** in version 2602, published in February 2026[^wsbase2602].",
-        "**The 2011 Secure Boot certificates expired.** Servers and VMs without the 2023 certificates get no new boot-level protections[^secureboot].",
+        "**The 2011 Secure Boot certificates expired.** Servers without the 2023 certificates still boot but get no new boot-level protections[^secureboot].",
         "**Broadcom's 9.1 hardening guide came out in June 2026,** for VCF and vSphere Foundation 9.1, with PowerCLI audit and remediation scripts[^vcfscg].",
-        "**NTLM is being switched off in stages.** October 2026 updates added enhanced NTLM auditing to Server 2019 and 2022[^ntlmaudit] and block NTLMv1-derived single sign-on on Server 2025[^ntlmv1]. Microsoft plans to disable network NTLM by default in the next major release[^ntlmoff]."
+        "**NTLM is being switched off in stages.** October 2026 updates added enhanced NTLM auditing to Server 2019 and 2022[^ntlmaudit] and block NTLMv1-derived single sign-on by default on Server 2025[^ntlmv1]. Microsoft plans to disable network NTLM by default in the next major Windows Server release[^ntlmoff]."
       ]
     },
     {
@@ -111,8 +111,8 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Every control at its strictest.** Broadcom offers a reasonable baseline, not a catalog of every control, because the strictest settings impede daily administration[^vcfscg]. Use CIS Level 1 unless a rule requires Level 2.",
-        "**Buying CIS SecureSuite first.** Microsoft's baselines are free and RHEL ships CIS profiles[^rhel]. Membership starts at $2,400 a year and excludes commercial use such as consulting[^cisprice].",
+        "**Every control at its strictest.** Broadcom offers a reasonable baseline, not a catalog of every control, because the strictest settings often impede daily administration[^vcfscg]. Use CIS Level 1 unless a rule requires Level 2.",
+        "**Buying CIS SecureSuite first.** Microsoft's baselines come in the Security Compliance Toolkit[^sct] and RHEL ships CIS profiles[^rhel]. Membership starts at $2,400 a year and excludes commercial use such as consulting[^cisprice].",
         "**Hardening the ESXi SSH daemon.** Broadcom dropped that control: keep SSH stopped except for brief, supervised diagnostics[^vcfscg]."
       ]
     },
@@ -122,10 +122,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Enforcing signing before auditing.** Clients that can't sign can no longer query domain controllers once LDAP signing is required[^ldapsign].",
+        "**Enforcing signing before auditing.** Once LDAP signing is required, domain controllers reject unsigned binds and simple binds without TLS[^ldapsign].",
         "**Two tools managing one setting.** If Group Policy and OSConfig set different values, the setting keeps flipping between them[^osconfig].",
-        "**Weakening every server for one device.** Turning off SMB signing for an old NAS[^smb1] or using RHEL's LEGACY crypto policy[^rhel] lowers protection for all.",
-        "**Leaving old VMs on the datastore.** UNC3944 staged its attacks from powered-off, orphaned VMs[^gtigvs]. Delete decommissioned disks."
+        "**Weakening a whole server for one device.** Turning off SMB signing for an old NAS[^smb1] or using RHEL's LEGACY crypto policy[^rhel] lowers protection for every other connection.",
+        "**Leaving old VMs on the datastore.** UNC3944 used an orphaned VM to copy a domain controller's disk[^gtigvs]. Delete retired disks."
       ]
     },
     {
@@ -140,7 +140,7 @@
           "items": [
             "Import Microsoft's baseline GPOs from the Security Compliance Toolkit; use OSConfig on Server 2025.",
             "Ask your IT provider for every default or shared password on servers, NAS, hypervisors and BMCs, and turn on Windows LAPS.",
-            "Turn on lockdown mode on every ESXi host."
+            "Turn on lockdown mode for each ESXi host in vCenter."
           ]
         },
         {
@@ -155,7 +155,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Map results to your auditors' framework: CIS, STIG, PCI DSS or BSI SYS.1.1 and SYS.1.3[^rhel].",
-            "Report drift with Azure Machine Configuration, free through Arc with Software Assurance[^arcmgmt].",
+            "Report drift with Azure Machine Configuration, included through Arc with Software Assurance[^arcmgmt].",
             "Build golden images in a pipeline that fails on baseline violations."
           ]
         }
@@ -335,7 +335,7 @@
       "id": "mtrends",
       "title": "M-Trends 2026, Executive Edition",
       "publisher": "Mandiant",
-      "date": "2026",
+      "date": "Mar 2026",
       "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
     },
     {
