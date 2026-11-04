@@ -91,8 +91,8 @@
         {
           "title": "Providers of general-purpose AI models",
           "items": [
-            "**Who.** Indicatively, models trained with over 10²³ FLOP that generate language, images or video, and anyone fine-tuning one with over a third of its original training compute[^gpaiguide].",
-            "**Duties since 2 August 2025.** Documentation, information for downstream providers, a copyright policy and a public training-content summary; open-source models skip the first two unless systemic. Models placed earlier comply by 2 August 2027[^aiact]. The Code of Practice is an adequate way to show compliance[^gpaicop].",
+            "**Who.** Indicatively, providers of models trained with over 10²³ FLOP that generate language, images or video, and anyone fine-tuning one with over a third of its original training compute[^gpaiguide].",
+            "**Duties since 2 August 2025.** Documentation, information for downstream providers, a copyright policy and a public training-content summary; open-source models skip the first two unless systemic. Models placed earlier comply by 2 August 2027[^aiact]. The Commission deems the Code of Practice an adequate voluntary way to show compliance[^gpaicop].",
             "**Systemic risk.** Presumed above 10²⁵ FLOP: evaluations with adversarial testing, risk mitigation, incident reporting and cybersecurity[^aiact]."
           ]
         }
@@ -117,7 +117,7 @@
       "navTitle": "Enforcement",
       "items": [
         "**Fines scale with the duty.** Up to €35 million or 7% of worldwide turnover for banned practices, €15 million or 3% for most other duties and €7.5 million or 1% for misleading authorities[^aiact].",
-        "**The AI Office handles general-purpose AI.** It can fine model providers up to 3% or €15 million since 2 August 2026, and supervises most systems they build on their own models[^aiact][^omnibus]. National authorities do the rest[^aiact].",
+        "**The AI Office handles general-purpose AI.** It can fine model providers up to 3% or €15 million since 2 August 2026, and supervises most systems built on their own models[^aiact][^omnibus]. National authorities do the rest[^aiact].",
         "**Germany: the Bundesnetzagentur.** Since 29 July 2026 it is the default market surveillance authority, contact point and complaints office; BaFin covers AI tied to regulated financial activities[^kimig].",
         "**Germany: the works council.** Inform it in time about planned AI use; it co-determines tools able to monitor behavior or performance[^betrvg][^bag]."
       ]
