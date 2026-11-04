@@ -1,14 +1,14 @@
 {
   "slug": "backups",
   "topic": "Backups",
-  "status": "draft",
+  "status": "published",
   "order": 27,
   "capability": "resilience/backups",
   "title": "Backups: what must you back up, and would restores work?",
   "short": "Set RPO and RTO per system with its owner, back up SaaS data and configuration too, and restore something every month.",
   "answer": "This quarter, agree with each system's owner how much data it may lose and how long it may be down, and check that your backups cover every system, SaaS service and configuration, with one copy outside each provider's account. Then restore something every month, from single files to whole systems and SaaS apps, and treat any target you haven't met in a test as unmet.",
   "audience": "IT teams in small, mid-size and large organizations with on-premises servers, virtualization, Microsoft 365 or Google Workspace, other SaaS and cloud workloads",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -28,7 +28,7 @@
         },
         {
           "title": "Keep a copy outside the platform it protects.",
-          "text": "In 2024 a Google error deleted a customer's VMware Engine private cloud without notice. Backups in another service helped restore it[^gcve]."
+          "text": "In 2024 a Google error deleted a customer's VMware Engine private cloud without notice. Backups kept in Cloud Storage, outside the deleted private cloud, helped restore it[^gcve]."
         },
         {
           "title": "Check coverage weekly, not just job status.",
@@ -76,7 +76,7 @@
       "items": [
         "**SaaS beyond mail and files.** CRM, ticketing, wikis, HR, finance. Atlassian's backup add-on keeps copies only 30 days[^atlbackup].",
         "**Repositories and CI.** GitHub's migration archives skip LFS objects, discussions and packages, and GitHub has no supported way to restore them[^ghbackup]. Self-managed GitLab backups omit `gitlab-secrets.json`, which holds the key to 2FA data and CI/CD variables[^gitlab].",
-        "**Tenant configuration.** Microsoft Graph snapshots Entra, Intune, Exchange and Teams settings but deletes them after 7 days[^tcm]. Export them.",
+        "**Tenant configuration.** Microsoft Graph can snapshot Microsoft 365 tenant settings, but deletes each snapshot after 7 days[^tcm]. Export them.",
         "**BitLocker keys.** Deleting an Entra device deletes them for good[^stale].",
         "**Network configs and the admin vault.** Export DNS zones and device configs after each change, and keep an encrypted vault export offline."
       ]
@@ -87,9 +87,9 @@
       "title": "What SaaS providers restore, and for how long",
       "navTitle": "Provider limits",
       "items": [
-        "**Exchange Online.** Deleted items are recoverable 14 days by default, 30 at most[^exorec]. A deleted mailbox is gone after 30 days[^exodel].",
+        "**Exchange Online.** Deleted items are recoverable 14 days by default, 30 at most[^exorec]. A deleted mailbox without a hold is gone after 30 days[^exodel].",
         "**SharePoint and OneDrive.** The recycle bin keeps items 93 days. After that, Microsoft support can roll back only a whole site or subsite, within 14 more days[^spdel]. A deleted user's OneDrive is kept 30 days by default, then 93 days in the recycle bin[^odret].",
-        "**Microsoft 365 Backup.** It skips group and room mailboxes[^m365new], and its copies stay inside Microsoft 365[^m365backup].",
+        "**Microsoft 365 Backup.** It covers SharePoint, OneDrive and user and shared mailboxes, not group or room mailboxes[^m365new]. Its copies stay inside Microsoft 365[^m365backup].",
         "**Google Workspace.** Admins can restore Drive files for 25 days after the trash is emptied[^gdrive] and deleted users for 20 days[^guser]. Google says Vault isn't designed as a backup tool[^vault]."
       ]
     },
@@ -112,8 +112,8 @@
       "navTitle": "Coverage and tests",
       "items": [
         "**Find what nothing protects.** AWS Backup Audit Manager flags resources outside any backup plan or without a recent recovery point[^awsaudit].",
-        "**Alert on silence.** A stopped job raises no failure, and full storage can stop backups or overwrite old ones unnoticed[^bsicon3].",
-        "**Test small and large restores.** ENISA's NIS2 guidance suggests testing full system and single file restores, validated by business users[^enisa]. Restore SaaS to a new location, never over production.",
+        "**Alert on silence.** A job that never starts raises no failure, and full storage can stop backups or overwrite old ones unnoticed[^bsicon3].",
+        "**Test small and large restores.** ENISA's NIS2 guidance suggests testing full system and single file restores, validated by business users[^enisa]. In tests, restore SaaS to a new location, not over production.",
         "**Automate in the cloud.** AWS Backup can restore a random recovery point on a schedule, time it and delete it[^awsrt]."
       ]
     },
@@ -124,7 +124,7 @@
       "navTitle": "What changed",
       "items": [
         "**Microsoft 365 Backup restores single files and keeps longer.** Granular file restore has been generally available since September 2026, for the last 14 days. Recovery windows have been configurable since September, and since 31 October reach 10 years for SharePoint and OneDrive[^m365new].",
-        "**Microsoft 365 Backup catches new items.** Full Workload Backup, in preview since September 2026, adds sites, OneDrives and mailboxes that no policy covers[^m365new].",
+        "**Microsoft 365 Backup catches new items.** Full Workload Backup, in preview since September 2026, adds eligible sites, OneDrives and mailboxes that no policy covers[^m365new].",
         "**AWS air-gapped vaults take more workloads.** Since March 2026 they accept Amazon EKS backups, which can be shared for recovery across accounts and AWS Organizations[^awseks]."
       ],
       "span": "full"
@@ -162,7 +162,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Raise Exchange deleted item retention to 30 days and OneDrive retention for deleted users to a year.",
+            "Raise Exchange deleted item retention to 30 days, and move a leaver's OneDrive files before deleting the account.",
             "Keep a printed page per system: owner, what's backed up, where, how to restore.",
             "Restore one file and one mailbox item every month and write down how long it took."
           ]
@@ -178,7 +178,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "NIS2 digital providers need backup plans covering configuration and cloud data, distant copies, retention periods and integrity checks[^enisa].",
+            "Cloud, data center, managed service and other digital providers under NIS2 need backup plans covering configuration and cloud data, distant copies and retention, plus integrity checks[^enisa].",
             "Report measured restore times against RPO and RTO per system each quarter.",
             "Copy critical SaaS and cloud data to a second provider and restore from it yearly."
           ]
@@ -189,6 +189,11 @@
   "changes": [
     {
       "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the OneDrive leaver advice and narrowed 8 statements to what the sources say."
+    },
+    {
+      "date": "2026-11-04",
       "version": "0.1",
       "text": "First draft, based on BSI CON.3, NIST SP 800-34, ENISA's NIS2 guidance, NCSC guidance, provider incident reviews and vendor documentation."
     }
@@ -196,7 +201,7 @@
   "sources": [
     {
       "id": "sp80034",
-      "title": "SP 800-34 Rev. 1, Contingency Planning Guide",
+      "title": "SP 800-34 Rev. 1, Contingency Planning Guide for Federal Information Systems",
       "publisher": "NIST",
       "date": "May 2010",
       "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34r1.pdf"
@@ -252,7 +257,7 @@
     },
     {
       "id": "tcm",
-      "title": "Tenant Configuration Management APIs in Microsoft Graph",
+      "title": "Use the Tenant Configuration Management APIs in Microsoft Graph",
       "publisher": "Microsoft Learn",
       "date": "19 Jan 2026",
       "url": "https://learn.microsoft.com/en-us/graph/api/resources/unified-tenant-configuration-management-api-overview?view=graph-rest-1.0"
@@ -329,7 +334,7 @@
     },
     {
       "id": "awsaudit",
-      "title": "AWS Backup Audit Manager controls",
+      "title": "Controls and remediation (AWS Backup Audit Manager)",
       "publisher": "AWS Docs",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/controls-and-remediation.html"
