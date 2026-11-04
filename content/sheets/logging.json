@@ -1,14 +1,14 @@
 {
   "slug": "logging",
   "topic": "Logging and monitoring",
-  "status": "draft",
+  "status": "published",
   "order": 17,
   "capability": "detect-respond/logging",
   "title": "Logging and monitoring: which logs do you need, and which alerts deserve a person?",
   "short": "Send identity, cloud and server logs to a store your admins can't erase, keep 12 months and prove monthly that your alerts fire.",
   "answer": "This month, send Entra, Microsoft 365, cloud and server logs to a store that your everyday admin accounts can't change or delete, and keep 12 months of them, the first 6 searchable, matching the new baseline for US federal agencies[^m2614]. Then alert on the few events that are rarely harmless, give each alert a named owner and deputy, and prove every month that the alerts still reach them.",
   "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID with some on-premises servers and cloud workloads",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -154,7 +154,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Send Defender XDR incident emails for High and Medium severity to a shared mailbox[^xdrmail].",
-            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable].",
+            "Archive Entra logs to a storage account in its own subscription, and lock its immutability policy once logs arrive[^immutable].",
             "Ask your IT provider for the last alert it acted on."
           ]
         },
@@ -169,7 +169,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Under NIS2, digital providers must sync clocks where feasible and watch logging uptime independently[^enisa].",
+            "Under NIS2, digital providers must sync clocks where feasible and monitor logging availability independently[^enisa].",
             "Keep a year or more in a cheaper lake tier and only recent data in analytics[^sentbill].",
             "Inject synthetic events[^lra] for each source monthly."
           ]
@@ -178,6 +178,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 10 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
