@@ -1,14 +1,14 @@
 {
   "slug": "third-party-risk",
   "topic": "Supplier and third-party risk",
-  "status": "draft",
+  "status": "published",
   "order": 20,
   "capability": "govern/third-party",
   "title": "Supplier risk: which suppliers could hurt you most, and how fast could you cut them off?",
   "short": "List every supplier with admin access, tokens or critical data, and make sure you can cut each one off within an hour.",
   "answer": "This quarter, list every supplier that holds admin access, tokens or a copy of your critical data, and make sure you can cut off each one's access within an hour. Then focus on that top tier: read their audit reports instead of sending questionnaires, fix the contract at renewal and plan for a week without them.",
   "audience": "IT, security, procurement and compliance leads in EU organizations, especially in Germany",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -76,7 +76,7 @@
       "items": [
         "**Read the audit report, not the logo.** Check that it covers your service, is current and tests whether key controls operate, as DORA requires for critical or important functions[^rtscontract]. Get every later C5 report and run the customer controls it assigns you[^c5faq].",
         "**Ask about the product, not just the company.** CISA and the FBI suggest asking whether SSO and MFA come at no extra cost and whether SaaS security logs are kept for at least six months at no additional charge[^sbd].",
-        "**Incident notice within hours.** Require notice of incidents that put your systems at risk[^nis2ir] within a fixed time, such as 24 hours. The GDPR sets processors no fixed deadline, so the EDPB suggests contracts require early notice[^edpb].",
+        "**Incident notice within hours.** Require notice of incidents that put your systems at risk[^nis2ir] within a fixed time, such as 24 hours, or sooner if your own reporting clock is shorter. The GDPR sets processors no fixed deadline, so the EDPB suggests contracts require early notice[^edpb].",
         "**Vulnerabilities and audits.** Require vulnerability handling and audits or audit reports[^nis2ir], and patches within the patching sheet's deadlines.",
         "**Subcontractors.** Require the same security terms for subcontractors[^nis2ir] and notice of material changes with a right to object, as DORA requires for critical functions[^rtssub].",
         "**Exit and data return.** Require your data back in an easily accessible format on termination or insolvency, a transition period and incident help at a preset cost[^dora]. Remove supplier accounts and data flows at exit[^enisatig]."
@@ -89,10 +89,10 @@
       "navTitle": "Supplier access",
       "items": [
         "**Give MSP staff named accounts with MFA.** Keep them out of internal admin groups, limit them to the systems the MSP manages and disable them when not in use[^aa22131a]. No admin credential should serve several customers[^rasw].",
-        "**Allow one remote access tool.** Allowlist the approved RMM tool, block the ports of others and keep log deletion out of its reach[^rasw]. In 2025, ransomware actors used a software provider's unpatched SimpleHelp RMM to reach its customers[^aa25163a].",
+        "**Allow one remote access tool.** Allowlist the approved RMM tool, block the ports of others and keep log deletion out of its reach[^rasw]. In 2025, ransomware actors exploited unpatched SimpleHelp RMM to compromise a billing software provider's customers[^aa25163a].",
         "**Take Global Administrator away from Microsoft partners.** Under **Settings** > **Partner relationships**, remove partner roles you don't need and ask for least-privilege GDAP roles[^dap]. Review them quarterly.",
         "**Limit OAuth consent.** In Entra ID, let users consent only to verified publishers' apps for low-impact permissions, and send other requests to the admin consent workflow[^consent]. Give integrations the narrowest scopes and avoid Salesforce's `full`[^gtigdrift].",
-        "**Watch supplier activity.** Alert on sign-ins by supplier accounts, new app consents and new RMM agents, and keep your most important logs for at least six months[^aa22131a]."
+        "**Watch supplier activity.** Alert on sign-ins by supplier accounts, new app consents and new RMM agents, and keep those logs for 12 months, as the logging sheet recommends."
       ]
     },
     {
@@ -184,6 +184,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the tier rule, the Klue incident and the CRA's scope and narrowed 14 statements to what the sources say."
+    },
     {
       "date": "2026-11-04",
       "version": "0.1",
