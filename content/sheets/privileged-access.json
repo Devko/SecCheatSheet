@@ -1,0 +1,361 @@
+{
+  "slug": "privileged-access",
+  "topic": "Privileged access",
+  "status": "draft",
+  "order": 16,
+  "capability": "identity/privileged-access",
+  "title": "Privileged access: who could take over everything today?",
+  "short": "List every Tier 0 account, app and server, keep Global Administrators under five and make other admin roles time-limited.",
+  "answer": "This quarter, find every account, app and server that can control Active Directory or Entra ID, and cut it to a few dedicated admin accounts that hold their roles only while activated. Guard the sync servers, certificate authorities and apps that can change those accounts as strictly as the accounts.",
+  "audience": "IT and security teams running Active Directory, Microsoft Entra ID or both, with Azure and Microsoft 365 admin roles",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Find out who holds Tier 0 today.",
+          "text": "List AD admin group members, holders of Entra roles marked **PRIVILEGED**, and the apps and servers that can change them. Microsoft calls excessive privilege one of its most common findings[^esae]."
+        },
+        {
+          "title": "Cut standing admin rights.",
+          "text": "Keep under five Global Administrators, two for emergencies, and under ten privileged role assignments[^entrabp]. Keep day-to-day accounts out of Domain and Enterprise Admins[^appf]."
+        },
+        {
+          "title": "Make the rest time-limited.",
+          "text": "In Entra Privileged Identity Management (PIM), make roles eligible, not active, so admins activate them for 1 to 24 hours[^pimsettings]. Require approval for Global Administrator[^scuba]."
+        },
+        {
+          "title": "Guard what controls the admins.",
+          "text": "Microsoft counts PAM tools, jump hosts, automation and apps with privileged roles as Tier 0[^privroles], and the Entra Connect server too[^connectprereq]. Treat certificate authorities and device management the same way."
+        },
+        {
+          "title": "Alert on every change to Tier 0.",
+          "text": "Send alerts where admins can't close them: Storm-2885 used a privileged cloud identity to close alerts[^mddr]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "inventory",
+      "title": "Find everyone who can take over",
+      "navTitle": "Find Tier 0",
+      "items": [
+        {
+          "title": "Who is in the AD admin groups?",
+          "text": "Export the nested members of every group AdminSDHolder protects, including Account, Backup, Server and Print Operators[^appc]. Most should be empty."
+        },
+        {
+          "title": "Who holds privileged Entra roles?",
+          "text": "In **Roles & admins**, filter on **Privileged** and count active and eligible assignments, including through groups[^privroles]. Add Azure subscription admins and Microsoft 365 roles managed outside Entra ID[^secplan]."
+        },
+        {
+          "title": "Which apps act as admins?",
+          "text": "List service principals with Entra roles or with Graph permissions such as `RoleManagement.ReadWrite.Directory` or `AppRoleAssignment.ReadWrite.All`, which let an app grant more privileges to itself or anyone else[^graphperms]. Add each app's owners, who can act as the app[^appowners]."
+        },
+        {
+          "title": "Which servers and tools control them?",
+          "text": "Add domain controllers, sync servers, certificate authorities, AD FS, and the hypervisors, backups and device management that reach them."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "ad",
+      "title": "Tier 0 in Active Directory",
+      "navTitle": "Active Directory",
+      "items": [
+        "**Keep top admins off other machines.** Deny Domain Admins every kind of sign-in to member servers and workstations by Group Policy[^appf].",
+        "**Put admins in Protected Users.** Members can't use NTLM, RC4 or delegation, and their Kerberos TGTs last four hours. Test first; never add service or computer accounts[^protected].",
+        "**Watch AdminSDHolder.** SDProp copies its permissions to every protected account and group hourly[^appc], so one added permission reaches all admins.",
+        "**Fix certificate templates.** A template any user can enroll in, with **Supply in the request** and client authentication, gives them a domain admin certificate. It's a common misconfiguration[^mdicert], and Mandiant reports attackers exploiting AD CS templates to create admin accounts[^mtrends].",
+        "**Replace service account passwords.** gMSA passwords rotate automatically. dMSAs on Windows Server 2025 also bind the account to named machines and help prevent Kerberoasting[^dmsa]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "cloud",
+      "title": "Tier 0 in Entra ID and the cloud",
+      "navTitle": "Entra ID and cloud",
+      "items": [
+        "**Treat three more roles like Global Administrator.** Privileged Authentication Administrators can reset its password[^privroles], Privileged Role Administrators assign roles[^secplan], and Conditional Access Administrators can remove the checks on PIM activation[^pimsettings].",
+        "**Use cloud-only admin accounts.** A compromised synced account can compromise Entra ID too[^entrabp]. Keep Tier 0 AD accounts out of sync[^secplan].",
+        "**Ask for more at activation.** Point PIM at a Conditional Access authentication context with a phishing-resistant authentication strength and sign-in frequency **Every time**[^pimsettings].",
+        "**Give apps certificates or managed identities.** Microsoft prefers them to client secrets[^secopsapps], and CISA's baseline says to block app passwords[^scuba].",
+        "**Count device management as Tier 0.** After the March 2026 attack on Stryker, CISA urged least-privilege Intune roles and Multi Admin Approval for wipes and changes to apps, scripts and roles[^cisaintune]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "hybrid",
+      "title": "Paths between on-premises and cloud",
+      "navTitle": "Hybrid paths",
+      "items": [
+        "**Harden the sync server as Tier 0.** Whoever controls an Entra Connect or Cloud Sync server can change Entra users, for example reset their passwords, so require MFA for every admin[^connectprereq][^cloudsync].",
+        "**Turn off matching you don't need.** Disable soft matching and hard match takeover, so an AD object can't take over a cloud account[^connectprereq].",
+        "**Watch cloud tools that reach back.** Intune and similar tools run code on managed devices. Storm-2885 used Intune to deploy scripts and open tunnels into on-premises environments[^mddr]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "detect",
+      "title": "Alert on these changes",
+      "navTitle": "Detection",
+      "items": [
+        "**AD admin groups.** Events 4728, 4732 and 4756 log a member added to a global, local or universal security group[^appl].",
+        "**AdminSDHolder, GPOs and SID history.** Event 5136 logs a changed directory object, and 4765 logs SID history added to an account[^appl].",
+        "**Entra roles and Azure.** **Add member to role** and **Add eligible member to role**[^secopsapps], each Global Administrator activation[^scuba] and elevated access to Azure[^elevate].",
+        "**Apps.** **Add app role assignment to service principal** for Microsoft Graph, **Add owner to application** and new app credentials[^secopsapps]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Entra ID blocks hard-match takeover of admins.** Since July 2026, sync can't hard-match onto a cloud user who holds or is eligible for a privileged role[^syncerr].",
+        "**Entra Connect Sync needs a certificate.** Run 2.6.84.0 or later with application-based authentication by 7 April 2027, or sync stops[^connectprereq].",
+        "**Domain controllers stopped assuming RC4.** Since April 2026 they assume AES for accounts without explicit encryption types. Check KDCSVC events 201 to 209 for accounts still on RC4, whose tickets can be cracked offline[^rc4]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A separate admin forest.** Microsoft now treats the red forest (ESAE) as a custom configuration for exception cases, such as disconnected environments[^esae]. Its PAWs, MFA and least privilege still apply.",
+        "**A password vault before cutting rights.** Vaulting the passwords of 30 Domain Admins still leaves 30 Domain Admins. Shrink the list first.",
+        "**PAWs for everyone in IT.** Give full PAWs, with no email or web browsing, to Tier 0 admins. Others can use hardened devices without local admin rights."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Letting PIM licenses lapse.** Eligible assignments disappear and time-bound active ones become permanent[^govlic].",
+        "**Requiring approval without approvers.** If every Global and Privileged Role Administrator is only eligible, you're locked out[^pimsettings].",
+        "**Running services as Domain Admins.** Kerberoasting is a common issue with service accounts[^dmsa], so one weak password can hand over the domain.",
+        "**Leaving Azure elevated access on.** Deactivating Global Administrator in PIM leaves it on[^elevate]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Keep two emergency accounts and at most two named, cloud-only Global Administrators.",
+            "Business Premium includes Entra ID P1, not P2: buy P2 only for admins and PIM approvers[^govlic].",
+            "Ask your IT provider which accounts it uses, and drop the deprecated Partner Tier1 and Tier2 roles[^privroles]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Put every Entra role in PIM, with approval for Global Administrator and alerts on each activation.",
+            "Give Tier 0 admins PAWs on a management subnet, as the network segmentation sheet describes.",
+            "Review apps with Graph write permissions, and their owners, every quarter."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run quarterly access reviews of Tier 0, licensed for reviewers and reviewed users[^govlic].",
+            "Put Defender for Identity sensors on AD CS servers: several certificate checks need them[^mdicert].",
+            "Twice a year, add a test account to Domain Admins and an Entra role, and time the alert."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn, CISA's Entra ID baseline and Intune alert, M-Trends 2026 and the Microsoft Digital Defense Report 2026."
+    }
+  ],
+  "sources": [
+    {
+      "id": "esae",
+      "title": "Enhanced Security Admin Environment (ESAE) architecture mainstream retirement",
+      "publisher": "Microsoft Learn",
+      "date": "14 Feb 2023",
+      "url": "https://learn.microsoft.com/en-us/security/privileged-access-workstations/esae-retirement"
+    },
+    {
+      "id": "entrabp",
+      "title": "Best practices for Microsoft Entra roles",
+      "publisher": "Microsoft Learn",
+      "date": "1 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/best-practices"
+    },
+    {
+      "id": "appf",
+      "title": "Appendix F: Securing Domain Admins Groups in Active Directory",
+      "publisher": "Microsoft Learn",
+      "date": "12 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-f--securing-domain-admins-groups-in-active-directory"
+    },
+    {
+      "id": "pimsettings",
+      "title": "Configure Microsoft Entra role settings in PIM",
+      "publisher": "Microsoft Learn",
+      "date": "23 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings"
+    },
+    {
+      "id": "scuba",
+      "title": "CISA M365 Secure Configuration Baseline for Microsoft Entra ID",
+      "publisher": "CISA (ScubaGear)",
+      "date": "ScubaGear v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md"
+    },
+    {
+      "id": "privroles",
+      "title": "Privileged roles and permissions in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "5 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/privileged-roles-permissions"
+    },
+    {
+      "id": "connectprereq",
+      "title": "Microsoft Entra Connect: Prerequisites and hardware",
+      "publisher": "Microsoft Learn",
+      "date": "16 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-install-prerequisites"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "appc",
+      "title": "Appendix C: Protected Accounts and Groups in Active Directory",
+      "publisher": "Microsoft Learn",
+      "date": "12 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/security-best-practices/appendix-c--protected-accounts-and-groups-in-active-directory"
+    },
+    {
+      "id": "secplan",
+      "title": "Secure access practices for administrators in Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "21 Nov 2024",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-planning"
+    },
+    {
+      "id": "graphperms",
+      "title": "Microsoft Graph permissions reference",
+      "publisher": "Microsoft Learn",
+      "date": "14 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/graph/permissions-reference"
+    },
+    {
+      "id": "protected",
+      "title": "Protected Users Security Group",
+      "publisher": "Microsoft Learn",
+      "date": "27 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/protected-users-security-group"
+    },
+    {
+      "id": "mdicert",
+      "title": "Certificates security posture assessment in Microsoft Defender for Identity",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "dmsa",
+      "title": "Delegated Managed Service Accounts overview",
+      "publisher": "Microsoft Learn",
+      "date": "30 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/delegated-managed-service-accounts/delegated-managed-service-accounts-overview"
+    },
+    {
+      "id": "secopsapps",
+      "title": "Microsoft Entra security operations for applications",
+      "publisher": "Microsoft Learn",
+      "date": "6 Sep 2022",
+      "url": "https://learn.microsoft.com/en-us/entra/architecture/security-operations-applications"
+    },
+    {
+      "id": "cisaintune",
+      "title": "CISA Urges Endpoint Management System Hardening After Cyberattack Against US Organization",
+      "publisher": "CISA",
+      "date": "18 Mar 2026",
+      "url": "https://www.cisa.gov/news-events/alerts/2026/03/18/cisa-urges-endpoint-management-system-hardening-after-cyberattack-against-us-organization"
+    },
+    {
+      "id": "cloudsync",
+      "title": "Prerequisites for Microsoft Entra Cloud Sync",
+      "publisher": "Microsoft Learn",
+      "date": "22 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/how-to-prerequisites"
+    },
+    {
+      "id": "appl",
+      "title": "Appendix L: Events to Monitor",
+      "publisher": "Microsoft Learn",
+      "date": "30 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor"
+    },
+    {
+      "id": "elevate",
+      "title": "Elevate access to manage all Azure subscriptions and management groups",
+      "publisher": "Microsoft Learn",
+      "date": "10 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/elevate-access-global-admin"
+    },
+    {
+      "id": "syncerr",
+      "title": "Microsoft Entra Connect: Troubleshoot errors during synchronization",
+      "publisher": "Microsoft Learn",
+      "date": "1 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/tshoot-connect-sync-errors"
+    },
+    {
+      "id": "rc4",
+      "title": "KB5073381: Managing Kerberos KDC usage of RC4 (CVE-2026-20833)",
+      "publisher": "Microsoft Support",
+      "date": "updated 14 Apr 2026",
+      "url": "https://support.microsoft.com/en-us/kb/5073381"
+    },
+    {
+      "id": "govlic",
+      "title": "Microsoft Entra ID Governance licensing fundamentals",
+      "publisher": "Microsoft Learn",
+      "date": "29 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/licensing-fundamentals"
+    },
+    {
+      "id": "appowners",
+      "title": "Overview of enterprise application ownership",
+      "publisher": "Microsoft Learn",
+      "date": "6 Dec 2024",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/overview-assign-app-owners"
+    }
+  ]
+}
