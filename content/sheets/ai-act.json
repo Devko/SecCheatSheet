@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "List every AI system and your role in it.",
-          "text": "Record owner, vendor, purpose, data and who it affects, and whether you are provider, deployer, importer or distributor[^aiact]. Running a chatbot you built under your own name makes you its provider[^transp]."
+          "text": "Record owner, vendor, purpose, data and who it affects, and whether you are provider, deployer, importer or distributor[^aiact]. Running a chatbot you built under your name makes you its provider[^transp]."
         },
         {
           "title": "Rule out the banned practices.",
-          "text": "Eight have applied since February 2025, including emotion recognition at work: tracking call center staff's emotions is banned, tracking customers' is not[^aiact][^prohib]. AI that makes intimate deepfakes without consent is banned from 2 December 2026[^omnibus]."
+          "text": "Eight have applied since February 2025, including emotion recognition at work: tracking call center staff's emotions is banned, tracking customers' is high-risk[^aiact][^prohib]. AI that makes intimate deepfakes without consent is banned from 2 December 2026[^omnibus]."
         },
         {
           "title": "Disclose AI where the law requires it.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Find your Annex III uses now.",
-          "text": "Hiring, staff management, credit scoring, life and health insurance pricing, education and biometric identification are among the high-risk uses[^aiact]. Their duties start on 2 December 2027[^omnibus]."
+          "text": "Hiring, staff management, credit scoring, life and health insurance pricing, education and remote biometric identification are high-risk uses[^aiact]. Their duties start on 2 December 2027[^omnibus]."
         }
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Is it an AI system at all?",
-          "text": "Rule-based software, spreadsheets without AI features and forecasts that just use averages are not[^aidef]. Mark them out of scope."
+          "text": "Software that only runs rules people defined, plain spreadsheets and forecasts that just use averages are not[^aidef]. Mark them out of scope."
         },
         {
           "title": "Which role do you hold?",
@@ -75,8 +75,8 @@
         {
           "title": "Deployers (most organizations)",
           "items": [
-            "**High-risk, from 2 December 2027.** Follow the instructions for use, assign trained oversight staff with authority, keep logs at least 6 months, report serious incidents to the provider and inform workers and the people affected[^aiact].",
-            "**Impact assessment.** Public bodies, providers of public services and users of credit scoring or life and health insurance pricing assess fundamental rights impacts before first use and notify the authority[^aiact]. It may cross-reference the DPIA[^omnibus]."
+            "**High-risk, from 2 December 2027.** Follow the instructions for use, assign trained oversight staff with authority, keep logs at least 6 months, report serious incidents to the provider and the authority, and inform workers and the people affected[^aiact].",
+            "**Impact assessment.** Public bodies, providers of public services and users of credit scoring or life and health insurance pricing assess fundamental rights impacts before first use and notify the authority[^aiact]."
           ]
         },
         {
@@ -91,8 +91,8 @@
         {
           "title": "Providers of general-purpose AI models",
           "items": [
-            "**Who.** Indicatively, models trained with over 10²³ FLOP that generate language, images or video. Fine-tuning makes you a provider only if it uses over a third of the original training compute[^gpaiguide].",
-            "**Duties since 2 August 2025.** Documentation, information for downstream providers, a copyright policy and a public training-content summary; open-source models skip the first two unless systemic. Models placed earlier comply by 2 August 2027[^aiact]. The Commission accepts the Code of Practice as a way to comply[^gpaicop].",
+            "**Who.** Indicatively, models trained with over 10²³ FLOP that generate language, images or video, and anyone fine-tuning one with over a third of its original training compute[^gpaiguide].",
+            "**Duties since 2 August 2025.** Documentation, information for downstream providers, a copyright policy and a public training-content summary; open-source models skip the first two unless systemic. Models placed earlier comply by 2 August 2027[^aiact]. The Code of Practice is an adequate way to show compliance[^gpaicop].",
             "**Systemic risk.** Presumed above 10²⁵ FLOP: evaluations with adversarial testing, risk mitigation, incident reporting and cybersecurity[^aiact]."
           ]
         }
@@ -117,9 +117,9 @@
       "navTitle": "Enforcement",
       "items": [
         "**Fines scale with the duty.** Up to €35 million or 7% of worldwide turnover for banned practices, €15 million or 3% for most other duties and €7.5 million or 1% for misleading authorities[^aiact].",
-        "**The AI Office handles general-purpose AI.** It can fine model providers up to 3% or €15 million since 2 August 2026, and supervises systems they build on their own models[^aiact][^omnibus]. National authorities enforce the rest[^aiact].",
-        "**Germany: the Bundesnetzagentur.** Since 29 July 2026 it is the market surveillance authority, contact point and complaints office; BaFin covers AI tied to regulated financial activities[^kimig].",
-        "**Germany: the works council.** Inform it in time about planned AI use; it co-determines tools designed to monitor behavior or performance[^betrvg]."
+        "**The AI Office handles general-purpose AI.** It can fine model providers up to 3% or €15 million since 2 August 2026, and supervises most systems they build on their own models[^aiact][^omnibus]. National authorities do the rest[^aiact].",
+        "**Germany: the Bundesnetzagentur.** Since 29 July 2026 it is the default market surveillance authority, contact point and complaints office; BaFin covers AI tied to regulated financial activities[^kimig].",
+        "**Germany: the works council.** Inform it in time about planned AI use; it co-determines tools able to monitor behavior or performance[^betrvg][^bag]."
       ]
     },
     {
@@ -128,10 +128,10 @@
       "title": "Where the AI Act meets the GDPR and the CRA",
       "navTitle": "GDPR and CRA",
       "items": [
-        "**Run one assessment, not two.** High-risk deployers use the provider's information for their DPIA[^aiact], and the fundamental rights impact assessment may cross-reference it[^omnibus].",
+        "**Build on the DPIA.** High-risk deployers use provider information for their DPIA[^aiact], and the fundamental rights impact assessment may cross-reference it[^omnibus].",
         "**Ask where the model came from.** Models trained on personal data aren't always anonymous. Check that a model wasn't developed unlawfully, starting with its data sources and any regulator findings[^edpb28].",
         "**Bias testing has a legal basis.** Special categories of personal data may be processed where strictly necessary to find and correct bias, under safeguards such as pseudonymization[^omnibus].",
-        "**CRA compliance covers AI cybersecurity.** A high-risk system that meets the CRA's essential requirements meets the AI Act's cybersecurity requirement[^omnibus]."
+        "**CRA compliance can cover AI cybersecurity.** A high-risk system whose CRA declaration of conformity shows it meets the CRA's essential requirements is deemed to meet the AI Act's cybersecurity requirement[^omnibus]."
       ]
     },
     {
@@ -140,7 +140,7 @@
       "title": "What you can skip",
       "items": [
         "**ISO/IEC 42001 certification as AI Act proof.** Only EN 18286, which can be layered on ISO/IEC 42001, gives a presumption of conformity for a quality management system[^hsec]. Deployers need neither.",
-        "**Inventorying every macro and rule engine.** They aren't AI systems[^aidef].",
+        "**Inventorying macros and fixed-rule workflows.** They aren't AI systems[^aidef].",
         "**AI literacy exams and certificates.** The law asks for measures, not a guaranteed level[^omnibus].",
         "**Labeling internal drafts.** Posts on internal networks and professional correspondence aren't published[^transp]."
       ]
@@ -200,10 +200,10 @@
   "sources": [
     {
       "id": "aiact",
-      "title": "Regulation (EU) 2024/1689 (AI Act), Articles 3, 5, 6, 25 to 27, 50 to 55, 73, 74, 88, 99, 101, 111 and 113, Annex III",
+      "title": "Regulation (EU) 2024/1689 (AI Act), as amended, Articles 3, 5, 6, 25 to 27, 50 to 55, 73, 74, 88, 99, 101, 111, 113, Annex III",
       "publisher": "EUR-Lex",
-      "date": "2024",
-      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj"
+      "date": "27 Jul 2026",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689/2026-07-27"
     },
     {
       "id": "omnibus",
@@ -251,7 +251,7 @@
       "id": "gpaicop",
       "title": "The General-Purpose AI Code of Practice",
       "publisher": "European Commission",
-      "date": "10 Jul 2025",
+      "date": "updated 7 Oct 2026",
       "url": "https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai"
     },
     {
@@ -263,7 +263,7 @@
     },
     {
       "id": "kimig",
-      "title": "KI-MIG, Sections 2 and 12",
+      "title": "KI-MIG, Sections 2, 6, 8 and 12",
       "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
       "date": "22 Jul 2026",
       "url": "https://www.gesetze-im-internet.de/ki-mig/"
@@ -276,10 +276,17 @@
       "url": "https://www.gesetze-im-internet.de/betrvg/"
     },
     {
+      "id": "bag",
+      "title": "Decision 1 ABR 7/15 (co-determination over monitoring devices)",
+      "publisher": "Federal Labour Court (Germany)",
+      "date": "13 Dec 2016",
+      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-abr-7-15/"
+    },
+    {
       "id": "edpb28",
-      "title": "Opinion 28/2024 on data protection aspects of AI models",
+      "title": "Opinion 28/2024 on certain data protection aspects of AI models",
       "publisher": "European Data Protection Board",
-      "date": "18 Dec 2024",
+      "date": "17 Dec 2024",
       "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en"
     }
   ]
