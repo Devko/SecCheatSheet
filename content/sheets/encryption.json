@@ -169,7 +169,7 @@
       "items": [
         "**Deleting a key something still uses.** A deleted AWS KMS key leaves its data unrecoverable. Disable it first and alarm on use during the 7 to 30 day waiting period[^kmsdel].",
         "**Trusting infrastructure-as-code defaults.** AWS load balancer listeners created from the CLI, CloudFormation or CDK without a named policy get `ELBSecurityPolicy-2016-08`, which allows TLS 1.0 and 1.1[^albpol].",
-        "**Turning off post-quantum key exchange for a middlebox.** Firefox warns this removes protection against later decryption of recorded traffic[^ffpq], and Chrome's switch for it ended after version 146[^chrome]. Fix the middlebox."
+        "**Turning off post-quantum key exchange for a middlebox.** Firefox warns this removes protection against later decryption of recorded traffic[^ffpq], and Chrome's policy to do so ended with version 146[^chrome]. Fix the middlebox."
       ]
     },
     {
