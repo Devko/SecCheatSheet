@@ -32,11 +32,11 @@
         },
         {
           "title": "Take remote access and databases off the internet.",
-          "text": "Put them behind a VPN or access gateway. Exploits opened 32% of Mandiant's 2025 intrusions, with an estimated mean time to exploit of -7 days[^mtrends]."
+          "text": "Put them behind a VPN or access gateway. Exploits opened 32% of Mandiant's 2025 intrusions, and the estimated mean time to exploit is -7 days, so exploitation often starts before the patch[^mtrends]."
         },
         {
           "title": "Watch for leaked secrets and passwords.",
-          "text": "Turn on secret scanning and leaked credential alerts. Of the ransomware victims Verizon linked to a credential or infostealer leak, half had one in the 95 days before they were named[^dbir]."
+          "text": "Turn on secret scanning and leaked credential alerts. Of the ransomware victims Verizon found with a credential or infostealer leak that year, half had one within 95 days before being named[^dbir]."
         }
       ]
     },
@@ -64,7 +64,7 @@
         },
         {
           "title": "Claim your SaaS tenants.",
-          "text": "Self-service sign-ups with work addresses create unmanaged Entra directories on your domain; take them over by verifying the domain[^entratakeover]. Do the same in other SaaS that verifies domains."
+          "text": "Self-service sign-ups can leave unmanaged Entra directories on your domains; take them over by verifying the domain[^entratakeover]. Do the same in other SaaS that verifies domains."
         },
         {
           "title": "Scan it all and compare.",
@@ -78,7 +78,7 @@
       "title": "What to look for in every scan",
       "navTitle": "What to look for",
       "items": [
-        "**Remote access and OT protocols.** RDP, SSH, VNC, TeamViewer, Modbus, DNP3 and BACnet are on CISA's list of ports to investigate[^cisaerg]. Firewall and VPN admin pages are in the edge devices sheet.",
+        "**Remote access and OT protocols.** CISA's minimum list of ports to check includes SSH, Telnet, RDP, VNC, TeamViewer, Modbus, DNP3 and BACnet[^cisaerg]. Firewall and VPN admin pages are in the edge devices sheet.",
         "**Databases.** Elasticsearch, MongoDB and other data stores should never answer from the internet; Shadowserver reports open ones daily[^shadow]. Cloud storage is in the cloud configuration sheet.",
         "**Forgotten and temporary systems.** File transfer servers, remote management tools, dev and test sites, and services that should have been decommissioned or kept internal[^easm].",
         "**Dangling DNS.** A CNAME to a deleted resource lets an attacker claim the name, serve content and get a valid certificate on your subdomain[^azdangling]. Any AWS account can claim a deleted S3 bucket or Elastic Beanstalk name[^awstakeover]."
@@ -117,7 +117,7 @@
         "**Shadowserver.** Free daily reports on exposed services for the IP ranges and domains you control[^shadow].",
         "**CISA Cyber Hygiene (US).** Free weekly scan reports and urgent alerts for US governments and critical infrastructure[^cyhy].",
         "**NCSC Early Warning (UK).** Free alerts on vulnerable or exposed services for any UK organization that registers its IPs and domains[^ncscew].",
-        "**CERT-Bund (Germany).** It sends daily reports to network operators by IP address and asks providers to pass them on[^certbund]. Essential and important entities can ask the BSI to scan them[^bsig].",
+        "**CERT-Bund (Germany).** It sends daily reports to network operators by IP address and asks providers to pass them on[^certbund]. Essential and important entities can ask the BSI to check their public systems[^bsig].",
         "**Commercial EASM.** It adds continuous discovery, takeover checks and history. Ask how it validates findings and how fresh its data is[^easm]."
       ]
     },
@@ -152,7 +152,7 @@
       "items": [
         "**Scanning only the ranges you know.** Cloud, SaaS and supplier systems sit on other addresses, and vendor-installed modems may not show up in routine scans[^cisaplc]. Discover from DNS and certificates too.",
         "**Deleting the resource before its DNS record.** Delete the record, wait out the TTL, then delete the resource[^awstakeover].",
-        "**Notices to a mailbox nobody reads.** CERT-Bund reaches you only through your network operator[^certbund]. Check that providers forward its reports and that abuse contacts reach a person."
+        "**Notices to a mailbox nobody reads.** CERT-Bund sends its reports to the network operator for each IP address[^certbund]. Make sure providers forward them and abuse mail reaches a person."
       ]
     },
     {
