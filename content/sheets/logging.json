@@ -1,0 +1,357 @@
+{
+  "slug": "logging",
+  "topic": "Logging and monitoring",
+  "status": "draft",
+  "order": 17,
+  "capability": "detect-respond/logging",
+  "title": "Logging and monitoring: which logs do you need, and which alerts deserve a person?",
+  "short": "Send identity, cloud and server logs to a store your admins can't erase, keep 12 months and prove monthly that your alerts fire.",
+  "answer": "This month, send Entra, Microsoft 365, cloud and server logs to a store that your everyday admin accounts can't change or delete, and keep 12 months of them, the first 6 searchable, as the new US federal baseline requires[^m2614]. Then alert on the few events that are rarely harmless, give each alert a named owner and deputy, and prove every month that the alerts still reach them.",
+  "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID with some on-premises servers and cloud workloads",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Get logs out of their default stores.",
+          "text": "Entra keeps sign-in and audit logs 7 days on Free and 30 on P1 or P2[^entraret]; the Azure Activity log[^activity] and CloudTrail event history[^ctbp] keep 90 days. Export each one this month."
+        },
+        {
+          "title": "Keep the copy where your admins can't delete it.",
+          "text": "Attackers delete local logs to hide[^asd]. Use a separate Azure subscription or AWS account with its own admins[^ctbp], on immutable storage that even account administrators can't delete[^immutable]."
+        },
+        {
+          "title": "Turn on the Windows logging that's off by default.",
+          "text": "Enable **Audit Process Creation** with command lines[^cmdline] and **PowerShell Script Block Logging**[^pslog], plus at least the minimum audit policy for Windows Event Forwarding[^wef]."
+        },
+        {
+          "title": "Name who answers each alert.",
+          "text": "Send alerts to a shared mailbox and a phone, with a named person and deputy each week. If nobody answers at night, pay a managed detection service before buying tools."
+        },
+        {
+          "title": "Alert when a source goes quiet, and test monthly.",
+          "text": "Alert on unexpected log termination, as Mandiant advises[^mtrends]. Monthly, run Defender for Endpoint's detection test on a server, whose alert appears in about 10 minutes[^mdetest], and check that a person saw it."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "check",
+      "title": "Check whether your logging would hold up",
+      "navTitle": "Self-check",
+      "items": [
+        {
+          "title": "Could you see an admin sign-in from 10 months ago?",
+          "text": "If not, extend retention. It can take up to 18 months to discover an incident[^asd], and Mandiant calls standard 90-day retention insufficient for scoping intrusions[^mtrends]."
+        },
+        {
+          "title": "Who could erase the central copy?",
+          "text": "List every account that can delete logs or stop collection. If any of them is an everyday admin account, separate the store."
+        },
+        {
+          "title": "Do all clocks agree?",
+          "text": "Point the PDC emulator in the forest root at a reliable external source; domain members follow the domain hierarchy[^w32time]. Store timestamps in UTC as ISO 8601 and use more than one time source[^asd]."
+        },
+        {
+          "title": "Is every planned source arriving?",
+          "text": "Compare the asset list with the sources that sent data this week. The BSI's federal standard requires this check after rollout, including data formats and time sync[^bsipd]."
+        },
+        {
+          "title": "When did an alert last reach someone after hours?",
+          "text": "If nobody knows, raise a test alert on a Sunday evening and time the response."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "sources",
+      "title": "Logs to collect first",
+      "navTitle": "Priority logs",
+      "items": [
+        "**Rank by what attackers want.** ASD and its partners rank critical systems and data first, then internet-facing services, identity servers, other critical servers, edge devices and admin workstations[^asd].",
+        "**Entra ID and Microsoft 365.** Export sign-in logs, including non-interactive and service principal sign-ins, audit logs and Graph activity logs[^entralogs], which aren't kept unless exported[^entraret]. The incident response sheet covers the unified audit log.",
+        "**Linux.** Load audit rules from `/usr/share/audit/sample-rules` with `augenrules --load`[^rhaudit], and log use of curl, systemctl and python[^asd].",
+        "**Cloud.** In AWS, use a multi-Region trail with log file integrity validation[^ctbp]. In Azure, add an Activity log diagnostic setting per subscription; a management group setting misses some events[^activity].",
+        "**Edge devices and hypervisors.** See the edge devices sheet. Mandiant calls hypervisor logs the only way to detect snapshot tampering or rogue virtual machines[^mtrends]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "alerts",
+      "title": "Alerts worth a person's time",
+      "navTitle": "Alerts",
+      "items": [
+        "**Logging stopped or cleared.** Windows events 1102 and 104 mean a log was cleared[^wef]. Also alert on deleted diagnostic settings and stopped trails.",
+        "**New admin rights.** Use the privileged access sheet's list for AD groups and Entra roles. For edge devices, see the edge devices sheet.",
+        "**Mail forwarded outside.** The default policy **Suspicious email forwarding activity** is High severity and on by default in E1, E3 and E5[^alertpol]. Add your alert mailbox as a recipient.",
+        "**Security tools changed.** Alert when someone changes Defender or logging settings or disables monitoring services[^asd].",
+        "**High-severity incidents.** Create a Defender XDR email rule for High and Medium incidents and use **Send test email**[^xdrmail].",
+        "**Large data exports.** ASD advises alerting on large or continuous exports by default[^asd]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "retention",
+      "title": "Retention and cost",
+      "navTitle": "Retention",
+      "items": [
+        "**Keep 12 months, 6 of them searchable.** That's the US federal minimum since May 2026[^m2614], and a sound default.",
+        "**Tier the storage.** Keep recent logs hot and older ones cold[^asd]. Sentinel retains analytics data free for 90 days and offers a cheaper lake tier for bulky tables[^sentbill].",
+        "**Start with what's free.** Sentinel ingests Azure Activity, Office 365 audit logs and Defender alerts free; raw Entra ID and Defender logs cost extra[^sentbill].",
+        "**Filter at the source.** Collect Windows security events with the Common or Minimal set, and keep non-security data in a separate workspace[^sentcost].",
+        "**Write the period down.** NIS2 entities must keep logs for a predefined period[^enisa]. The BSI suggests 90 days for federal log data but lets security events without personal data stay longer[^bsipd]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**The US federal baseline was cut back.** OMB's M-26-14 of 22 May 2026 replaced M-21-31, whose retention of vast amounts of log data proved neither feasible nor cost-effective for most agencies[^m2614].",
+        "**CISA published a logging reference architecture.** Its August 2026 guide lists health and completeness monitoring, synthetic tests and automated threat emulation as features a logging system needs[^lra].",
+        "**CISA retired Logging Made Easy.** Support ended on 22 May 2026 and the repository is read-only[^lme]. If you run it, plan a replacement.",
+        "**Sysmon is built into Windows.** Windows 11 and Windows Server 2025 include it as an optional feature. Uninstall standalone Sysmon first, and parse the XML, as event text is now localized[^sysmon]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Sending everything to the SIEM.** CISA notes that SIEM-first designs often become costly as volume grows[^lra]. Keep bulky logs in cheaper storage.",
+        "**Microsoft service principal sign-in logs.** Microsoft calls this preview log high-volume and not essential for security investigations[^entralogs].",
+        "**Data access logs everywhere.** Google Cloud leaves them off, except for BigQuery, because of their volume[^gcpaudit]. Enable them only for sensitive data.",
+        "**Hundreds of imported rules.** Ten alerts that someone answers beat hundreds that nobody reads."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Basic audit policy overwriting the advanced one.** Enable **Audit: Force audit policy subcategory settings**; event 4719 shows an overwrite[^cmdline].",
+        "**Local logs too small.** Windows Event Forwarding buffers in the local log, and events overwritten while the collector is unreachable are lost without notice[^wef]. Raise maximum log sizes[^asd].",
+        "**Expecting a license upgrade to bring back history.** Entra retention changes aren't retroactive; expired data is gone unless you archived it[^entraret].",
+        "**Letting everyone read the logs.** Command lines and script blocks can expose passwords and other credentials[^cmdline][^pslog]. Limit who can read them."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on Defender XDR incident emails for High and Medium severity to a shared mailbox[^xdrmail].",
+            "Archive Entra logs to a storage account in its own subscription with a locked immutability policy[^immutable].",
+            "Ask your IT provider for the last alert it acted on and how long that took."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Run one SIEM workspace: free sources first, then Entra sign-ins and server security events.",
+            "Write one rule per item in the alert list, each with an owner, and test them monthly.",
+            "Cover nights and weekends with a managed detection service that may isolate devices."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "NIS2 cloud, data center and managed service providers must sync clocks and monitor logging availability independently[^enisa].",
+            "Keep a year or more in a cheaper lake tier and only recent data in analytics[^sentbill].",
+            "Inject synthetic events per source category and track failures to a fix[^lra]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on the joint ASD, CISA, FBI and NSA event logging guidance, OMB M-26-14, CISA's Logging Reference Architecture, M-Trends 2026, ENISA's NIS2 guidance, the BSI logging standard and vendor documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "asd",
+      "title": "Best practices for event logging and threat detection",
+      "publisher": "ASD's ACSC, CISA, FBI, NSA and partners",
+      "date": "Aug 2024",
+      "url": "https://www.ic3.gov/CSA/2024/240822.pdf"
+    },
+    {
+      "id": "m2614",
+      "title": "M-26-14: Ensuring Effective and Efficient Agency Logging and Network Visibility",
+      "publisher": "OMB (US)",
+      "date": "22 May 2026",
+      "url": "https://www.whitehouse.gov/wp-content/uploads/2026/05/M-26-14-Ensuring-Effective-and-Efficient-Agency-Logging-and-Network-Visibility-to-Defend-Against-Evolving-Cyber-Threats.pdf"
+    },
+    {
+      "id": "lra",
+      "title": "Logging Reference Architecture",
+      "publisher": "CISA",
+      "date": "20 Aug 2026",
+      "url": "https://www.cisa.gov/sites/default/files/2026-09/logging-reference-architecture-508.pdf"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026 Executive Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "enisa",
+      "title": "NIS2 technical implementation guidance (Implementing Regulation 2024/2690), v1.0",
+      "publisher": "ENISA",
+      "date": "26 Jun 2025",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
+    },
+    {
+      "id": "bsipd",
+      "title": "Mindeststandard Protokollierung und Detektion von Cyberangriffen, Version 2.1",
+      "publisher": "BSI",
+      "date": "11 Nov 2024",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Mindeststandards/MST_BSI_PD_Version_2_1.pdf"
+    },
+    {
+      "id": "lme",
+      "title": "Logging Made Easy (archived repository)",
+      "publisher": "CISA on GitHub",
+      "date": "archived 22 May 2026",
+      "url": "https://github.com/cisagov/LME"
+    },
+    {
+      "id": "entraret",
+      "title": "Microsoft Entra data retention",
+      "publisher": "Microsoft Learn",
+      "date": "6 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-reports-data-retention"
+    },
+    {
+      "id": "entralogs",
+      "title": "Logs available for streaming from Microsoft Entra ID",
+      "publisher": "Microsoft Learn",
+      "date": "16 Apr 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-diagnostic-settings-logs-options"
+    },
+    {
+      "id": "activity",
+      "title": "Activity log in Azure Monitor",
+      "publisher": "Microsoft Learn",
+      "date": "19 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/activity-log"
+    },
+    {
+      "id": "ctbp",
+      "title": "Security best practices in AWS CloudTrail",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/best-practices-security.html"
+    },
+    {
+      "id": "gcpaudit",
+      "title": "Cloud Audit Logs overview",
+      "publisher": "Google Cloud Documentation",
+      "date": "updated 30 Oct 2026",
+      "url": "https://docs.cloud.google.com/logging/docs/audit"
+    },
+    {
+      "id": "immutable",
+      "title": "Immutable storage for blob data overview",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/immutable-storage-overview"
+    },
+    {
+      "id": "cmdline",
+      "title": "Command line process auditing",
+      "publisher": "Microsoft Learn",
+      "date": "12 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/component-updates/command-line-process-auditing"
+    },
+    {
+      "id": "pslog",
+      "title": "about_Logging (Windows PowerShell 5.1)",
+      "publisher": "Microsoft Learn",
+      "date": "9 Jan 2024",
+      "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1"
+    },
+    {
+      "id": "wef",
+      "title": "Use Windows Event Forwarding to help with intrusion detection",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/use-windows-event-forwarding-to-assist-in-intrusion-detection"
+    },
+    {
+      "id": "sysmon",
+      "title": "Sysmon overview",
+      "publisher": "Microsoft Learn",
+      "date": "24 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/sysmon/overview"
+    },
+    {
+      "id": "w32time",
+      "title": "How the Windows Time service works",
+      "publisher": "Microsoft Learn",
+      "date": "25 Jul 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/windows-time-service/how-the-windows-time-service-works"
+    },
+    {
+      "id": "rhaudit",
+      "title": "Auditing the system (RHEL 9 Security hardening)",
+      "publisher": "Red Hat Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening"
+    },
+    {
+      "id": "sentbill",
+      "title": "Plan costs and understand pricing and billing (Microsoft Sentinel)",
+      "publisher": "Microsoft Learn",
+      "date": "1 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/sentinel/billing"
+    },
+    {
+      "id": "sentcost",
+      "title": "Reduce costs for Microsoft Sentinel",
+      "publisher": "Microsoft Learn",
+      "date": "14 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/azure/sentinel/billing-reduce-costs"
+    },
+    {
+      "id": "alertpol",
+      "title": "Alert policies in the Microsoft Defender portal",
+      "publisher": "Microsoft Learn",
+      "date": "3 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/alert-policies"
+    },
+    {
+      "id": "xdrmail",
+      "title": "Get incident notifications by email",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/m365d-notifications-incidents"
+    },
+    {
+      "id": "mdetest",
+      "title": "Run a detection test on a newly onboarded device",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/run-detection-test"
+    }
+  ]
+}

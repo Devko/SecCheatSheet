@@ -1,0 +1,381 @@
+{
+  "slug": "cloud-configuration",
+  "topic": "Cloud configuration",
+  "status": "draft",
+  "order": 18,
+  "capability": "infrastructure/cloud",
+  "title": "Cloud configuration: which settings let attackers in, and would you notice if one changed?",
+  "short": "Check Microsoft 365 and every cloud account against one free baseline this month, block public storage and long-lived keys at the top, and diff the results every week.",
+  "answer": "This month, run CISA's ScubaGear against Microsoft 365 and a free posture check against each cloud, and fix public storage, long-lived access keys, open app consent and open external access first. Then lock those settings with organization-level guardrails and re-run the same checks every week, so a changed setting shows up as a diff rather than as an incident.",
+  "audience": "IT, platform and security teams running Microsoft 365 with workloads in Azure, AWS or Google Cloud, in organizations of any size",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Measure against one published baseline this month.",
+          "text": "Run CISA's free ScubaGear against Microsoft 365; it reads settings and changes nothing[^scubagear]. For clouds, Defender for Cloud's free Foundational CSPM checks Azure, AWS and Google Cloud against the Microsoft cloud security benchmark[^cspm]."
+        },
+        {
+          "title": "Block public storage at the top.",
+          "text": "Enforce S3 Block Public Access for the whole AWS organization[^s3org], set `AllowBlobPublicAccess` to false on every Azure storage account[^azanon] and enforce `storage.publicAccessPrevention` in Google Cloud[^gcpcons]. The DBIR counts data stores left online without access controls among the most common errors behind breaches[^dbir]."
+        },
+        {
+          "title": "Replace long-lived keys with short-lived credentials.",
+          "text": "AWS traces a large portion of security events to compromised long-term access keys[^awsssec]. In late 2025 attackers broke in with AWS keys suspected to have leaked in 2022[^th]. Move people to federated sign-in and workloads to roles or managed identities, then delete the keys."
+        },
+        {
+          "title": "Close app consent and external access in Microsoft 365.",
+          "text": "Restrict user consent to verified publishers and low-risk permissions, with an admin consent workflow[^scuba]. Allow Teams external access only for named domains[^scubateams]: confirmed vishing over cross-tenant Teams calls rose 502% in a year[^mddr]."
+        },
+        {
+          "title": "Turn the baseline into guardrails, then diff it weekly.",
+          "text": "Enforce what must never change with AWS Organizations policies, Azure Policy and Google Cloud organization policies. Re-run the assessment every week and compare runs; ScubaGear's `Invoke-SCuBADiff` does this for Microsoft 365[^scubagear]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "adopt",
+      "title": "Adopt a baseline without breaking things",
+      "navTitle": "Adopt a baseline",
+      "items": [
+        {
+          "title": "Pick one baseline per platform.",
+          "text": "For Microsoft 365, SCuBA, or Baseline Security Mode, which every plan has in the admin center[^bsm]. For Azure, the Microsoft cloud security benchmark[^mcsb]; for AWS, Foundational Security Best Practices[^fsbp]; for Google Cloud, its security baseline constraints[^gcpbase]."
+        },
+        {
+          "title": "Assess before you change anything.",
+          "text": "Export every failing check. ScubaGear's first run also writes a template of your tenant's current settings[^scubagear]."
+        },
+        {
+          "title": "Write down each exception.",
+          "text": "Record why each failing setting stays, who owns it and when it ends. ScubaGear's YAML config holds these as exclusions, annotations or omissions[^scubagear]."
+        },
+        {
+          "title": "Check the impact, then fix.",
+          "text": "Start with the policies CISA marks as BOD 25-01 requirements[^bod]. Turn on each Baseline Security Mode setting whose impact report shows zero impact[^bsm], and start Azure Policy in audit mode."
+        },
+        {
+          "title": "Enforce, then re-run.",
+          "text": "Switch audit to deny once the findings are fixed, test each guardrail on one account or OU first, and re-run the assessment to confirm."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "settings",
+      "title": "Settings attackers go after",
+      "navTitle": "Key settings",
+      "span": "full",
+      "items": [
+        "**Public storage.** Google's public access prevention revokes existing public access the moment you enforce it[^gcpcons]. Move public websites and downloads into a separate account or project before you enforce any of these settings.",
+        "**Access keys and shared keys.** Attackers reach Azure Blob Storage through exposed credentials, shared keys and SAS tokens[^mddr], and accounts accept their keys until `AllowSharedKeyAccess` is false[^azshared]. Google Cloud blocks service account keys in organizations created since May 2024[^gcpbase] and disables keys it finds exposed[^th]. Entra app secrets: see the privileged access sheet.",
+        "**Instance metadata.** IMDSv1 hands an instance's role credentials to any request that reaches it, including through SSRF flaws and open proxies[^imdsblog]. Require IMDSv2 by account default or declarative policy, find laggards with the `ImdsV1Enabled` metric, and add `ec2:RoleDelivery` to an SCP so IMDSv1 credentials stop working[^imds].",
+        "**Broad roles for workloads.** Generate policies from actual use with IAM Access Analyzer[^iambp] and remove wildcard actions, which Security Hub flags as IAM.1 and IAM.21[^fsbp]. For GitHub Actions deploying through OIDC, pin the role's `sub` condition to one repository and branch or environment[^ghoidc].",
+        "**Guests and external access.** Let only admins and Guest Inviters invite guests, limit guests' directory access, invite only from approved domains[^scuba] and block chats started by unmanaged Teams accounts[^scubateams]. In Google Cloud, `iam.allowedPolicyMemberDomains` keeps IAM grants inside your organization[^gcpbase]. SharePoint links: see the DLP sheet.",
+        "**OAuth app consent.** Microsoft's managed default for new tenants still lets users consent to delegated permissions outside a list of mail, file, calendar and chat scopes[^consentpol]. Changing it keeps existing grants[^consent], so review those too. Stolen Salesloft Drift tokens opened Salesforce data at Google, Zscaler, Cisco and others in 2025[^dbir]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "guardrails",
+      "title": "Guardrails and drift checks",
+      "navTitle": "Guardrails",
+      "span": "full",
+      "items": [
+        "**AWS.** SCPs cap what roles can do, RCPs what resources allow, and declarative policies set EC2 defaults such as IMDSv2 across accounts[^orgpol][^imds]. Test each on one OU before the whole organization.",
+        "**Azure.** Assign deny policies at a management group. Deny blocks new and updated resources but only marks existing ones non-compliant[^azdeny], so fix those separately.",
+        "**Google Cloud.** Organizations created before 3 May 2024 lack the security baseline constraints[^gcpbase]. Set them yourself, plus a policy that blocks 0.0.0.0/0 ingress, as Google advises[^th].",
+        "**Infrastructure as code.** Scan each Terraform or CloudFormation pull request with a policy checker such as Checkov[^checkov]. Run `terraform plan` on a schedule: a non-empty plan nobody started means a change outside the pipeline.",
+        "**The guardrails themselves.** Alert on changes to SCPs, policy assignments, organization policies, consent settings and Conditional Access. The logging sheet covers which logs to keep."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Exploits overtook weak credentials in Google Cloud.** In late 2025, software flaws opened 44.5% of the Google Cloud intrusions in Google's data, weak or missing credentials 27.2% and misconfiguration 21%, down from 29.4%. Google thinks its secure defaults may explain part of the shift[^th]. Patch exposed workloads within the patching sheet's deadlines.",
+        "**ScubaGear 2.0 is out.** CISA's October 2026 release adds a Security Suite baseline for Defender, Purview, Exchange Online and Teams and scores risky apps[^scubanews]. The Entra baseline now requires blocking risky AI agents[^scuba]. Re-run it and update your config file.",
+        "**Microsoft 365 moved toward secure defaults.** Baseline Security Mode, in the admin center since November 2025, covers phishing-resistant MFA for admins, legacy authentication and app consent, with impact reports[^bsm]. Tenant Configuration Management, generally available since April 2026, monitors over 200 settings across six workloads[^tcmga].",
+        "**S3 tightened two defaults.** Since November 2025 one AWS Organizations policy can enforce Block Public Access for every account[^s3org]. Since April 2026 new buckets reject SSE-C[^ssec], which attackers with stolen keys had used to re-encrypt victims' objects[^awsssec]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A paid CSPM before the free checks.** ScubaGear is public domain[^scubagear], and Defender for Cloud's Foundational CSPM is free for Azure, AWS and Google Cloud[^cspm]. Buy attack path analysis after the basics are closed.",
+        "**Perfecting 90-day key rotation.** Security Hub checks for it[^fsbp], but AWS advises not creating long-term keys at all[^awsssec]. Remove them instead.",
+        "**Mapping to every framework first.** Microsoft notes that its benchmark's mappings to CIS, NIST or PCI DSS don't by themselves mean compliance[^mcsb]. Fix against one baseline, then map for the auditor."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Trusting a new default to fix old resources.** An IMDSv2 account default leaves existing instances alone[^imds], and consent changes keep existing grants[^consent].",
+        "**Running workloads in the AWS management account.** SCPs and RCPs don't restrict it[^orgpol].",
+        "**Giving the deploy pipeline admin rights.** UNC6426 turned a stolen GitHub token into AWS administrator access in under 72 hours, because the pipeline's CloudFormation role could create roles[^th].",
+        "**Exposing a test resource \"just for a day.\"** Microsoft measured a median of 5.3 hours from an exposed container's start to the first exploit attempt[^mddr]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on each Baseline Security Mode setting with zero impact[^bsm].",
+            "Ask your IT provider for a monthly ScubaGear report and the list of consented apps and guests.",
+            "Keep all cloud accounts under one organization or management group, with public storage blocked at the top."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Run ScubaGear weekly from a scheduled job and post the diff to the team channel.",
+            "Connect every cloud account to one posture tool and give each finding an owner and a due date.",
+            "Make infrastructure as code the only write path, and keep console write access for emergency roles."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "US federal civilian agencies must meet BOD 25-01's mandatory SCuBA policies and report results to CISA[^bod].",
+            "Feed tenant drift and posture findings into the SIEM, with a fix time per severity.",
+            "Review changes to SCPs, Azure Policy and organization policies like Tier 0 code, with two people."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on CISA's SCuBA baselines and BOD 25-01, Google's Cloud Threat Horizons Report H1 2026, the 2026 DBIR, the Microsoft Digital Defense Report 2026 and AWS, Microsoft Learn and Google Cloud documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "scubagear",
+      "title": "ScubaGear (README)",
+      "publisher": "CISA",
+      "date": "v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear"
+    },
+    {
+      "id": "scuba",
+      "title": "CISA M365 Secure Configuration Baseline for Microsoft Entra ID",
+      "publisher": "CISA (ScubaGear)",
+      "date": "ScubaGear v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md"
+    },
+    {
+      "id": "scubateams",
+      "title": "CISA M365 Secure Configuration Baseline for Microsoft Teams",
+      "publisher": "CISA (ScubaGear)",
+      "date": "ScubaGear v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/teams.md"
+    },
+    {
+      "id": "scubanews",
+      "title": "CISA Publishes Significant Updates to ScubaGear and ScubaGoggles",
+      "publisher": "CISA",
+      "date": "27 Oct 2026",
+      "url": "https://www.cisa.gov/news-events/news/cisa-publishes-significant-updates-scubagear-and-scubagoggles"
+    },
+    {
+      "id": "bod",
+      "title": "BOD 25-01: Implementing Secure Practices for Cloud Services",
+      "publisher": "CISA",
+      "date": "17 Dec 2024",
+      "url": "https://www.cisa.gov/news-events/directives/bod-25-01-implementing-secure-practices-cloud-services"
+    },
+    {
+      "id": "th",
+      "title": "Cloud Threat Horizons Report H1 2026",
+      "publisher": "Google Cloud",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/cloud_threat_horizons_report_h12026.pdf"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "bsm",
+      "title": "Baseline security mode settings",
+      "publisher": "Microsoft Learn",
+      "date": "30 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/baseline-security-mode/baseline-security-mode-settings"
+    },
+    {
+      "id": "consent",
+      "title": "Configure how users consent to applications",
+      "publisher": "Microsoft Learn",
+      "date": "15 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent"
+    },
+    {
+      "id": "consentpol",
+      "title": "Manage app consent policies",
+      "publisher": "Microsoft Learn",
+      "date": "22 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/manage-app-consent-policies"
+    },
+    {
+      "id": "tcmga",
+      "title": "Tenant Configuration Management APIs are now generally available",
+      "publisher": "Microsoft Entra Blog",
+      "date": "23 Apr 2026",
+      "url": "https://techcommunity.microsoft.com/blog/microsoft-entra-blog/tenant-configuration-management-apis-are-now-generally-available/4513157"
+    },
+    {
+      "id": "mcsb",
+      "title": "Overview of the Microsoft cloud security benchmark v2 (preview)",
+      "publisher": "Microsoft Learn",
+      "date": "15 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/security/benchmark/azure/overview"
+    },
+    {
+      "id": "cspm",
+      "title": "What is Cloud Security Posture Management (CSPM)",
+      "publisher": "Microsoft Learn",
+      "date": "11 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-cloud-security-posture-management"
+    },
+    {
+      "id": "azanon",
+      "title": "Remediate anonymous read access to blob data",
+      "publisher": "Microsoft Learn",
+      "date": "15 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-prevent"
+    },
+    {
+      "id": "azshared",
+      "title": "Prevent authorization with Shared Key",
+      "publisher": "Microsoft Learn",
+      "date": "11 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/common/shared-key-authorization-prevent"
+    },
+    {
+      "id": "azdeny",
+      "title": "Azure Policy definitions deny effect",
+      "publisher": "Microsoft Learn",
+      "date": "4 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effect-deny"
+    },
+    {
+      "id": "fsbp",
+      "title": "AWS Foundational Security Best Practices standard in Security Hub CSPM",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/securityhub/latest/userguide/fsbp-standard.html"
+    },
+    {
+      "id": "s3org",
+      "title": "Amazon S3 Block Public Access now supports organization-level enforcement",
+      "publisher": "AWS",
+      "date": "26 Nov 2025",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2025/11/amazon-s3-block-public-access-organization-level-enforcement/"
+    },
+    {
+      "id": "ssec",
+      "title": "Default SSE-C setting for new buckets FAQ",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/default-s3-c-encryption-setting-faq.html"
+    },
+    {
+      "id": "awsssec",
+      "title": "Preventing unintended encryption of Amazon S3 objects",
+      "publisher": "AWS Security Blog",
+      "date": "updated 18 Mar 2025",
+      "url": "https://aws.amazon.com/blogs/security/preventing-unintended-encryption-of-amazon-s3-objects/"
+    },
+    {
+      "id": "iambp",
+      "title": "Security best practices in IAM",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    },
+    {
+      "id": "imds",
+      "title": "Transition to using Instance Metadata Service Version 2",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-transition-to-version-2.html"
+    },
+    {
+      "id": "imdsblog",
+      "title": "Add defense in depth against open firewalls, reverse proxies, and SSRF vulnerabilities with enhancements to the EC2 Instance Metadata Service",
+      "publisher": "AWS Security Blog",
+      "date": "19 Nov 2019",
+      "url": "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/"
+    },
+    {
+      "id": "orgpol",
+      "title": "Managing organization policies with AWS Organizations",
+      "publisher": "AWS Documentation",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies.html"
+    },
+    {
+      "id": "ghoidc",
+      "title": "Configuring OpenID Connect in Amazon Web Services",
+      "publisher": "GitHub Docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws"
+    },
+    {
+      "id": "gcpbase",
+      "title": "Manage Google Cloud security baseline constraints",
+      "publisher": "Google Cloud",
+      "date": "updated 26 Oct 2026",
+      "url": "https://docs.cloud.google.com/organization-policy/manage-baseline-constraints"
+    },
+    {
+      "id": "gcpcons",
+      "title": "Organization policy constraints",
+      "publisher": "Google Cloud",
+      "date": "updated 26 Oct 2026",
+      "url": "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"
+    },
+    {
+      "id": "checkov",
+      "title": "What is Checkov?",
+      "publisher": "Checkov docs",
+      "date": "checked 4 Nov 2026",
+      "url": "https://www.checkov.io/1.Welcome/What%20is%20Checkov.html"
+    }
+  ]
+}

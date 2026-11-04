@@ -1,0 +1,351 @@
+{
+  "slug": "endpoints-email",
+  "topic": "Endpoints and email",
+  "status": "draft",
+  "order": 19,
+  "capability": "infrastructure/endpoint",
+  "title": "Endpoints and email: which settings stop the attacks that actually land?",
+  "short": "Put EDR in block mode and users on standard accounts this month, then take every mail domain to DMARC reject within 90 days.",
+  "answer": "This month, make EDR block on every laptop, remove users' local admin rights and turn on Microsoft's three standard attack surface reduction rules; this quarter, take your mail domains to DMARC reject and confirm every bank detail change by phone. Judge the rest by whether it stops pasted commands, fake sign-in pages or fake payment requests.",
+  "audience": "IT teams in small and mid-size organizations managing Windows and Mac laptops, phones and Microsoft 365 or Google Workspace mail, often without security staff",
+  "version": "0.1",
+  "lastReviewed": "2026-11-04",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Run EDR that blocks, on every device.",
+          "text": "Defender for Endpoint Plan 1 has no EDR; Defender for Business, which Business Premium includes, and Plan 2 do[^mdb]. Turn on tamper protection: on Macs it starts in audit mode, so set it to block[^tamper]."
+        },
+        {
+          "title": "Take away local admin rights.",
+          "text": "Entra join makes the joining user a local admin by default[^localadmin]; turn that off in the device registration policy or Autopilot profile. Manage the built-in admin account with Windows LAPS, included in Intune Plan 1[^laps]."
+        },
+        {
+          "title": "Turn on attack surface reduction rules.",
+          "text": "Microsoft recommends block mode for its three standard protection rules without extensive testing, and audit mode first for the rest. The rules need Defender Antivirus in active mode[^asr]."
+        },
+        {
+          "title": "Take every mail domain to DMARC enforcement.",
+          "text": "Microsoft's goal is `p=reject` for every domain and subdomain, via `p=none` and `p=quarantine`[^dmarcms]. Today, publish `v=DMARC1; p=reject;` on domains that never send mail, including an unused onmicrosoft.com domain[^dmarcms]."
+        },
+        {
+          "title": "Confirm payment changes on a known number.",
+          "text": "Call a known number before changing bank details or a payroll account. Microsoft saw over 46 million attacks posing as business contacts in a year, most opening with harmless small talk[^mddr]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "baseline",
+      "title": "Roll out the device baseline in this order",
+      "navTitle": "Device rollout",
+      "items": [
+        {
+          "title": "Find the devices nobody manages.",
+          "text": "Compare the device lists in Intune, Entra ID and your EDR console. Treat any device missing from one of them as unprotected until it is enrolled."
+        },
+        {
+          "title": "Replace or pay for what's out of support.",
+          "text": "Windows 10 support ended on 14 October 2025. Commercial ESU costs $61 per device for the first year, doubles each year, lasts three years at most, and joining late means paying for the years you missed[^esu]. Office LTSC 2021 support ended on 13 October 2026[^officeeos]. Patch the rest within the patching sheet's deadlines."
+        },
+        {
+          "title": "Audit the other ASR rules, then block.",
+          "text": "Run them in audit mode for a few weeks, add per-rule exclusions only for named business apps, then switch to block[^asr]."
+        },
+        {
+          "title": "Add application control in audit mode.",
+          "text": "In Intune's App Control for Business, trust Windows components and Store apps, apps with a good reputation and apps from the Intune managed installer. Apps installed before you enable the managed installer aren't tagged, so audit first[^appctl]."
+        },
+        {
+          "title": "Encrypt, escrow the keys, then enforce.",
+          "text": "Require BitLocker to store its recovery key in Entra ID before it encrypts[^bitlocker], and have FileVault escrow its key to your device management. Then require encryption in the compliance policy and a compliant device in Conditional Access."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "devices",
+      "title": "Device settings that close the common paths",
+      "navTitle": "Devices",
+      "items": [
+        "**Block macro and script paths.** Office on Windows blocks macros in files from the internet by default, but the enforcing policy needs Microsoft 365 Apps for enterprise[^macros]. Add the ASR rules against macro Win32 API calls, obfuscated scripts and scripts launching downloads[^asr].",
+        "**Limit what pasted commands can do.** ClickFix lures, which get users to paste a command into Run, Terminal or File Explorer, hit over 1.1 million devices from February to early May 2026. Restrict PowerShell and JavaScript and enforce application control in user-writable folders[^mddr].",
+        "**Allow remote support tools for IT only.** Vishing callers get victims to grant access through one, then finish reconnaissance in two minutes or less[^mddr]. Block the rest with application control.",
+        "**Allowlist browser extensions.** Set Edge's ExtensionInstallBlocklist to `*` and list approved ones in ExtensionInstallAllowlist[^edgeext]. At the average company, over 15% of users had unauthorized AI extensions[^dbir].",
+        "**Give Macs the same baseline.** Atomic macOS Stealer was half the infostealer activity Defender Experts saw[^mddr]. macOS has no ASR rules[^asr], so rely on EDR, FileVault and standard accounts.",
+        "**Protect work data on personal phones.** Intune app protection Level 2 blocks copy and paste to unmanaged apps, outdated OS versions and jailbroken devices. Require it in Conditional Access[^appprot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "email",
+      "title": "Email settings against spoofing and fraud",
+      "navTitle": "Email",
+      "items": [
+        "**Turn on the preset policies.** Assign Microsoft's Standard preset security policy to everyone and Strict to admins, finance and executives; until you turn them on, they apply to no one[^preset]. In Google Workspace, turn on every option under Gmail **Safety**[^gws].",
+        "**Remove the Safe Links click-through.** Each month, 89% to 96% of malicious attachments led to phishing pages rather than malware, and Microsoft advises time-of-click URL checks without a user override[^mddr].",
+        "**Mark external mail.** `Set-ExternalInOutlook -Enabled $true` adds an External tag in Outlook on every platform[^exttag].",
+        "**Block automatic external forwarding.** Set the outbound spam policy to **Off - Forwarding is disabled**; the default, Automatic, behaves differently from tenant to tenant. Forwarding rules can also come from a compromised account[^fwd]: the incident response sheet covers the cleanup.",
+        "**Reject Direct Send.** It's off by default. Run `Set-OrganizationConfig -RejectDirectSend $true` once no scanner or app relies on it[^directsend].",
+        "**Require TLS with MTA-STS.** Publish the policy in testing mode, then enforce. Exchange Online already checks other domains' policies on outbound mail[^mtasts]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**DMARC became a standards-track RFC.** RFC 9989 replaced RFC 7489 in May 2026 and swaps the `pct` tag for `t` (testing). It says domains whose users post to mailing lists should not publish `p=reject`, so check your reports for list traffic first[^rfc9989].",
+        "**Windows 11 24H2 Home and Pro lost support.** They no longer get updates, and Enterprise 23H2 stops on 10 November 2026[^w11].",
+        "**Administrator protection shipped.** The October 2026 update turns it on where Microsoft's Windows security baselines apply; Microsoft says not to use it on LAPS-managed devices[^adminprot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**More email phishing simulations.** Email phishing opened only 6% of Mandiant's 2025 intrusions, voice phishing 11%[^mtrends]. Spend the time on call-back rules for finance and the help desk.",
+        "**A second antivirus beside Defender.** ASR rules don't run while Defender Antivirus is in passive mode[^asr].",
+        "**DMARC forensic reports.** Microsoft 365 doesn't send them; start with aggregate reports only[^dmarcms]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Exclusions without an owner.** Excluded files run, and no ASR events are recorded for them[^asr]. Give each exclusion an owner and a review date.",
+        "**Trusting a whole share or site for macros.** Anyone who can add files there can add macros[^macros]. Sign the macros you need instead.",
+        "**Deleting a device before saving its keys.** Deleting it in Entra ID loses its LAPS password[^laps]; deleting its Intune object suspends BitLocker[^bitlocker].",
+        "**Changing bank details because an email thread says so.** Attackers reuse old threads to get bank accounts changed before a wire transfer[^dbir]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on Business Premium's Defender for Business[^mdb], the standard ASR rules and the Standard email preset.",
+            "Make every user a standard user.",
+            "Use a DMARC reporting service and a call-back rule for every payment change."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Audit every ASR rule for a month, then block.",
+            "Pilot App Control for Business with the Intune managed installer.",
+            "Use Strict presets for finance and admins; enforce MTA-STS and reject Direct Send."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Enforce App Control on all workstations.",
+            "Handle elevation requests with Endpoint Privilege Management, not admin accounts.",
+            "Report weekly coverage: EDR blocking, ASR in block mode, encryption, supported OS."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-04",
+      "version": "0.1",
+      "text": "First draft, based on the Microsoft Digital Defense Report 2026, the 2026 DBIR, M-Trends 2026, RFC 9989 and Microsoft Learn and Google Workspace documentation for Defender, Intune, Office and Exchange Online."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mdb",
+      "title": "What is Microsoft Defender for Business?",
+      "publisher": "Microsoft Learn",
+      "date": "27 Aug 2025",
+      "url": "https://learn.microsoft.com/en-us/defender-business/mdb-overview"
+    },
+    {
+      "id": "tamper",
+      "title": "Tamper protection overview",
+      "publisher": "Microsoft Learn",
+      "date": "9 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/tamper-protection-overview"
+    },
+    {
+      "id": "localadmin",
+      "title": "Manage local administrators on Entra joined devices",
+      "publisher": "Microsoft Learn",
+      "date": "17 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/devices/assign-local-admin"
+    },
+    {
+      "id": "laps",
+      "title": "Windows LAPS with Microsoft Intune",
+      "publisher": "Microsoft Learn",
+      "date": "29 May 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/laps/overview"
+    },
+    {
+      "id": "asr",
+      "title": "ASR rules overview",
+      "publisher": "Microsoft Learn",
+      "date": "4 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/attack-surface-reduction-rules-overview"
+    },
+    {
+      "id": "dmarcms",
+      "title": "Set up DMARC in Microsoft 365",
+      "publisher": "Microsoft Learn",
+      "date": "3 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "esu",
+      "title": "Windows 10 ESU program",
+      "publisher": "Microsoft Learn",
+      "date": "17 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/whats-new/extended-security-updates"
+    },
+    {
+      "id": "appctl",
+      "title": "App Control for Business and managed installers",
+      "publisher": "Microsoft Learn",
+      "date": "17 Sep 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/endpoint-security/manage-app-control"
+    },
+    {
+      "id": "bitlocker",
+      "title": "Encrypt Windows devices with BitLocker",
+      "publisher": "Microsoft Learn",
+      "date": "26 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/endpoint-security/encrypt-bitlocker-windows"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6c3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "macros",
+      "title": "Macros from the internet blocked by default",
+      "publisher": "Microsoft Learn",
+      "date": "17 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365-apps/security/internet-macros-blocked"
+    },
+    {
+      "id": "edgeext",
+      "title": "Manage Edge extensions with policies",
+      "publisher": "Microsoft Learn",
+      "date": "12 Jan 2024",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-manage-extensions-policies"
+    },
+    {
+      "id": "appprot",
+      "title": "App protection data protection framework",
+      "publisher": "Microsoft Learn",
+      "date": "12 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/app-management/protection/data-protection-framework"
+    },
+    {
+      "id": "preset",
+      "title": "Preset security policies",
+      "publisher": "Microsoft Learn",
+      "date": "3 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-office-365/preset-security-policies"
+    },
+    {
+      "id": "gws",
+      "title": "Advanced phishing and malware protection",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/gmail/advanced/advanced-phishing-and-malware-protection"
+    },
+    {
+      "id": "exttag",
+      "title": "Set-ExternalInOutlook",
+      "publisher": "Microsoft Learn",
+      "date": "updated 27 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/set-externalinoutlook"
+    },
+    {
+      "id": "fwd",
+      "title": "Control external email forwarding",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-office-365/outbound-spam-policies-external-email-forwarding"
+    },
+    {
+      "id": "directsend",
+      "title": "More control over Direct Send in Exchange Online",
+      "publisher": "Microsoft Exchange Blog",
+      "date": "updated 20 May 2026",
+      "url": "https://techcommunity.microsoft.com/blog/exchange/introducing-more-control-over-direct-send-in-exchange-online/4408790"
+    },
+    {
+      "id": "mtasts",
+      "title": "Enhance mail flow with MTA-STS",
+      "publisher": "Microsoft Learn",
+      "date": "21 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/exchange/security-and-compliance/enhance-mail-flow-using-strict-transport-security"
+    },
+    {
+      "id": "rfc9989",
+      "title": "RFC 9989: DMARC",
+      "publisher": "IETF",
+      "date": "May 2026",
+      "url": "https://www.rfc-editor.org/rfc/rfc9989.html"
+    },
+    {
+      "id": "w11",
+      "title": "Windows 11 release information",
+      "publisher": "Microsoft Learn",
+      "date": "28 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information"
+    },
+    {
+      "id": "officeeos",
+      "title": "End of support resources for Office",
+      "publisher": "Microsoft Learn",
+      "date": "20 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365-apps/end-of-support/resources"
+    },
+    {
+      "id": "adminprot",
+      "title": "Administrator protection",
+      "publisher": "Microsoft Learn",
+      "date": "13 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/security/application-security/application-control/administrator-protection/"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    }
+  ]
+}
