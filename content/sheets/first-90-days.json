@@ -1,0 +1,331 @@
+{
+  "slug": "first-90-days",
+  "topic": "First 90 days as head of security",
+  "status": "draft",
+  "order": 69,
+  "capability": "leadership/first-90-days",
+  "title": "First 90 days as head of security: what do you check, fix and decide?",
+  "short": "Listen and fix five basics in month one, measure in month two, and get a strategy and roadmap approved by day 90.",
+  "answer": "In your first 30 days, find out who decides, which laws and promises bind you and whom to call, and fix five basics that need no strategy. Build the first risk register and a light maturity assessment in month two, and bring a strategy draft, operating model and first roadmap to management for approval by day 90.",
+  "audience": "New heads of security, CISOs and information security officers (ISBs), IT leads who take over security, and the managing directors they report to",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Get your mandate in writing.",
+          "text": "In the first two weeks, have management confirm your role, reporting line, deputy and decision rights in a minuted decision; see the security team sheet. The BSI lists confirming the ISB or CISO reporting line among the decisions to take after management's first training[^bsicurr]."
+        },
+        {
+          "title": "Listen for a month before you change anything.",
+          "text": "Interview the managing directors and the heads of the business, IT, legal and data protection, and read what your predecessor left."
+        },
+        {
+          "title": "Fix five basics without waiting for a strategy.",
+          "text": "Admin MFA, backups, edge flaws, logging and the call chain can't wait. In ENISA's 2025 survey, patching (50%) and business continuity (49%) were the NIS2 areas organizations found hardest to implement[^nisinv]."
+        },
+        {
+          "title": "Measure in month two.",
+          "text": "Write the first risk register rows and run a light maturity assessment, rating only what you saw working."
+        },
+        {
+          "title": "Bring decisions to management by day 90.",
+          "text": "Have a strategy draft, the operating model and a first roadmap with a budget approved in a minuted decision. Under NIS2, the management body approves the security measures and oversees their implementation[^nis2]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "listen",
+      "title": "Days 1 to 30: find out what you inherited",
+      "navTitle": "Days 1 to 30",
+      "items": [
+        {
+          "title": "Who decides?",
+          "text": "List who approves budgets, accepts risks, signs exceptions and may shut down a system, and read two years of management minutes on security."
+        },
+        {
+          "title": "Which laws and promises bind you?",
+          "text": "Map each entity to NIS2, DORA and the CRA with the EU security laws sheet; in Germany, the BSI's anonymous NIS-2 check gives a first, non-binding answer[^bsicheck]. Collect the security annexes and questionnaires sent to customers and insurers; see the customer assurance and cyber insurance sheets."
+        },
+        {
+          "title": "Whom do you call?",
+          "text": "Get three lists: admin accounts, Global and domain admins first; incident contacts, from the MDR to the insurer's hotline; suppliers with remote access. Regulation 2024/2690 requires digital providers to keep incident contact lists and supplier contact points[^enisatig]."
+        },
+        {
+          "title": "What went wrong before?",
+          "text": "Read the last two or three years of incidents, near misses, audits and penetration tests, and check which findings were closed with evidence."
+        },
+        {
+          "title": "Are the basics really in place?",
+          "text": "Check the five fixes below yourself, on screen: a setting, a log entry, a restore record. A yes in a handover note isn't evidence."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "quick",
+      "title": "Five fixes for month one that need no strategy",
+      "navTitle": "Quick fixes",
+      "items": [
+        "**Phishing-resistant MFA for every admin.** Register security keys or passkeys, then require the Phishing-resistant MFA strength in Conditional Access (Entra ID P1 or Business Premium)[^ca]. Microsoft lists 14 roles as a minimum and warns that enforcing before registration can lock you out[^caadmin]. See the passkeys and MFA sheet.",
+        "**One backup copy admins can't delete.** Give backups their own admin accounts and require MFA to change or delete them, as the NCSC advises[^ncscprem]. Then time one restore, as the ransomware sheet describes.",
+        "**No exploited flaw on an edge device.** Exploits were the most common way into Mandiant's 2025 intrusions, at 32%, for a sixth year[^mtrends]. Patch exploited firewall and VPN flaws within the patching sheet's 72 hours.",
+        "**Logging that is on.** Auditing isn't on by default in Microsoft 365 Business plans; check `Get-AdminAuditLogConfig`[^auditon]. Without logs you may have to assume and disclose a worst-case data theft[^mtrends]. See the logging sheet.",
+        "**A call chain that works at 3 a.m.** Name who is on call, who may shut systems down and who reports, each with a deputy, on paper. The BSI asks how the 24-hour deadline holds at night and on weekends[^bsicurr]. See the incident response sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "bsig",
+      "title": "German NIS2 entities: the BSIG duties to check first",
+      "navTitle": "BSIG duties",
+      "items": [
+        "**Registration.** It's due within three months of falling in scope[^bsig], and the BSI says the deadline has passed[^bsinis2]. If you missed it, register in the BSI portal now with an ELSTER organization certificate from Mein Unternehmenskonto[^bsinis2].",
+        "**Current details.** The registration holds email, phone numbers and public IP ranges; report changes within two weeks[^bsig]. Urgent BSI warnings may come at night[^bsimelde], so route them to someone on call.",
+        "**Your own portal access.** Each user needs their own ELSTER certificate, activated by a letter that usually takes five working days or more. The BSI advises at least two owners; if the only one left, ask portal support[^bsiportalfaq].",
+        "**The reporting chain.** Any employee given portal access may report, and a provider can be authorized to report for you, though responsibility stays with you[^bsimelde]. The 24 hours start when an employee learns of the incident during working hours[^bsimelde]; the EU security laws sheet has the clocks.",
+        "**Management training.** The managing directors must attend regularly[^bsig]; training only the IT lead or ISB doesn't replace it[^bsicurr]. Record provider, participants and roles, date, duration and content[^bsihand]."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "decide",
+      "title": "Days 31 to 90: measure, then decide",
+      "navTitle": "Days 31 to 90",
+      "items": [
+        {
+          "title": "Days 31 to 45: the first risk register rows.",
+          "text": "Write 15 to 30 risks with business owners and reconfirm or expire inherited acceptances; see the risk register sheet."
+        },
+        {
+          "title": "Days 46 to 60: a light maturity assessment.",
+          "text": "Run the maturity sheet's assessment in three weeks: scope it to the crown jewels and sample one piece of evidence per outcome."
+        },
+        {
+          "title": "Days 61 to 75: strategy draft and operating model.",
+          "text": "Write the strategy sheet's one page and the operating model sheet's two pages; month one already covered the strategy's first two weeks."
+        },
+        {
+          "title": "Days 76 to 90: first roadmap and approval.",
+          "text": "Turn bets and gaps into the program sheet's 8 to 12 initiatives. German NIS2 entities can also approve the § 30 measures register the BSI suggests[^bsicurr]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "reporting",
+      "title": "Reporting to management in the first 90 days",
+      "navTitle": "Reporting",
+      "items": [
+        "**Day 30: what you found.** One page with the five basics and their status, what you fixed, the BSIG checks and the top five risks. Ask for one decision, such as funding the backup copy.",
+        "**Day 60: risks and gaps.** The top ten risks and current against target per function, with no average score.",
+        "**Day 90: the decisions.** Strategy, operating model, roadmap and budget. The BSI's list for management adds scope, governance, risk acceptance rules, the reporting process and a regular cyber risk report[^bsicurr].",
+        "**Minute every decision.** The BSI recommends resolutions, budget decisions and accepted residual risks as proof of management's active involvement[^bsicurr]. Then switch to the security metrics sheet's quarterly page."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip in the first 90 days",
+      "navTitle": "What you can skip",
+      "items": [
+        "**New tools.** First list what your licenses include and what is switched off. Buy only what a quick fix needs, such as admin security keys.",
+        "**Rewriting every policy.** Fix only rules that are dangerous or contradict the settings. The policies sheet's rewrite comes after the strategy.",
+        "**Reorganizing on day 10.** You don't yet know who carries what. Move people after the operating model is approved.",
+        "**A certification project.** Unless a contract sets a date, decide on ISO 27001 with the strategy; see the ISMS sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Believing the handover.** In ENISA's NIS360 2026, cloud and data center providers said they test incident plans regularly; their supervisors said oversight didn't show it[^nis360].",
+        "**Your predecessor's name on the call list.** Update the incident card, the BSI registration and the insurer and supplier contacts in week one.",
+        "**Spending 90 days on tickets.** Block two days a week for interviews and planning, and hand routine work back to IT or the provider.",
+        "**A strategy from your last job.** One written in week two describes the company you left. Write it after the interviews and the risk register."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**German NIS2 duties apply.** By 30 September 2026, 20,141 entities had registered with the BSI under NIS2[^bsizahlen]. Check that yours is one.",
+        "**The BSI published a model management training.** Its curriculum of 28 October 2026 lists the decisions to take, ideally within 2 to 6 weeks[^bsicurr].",
+        "**Voice phishing became the second way in.** It opened 11% of Mandiant's 2025 intrusions, after exploits[^mtrends]. Check how the help desk verifies callers before an MFA reset; see the security awareness sheet."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "As IT lead or part-time ISB, start with the managing director and the IT provider.",
+            "Have the provider show the five basics on screen and close the gaps in month one.",
+            "In Germany, use the maturity sheet's CyberRisikoCheck as the light assessment."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Interview 10 to 15 people in month one, including the works council and the data protection officer.",
+            "Build the risk register and the CSF 2.0 profile with the IT team, not for it.",
+            "Present strategy, operating model and roadmap in one management meeting."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "In week two, map each legal entity to its laws and supervisors. Critical facilities register under the KRITIS umbrella act[^bsig].",
+            "Read the last supervisory and internal audit findings before you set priorities.",
+            "Each entity's management approves its own part."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on BSIG §§ 32, 33 and 38, the BSI's registration, reporting and portal pages, its October 2026 management training curriculum, ENISA's NIS Investments 2025 and NIS360 2026, M-Trends 2026 and Microsoft Learn."
+    }
+  ],
+  "sources": [
+    {
+      "id": "bsicurr",
+      "title": "Curriculum Geschäftsleitungsschulung NIS-2",
+      "publisher": "BSI",
+      "date": "28 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
+    },
+    {
+      "id": "bsihand",
+      "title": "Handreichung Geschäftsleitungsschulung, v1.0",
+      "publisher": "BSI",
+      "date": "17 Apr 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
+    },
+    {
+      "id": "bsig",
+      "title": "BSIG §§ 32, 33 and 38",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "bsinis2",
+      "title": "NIS-2-regulierte Unternehmen",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/nis-2-regulierte-unternehmen_node.html"
+    },
+    {
+      "id": "bsimelde",
+      "title": "NIS-2-Meldepflicht",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-Infopakete/NIS-2-Meldepflicht/NIS-2-Meldepflicht_node.html"
+    },
+    {
+      "id": "bsiportalfaq",
+      "title": "BSI-Portal FAQ",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Service-Navi/FAQ/BSI-Portal/faq_bsi-portal_node.html"
+    },
+    {
+      "id": "bsicheck",
+      "title": "NIS-2-Betroffenheitsprüfung",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://betroffenheitspruefung-nis-2.bsi.de/"
+    },
+    {
+      "id": "bsizahlen",
+      "title": "NIS-2 in Zahlen",
+      "publisher": "BSI",
+      "date": "as of 30 Sep 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-in-Zahlen/nis-2-in-zahlen_node.html"
+    },
+    {
+      "id": "nis2",
+      "title": "NIS2 Directive, Article 20",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "enisatig",
+      "title": "NIS2 Implementation Guidance",
+      "publisher": "ENISA",
+      "date": "Jun 2025",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
+    },
+    {
+      "id": "nisinv",
+      "title": "NIS Investments 2025",
+      "publisher": "ENISA",
+      "date": "8 Dec 2025",
+      "url": "https://www.enisa.europa.eu/publications/nis-investments-2025"
+    },
+    {
+      "id": "nis360",
+      "title": "ENISA NIS360 2026",
+      "publisher": "ENISA",
+      "date": "28 May 2026",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2026-05/ENISA%20NIS360%202026.pdf"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026, Executive Edition",
+      "publisher": "Mandiant",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "caadmin",
+      "title": "Phishing-resistant MFA for admin roles",
+      "publisher": "Microsoft Learn",
+      "date": "24 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-admin-phish-resistant-mfa"
+    },
+    {
+      "id": "ca",
+      "title": "Conditional Access",
+      "publisher": "Microsoft Learn",
+      "date": "27 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview"
+    },
+    {
+      "id": "auditon",
+      "title": "Turn auditing on or off",
+      "publisher": "Microsoft Learn",
+      "date": "19 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/audit-log-enable-disable"
+    },
+    {
+      "id": "ncscprem",
+      "title": "Ransomware-resistant on premises backups",
+      "publisher": "NCSC (UK)",
+      "date": "22 Nov 2024",
+      "url": "https://www.ncsc.gov.uk/collection/ransomware-resistant-backups/principles-for-ransomware-resistant-on-premises-backups"
+    }
+  ]
+}

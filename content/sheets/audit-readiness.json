@@ -1,0 +1,367 @@
+{
+  "slug": "audit-readiness",
+  "topic": "Audit readiness and evidence",
+  "status": "draft",
+  "order": 70,
+  "capability": "leadership/audits",
+  "title": "Audit readiness: could you pass an audit without a fire drill?",
+  "short": "Map every control to dated evidence and an owner, and sample your own controls each quarter so auditors find nothing new.",
+  "answer": "This quarter, build one evidence register that ties each control to its evidence, owner, location and refresh date, and name one coordinator for every auditor request. Then sample your own controls each quarter and close every finding with a root cause, an owner and a date, as ISO certifiers, TISAX, the BSI and DORA all expect[^ias][^tph][^bsioh][^rts].",
+  "audience": "Security, ISMS and IT leads preparing for ISO 27001, TISAX, BSI, DORA, customer and data protection audits",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Keep one evidence register.",
+          "text": "One row per control: requirement, evidence, owner, location, refresh interval and whether a tool collects it. Grundschutz++ asks for each measure's requirement, the date it was done or checked and who checked it[^std3001]."
+        },
+        {
+          "title": "Plan three years of audits at once.",
+          "text": "ISO 27001 brings surveillance audits in years one and two and recertification in year three[^ias]. KRITIS proofs[^bsig] and TISAX labels[^tph] run on 3-year cycles. Book auditors early."
+        },
+        {
+          "title": "Route every request through one coordinator.",
+          "text": "Log each request with an ID, the question, the owner, the due time and what was sent. Check every file before it leaves."
+        },
+        {
+          "title": "Close findings at the root cause, by a date.",
+          "text": "TISAX requires a root cause and an implementation date for every corrective action and caps each at 9 months[^tph]. Use the same fields for every audit."
+        },
+        {
+          "title": "Audit yourself every quarter.",
+          "text": "Sample key controls as an auditor would: five leavers, three changes, the last restore. IIA cyber audits check that management reviews control failures and fixes them in time[^iiacyber]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "run",
+      "title": "Run an audit without a fire drill",
+      "navTitle": "Audit run",
+      "items": [
+        {
+          "title": "Eight weeks out: what exactly is audited?",
+          "text": "Confirm scope, criteria, their version and the dates in writing. For a KRITIS proof, agree the scope with the auditor before ordering and put each side's duties in the contract[^bsioh]."
+        },
+        {
+          "title": "Six weeks out: is every row current?",
+          "text": "Refresh stale evidence, rerun the population exports and update open findings. Stage 1 checks that internal audits and management reviews are planned and done[^ias]."
+        },
+        {
+          "title": "Four weeks out: who answers what?",
+          "text": "Name a contact per topic[^gain] and a deputy, and brief them on scope and where the evidence lives. At TISAX level 3, expect unplanned interviews with staff who run the process[^tph]."
+        },
+        {
+          "title": "Audit days: who sends what?",
+          "text": "The coordinator sits in on interviews and keeps the request log. Answer only the question asked; if you don't know, say so and follow up."
+        },
+        {
+          "title": "Each evening and at closing: is it right?",
+          "text": "Correct misunderstandings with evidence the same day. At the closing meeting, check each finding's facts, grade and clause."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "who",
+      "title": "Who can audit you, and what they can demand",
+      "navTitle": "Who audits",
+      "span": "full",
+      "items": [
+        "**The BSI, for essential entities.** It can order audits by independent bodies and, during business hours, enter premises and demand records and answers. From December 2028 it can order proof from any of them[^bsig][^gain]. Wrong answers in an inspection can cost up to €100,000[^bsig].",
+        "**The BSI, for others.** Important entities face checks only when facts suggest a gap. KRITIS operators submit proof unasked; a wrong or incomplete one can cost up to €1 million[^bsig].",
+        "**DORA.** Independent auditors with ICT expertise audit the ICT risk framework regularly, management approves the ICT audit plans, and critical findings need a formal follow-up with rules for timely fixes[^dora].",
+        "**Data protection authorities.** They can order information, run audits and enter premises[^gdpr]; in Germany you may refuse self-incriminating answers[^bdsg]. Bavaria's BayLDA audits on site, in writing or online and publishes its questionnaires, such as on ransomware[^baylda].",
+        "**Internal audit.** IIA standards require prioritized findings, root causes where possible and tracked follow-up[^giias]. It can be your KRITIS auditor only with a quality assessment under IDW PS 983 or DIIR No. 3 at most 5 years old[^gain].",
+        "**Customers.** Serve them from the same register; see the customer assurance sheet."
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "cycles",
+      "title": "Audit cycles and deadlines",
+      "navTitle": "Cycles",
+      "span": "full",
+      "items": [
+        {
+          "name": "ISO/IEC 27001 certification",
+          "scope": "First surveillance within 12 months of the certification decision[^ias].",
+          "steps": [
+            {
+              "at": "Stage 1",
+              "what": "Documents and readiness"
+            },
+            {
+              "at": "Stage 2",
+              "what": "On site: does it work?"
+            },
+            {
+              "at": "Year 1",
+              "what": "Surveillance audit"
+            },
+            {
+              "at": "Year 2",
+              "what": "Surveillance audit"
+            },
+            {
+              "at": "Year 3",
+              "what": "Recertification"
+            }
+          ]
+        },
+        {
+          "name": "KRITIS proof, BSIG § 39",
+          "scope": "Counted from the due date, not the submission date[^bsioh]; at least two independent auditors[^gain].",
+          "steps": [
+            {
+              "at": "Before due",
+              "what": "Audit and deficiency list"
+            },
+            {
+              "at": "Due date",
+              "what": "Proof and plan to the BSI"
+            },
+            {
+              "at": "Quarterly",
+              "what": "Usually, updated deficiency list"
+            },
+            {
+              "at": "3 years",
+              "what": "Next proof"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "evidence",
+      "title": "Evidence that holds up",
+      "navTitle": "Evidence",
+      "items": [
+        "**Populations, not examples.** Export the full list for the period with its query and let the auditor pick. IIA work programs record population, sample size and method[^giias]; KRITIS reports explain the sample[^gain].",
+        "**Exports and live views, not screenshots.** The IIA counts evidence as more reliable when auditors get it directly or from a well-controlled system[^giias]. Show the setting live, then hand over the export.",
+        "**The whole period, dated.** Label each item with system, query, time and who pulled it. AWS Config returns a resource's compliance at each change[^awsam].",
+        "**Certificates, within limits.** From 2027 one counts toward a KRITIS proof only if its last audit was at most 12 months before the § 39 audit[^gain]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "findings",
+      "title": "Findings and corrective action",
+      "navTitle": "Findings",
+      "items": [
+        "**ISO 27001.** Majors must be closed before certification, minors need an accepted plan, and a major not verified within 6 months repeats stage 2[^ias].",
+        "**KRITIS.** Fix serious deficiencies at once, minor ones promptly or later with risk treatment[^gain]. The BSI wants each cause analyzed and can order fixes under penalty[^bsioh].",
+        "**TISAX.** A minor non-conformity with an approved plan gets temporary labels, a major none. Actions over 3 months need a reason, over 6 months proof they can't be faster, and none may exceed 9 months[^tph].",
+        "**DORA TLPT.** Within 8 weeks of the authority accepting the test reports, send remediation plans with measures, dates, root causes and owners[^rts].",
+        "**Old findings return.** The next KRITIS auditor gets your previous list unchanged, with status; open items carry over[^gain]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "between",
+      "title": "Between audits",
+      "navTitle": "Between audits",
+      "items": [
+        "**Set a refresh interval per row.** Monthly for access and patch exports, quarterly for reviews, yearly for tests and policies. Flag rows past due.",
+        "**Automate what systems record.** Compliance Manager, in Microsoft 365 with templates by license, tests improvement actions from Secure Score and Defender for Cloud signals[^cmsetup].",
+        "**On AWS, use Config conformance packs.** They check technical settings, not policies or procedures[^awsam].",
+        "**Buy a GRC platform for scale.** Our rule: past about 150 rows or three frameworks, with timestamped evidence export."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**KRITIS proofs every 3 years.** Germany's NIS2 law took effect on 6 December 2025; the BSI sent new due dates on 8 December[^bsifaq]. The law also lets the BSI audit essential entities[^bsig].",
+        "**Stricter KRITIS audit rules.** GAiN 2.2 of 9 July 2026 limits certificate reuse from 2027[^gain]; binding rules for certified KRITIS auditors are planned for early 2027[^bsioh].",
+        "**A cyber baseline for internal audit.** Since 5 February 2026, IIA cyber audits must cover governance, risk and controls[^iiacyber].",
+        "**AWS Audit Manager closed to new customers** on 30 April 2026[^awsam]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Pre-assessments.** ENX advises against them for TISAX: you pay for two full assessments, even without findings[^tph].",
+        "**Printed binders.** A read-only folder and a screen share do better.",
+        "**Scripted answers.** They fail at the second question. Brief people on facts and where the evidence is.",
+        "**Monthly evidence for every control.** Refresh by risk instead."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Evidence made the week before.** Forty access reviews signed on one day show the control didn't run all year.",
+        "**Screenshots without date or source.** They prove a screen, not a control. Grundschutz++ wants tool, time and result for automated checks[^std3001].",
+        "**Controls nobody runs.** A rule with no owner and no record is a finding waiting to happen.",
+        "**Guessing.** Say when you don't know: a wrong answer in a BSI inspection is itself an offense[^bsig]. And a late auditor doesn't excuse a late KRITIS proof[^bsioh]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Keep the register in a spreadsheet and a dated evidence folder per quarter.",
+            "Let your IT provider pull exports, but keep the coordinator role in-house."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Link each register row to a ticket and collect Microsoft 365 evidence automatically.",
+            "Have someone outside IT operations run the quarterly sample."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Plan ISO, KRITIS, TISAX and DORA audits in one three-year calendar from one register.",
+            "Report open findings, overdue actions and expired evidence to management quarterly."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on the BSIG, BSI KRITIS audit rules, ISO/IEC 17021-1, ENX's TISAX handbook, DORA and its TLPT standard, IIA standards, the GDPR and BDSG."
+    }
+  ],
+  "sources": [
+    {
+      "id": "std3001",
+      "title": "BSI-Standard 300-1, v1.0",
+      "publisher": "BSI",
+      "date": "20 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_300-1.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "ias",
+      "title": "ISO/IEC 17021-1, Section 9 (slides)",
+      "publisher": "IAS",
+      "date": "Feb 2021",
+      "url": "https://cdn-v2.iasonline.org/wp-content/uploads/2021/02/17021-1-2015-Section-9-1.pdf"
+    },
+    {
+      "id": "bsig",
+      "title": "BSIG §§ 39, 61, 62, 65",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "bsioh",
+      "title": "Orientierungshilfe zu Nachweisen",
+      "publisher": "BSI",
+      "date": "30 Oct 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/Kritische-Infrastrukturen/OH_Nachweise/orientierungshilfe.html"
+    },
+    {
+      "id": "gain",
+      "title": "GAiN, v2.2",
+      "publisher": "BSI",
+      "date": "9 Jul 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/anforderungen_gain_22.pdf?__blob=publicationFile&v=4"
+    },
+    {
+      "id": "bsifaq",
+      "title": "Fragen und Antworten zu NIS-2",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-FAQ/NIS-2-FAQ-allgemein/FAQ-zu-NIS-2.html"
+    },
+    {
+      "id": "tph",
+      "title": "TISAX Participant Handbook 2.8",
+      "publisher": "ENX",
+      "date": "13 Mar 2025",
+      "url": "https://enx.com/handbook/TISAX%20Participant%20Handbook.pdf"
+    },
+    {
+      "id": "dora",
+      "title": "DORA, Articles 5, 6 and 26",
+      "publisher": "EUR-Lex",
+      "date": "14 Dec 2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "rts",
+      "title": "DORA TLPT standard 2025/1190",
+      "publisher": "EUR-Lex",
+      "date": "18 Jun 2025",
+      "url": "https://eur-lex.europa.eu/eli/reg_del/2025/1190/oj"
+    },
+    {
+      "id": "giias",
+      "title": "Global Internal Audit Standards",
+      "publisher": "IIA",
+      "date": "9 Jan 2024",
+      "url": "https://www.theiia.org/globalassets/site/standards/editable-versions/globalinternalauditstandards_2024january9_editable.pdf"
+    },
+    {
+      "id": "iiacyber",
+      "title": "Cybersecurity Topical Requirement",
+      "publisher": "IIA",
+      "date": "effective 5 Feb 2026",
+      "url": "https://www.theiia.org/globalassets/site/standards/topical-requirements/cybersecurity/cybersecurity_topical_requirement.pdf"
+    },
+    {
+      "id": "gdpr",
+      "title": "GDPR, Articles 31 and 58",
+      "publisher": "EUR-Lex",
+      "date": "27 Apr 2016",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    },
+    {
+      "id": "bdsg",
+      "title": "BDSG § 40",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bdsg_2018/__40.html"
+    },
+    {
+      "id": "baylda",
+      "title": "Datenschutzprüfungen",
+      "publisher": "BayLDA",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.lda.bayern.de/de/kontrollen_stabsstelle.html"
+    },
+    {
+      "id": "cmsetup",
+      "title": "Compliance Manager setup",
+      "publisher": "Microsoft Learn",
+      "date": "updated 25 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/compliance-manager-setup"
+    },
+    {
+      "id": "awsam",
+      "title": "Audit Manager availability change",
+      "publisher": "AWS",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.aws.amazon.com/audit-manager/latest/userguide/audit-manager-availability-change.html"
+    }
+  ]
+}

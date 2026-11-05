@@ -1,0 +1,376 @@
+{
+  "slug": "active-directory",
+  "topic": "Active Directory and Entra Connect",
+  "status": "draft",
+  "order": 67,
+  "capability": "identity/directory",
+  "title": "Active Directory: could any user become Domain Admin today?",
+  "short": "Run a free AD assessment this month, close every path an ordinary user has to Domain Admin, and rotate krbtgt every six months.",
+  "answer": "This month, run PingCastle or Defender for Identity on every domain and close what lets any user reach Domain Admin: weak certificate templates, unconstrained delegation, loose permissions and a machine account quota above 0. Then retire NTLM, RC4 and stale accounts behind audit logs, and reassess quarterly.",
+  "audience": "IT and security teams running Active Directory, with or without Entra Connect or Cloud Sync",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Find the paths before attackers do.",
+          "text": "Run PingCastle or Purple Knight, and BloodHound CE, on every domain. Any AD user can find and exploit its weaknesses[^asdad]."
+        },
+        {
+          "title": "Fix certificate templates.",
+          "text": "A template any user can enroll in, with a supplied subject name and client authentication, lets them become a domain admin[^mdicert]."
+        },
+        {
+          "title": "Remove unconstrained delegation.",
+          "text": "Use resource-based constrained delegation instead, mark admins **sensitive and cannot be delegated** and stop the Print Spooler on DCs[^asdad]."
+        },
+        {
+          "title": "Set the machine account quota to 0.",
+          "text": "By default any user can add ten computers to the domain[^asdad]. BSI requires limiting this to admin accounts[^bsiapp22]."
+        },
+        {
+          "title": "Rotate krbtgt twice a year.",
+          "text": "Reset it twice, at least 10 hours apart[^krbtgt], every six months and after a suspected compromise[^asdad]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "assess",
+      "title": "Run your first assessment",
+      "navTitle": "First assessment",
+      "items": [
+        {
+          "title": "What do you already own?",
+          "text": "Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) shows findings in Secure Score. Its CA checks need a sensor on each CA[^mdicert]."
+        },
+        {
+          "title": "What does a free scan find?",
+          "text": "PingCastle Community is free for internal use, also by your IT provider[^pingcastle]. Purple Knight is free, needs no admin rights[^pkfaq] and has its license in the app[^pkdocs]."
+        },
+        {
+          "title": "Who can reach Tier 0?",
+          "text": "Load SharpHound data into BloodHound CE (Apache 2.0[^bhce]) and list the paths from Domain Users and Domain Computers to Tier 0. Tell your SOC first."
+        },
+        {
+          "title": "What do you fix first?",
+          "text": "What any user can exploit: templates, DCSync rights[^mdiacct] and write access to AdminSDHolder, GPOs or admin groups. Then delegation and NTLM."
+        },
+        {
+          "title": "When do you look again?",
+          "text": "Every quarter and after major changes. For high protection needs, BSI recommends regular attack path analysis[^bsiapp22]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "adcs",
+      "title": "Certificate Services (AD CS)",
+      "navTitle": "AD CS",
+      "items": [
+        "**Know the classes.** SpecterOps named ESC1 to ESC8[^certified]; Certipy lists fixes up to ESC17[^certipy].",
+        "**Templates (ESC1 to ESC4).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
+        "**CA flags (ESC6, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
+        "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove the role[^certipy].",
+        "**Log it.** Turn on CA auditing, off by default, and alert on events 4886, 4887, 4899 and 4900[^asdad]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "kerberos",
+      "title": "Kerberos, delegation and krbtgt",
+      "navTitle": "Kerberos",
+      "items": [
+        "**Find what still uses RC4.** Watch KDCSVC events 201 to 209[^rc4kb], run `Get-KerbEncryptionUsage.ps1 -Encryption RC4` and reset accounts without AES keys. Server 2025 DCs issue no RC4 TGTs[^rc4detect].",
+        "**Check all delegation.** Defender for Identity flags unconstrained, constrained and resource-based delegation that exposes sensitive accounts[^mdiacct]. Protected Users can't be delegated[^asdad], and BSI requires privileged accounts there[^bsiapp22].",
+        "**Rotate krbtgt in two steps.** Wait at least 10 hours, the default ticket lifetime, between resets. RODCs have their own `krbtgt_` accounts[^krbtgt]. Move SPN accounts to gMSAs, as the non-human identities sheet describes."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "ntlm",
+      "title": "NTLM and LDAP",
+      "navTitle": "NTLM and LDAP",
+      "items": [
+        "**Log NTLM for the whole domain.** Enable **Log Enhanced Domain-wide NTLM Logs** on DCs. Events 4030 to 4033 show NTLM and NTLMv1 use; Server 2019 and 2022 got them in October 2026[^ntlmaudit].",
+        "**Restrict it in stages.** Audit, add server exceptions, then deny with **Restrict NTLM: NTLM authentication in this domain**. Start with CA, Entra Connect and Cloud Sync servers, where Microsoft says to block it[^kb5005413][^connectprereq][^cloudsync].",
+        "**Get ready for NTLM off by default** in the next major Windows Server release[^ntlmoff]. The secure-configuration sheet covers the rest.",
+        "**Sign LDAP and bind it to TLS,** as BSI expects[^bsiapp22]. Defender for Identity lists clients that bind in clear text[^mdiacct]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "hygiene",
+      "title": "Permissions and stale objects",
+      "navTitle": "Directory hygiene",
+      "items": [
+        "**Take DCSync rights from non-admins.** Defender for Identity lists them[^mdiacct]; review the remaining holders every six months[^asdad].",
+        "**Check who can change the admins:** non-admin rights on AdminSDHolder, WriteDACL on sensitive groups[^mdiacct] and write rights for Domain Computers[^asdad].",
+        "**Clear risky attributes:** passwords in descriptions, **Password not required** and **Do not require Kerberos preauthentication**[^mdiacct].",
+        "**Disable accounts idle for 90 days** (`Search-ADAccount -AccountInactive`) and delete them weeks later[^mdiacct], within your retention rules[^bsiapp22].",
+        "**Guard DC backups like DCs.** They contain every password hash[^asdad]. The ransomware sheet covers forest recovery."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "hybrid",
+      "title": "Entra Connect, Cloud Sync and Seamless SSO",
+      "navTitle": "Hybrid sync",
+      "items": [
+        "**Switch Connect Sync to application-based authentication,** keep its certificate key in a TPM and delete the old `Sync_` account. Application Administrators can act as the app: treat them as sync admins[^appauth].",
+        "**Rotate the `MSOL_` account** every 90 days, never as a Domain Admin, and remove its replication rights if you don't use password hash sync[^mdihybrid].",
+        "**Roll the Seamless SSO key every 30 days.** Whoever holds it can impersonate any synced user[^mdihybrid]. Run `Update-AzureADSSOForest` once per forest[^ssofaq].",
+        "**Harden Cloud Sync the same way.** Its agent runs as a gMSA on a Tier 0 server with NTLM disabled[^cloudsync]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**DCs stopped defaulting to RC4.** April 2026 updates assume AES where no encryption type is set, and July removed the rollback. KDCSVC event 205 flags a domain-wide override[^rc4kb].",
+        "**Connect Sync tenants are moving to Cloud Sync.** Microsoft notifies each tenant of its window from July 2026, simple setups first[^entranew].",
+        "**Synced users can become cloud users.** Since January 2026 you can move a user's source of authority to Entra ID[^entranew].",
+        "**Defender for Identity reached CA and Entra Connect servers,** with v3 sensor support since September 2026 and ESC1, ESC8 and ESC11 alerts since October[^mdinew]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Paid AD audit suites first.** The free tools find the paths that matter most. Buy continuous monitoring once the first findings are fixed.",
+        "**Studying all 17 ESC classes.** Let a scanner find them. Some need parts you may not run, like web enrollment (ESC8) or a YubiHSM (ESC12)[^certipy].",
+        "**Monthly krbtgt rotation.** ASD asks for every six months and after a suspected compromise[^asdad]. Spend the time removing DCSync rights."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Re-enabling RC4 domain-wide.** A `DefaultDomainSupportedEncTypes` of 0x24 leaves every account vulnerable; allow RC4 per service[^rc4kb].",
+        "**Fixing a template, keeping its certificates.** They stay valid until they expire or are revoked[^asdad]. Revoke those whose requester differs from the subject.",
+        "**Running the Seamless SSO rollover twice.** A second run in one forest breaks Seamless SSO until users' tickets expire[^ssofaq]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Have your IT provider run PingCastle or Purple Knight quarterly and fix what any user can exploit.",
+            "Set the machine account quota to 0 and remove unconstrained delegation outside DCs.",
+            "If all PCs are Entra or hybrid joined, you may not need Seamless SSO[^ssofaq]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Run BloodHound CE every quarter and track the paths from Domain Users to Tier 0.",
+            "Log NTLM domain-wide and give each dependency an owner and an end date.",
+            "Rotate krbtgt every six months from a written runbook."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Put Defender for Identity sensors on every DC, CA and Entra Connect server.",
+            "Map BSI APP.2.2 into your baseline, such as Protected Users, gMSAs and AES-only Kerberos[^bsiapp22].",
+            "Rehearse a forest recovery in isolation every year, as the ransomware sheet describes."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on the joint ASD, CISA, NSA and partners guide on Active Directory compromises (September 2026), BSI APP.2.2, Microsoft Learn and support articles on AD CS, NTLM, Kerberos and Entra Connect, SpecterOps' Certified Pre-Owned and the tool makers' license terms."
+    }
+  ],
+  "sources": [
+    {
+      "id": "asdad",
+      "title": "Detecting and mitigating Active Directory compromises",
+      "publisher": "ASD, CISA, NSA, CCCS, NCSC-NZ, NCSC UK",
+      "date": "Sep 2026",
+      "url": "https://www.ncsc.govt.nz/assets/guidance/Documents/Detecting-and-mitigating-Active-Directory-compromises-September-2026.pdf"
+    },
+    {
+      "id": "bsiapp22",
+      "title": "IT-Grundschutz-Kompendium, APP.2.2 Active Directory Domain Services",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/06_APP_Anwendungen/APP_2_2_Active_Directory_Domain_Services_Edition_2023.pdf?__blob=publicationFile&v=1"
+    },
+    {
+      "id": "certified",
+      "title": "Certified Pre-Owned (vendor research)",
+      "publisher": "SpecterOps",
+      "date": "17 Jun 2021",
+      "url": "https://specterops.io/research/certified-pre-owned/"
+    },
+    {
+      "id": "certipy",
+      "title": "Certipy wiki: Privilege Escalation, ESC1 to ESC17 (tool docs)",
+      "publisher": "Certipy on GitHub",
+      "date": "updated 22 Jun 2026",
+      "url": "https://github.com/ly4k/Certipy/wiki/06-%E2%80%90-Privilege-Escalation"
+    },
+    {
+      "id": "mdicert",
+      "title": "Certificates security posture assessment in Defender for Identity",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/certificates"
+    },
+    {
+      "id": "kb5005413",
+      "title": "KB5005413: Mitigating NTLM relay attacks on AD CS",
+      "publisher": "Microsoft Support",
+      "date": "checked 5 Nov 2026",
+      "url": "https://support.microsoft.com/en-us/topic/kb5005413-mitigating-ntlm-relay-attacks-on-active-directory-certificate-services-ad-cs-3612b773-4043-4aa9-b23d-b87910cd3429"
+    },
+    {
+      "id": "rc4kb",
+      "title": "KB5073381: Kerberos RC4 changes (CVE-2026-20833)",
+      "publisher": "Microsoft Support",
+      "date": "updated 14 Apr 2026",
+      "url": "https://support.microsoft.com/en-us/kb/5073381"
+    },
+    {
+      "id": "rc4detect",
+      "title": "Detect and remediate RC4 usage in Kerberos",
+      "publisher": "Microsoft Learn",
+      "date": "6 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/security/kerberos/detect-remediate-rc4-kerberos"
+    },
+    {
+      "id": "krbtgt",
+      "title": "AD Forest Recovery: Reset the krbtgt password",
+      "publisher": "Microsoft Learn",
+      "date": "21 May 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password"
+    },
+    {
+      "id": "mdiacct",
+      "title": "Accounts security posture assessment",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/accounts"
+    },
+    {
+      "id": "mdihybrid",
+      "title": "Hybrid security posture assessments in Defender for Identity",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/security-posture-assessments/hybrid-security"
+    },
+    {
+      "id": "mdilic",
+      "title": "Defender for Identity sensor v2.x prerequisites: licensing",
+      "publisher": "Microsoft Learn",
+      "date": "8 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/deploy/prerequisites-sensor-version-2"
+    },
+    {
+      "id": "mdinew",
+      "title": "What's new in Microsoft Defender for Identity",
+      "publisher": "Microsoft Learn",
+      "date": "28 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/whats-new"
+    },
+    {
+      "id": "ntlmaudit",
+      "title": "KB5064479: Overview of NTLM auditing enhancements",
+      "publisher": "Microsoft Support",
+      "date": "updated 13 Oct 2026",
+      "url": "https://support.microsoft.com/topic/overview-of-ntlm-auditing-enhancements-in-windows-11-version-24h2-and-windows-server-2025-b7ead732-6fc5-46a3-a943-27a4571d9e7b"
+    },
+    {
+      "id": "ntlmoff",
+      "title": "Advancing Windows security: Disabling NTLM by default",
+      "publisher": "Windows IT Pro Blog",
+      "date": "29 Jan 2026, updated 22 Oct 2026",
+      "url": "https://techcommunity.microsoft.com/blog/windows-itpro-blog/advancing-windows-security-disabling-ntlm-by-default/4489526"
+    },
+    {
+      "id": "connectprereq",
+      "title": "Microsoft Entra Connect: Prerequisites and hardware",
+      "publisher": "Microsoft Learn",
+      "date": "16 Jan 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-install-prerequisites"
+    },
+    {
+      "id": "cloudsync",
+      "title": "Prerequisites for Microsoft Entra Cloud Sync",
+      "publisher": "Microsoft Learn",
+      "date": "22 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/how-to-prerequisites"
+    },
+    {
+      "id": "appauth",
+      "title": "Authenticate to Microsoft Entra ID by using application identity",
+      "publisher": "Microsoft Learn",
+      "date": "24 Jul 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/authenticate-application-id"
+    },
+    {
+      "id": "ssofaq",
+      "title": "Microsoft Entra Seamless SSO: Frequently asked questions",
+      "publisher": "Microsoft Learn",
+      "date": "15 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso-faq"
+    },
+    {
+      "id": "entranew",
+      "title": "Microsoft Entra releases and announcements",
+      "publisher": "Microsoft Learn",
+      "date": "updated 8 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"
+    },
+    {
+      "id": "pingcastle",
+      "title": "PingCastle README: License",
+      "publisher": "Netwrix on GitHub",
+      "date": "checked 5 Nov 2026",
+      "url": "https://github.com/netwrix/pingcastle"
+    },
+    {
+      "id": "pkfaq",
+      "title": "Purple Knight FAQ",
+      "publisher": "Semperis",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.semperis.com/purple-knight/faq/"
+    },
+    {
+      "id": "pkdocs",
+      "title": "Purple Knight Community documentation",
+      "publisher": "Semperis",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.purple-knight.com/community/welcome.htm"
+    },
+    {
+      "id": "bhce",
+      "title": "BloodHound Community Edition repository and license",
+      "publisher": "SpecterOps on GitHub",
+      "date": "checked 5 Nov 2026",
+      "url": "https://github.com/SpecterOps/BloodHound"
+    }
+  ]
+}
