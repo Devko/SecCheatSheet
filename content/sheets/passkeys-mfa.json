@@ -8,7 +8,7 @@
   "short": "Put admins on security keys or passkeys first, then retire SMS, voice and email codes for everyone else.",
   "answer": "Require phishing-resistant sign-in (security keys, passkeys, Windows Hello for Business or certificates) for every admin first, and secure account recovery before you enforce it. Then move each remaining group to the strongest method its devices support, and give SMS, voice and email codes an end date.",
   "audience": "IT and security teams, especially on Microsoft 365 and Microsoft Entra ID",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-02",
   "reviewEveryDays": 30,
   "blocks": [
@@ -81,7 +81,7 @@
           "items": [
             "**Security keys (FIDO2).** They suit admins, shared PCs and computers too old for passkeys.",
             "**Device-bound passkeys.** The private key never leaves one device, such as a phone running Microsoft Authenticator[^passkeys]. They suit admins without a separate security key.",
-            "**Synced passkeys.** The provider backs them up and restores them on a new device. NIST allows them at AAL2 but not AAL3[^sp80063b].",
+            "**Synced passkeys.** NIST allows them at AAL2 but not AAL3. Where you can, keep them in company-managed accounts on managed devices that block sharing, as NIST requires for federal agencies[^sp80063b].",
             "**Windows Hello for Business.** It is bound to one computer and suits daily sign-in there.",
             "**Certificate-based authentication.** CISA counts it as phishing-resistant[^cisaprmfa]. Keep it where you already issue smart cards."
           ]
@@ -169,6 +169,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: synced passkeys should live in company-managed accounts on managed devices that block sharing where possible, as NIST requires for federal agencies, rather than in staff's personal accounts."
+    },
     {
       "date": "2026-11-02",
       "version": "1.0",

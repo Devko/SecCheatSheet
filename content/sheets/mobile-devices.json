@@ -8,7 +8,7 @@
   "short": "Gate every phone in Conditional Access this month; block iOS more than one major release behind and Android older than 14.",
   "answer": "This month, require a compliant device or Intune app protection for every phone that reaches work data, and set a date to block iOS older than the previous major release and Android older than 14. Then manage company phones fully, protect only work apps on personal ones and harden high-risk users' phones.",
   "audience": "IT teams of any size in the EU and Germany managing company phones and work data on personal ones, mostly with Intune, some with Jamf or Google",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -88,7 +88,7 @@
       "items": [
         "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and 3G, and new configuration profiles[^lockdown].",
         "**Advanced Protection** blocks sideloading and unauthorized USB access while locked, and reboots phones locked for 72 hours. Turn on its Intrusion Logging too[^aap].",
-        "**Treat threat notifications as incidents.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov]."
+        "**Treat threat notifications as incidents.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com[^atn]; bring in your incident response provider. Google Workspace alerts admins to government-backed attacks[^gwsgov]."
       ]
     },
     {
@@ -108,8 +108,8 @@
       "title": "Lost phones, SIM swaps and eSIMs",
       "navTitle": "Lost and SIM",
       "items": [
-        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Lock it in Intune, on iCloud.com[^sdp] or at android.com/lock[^theft], then remove its passkeys (see the passkeys and MFA sheet).",
-        "**Turn on theft protection now.** Away from familiar places, Stolen Device Protection needs Face ID or Touch ID to use saved passwords, erase the phone or move its eSIM[^sdp]. Android has Theft Detection Lock[^theft].",
+        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Lock it in Intune[^lostmode] or wipe work apps' data[^appprot], then remove its passkeys (see the passkeys and MFA sheet).",
+        "**Block resets on company phones.** Disable **Erase All Content and Settings** on supervised iPhones[^restr] and **Factory reset** on managed Android[^andrestr].",
         "**Make SIM swaps harder.** Most carriers ENISA surveyed check callers with personal details such as date of birth[^enisa]. Set a password on the business account and block eSIM changes on supervised iPhones[^restr]. If the signal vanishes, call the carrier at once[^enisa]."
       ]
     },
@@ -186,6 +186,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: lost phones are locked in Intune or have work data wiped instead of using consumer Find My pages, company phones block resets through MDM restrictions instead of user-enabled theft protection, and Access Now is dropped because it serves civil society only."
+    },
+    {
+      "date": "2026-11-05",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check, which made the OS version rules safe to roll out and narrowed 15 statements to what the sources say."
     },
@@ -198,7 +203,7 @@
   "sources": [
     {
       "id": "grant",
-      "title": "Migrate approved client app to application protection policy in Conditional Access",
+      "title": "Migrate approved client app to app protection policy",
       "publisher": "Microsoft Learn",
       "date": "29 May 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/migrate-approved-client-app"
@@ -219,7 +224,7 @@
     },
     {
       "id": "byodand",
-      "title": "Android Enterprise security configurations for personally-owned work profiles",
+      "title": "Security configurations for Android work profiles",
       "publisher": "Microsoft Learn",
       "date": "26 Mar 2025",
       "url": "https://learn.microsoft.com/en-us/intune/device-security/security-configurations/android-personally-owned"
@@ -240,7 +245,7 @@
     },
     {
       "id": "workprofile",
-      "title": "Enroll personal devices in Intune with Android Enterprise work profile management",
+      "title": "Android Enterprise work profile enrollment",
       "publisher": "Microsoft Learn",
       "date": "18 Jun 2026",
       "url": "https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile"
@@ -267,6 +272,20 @@
       "url": "https://learn.microsoft.com/en-us/intune/fundamentals/role-based-access-control/multi-admin-approval"
     },
     {
+      "id": "lostmode",
+      "title": "Intune Lost mode",
+      "publisher": "Microsoft Learn",
+      "date": "27 Oct 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-management/actions/lost-mode"
+    },
+    {
+      "id": "andrestr",
+      "title": "Android device restrictions",
+      "publisher": "Microsoft Learn",
+      "date": "2 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-device-restrictions-android-enterprise"
+    },
+    {
       "id": "partners",
       "title": "Third-party device compliance partners",
       "publisher": "Microsoft Learn",
@@ -282,17 +301,10 @@
     },
     {
       "id": "atn",
-      "title": "About Apple threat notifications and protecting against mercenary spyware",
+      "title": "About Apple threat notifications",
       "publisher": "Apple Support",
       "date": "13 Aug 2026",
       "url": "https://support.apple.com/en-us/102174"
-    },
-    {
-      "id": "sdp",
-      "title": "About Stolen Device Protection for iPhone",
-      "publisher": "Apple Support",
-      "date": "22 Oct 2026",
-      "url": "https://support.apple.com/en-us/120340"
     },
     {
       "id": "altdist",
@@ -328,13 +340,6 @@
       "publisher": "Android Help",
       "date": "checked 5 Nov 2026",
       "url": "https://support.google.com/android/answer/16339980"
-    },
-    {
-      "id": "theft",
-      "title": "Protect your personal data against theft",
-      "publisher": "Android Help",
-      "date": "checked 5 Nov 2026",
-      "url": "https://support.google.com/android/answer/15146908"
     },
     {
       "id": "asb",
@@ -380,16 +385,16 @@
     },
     {
       "id": "ncscim",
-      "title": "Choosing an enterprise instant messaging solution",
+      "title": "Choosing enterprise instant messaging",
       "publisher": "NCSC (UK)",
-      "date": "reviewed 13 May 2025",
+      "date": "13 May 2025",
       "url": "https://www.ncsc.gov.uk/collection/device-security-guidance/policies-and-settings/choosing-an-enterprise-instant-messaging-solution"
     },
     {
       "id": "whatsapp",
       "title": "WhatsApp Privacy Policy (EEA)",
       "publisher": "WhatsApp",
-      "date": "effective 2 Jul 2026",
+      "date": "2 Jul 2026",
       "url": "https://www.whatsapp.com/legal/privacy-policy-eea"
     },
     {
@@ -401,9 +406,9 @@
     },
     {
       "id": "betrvg",
-      "title": "BetrVG, Section 87",
-      "publisher": "Federal Ministry of Justice (Germany)",
-      "date": "as amended 19 Jul 2024",
+      "title": "BetrVG, § 87",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
     }
   ]
