@@ -24,7 +24,7 @@
         },
         {
           "title": "Watch before you enforce.",
-          "text": "Keep a new Conditional Access policy in report-only mode for at least a week[^caplan]; it logs and blocks nothing[^careport]. Audit ASR rules first, except the standard protection rules[^asrtest]."
+          "text": "Keep a new Conditional Access policy in report-only mode for at least a week[^caplan]; it logs but blocks no one[^careport]. Audit ASR rules first, except the standard protection rules[^asrtest]."
         },
         {
           "title": "Roll out in rings sized for your help desk.",
@@ -35,7 +35,7 @@
           "text": "Exclusion lists start short and grow[^caexcl]. Give each member of a policy's exclusion group a reason, an owner and an end date."
         },
         {
-          "title": "Ask security at kickoff, not before go-live.",
+          "title": "Ask security at kickoff, not at go-live.",
           "text": "The BSI requires involving the ISB early in larger projects and new IT systems[^isms1]; Grundschutz++ lets you define when[^std3001]."
         }
       ]
@@ -100,7 +100,7 @@
       "navTitle": "Adoption",
       "items": [
         "**Coverage is enforced over in scope,** counted weekly from the inventory by ring and business unit, with the tail named.",
-        "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** shows who is MFA or passwordless capable and single-factor sign-ins (P1 or P2)[^authact].",
+        "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** lists who is MFA or passwordless capable and counts single-factor sign-ins[^authact].",
         "**Conditional Access.** The gap analyzer workbook lists sign-ins no policy applied to (P1 and Log Analytics)[^gap].",
         "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business; otherwise collect audit event 1122[^asrtest]."
       ]
@@ -126,7 +126,7 @@
         "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
         "**Rate the need: normal or high.** Grundschutz++ has just these two; normal needs no risk analysis of its own, high does[^std3001].",
         "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
-        "**Pentest before go-live** if it faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
+        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
         "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]."
       ]
     },

@@ -113,7 +113,7 @@
         "**Germany.** BSIG § 38 has management implement and oversee the § 30 measures, whose compliance must be documented[^bsig]. Minute the approval.",
         "**Topic policies one level down,** by the role the top policy names.",
         "**Yearly and on triggers.** At least annually and after significant incidents or changes[^nis2ir], new laws, audit findings, new technology or an acquisition[^csfie].",
-        "**Stagger the rest.** A yearly review suits most documents, the BSI found[^std2002]; do two or three a quarter."
+        "**Stagger the rest,** two or three a quarter; the BSI finds yearly suits most documents[^std2002]."
       ]
     },
     {
@@ -125,7 +125,7 @@
         "**Same header everywhere.** Title, owner, version, last and next review, approval, classification and audience[^std2002], plus a change log.",
         "**One source, one place to read.** A versioned library or Git, one intranet page and old versions archived centrally[^isms1].",
         "**Acknowledge at hire, yearly and on change**[^csfie]. 2024/2690 requires it for the top policy[^nis2ir]; ENISA accepts a digital one or a contract clause[^enisatig].",
-        "**Collect it at sign-in.** Entra terms of use (Entra ID P1) shows a PDF before access and can require reacceptance. Deleting the terms deletes the acceptances[^entratou]."
+        "**Collect it at sign-in.** Entra terms of use (Entra ID P1) can require reacceptance of each version; deleting the terms deletes the records[^entratou]."
       ]
     },
     {
@@ -154,9 +154,9 @@
       "navTitle": "Mistakes",
       "items": [
         "**A template nobody adapted.** Rules for tools you don't run read as fiction. SANS's terms allow only personal, non-commercial use without changes[^sansterms]; CRF, its template partner, bars derivative works[^crfterms].",
-        "**Policies that contradict the settings.** The template demands 90-day password changes, NIST says not to require them[^sp80063b] and your tenant doesn't.",
+        "**Settings that contradict the policy.** It demands 90-day password changes; NIST says not to require them[^sp80063b], and your tenant doesn't.",
         "**Reviews that only change the date.** No change log means nobody read the incidents and findings.",
-        "**A signed policy as the goal.** The BSI tells management to ask for proof of effectiveness instead[^bsicurr]."
+        "**A signed policy as the goal.** The BSI wants proof of effectiveness[^bsicurr]."
       ]
     },
     {
@@ -182,7 +182,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Write the top policy and acceptable use page with your IT provider; the managing director signs.",
-            "Adapt CIS's acceptable use template, which CIS invites enterprises to use[^cisaup].",
+            "Adapt CIS's acceptable use template[^cisaup].",
             "Collect acknowledgment at onboarding and yearly."
           ]
         },
@@ -199,7 +199,7 @@
           "items": [
             "One group policy, adopted by each regulated entity's management with local annexes.",
             "The mapping table in the GRC tool, linked to configuration checks.",
-            "Internal audit samples rules against live settings yearly."
+            "Internal audit checks a sample of rules yearly."
           ]
         }
       ]
@@ -209,7 +209,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on NIS2, Regulation 2024/2690, ENISA's guidance, BSIG §§ 30 and 38, BSI ISMS.1, 200-2 and 300-1, NIST CSF 2.0 and SP 800-12, the NCSC's CAF and culture principles, and template terms."
+      "text": "First draft, based on NIS2, Regulation 2024/2690, ENISA's guidance, the BSIG, BSI ISMS.1, 200-2 and 300-1, NIST CSF 2.0 and the NCSC's CAF."
     }
   ],
   "sources": [
@@ -222,7 +222,7 @@
     },
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, recital 9 and Annex",
+      "title": "Regulation (EU) 2024/2690",
       "publisher": "EUR-Lex",
       "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
@@ -257,7 +257,7 @@
     },
     {
       "id": "bsicurr",
-      "title": "NIS-2 Curriculum Geschäftsleitungsschulung",
+      "title": "Curriculum Geschäftsleitungsschulung",
       "publisher": "BSI",
       "date": "28 Oct 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
