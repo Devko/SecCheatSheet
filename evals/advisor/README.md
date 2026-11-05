@@ -24,8 +24,10 @@ node evals/advisor/run.mjs --condition old=/tmp/old/plugins/security-advisor \
 node evals/advisor/judge.mjs evals/advisor/results/<folder>
 ```
 
-`--cases Q1-patch-vpn,R1-python-api` limits the run to some cases. Rerunning with the same `--out`
-resumes and skips finished runs. Results go to `evals/advisor/results/`, which git ignores.
+A condition can name a model: `--condition haiku:claude-haiku-5-5` runs Haiku without the plugin,
+and `--condition haiku-plugin:claude-haiku-5-5=plugins/security-advisor` runs it with the plugin. The
+report shows which model answered. `--cases Q1-patch-vpn,R1-python-api` limits the run to some
+cases. Rerunning with the same `--out` resumes and skips finished runs. Results go to `evals/advisor/results/`, which git ignores.
 
 Cost, at November 2026 prices: about $0.10 to $0.25 per question or triage run, $0.20 to $0.60 per
 code review run, and about $0.10 per judge call. Three conditions with three runs each cost about $30.

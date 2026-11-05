@@ -36,7 +36,9 @@ function extract(file) {
   const result = events.find((e) => e.type === "result");
   if (!result?.result) return null;
   const meta = events.find((e) => e.type === "meta") ?? {};
+  const init = events.find((e) => e.type === "system" && e.subtype === "init") ?? {};
   return {
+    model: init.model ?? "?",
     answer: result.result,
     cost: result.total_cost_usd ?? 0,
     seconds: (meta.wallMs ?? result.duration_ms ?? 0) / 1000,
@@ -158,6 +160,7 @@ const summary = names.map((name) => {
     seconds: Object.fromEntries(kinds.map((k) => [k, mean(of(name, (j) => j.kind === k).map(({ r }) => r.seconds))])),
     words: mean(rows.map(({ r }) => r.words)),
     advisorUsed: rows.filter(({ r }) => r.advisorUsed).length,
+    models: [...new Set(rows.map(({ r }) => r.model))].join(", "),
     webCalls: rows.reduce((s, { r }) => s + r.webCalls, 0),
   };
 });
@@ -184,6 +187,7 @@ const md = [
   "",
   `| | ${names.join(" | ")} |`,
   `| --- | ${names.map(() => "---").join(" | ")} |`,
+  `| Model | ${summary.map((s) => s.models).join(" | ")} |`,
   `| Checks met | ${summary.map((s) => pct(s.checks)).join(" | ")} |`,
   ...kinds.map((k) => `| Checks met, ${k} | ${summary.map((s) => pct(s.byKind[k])).join(" | ")} |`),
   `| Factual errors | ${summary.map((s) => s.errors).join(" | ")} |`,

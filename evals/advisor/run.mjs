@@ -3,8 +3,9 @@
 //   node evals/advisor/run.mjs --condition base --condition plugin=plugins/security-advisor \
 //     [--runs 3] [--concurrency 6] [--cases Q1-patch-vpn,R1-python-api] [--out <dir>]
 //
-// A condition is "base" (no plugin) or "<name>=<plugin directory>". Every condition gets the same
-// tools; plugin conditions also get the advisor's MCP tools. Prompts are plain requests with no slash
+// A condition is "<name>[:<model>][=<plugin directory>]": "base" runs without the plugin on the
+// default model, "haiku:claude-haiku-5-5=plugins/security-advisor" runs Haiku with the plugin.
+// Every condition gets the same tools; plugin conditions also get the advisor's MCP tools. Prompts are plain requests with no slash
 // commands, so the test also shows whether the plugin is used without being asked for.
 // Finished runs are skipped, so an interrupted run can be resumed with the same --out.
 // Then grade with: node evals/advisor/judge.mjs <out>
@@ -20,8 +21,9 @@ const all = (name) => args.flatMap((a, i) => (a === name ? [args[i + 1]] : []));
 const one = (name, fallback) => all(name)[0] ?? fallback;
 
 const conditions = all("--condition").map((c) => {
-  const [name, dir] = c.split("=");
-  return { name, plugin: dir ? path.resolve(dir) : null };
+  const [head, dir] = c.split("=");
+  const [name, model] = head.split(":");
+  return { name, model: model || null, plugin: dir ? path.resolve(dir) : null };
 });
 if (!conditions.length) {
   console.error("Give at least one --condition, e.g. --condition base --condition plugin=plugins/security-advisor");
@@ -75,6 +77,7 @@ async function runOne({ c, cond, n }) {
   const flags = ["-p", c.prompt, "--output-format", "stream-json", "--verbose", "--max-turns", "30",
     "--allowedTools", ...TOOLS, ...(cond.plugin ? MCP : [])];
   if (cond.plugin) flags.push("--plugin-dir", cond.plugin);
+  if (cond.model) flags.push("--model", cond.model);
   const started = Date.now();
   await new Promise((resolve) => {
     const child = spawn("claude", flags, { cwd, stdio: ["ignore", "pipe", "pipe"] });
