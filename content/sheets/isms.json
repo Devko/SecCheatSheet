@@ -24,7 +24,7 @@
         },
         {
           "title": "Scope the whole regulated entity.",
-          "text": "ISO 27001 lets you limit the scope; the BSIG requires measures for the whole regulated entity[^bsiiso]. Include IT operations, cloud services and outsourced process steps."
+          "text": "ISO 27001 lets you limit the scope; the BSIG requires measures for all relevant operations of the entity[^bsiiso]. Include IT operations, cloud services and outsourced process steps."
         },
         {
           "title": "Let risks choose the controls.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Does a regulator name a scheme?",
-          "text": "German power and gas grid operators need an ISMS certified against the Bundesnetzagentur's IT security catalog; an ISO or IT-Grundschutz certificate alone isn't enough[^bnetza]. KRITIS operators prove their measures to the BSI every 3 years[^bsig]."
+          "text": "German power and gas grid operators need an ISMS certified against the Bundesnetzagentur's 2015 IT security catalog, now under revision; an ISO or IT-Grundschutz certificate alone isn't enough[^bnetza]. Other KRITIS operators prove their measures to the BSI every 3 years[^bsig]."
         },
         {
           "title": "Do automotive customers ask for TISAX?",
@@ -74,14 +74,14 @@
       "title": "The certifiable options side by side",
       "navTitle": "Frameworks",
       "span": "full",
-      "intro": "ENISA maps each requirement of NIS2 Implementing Regulation 2024/2690 to ISO 27001 and NIST CSF 2.0, but says this doesn't make them equivalent[^enisatig].",
+      "intro": "ENISA maps each requirement of NIS2 Implementing Regulation 2024/2690 to ISO 27001 and NIST CSF 2.0, without judging equivalence or full coverage[^enisatig].",
       "columns": [
         {
           "title": "ISO/IEC 27001:2022",
           "items": [
             "**Current edition.** The 2022 text with Amendment 1:2024[^iso27001], which asks you to decide whether climate change is relevant; no new certificate is needed[^iafclimate].",
             "**Controls.** Annex A refers to the 93 controls of ISO/IEC 27002:2022[^iaf26]. You select them by risk and list them in the statement of applicability (SoA).",
-            "**2013 is gone.** Certificates to the 2013 edition expired or were withdrawn on 31 October 2025[^iaf26]."
+            "**2013 is gone.** Certificates to the 2013 edition expired or were withdrawn by 31 October 2025[^iaf26]."
           ]
         },
         {
@@ -95,7 +95,7 @@
         {
           "title": "TISAX",
           "items": [
-            "**Objectives set the depth.** AL2 checks evidence and interviews the security lead, usually by video call. AL3, for strictly confidential data and prototype parts, checks everything, generally on site[^tisaxnis2].",
+            "**Objectives set the depth.** AL2 checks evidence and interviews the security lead, usually by video call. AL3, for example for strictly confidential data and prototype parts, checks everything, generally on site[^tisaxnis2].",
             "**Catalog.** VDA ISA2027 applies to assessments ordered from 1 January 2027[^enxisa]; initial ISA6 assessments can be opened until March 2027[^enxdl].",
             "**Validity.** Labels last up to 3 years[^enxisa]."
           ]
@@ -108,10 +108,10 @@
       "title": "What NIS2 and the BSIG require",
       "navTitle": "NIS2 and BSIG",
       "items": [
-        "**No certificate.** The BSI says ISO 27001 certification is no precondition for meeting the BSIG[^bsiiso], and IT-Grundschutz isn't mandatory[^bsifaq].",
+        "**No certificate.** The BSI says ISO 27001 certification is no precondition for meeting the BSIG[^bsiiso], and IT-Grundschutz isn't mandatory for all entities[^bsifaq].",
         "**Documented measures.** You must document how you meet the risk management duties[^bsig] and show proof when the BSI orders it, for example audit reports. KRITIS operators submit it unasked[^bsifaq].",
         "**Gaps to close.** Registration, reporting deadlines and management training aren't part of ISO 27001[^bsiiso]; see the EU security laws sheet.",
-        "**Mappings are gap lists.** The BSI maps each § 30 BSIG measure to ISO 27001 clauses and controls[^bsiiso]. ENX concludes that TISAX-compliant sites meet NIS2 apart from reporting[^tisaxnis2]; the BSI says no company certificate alone meets every BSIG requirement[^bsifaq]."
+        "**Mappings are gap lists.** The BSI maps each § 30 BSIG measure to ISO 27001 clauses and controls[^bsiiso]. ENX, which runs TISAX, argues that a label covering all affected sites meets NIS2 apart from reporting[^tisaxnis2]; the BSI says no company certificate alone meets every BSIG requirement[^bsifaq]."
       ]
     },
     {
@@ -123,7 +123,7 @@
         "**Scope by business process.** Name the processes, sites, applications, IT systems and service providers, and include each process completely[^std3001].",
         "**Mark each control's real state.** Implemented with evidence, planned with a date, or not applicable. Grundschutz++ allows that only if a requirement can't functionally be met or the component is absent, with a reason[^std3001].",
         "**Explain every choice.** ISA2027 requires each listed aspect to be consciously considered and the decision explainable[^enxisa]. Hold your SoA to that.",
-        "**Keep the documents few.** Scope, policy, risk register, SoA, treatment plan, audit reports and review minutes. Management approves the policy; every employee gets it[^std3001]."
+        "**Keep the documents few.** Scope, policy, objectives, risk register, SoA, treatment plan, audit and corrective action records and review minutes. Management approves the policy; every employee gets it[^std3001]."
       ]
     },
     {
@@ -157,8 +157,8 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Grundschutz++ arrived.** BSI-Standard 300-1 version 1.0, dated 20 October 2026, targets experienced early adopters[^std3001]. Certification on its basis opens on 1 January 2027; classic IT-Grundschutz certification ends on 30 November 2031[^gspp].",
-        "**TISAX moved to yearly catalogs.** Under ISA2027, published on 1 July 2026, suppliers to organizations with very high protection needs must be covered by a TISAX label, an equivalent assessment or a supplier audit. New catalogs follow each summer[^enxisa]."
+        "**Grundschutz++ arrived.** BSI-Standard 300-1 version 1.0, dated 20 October 2026, targets experienced early adopters[^std3001]. Certification applications on its basis open on 1 January 2027; classic IT-Grundschutz certification ends on 30 November 2031[^gspp].",
+        "**TISAX moved to yearly catalogs.** Under ISA2027, published on 1 July 2026, suppliers to organizations with very high protection needs are expected to show a TISAX label, an equivalent assessment or a supplier audit. New catalogs follow each summer[^enxisa]."
       ]
     },
     {
@@ -181,7 +181,7 @@
       "items": [
         "**A scope too narrow to matter.** A certificate for the IT department alone misses what customers and the BSI care about. The BSI tells certified entities to check whether NIS2 needs a wider scope[^bsiiso].",
         "**Controls copied from a template.** An SoA with every control implemented and no evidence falls apart in the first customer audit.",
-        "**An ISMS run only by consultants.** Management can't hand over responsibility, and the security officer must be involved in projects such as new systems[^std3001]. Let consultants coach the process owners.",
+        "**An ISMS run only by consultants.** Management can't hand over responsibility, and a security role must be involved in security-relevant projects such as new systems[^std3001]. Let consultants coach the process owners.",
         "**Trusting a supplier's logo.** Ask for the certificate's scope and SoA; see the third-party risk sheet."
       ]
     },
@@ -243,7 +243,7 @@
     },
     {
       "id": "bsig",
-      "title": "BSIG §§ 30, 39 and 61",
+      "title": "BSIG §§ 28, 30 and 39",
       "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bsig_2025/"
@@ -321,7 +321,7 @@
     {
       "id": "tisaxnis2",
       "title": "NIS2 fulfilment through TISAX, v1",
-      "publisher": "ENX WG ISA",
+      "publisher": "ENX",
       "date": "24 Apr 2025",
       "url": "https://enx.com/TISAX-NIS2-en.pdf"
     },
