@@ -108,8 +108,8 @@
       "title": "Lost phones, SIM swaps and eSIMs",
       "navTitle": "Lost and SIM",
       "items": [
-        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Mark it lost on iCloud.com[^sdp] or lock it at android.com/lock[^theft], then remove its passkeys, as the passkeys and MFA sheet's backup method allows.",
-        "**Turn on theft protection beforehand.** Away from familiar places, Stolen Device Protection needs Face ID or Touch ID to use saved passwords, erase the phone or move its eSIM[^sdp]. On Android, use Theft Detection Lock[^theft].",
+        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Mark it lost on iCloud.com[^sdp] or lock it at android.com/lock[^theft], then remove its passkeys (see the passkeys and MFA sheet).",
+        "**Turn on theft protection now.** Away from familiar places, Stolen Device Protection needs Face ID or Touch ID to use saved passwords, erase the phone or move its eSIM[^sdp]. Android has Theft Detection Lock[^theft].",
         "**Make SIM swaps harder.** Carriers mostly verify requests with personal details such as date of birth[^enisa]. Set a password on the business account and block eSIM changes on supervised iPhones[^restr]. If the signal vanishes, call the carrier at once[^enisa]."
       ]
     },
