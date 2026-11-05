@@ -1,14 +1,14 @@
 {
   "slug": "active-directory",
   "topic": "Active Directory and Entra Connect",
-  "status": "draft",
+  "status": "published",
   "order": 67,
   "capability": "identity/directory",
   "title": "Active Directory: could any user become Domain Admin today?",
   "short": "Run a free AD assessment this month, close every path an ordinary user has to Domain Admin, and rotate krbtgt every six months.",
   "answer": "This month, run PingCastle or Defender for Identity on every domain and close what lets any user reach Domain Admin: weak certificate templates, unconstrained delegation, loose permissions and a machine account quota above 0. Then retire NTLM, RC4 and stale accounts behind audit logs, and reassess quarterly.",
   "audience": "IT and security teams running Active Directory, with or without Entra Connect or Cloud Sync",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -196,6 +196,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which made the machine account quota, LDAP, NTLM and krbtgt steps safe to roll out, updated the RC4 changes to July 2026 enforcement, added the April 2027 Entra Connect deadline and stated PingCastle's and Purple Knight's license terms for companies."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
