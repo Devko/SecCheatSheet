@@ -90,6 +90,8 @@ It reads the published sheets through `index.json` at run time, so:
   search finds the right sheet for each question, and names new sheets that have none.
 - **Changes to the plugin itself** (its skills, agent or server) need `version` raised in
   `plugins/security-advisor/.claude-plugin/plugin.json`. Users only receive plugin updates when it changes.
+  To check that a change actually helps, compare it with the published version in the
+  [advisor eval](evals/advisor/README.md), which runs realistic requests with and without the plugin.
 - **To try sheets before they're published**, build locally and point the plugin at the build:
 
   ```bash
