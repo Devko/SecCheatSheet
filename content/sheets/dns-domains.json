@@ -1,14 +1,14 @@
 {
   "slug": "dns-domains",
   "topic": "DNS and domains",
-  "status": "draft",
+  "status": "published",
   "order": 43,
   "capability": "exposure/dns",
   "title": "DNS and domains: could someone hijack your domains or your DNS?",
   "short": "Put phishing-resistant MFA on every registrar and DNS account this month, registry-lock the domains you sign in and mail with, and send all user DNS through a resolver you control.",
   "answer": "This month, put phishing-resistant MFA on every registrar and DNS provider account, registry-lock the few domains that sign-in, email and your website depend on, and publish CAA records on every domain. Then send all user DNS through a validating, filtering resolver you control, and sign zones with DNSSEC only where your provider automates the keys.",
   "audience": "IT and security teams in organizations of any size that own domains, run public DNS and resolve DNS for their users",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,15 +24,15 @@
         },
         {
           "title": "Registry-lock the domains everything depends on.",
-          "text": "A registrar lock lasts only until someone in your registrar account asks for its removal. A registry lock is set by the registry and takes longer to remove[^eppcodes]; DENIC's .de lock needs a named contact to confirm each change[^denicrl]. Lock the domains behind sign-in, email, your website and name servers."
+          "text": "Anyone in your registrar account can ask to lift a registrar lock. A registry lock is set by the registry and can take longer to remove[^eppcodes]; DENIC's .de lock needs a named contact to confirm each change[^denicrl]. Lock the domains behind sign-in, email, your website and name servers. Test an unlock, since the lock also delays urgent fixes."
         },
         {
           "title": "Make expiry impossible.",
-          "text": "Use auto-renew on a company card, with more than one trusted person able to manage each domain[^ncscdomains]. Answer holder verification requests from your provider: unverified .de domains go offline[^denicverify]."
+          "text": "Use auto-renew on a company card and two trusted managers per domain[^ncscdomains]. Answer your provider's holder verification requests, or .de domains go offline and are later released[^denicverify]."
         },
         {
           "title": "Publish CAA everywhere and watch CT logs.",
-          "text": "Name the CAs you use, publish `issue \";\"` on domains that need no certificates[^rfc8659] and monitor certificate transparency logs for every domain, parked ones included[^googlecctld]. Parked domains also need the DMARC record from the endpoints and email sheet."
+          "text": "Name the CAs you and your SaaS providers use, publish `issue \";\"` on domains that need no certificates[^rfc8659] and monitor CT logs for every domain, parked ones included[^googlecctld]. Parked domains also need the DMARC record from the endpoints and email sheet."
         },
         {
           "title": "Send all user DNS through a resolver you control.",
@@ -87,8 +87,8 @@
       "navTitle": "DNSSEC and CAA",
       "items": [
         "**Sign only where your provider automates the keys.** DNSSEC can't stop someone who logs in to your registrar or DNS provider, but it lets CAs detect forged CAA records[^rfc8659]. Use ECDSA P-256 or Ed25519; RSA/SHA-1 is deprecated[^icannalg].",
-        "**Know what breaks.** Since 15 March 2026, CAs must validate DNSSEC and may not treat a validation error as permission to issue[^br], so a broken signature also blocks certificate renewals. Moving DNS provider? Remove the DS record first, as Route 53's migration steps do[^awsmigrate].",
-        "**Bind CAA to your ACME account.** Let's Encrypt honors `accounturi` now[^lecaa]. All CAs must from 15 March 2027, and email validation ends on 15 March 2028[^br]. Whoever controls your DNS will be able to get certificates."
+        "**Know what breaks.** Since 15 March 2026, CAs must validate DNSSEC and may not treat a validation error as permission to issue[^br], so a broken signature also blocks renewals. Moving DNS provider? Pull the DS record and wait out its TTL first, as Route 53's guide does[^awsmigrate].",
+        "**Bind CAA to your ACME account.** Let's Encrypt honors `accounturi` now[^lecaa]; list every account you renew with. All CAs must from 15 March 2027, and email validation ends on 15 March 2028[^br]."
       ]
     },
     {
@@ -99,7 +99,7 @@
       "items": [
         "**Recurse only for your own clients.** No internet-facing server should be both authoritative and recursive[^sp80081].",
         "**Validate DNSSEC** with automatic trust anchor updates, two time sources and QNAME minimization[^sp80081].",
-        "**Block DNS that goes around them:** outbound port 53 except from your resolvers, port 853 and known public DoH servers[^sp80081].",
+        "**Block DNS that goes around them:** outbound ports 53 and 853 except from your resolvers, and known public DoH servers[^sp80081].",
         "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081].",
         "**Practice turning off validation for one zone.** A faulty DENIC key rollover on 5 May 2026 broke .de names, signed or not, on validating resolvers; some large operators suspended validation for .de[^denicout]."
       ]
@@ -110,9 +110,9 @@
       "title": "Protective DNS and DNS over HTTPS",
       "navTitle": "Protective DNS",
       "items": [
-        "**Use a free service if it fits.** UK central government must use the NCSC's free PDNS[^ncscpdns]. DNS4EU runs a free public protective resolver with DoH and DoT, and offers DNS4GOV to public institutions[^dns4eu].",
+        "**Check public-sector services.** UK central government must use the NCSC's free PDNS[^ncscpdns]. DNS4EU's free resolver is for individuals only; public institutions get their own service[^dns4eu].",
         "**Or buy one with logs and an API.** Ask for current deny lists, editable allow lists and block logs your SIEM can pull. It doesn't replace your own DNS logs[^ncscpriv].",
-        "**Control DoH in browsers.** Chrome sends no DoH on managed devices unless the `DnsOverHttpsMode` policy allows it[^chromedoh]. Firefox's DoH bypasses your DNS unless the `DNSOverHTTPS` policy's `ProviderURL` points at your resolver[^ffdoh]."
+        "**Control DoH in browsers.** Chrome sends no DoH on managed devices unless the `DnsOverHttpsMode` policy allows it[^chromedoh]. Lock Firefox's `DNSOverHTTPS` policy to off or to your resolver's `ProviderURL`[^ffdoh]."
       ]
     },
     {
@@ -124,7 +124,7 @@
       "items": [
         "**Three ccTLD registries were hijacked.** Attackers compromised the registries of .gh, .sl and .as, changed DNS records and got certificates for Google and other brands. Google advises restrictive CAA with ACME account bindings[^googlecctld].",
         "**The root zone has a new key.** KSK-2024 (key tag 38696) has signed it since 11 October 2026. Check each validating resolver's trust anchors instead of assuming automatic updates worked[^ksk].",
-        "**.de verifies holder data.** Under NIS2, DENIC has risk-checked holder data since December 2025, now including a phone number, and existing domains can be asked to verify too[^denicreg][^denicverify]. Real requests come through your provider, and DENIC never asks for passwords by email[^denicverify].",
+        "**.de verifies holder data.** Under NIS2, DENIC has risk-checked holder data since December 2025, now including a phone number, and existing domains can be asked to verify too[^denicreg][^denicverify]. Verification runs only through your provider, and DENIC never asks for passwords by email[^denicverify].",
         "**Windows DNS Server speaks DoH.** Since the June 2026 update, Windows Server 2025 accepts DoH from clients, but not toward upstream servers[^kb5094125]. Clients can encrypt DNS without bypassing your resolver."
       ]
     },
@@ -144,9 +144,9 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Domains in an account that can close.** Closing an AWS account suspends its Route 53 domains on day 5[^awsdomains]; use an account nobody closes.",
-        "**Recovery email on the domain itself.** A hijacker then gets your password resets. AWS advises a root email outside the account's own domains[^awsdomains].",
-        "**Deleting the zone, not the delegation.** Anyone who opens an account at that DNS host can take over the name[^sp80081]."
+        "**Domains in an account that can close.** Closing an AWS account suspends its Route 53 domains within 5 days[^awsdomains].",
+        "**Recovery email on the domain itself.** A hijacker then gets your password resets. Use an address on another domain.",
+        "**Deleting the zone, not the delegation.** An attacker with an account at that DNS host may then take over the name[^sp80081]."
       ]
     },
     {
@@ -161,7 +161,7 @@
           "items": [
             "Move every domain into a registrar account you own, with two admins on security keys.",
             "Turn on auto-renew and registrar lock everywhere, and publish CAA for the CA you use.",
-            "Point your router or firewall at a protective resolver such as DNS4EU's[^dns4eu]."
+            "Point your router or firewall at a protective DNS service that allows business use."
           ]
         },
         {
@@ -184,6 +184,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected DNS4EU eligibility (its free resolver excludes businesses), made the outbound DNS blocking and DNSSEC migration steps safe and replaced an AWS blog post with AWS documentation."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -263,10 +268,10 @@
     },
     {
       "id": "awsdomains",
-      "title": "Protect Amazon Route 53 domains during account lifecycle events",
-      "publisher": "AWS",
-      "date": "22 Jul 2026",
-      "url": "https://aws.amazon.com/blogs/networking-and-content-delivery/protect-amazon-route-53-domains-during-account-lifecycle-events-best-practices-for-domain-governance-in-multi-account-organizations/"
+      "title": "Route 53 domains when an AWS account is closed",
+      "publisher": "AWS Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/troubleshooting-account-closed.html"
     },
     {
       "id": "awsmigrate",
@@ -301,7 +306,7 @@
       "title": "TLS Baseline Requirements, version 2.3.1",
       "publisher": "CA/Browser Forum",
       "date": "4 Oct 2026",
-      "url": "https://github.com/cabforum/servercert/blob/main/docs/BR.md"
+      "url": "https://cabforum.org/working-groups/server/baseline-requirements/requirements/"
     },
     {
       "id": "rfc8659",
@@ -340,10 +345,10 @@
     },
     {
       "id": "dns4eu",
-      "title": "DNS4EU public service launched",
+      "title": "Free public DNS resolver for Europe",
       "publisher": "DNS4EU",
-      "date": "11 Jun 2025",
-      "url": "https://joindns4.eu/learn/dns4eu-public-service-launched"
+      "date": "checked 5 Nov 2026",
+      "url": "https://joindns4.eu/for-public"
     },
     {
       "id": "chromedoh",
