@@ -24,7 +24,7 @@
         },
         {
           "title": "Enforce updates with a deadline.",
-          "text": "Use declarative update enforcement. In Intune, **Software Update Enforce Latest** with **Delay in Days** at 7[^intuneupd] meets the patching sheet's deadline for exploited flaws on internal systems. macOS 27 ignores the old MDM update commands[^wn27]."
+          "text": "Use declarative update enforcement: in Intune, **Software Update Enforce Latest** with **Delay in Days** at 7[^intuneupd]. When Apple says a flaw may have been exploited, enforce that version within 72 hours, as the browsers sheet does for browsers."
         },
         {
           "title": "Give users standard accounts.",
@@ -86,10 +86,10 @@
       "title": "How Macs get infected now",
       "navTitle": "Infostealers",
       "items": [
-        "**Atomic macOS Stealer leads.** It made up 50% of the top five stealer families Microsoft Defender Experts saw, MacSync 7%. Mac-targeted activity has grown since late 2025[^mddr].",
+        "**Atomic macOS Stealer leads.** Of the top five stealer families Microsoft Defender Experts saw, it had 50% of the activity, MacSync 7%. Mac-targeted activity has grown since late 2025[^mddr].",
         "**Pasted commands skip Gatekeeper.** Fake troubleshooting guides have users paste a Terminal command that fetches a script with curl. Scripts started from Terminal don't get the checks Gatekeeper runs on apps opened in Finder[^msclickfix].",
         "**Standard accounts don't stop them.** The stealer asks for the user's password, then takes Keychain entries, browser passwords, session cookies and wallets[^msclickfix]. See the browsers sheet on cookie theft.",
-        "**The paste warning is a speed bump.** Since macOS 26.4[^msclickfix], Macs warn users who rarely use Terminal, who can choose Paste Anyway[^paste].",
+        "**The paste warning is a speed bump.** It appears only when someone who rarely uses Terminal pastes a command from a website, chat or email, and they can choose Paste Anyway[^paste].",
         "**Gatekeeper overrides moved.** Since Sequoia, users allow unnotarized apps in Privacy & Security, not with Control-click[^sequoia]. On macOS 15+, Endpoint Security tools can log each bypass[^xprotect]."
       ]
     },
@@ -101,7 +101,7 @@
       "items": [
         "**Lost: lock it.** A remote lock restarts the Mac and asks for a six-digit PIN. Managed Lost Mode, with location, is only for iPhone and iPad[^lock].",
         "**Compromised: isolate it.** Isolate it in Defender[^mdemac] and follow the incident response sheet. Assume the Keychain, browser passwords and cookies are stolen[^msclickfix], and reset them.",
-        "**Erase and re-enroll.** MDM erase uses Erase All Content and Settings; on Apple silicon it needs a bootstrap token[^erase]. Rotate the FileVault key and admin password once seen[^fv][^laps].",
+        "**Erase and re-enroll.** MDM erase uses Erase All Content and Settings; on Apple silicon it needs a bootstrap token[^erase]. Rotate a FileVault key or admin password after anyone views it[^fv][^laps].",
         "**Keep Activation Lock in your hands.** Leave it off unless MDM holds the bypass code, via **Activation Lock Allowed While Supervised**[^intuneal]. Apple Business can lift a user's lock on Macs added before it was on[^abal]."
       ]
     },
@@ -128,7 +128,7 @@
         "**Apple Business replaced Apple Business Manager.** Since 14 April 2026, it is free and includes a built-in MDM[^abnews].",
         "**macOS 27 dropped Intel and legacy update management.** Since 14 September 2026, it runs only on Apple silicon[^appsec] and ignores MDM update commands[^wn27].",
         "**macOS 27 can block binaries.** Supervised Macs can enforce allow or deny lists through a built-in Endpoint Security client[^allowdeny].",
-        "**Intune retired legacy Setup Assistant enrollment.** Since October 2026, those profiles use modern authentication[^intuneade]; test before new Macs arrive."
+        "**Intune ended legacy Setup Assistant authentication.** Since October 2026, profiles use modern authentication[^intuneade]; test it now."
       ]
     },
     {
@@ -139,7 +139,7 @@
         "**A second antivirus beside the EDR.** Defender for Endpoint on Mac includes antivirus[^mdemac], on top of XProtect's signatures[^xprotect].",
         "**Binding Macs to Active Directory.** Platform SSO can map on-premises Kerberos tickets from Entra ID[^pssoscen].",
         "**Blocking Terminal for everyone.** Developers and IT need it. EDR and binary control cover the risk better.",
-        "**NVRAM and SMC resets at disposal.** The BSI's 2023 module asks for them[^bsi], but erasing makes the data cryptographically inaccessible[^erase]."
+        "**BSI steps older than Apple silicon.** SYS.2.4 asks for NVRAM and SMC resets and a firmware password[^bsi]. On Apple silicon, erasing makes data cryptographically inaccessible[^erase] and FileVault replaces the password[^fwpw]."
       ],
       "span": "full"
     },
@@ -335,7 +335,7 @@
     {
       "id": "msclickfix",
       "title": "ClickFix campaign uses fake macOS utilities lures",
-      "publisher": "Microsoft Security Blog",
+      "publisher": "Microsoft Defender Security Research Team",
       "date": "6 May 2026",
       "url": "https://www.microsoft.com/en-us/security/blog/2026/05/06/clickfix-campaign-uses-fake-macos-utilities-lures-deliver-infostealers/"
     },
@@ -373,6 +373,13 @@
       "publisher": "Apple Support",
       "date": "25 Oct 2023",
       "url": "https://support.apple.com/guide/deployment/dep0a819891e/web"
+    },
+    {
+      "id": "fwpw",
+      "title": "Set a firmware password on your Mac",
+      "publisher": "Apple Support",
+      "date": "22 Jun 2026",
+      "url": "https://support.apple.com/en-us/102384"
     },
     {
       "id": "intuneal",
