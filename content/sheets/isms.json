@@ -1,14 +1,14 @@
 {
   "slug": "isms",
   "topic": "ISMS and ISO 27001",
-  "status": "draft",
+  "status": "published",
   "order": 33,
   "capability": "govern/isms",
   "title": "ISMS and ISO 27001: which certificate do you need, and will the system run your security?",
-  "short": "Certify only what customers or regulators ask for, scope the whole regulated entity and review risks with management at least once a year.",
-  "answer": "Decide this quarter which evidence your customers and regulators actually ask for, such as an ISO/IEC 27001:2022 certificate or a TISAX label, because NIS2 and the German BSIG require documented measures, not a certificate[^bsiiso]. Then scope the ISMS to the whole regulated entity, let your risk register choose the controls and have management decide on the remaining risks at least once a year.",
+  "short": "Certify only what customers or regulators ask for, scope all relevant operations and review risks with management at least once a year.",
+  "answer": "Decide this quarter which evidence your customers and regulators actually ask for, such as an ISO/IEC 27001:2022 certificate or a TISAX label, because NIS2 and the German BSIG require documented measures, not a certificate[^bsiiso]. Then scope the ISMS to all the regulated entity's relevant operations, let your risk register choose the controls and have management decide on the remaining risks at least once a year.",
   "audience": "Security, compliance and IT leads in EU organizations, especially in Germany, deciding whether and how to build an ISMS",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -110,7 +110,7 @@
       "items": [
         "**No certificate.** The BSI says ISO 27001 certification is no precondition for meeting the BSIG[^bsiiso], and IT-Grundschutz isn't mandatory for all entities[^bsifaq].",
         "**Documented measures.** You must document how you meet the risk management duties[^bsig] and show proof when the BSI orders it, for example audit reports. KRITIS operators submit it unasked[^bsifaq].",
-        "**Gaps to close.** Registration, reporting deadlines and management training aren't part of ISO 27001[^bsiiso]; see the EU security laws sheet.",
+        "**Gaps to close.** Registration, reporting deadlines and management training aren't part of ISO 27001[^bsiiso]; see the EU security laws sheet. Energy and telecom operators follow their sector law instead[^bsig].",
         "**Mappings are gap lists.** The BSI maps each § 30 BSIG measure to ISO 27001 clauses and controls[^bsiiso]. ENX, which runs TISAX, argues that a label covering all affected sites meets NIS2 apart from reporting[^tisaxnis2]; the BSI says no company certificate alone meets every BSIG requirement[^bsifaq]."
       ]
     },
@@ -220,6 +220,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 13 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
