@@ -1,14 +1,14 @@
 {
   "slug": "websites-cms",
   "topic": "Websites and CMS",
-  "status": "draft",
+  "status": "published",
   "order": 48,
   "capability": "exposure/websites",
   "title": "Websites and CMS: who patches your site, and how fast?",
   "short": "Turn on automatic updates and admin MFA, and leave PHP 8.2 and Drupal 10 before support ends in December 2026.",
-  "answer": "This month, turn on automatic updates for core, plugins and themes, require MFA for every admin and plan the move off PHP 8.2 and Drupal 10, which lose support in December 2026. Then write down who patches the CMS, the plugins and PHP, and who restores the site when it is hacked.",
+  "answer": "This week, get every site's PHP patched for October's exploited flaws. This month, turn on automatic updates for core, plugins and themes, require MFA for every admin, plan the move off PHP 8.2 and Drupal 10, which lose support in December, and write down who patches and who restores the site when it is hacked.",
   "audience": "Marketing, IT and security teams that run company websites and online shops, alone or with an agency or hoster",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -77,7 +77,7 @@
         "**Check WordPress's settings.** Minor releases update automatically, but major ones only on sites installed since 5.6[^wpupgrade]. Enable both under Dashboard > Updates.",
         "**Buy premium plugins in the company's name.** WordPress shows updates for plugins installed from a ZIP file only if the vendor built in an updater[^wpplugins]. Never use nulled copies from untrusted sources[^wphardening].",
         "**Replace abandoned plugins.** Check each plugin's last release once a quarter, and replace any that no longer get updates.",
-        "**Patch PHP separately.** CMS updates don't fix the PHP runtime, and containers need a rebuild[^bsiphp]. Agree a PHP patch deadline with the hoster."
+        "**Patch PHP separately.** CMS updates don't fix the PHP runtime, and containers need a rebuild[^bsiphp]. Set a PHP patch deadline with the hoster."
       ]
     },
     {
@@ -87,7 +87,7 @@
       "navTitle": "Admin access",
       "items": [
         "**One account per person.** No shared agency logins. Keep admin rights to a few named people and give content staff an editor role.",
-        "**Prefer company SSO.** Sign admins in through your identity provider with SAML or OpenID Connect, so leavers lose access at once.",
+        "**Prefer company SSO.** Sign admins in through your identity provider with SAML or OpenID Connect, so leavers lose access with their account.",
         "**Restrict the admin path.** Allow the backend only from VPN or office IPs, with TYPO3's `IPmaskList`[^typo3be] or web server rules, and limit failed logins[^bsiapp31].",
         "**Own every account.** Keep the domain, hosting, CDN, repositories and licenses in the company's name; registrar locks are in the DNS and domains sheet. When an agency leaves, remove its accounts and rotate SFTP, database and API credentials."
       ]
@@ -98,7 +98,7 @@
       "title": "Online shops: scripts on the payment page",
       "navTitle": "Shops",
       "items": [
-        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on payment pages and on pages embedding the provider's iframe, not plain redirects[^pcisupp]. SAQ A drops both, but iframe users must confirm their site resists script attacks[^pcifaq].",
+        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on payment pages and on pages embedding the provider's iframe; with a redirect, only scripts that perform it[^pcisupp]. SAQ A drops both, but iframe users must confirm their site resists script attacks[^pcifaq].",
         "**Authorize every script (6.4.3).** Confirm each payment page script is authorized, assure its integrity and list it with a reason[^pcisupp].",
         "**Detect changes (11.6.1).** Alert on unauthorized script and security header changes as browsers see them, weekly or per risk analysis[^pcisupp].",
         "**Cut scripts from checkout.** Keep tag managers, chat widgets and pixels off payment pages, and limit sources with a Content Security Policy[^pcisupp]."
@@ -136,10 +136,10 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**PHP needed an emergency patch.** On 21 Oct 2026, PHP fixed two critical unauthenticated code execution flaws with no complete mitigation[^phpsa]. CISA listed both as exploited on 26 Oct[^kev]. Check each site's PHP; distro builds have their own numbers[^bsiphp].",
+        "**PHP needed an emergency patch.** On 21 Oct 2026, PHP fixed two critical unauthenticated code execution flaws[^phpsa]. CISA listed both as exploited on 26 Oct[^kev]. Check each site's PHP against its Linux distribution's patched package[^bsiphp].",
         "**WordPress core entered CISA's KEV catalog.** Four core flaws were added from July to November 2026[^kev].",
         "**Hosting panels were exploited.** CISA lists a cPanel login bypass used in ransomware attacks, and a LiteSpeed cPanel plugin flaw that gave any cPanel user root[^kev].",
-        "**Other CMS and shops too.** CISA added a Drupal core flaw in May, five Joomla extensions in June and July, and three Adobe Commerce flaws since September[^kev]."
+        "**Other platforms too.** CISA added a Drupal core flaw in May, flaws in five Joomla extensions in June and July, and three Adobe Commerce flaws since September[^kev]."
       ]
     },
     {
@@ -147,7 +147,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Hiding the CMS version or renaming the admin URL.** Neither stops an exploit. Spend the time on updates and MFA.",
+        "**Renaming the admin URL.** It doesn't stop an exploit. Restrict the path instead, and spend the time on updates and MFA.",
         "**A second or third security plugin.** Each one is more code to patch. One security plugin is enough.",
         "**Staging every security release.** WordPress strongly discourages turning off minor auto-updates[^wpupgrade]. Stage major upgrades only.",
         "**Perfect scores on header and TLS scanners.** Apply the encryption sheet's TLS baseline and a CSP on checkout, then get back to updates."
@@ -176,7 +176,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Ask your agency or hoster in writing who updates core, plugins and PHP, and to fix exploited flaws within 72 hours.",
-            "Turn on automatic updates and MFA for every admin.",
+            "Turn on automatic updates and admin MFA.",
             "Take card payments on your provider's hosted payment page, not in your own form."
           ]
         },
@@ -200,6 +200,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which tied the PCI script rules to PCI SSC's own FAQ, scoped the German TDDDG duty, added the exploited Drupal, Joomla and Adobe Commerce flaws and put agency and hosting contracts first."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
