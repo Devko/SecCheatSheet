@@ -90,9 +90,9 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (needs every library instrumented, even libc) and TSan for data races; ASan and TSan can't be combined[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
-        "**Fuzzers.** libFuzzer gets bug fixes only, as its authors moved to Centipede[^libfuzzer]; ClusterFuzzLite still runs it on pull requests and in batch jobs[^cflite].",
-        "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2`, `-Wconversion` and `-Werror=format-security`[^openssf]; in C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers so you can move it to `std::span`[^safebuf]. On MSVC, `/sdl` turns uninitialized-variable warnings into errors[^mssdl]."
+        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (every library instrumented, even libc) and TSan for data races, which can't run with ASan[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
+        "**Fuzzers.** libFuzzer now gets only bug fixes[^libfuzzer]; ClusterFuzzLite runs it on pull requests and in batch jobs[^cflite].",
+        "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2`, `-Wconversion` and `-Werror=format-security`[^openssf]. In C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers[^safebuf]. On MSVC, `/sdl` makes uninitialized-variable warnings errors[^mssdl]."
       ]
     },
     {
@@ -165,7 +165,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on the OpenSSF compiler hardening guide, GCC, Clang, libc++ and MSVC docs, WG21 papers, Google's memory-safety data, CISA and FBI guidance, OpenSSL advisories and the 2025 CWE Top 25."
+      "text": "First draft, based on the OpenSSF compiler hardening guide, GCC, Clang, libc++ and MSVC docs, Google's memory-safety data, CISA and FBI guidance, OpenSSL advisories, the KEV catalog and the 2025 CWE Top 25."
     }
   ],
   "sources": [
@@ -199,8 +199,8 @@
     },
     {
       "id": "gccinst",
-      "title": "GCC manual: Instrumentation Options",
-      "publisher": "GCC",
+      "title": "Instrumentation Options",
+      "publisher": "GCC manual",
       "date": "checked 5 Nov 2026",
       "url": "https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html"
     },
@@ -262,8 +262,8 @@
     },
     {
       "id": "gccovf",
-      "title": "GCC manual: Integer Overflow Builtins",
-      "publisher": "GCC",
+      "title": "Integer Overflow Builtins",
+      "publisher": "GCC manual",
       "date": "checked 5 Nov 2026",
       "url": "https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html"
     },
@@ -283,9 +283,9 @@
     },
     {
       "id": "kev",
-      "title": "Known Exploited Vulnerabilities Catalog (data feed)",
+      "title": "Known Exploited Vulnerabilities Catalog",
       "publisher": "CISA",
-      "date": "1,768 entries on 4 Nov 2026",
+      "date": "data feed, 4 Nov 2026",
       "url": "https://github.com/cisagov/kev-data"
     },
     {
@@ -297,8 +297,8 @@
     },
     {
       "id": "gccattr",
-      "title": "GCC manual: Common Attributes",
-      "publisher": "GCC",
+      "title": "Common Attributes",
+      "publisher": "GCC manual",
       "date": "checked 5 Nov 2026",
       "url": "https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html"
     },
@@ -346,8 +346,8 @@
     },
     {
       "id": "gccopt",
-      "title": "GCC manual: Optimize Options",
-      "publisher": "GCC",
+      "title": "Optimize Options",
+      "publisher": "GCC manual",
       "date": "checked 5 Nov 2026",
       "url": "https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html"
     },
@@ -367,7 +367,7 @@
     },
     {
       "id": "cvebrotli",
-      "title": "CVE-2026-111497: Out-of-Bounds Write in Google Brotli Decoder",
+      "title": "CVE-2026-111497 (Brotli decoder)",
       "publisher": "Google",
       "date": "22 Oct 2026",
       "url": "https://www.cve.org/CVERecord?id=CVE-2026-111497"
@@ -389,7 +389,7 @@
     {
       "id": "cisaroad",
       "title": "The Case for Memory Safe Roadmaps",
-      "publisher": "CISA, NSA, FBI and partners",
+      "publisher": "CISA, NSA and partners",
       "date": "Dec 2023",
       "url": "https://www.ic3.gov/CSA/2023/231206.pdf"
     },
