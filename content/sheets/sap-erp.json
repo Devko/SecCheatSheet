@@ -1,14 +1,14 @@
 {
   "slug": "sap-erp",
   "topic": "SAP and ERP systems",
-  "status": "draft",
+  "status": "published",
   "order": 66,
   "capability": "infrastructure/erp",
   "title": "SAP and ERP: is the system that moves your money patched, closed and watched?",
   "short": "Patch SAP and Oracle every month, exploited flaws on exposed systems within 72 hours, and keep SAP support packages under 24 months old.",
   "answer": "This month, take every ERP web component that doesn't need to be public off the internet, and apply each month's SAP Security Notes and Oracle patches within the patching sheet's deadlines. Then close the paths inside (RFC gateway, trusted connections, standard users, SAP_ALL in production) and keep the Security Audit Log on and in your SIEM, so someone reviews every emergency and admin session.",
   "audience": "SAP Basis, security and IT teams running SAP ECC, S/4HANA, RISE or BTP, and teams running Oracle or Microsoft ERP systems",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -52,7 +52,7 @@
         },
         {
           "title": "How fast must each one go in?",
-          "text": "Use the patching sheet's tiers: exploited (in KEV[^kev]) first, then Critical[^sapoct26] and High notes within 14 days on internet-facing systems and 30 days inside."
+          "text": "Use the patching sheet's tiers: exploited (in KEV[^kev]) within 72 hours on internet-facing systems and 7 days inside, other Critical and High notes within 14 and 30 days."
         },
         {
           "title": "Did the fix reach production?",
@@ -60,7 +60,7 @@
         },
         {
           "title": "Is the server still talking to the internet?",
-          "text": "Block outbound traffic from ERP servers, as Google advises for EBS; it can disrupt an attack even after a break-in[^gtigebs]."
+          "text": "Block non-essential outbound internet traffic from ERP servers, as Google advises for EBS; it can disrupt an attack even after a break-in[^gtigebs]."
         }
       ]
     },
@@ -71,7 +71,7 @@
       "navTitle": "Exploited flaws",
       "span": "full",
       "items": [
-        "**SAP NetWeaver Visual Composer, CVE-2025-31324.** Unauthenticated file upload; in KEV since 29 April 2025, with ransomware use[^kev].",
+        "**SAP Visual Composer, CVE-2025-31324 and -42999.** Ransomware used both uploader flaws; in KEV since 29 April and 15 May 2025[^kev].",
         "**Oracle EBS, CVE-2025-61882.** Google saw likely zero-day attacks from 9 August 2025 and data theft[^gtigebs]; in KEV since 6 October[^kev].",
         "**Oracle PeopleSoft, CVE-2026-35273.** ShinyHunters exploited it from 27 May 2026, before Oracle's 10 June alert[^gtigps]; in KEV since 12 June[^kev].",
         "**Oracle Payments in EBS, CVE-2026-46817.** An unauthenticated takeover rated 9.8, fixed on 28 May 2026[^oracspu]; in KEV since 15 July[^kev]."
@@ -84,9 +84,9 @@
       "navTitle": "Inside paths",
       "items": [
         "**Block function modules nobody calls.** In UCON's final phase, remote-enabled function modules not assigned to a communication assembly can't be called from outside[^ucon].",
-        "**Treat trusted RFC like a stored password.** Never let development or test systems trust into production[^app42].",
+        "**Treat trusted RFC like a stored password.** We extend BSI's stored-password rule[^app42]: production never trusts development or test systems.",
         "**Lock the standard users.** Lock SAP*, DDIC and EARLYWATCH but keep SAP* in every client, and check with report RSUSR003[^stdusers].",
-        "**Run jobs as technical users.** Background jobs run as System users, and no standard user runs jobs or RFC connections[^app42]."
+        "**Run jobs as technical users.** Background jobs run as System users, not Dialog users[^app42]. Move the transport job RDDIMPDP off DDIC, so DDIC can stay locked[^stdusers]."
       ]
     },
     {
@@ -95,10 +95,10 @@
       "title": "Powerful rights and emergency access",
       "navTitle": "Authorizations",
       "items": [
-        "**Remove debug and replace.** S_DEVELOP with object type DEBUG and change rights lets users alter accounting data in memory without a trace[^dsag].",
+        "**Remove debug and replace.** S_DEVELOP for DEBUG with change rights lets users alter accounting data in memory, bypassing the audit trail[^dsag].",
         "**Remove all-table access.** No production user should display every table through SE16 with S_TABU_DIS for all groups[^dsag].",
         "**Review every firefighter session.** Unlock emergency users per ticket and log everything[^app42]. SAP Access Control sends each session's logs to a reviewer, if the system records them[^eam].",
-        "**Protect vendor bank details.** Mark bank fields as sensitive, so a second user must confirm changes before the automatic payment run; manual payments aren't blocked[^dualctl]."
+        "**Protect vendor bank details.** Mark bank fields as sensitive, so a second user must confirm changes before the automatic payment run[^dualctl]; manual payments aren't blocked[^dualkba]."
       ]
     },
     {
@@ -108,7 +108,7 @@
       "navTitle": "Logs and code",
       "items": [
         "**Send the audit log to your SIEM.** Microsoft Sentinel for SAP charges per production system and needs SAP Integration Suite[^sentinel][^sentprep].",
-        "**Gate every transport.** Build roles and code only in development[^app42]; the ABAP Test Cockpit checks them at release[^atc]. Its security checks, Code Vulnerability Analyzer, need a license on premises or SAP BTP[^cva].",
+        "**Gate every transport.** Build roles and code only in development[^app42]; the ABAP Test Cockpit checks code at transport release[^atc]. Its security checks, Code Vulnerability Analyzer, need a per-user license on premises or a BTP ABAP Environment[^cva].",
         "**Follow APP.4.6 in custom ABAP.** Check AUTHORITY-CHECK results; avoid dynamic Open SQL, ADBC and INSERT REPORT[^app46]."
       ]
     },
@@ -120,7 +120,7 @@
       "items": [
         "**End of 2027.** Mainstream maintenance ends for SAP ERP 6.0, EHP 6 to 8[^bs7], and SAP Solution Manager[^sysrec].",
         "**2028 to 2030.** Optional extended maintenance, at 2 percentage points more[^bs7]. Then, in customer-specific maintenance, SAP considers new high and critical notes for 12 months only[^sapnotes].",
-        "**RISE transition option.** Security patches from 2031 to 2033 for systems moved to SAP ERP, private edition on HANA by the end of 2030[^transopt]."
+        "**RISE transition option.** Security patches from 2031 to 2033, or with further prerequisites to 2035, for systems moved to SAP ERP, private edition on HANA by the end of 2030[^transopt]."
       ]
     },
     {
@@ -142,7 +142,7 @@
       "items": [
         "**Oracle patches monthly.** Critical Security Patch Updates, first on 28 May, now fill the months between quarterly updates[^oraalerts].",
         "**SAP's own npm packages were poisoned.** Malicious CAP database packages and MTA Build Tool versions appeared in April[^sapapr26]. See the supply-chain sheet.",
-        "**ECC on RISE until 2035.** Since 13 October, transition option subscriptions may run to the end of 2035[^transopt]."
+        "**ECC on RISE until 2035.** Since 13 October, the transition option may run to the end of 2035, with further prerequisites[^transopt]."
       ]
     },
     {
@@ -163,7 +163,7 @@
       "items": [
         "**Leaving unused components installed.** Visual Composer, exploited in 2025, got another 9.9 note in October 2026[^sapoct26].",
         "**Falling behind on cumulative patches.** Oracle's fix for CVE-2025-61882 needed the October 2023 Critical Patch Update first[^oraebsalert].",
-        "**Trusting a WAF.** Google warns WAF body-inspection rules can be bypassed[^gtigps]."
+        "**Relying on a WAF alone.** Google warns WAF body-inspection rules can be bypassed[^gtigps]."
       ]
     },
     {
@@ -177,7 +177,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Get a monthly note status per system from your ERP partner, and proof that no ERP login is public.",
-            "In Business Central, limit SUPER and review delegated partner admins[^bcperm]; get an email when an IBAN changes[^bcaudit]."
+            "In Business Central, limit SUPER and delegated admins[^bcperm], and alert on IBAN changes[^bcaudit]."
           ]
         },
         {
@@ -198,6 +198,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which aligned SAP patch deadlines with the patching sheet, added the second exploited Visual Composer flaw, scoped dual control and outbound blocking to what SAP and Google say and marked our trusted RFC rule as an extension of BSI's."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -243,13 +248,13 @@
     {
       "id": "mddr",
       "title": "Microsoft Digital Defense Report 2026",
-      "publisher": "Microsoft",
+      "publisher": "Microsoft Threat Intelligence",
       "date": "Oct 2026",
       "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
     },
     {
       "id": "gtigebs",
-      "title": "Oracle E-Business Suite Zero-Day Exploited in Extortion Campaign",
+      "title": "Oracle E-Business Suite Zero-Day Exploited in Widespread Extortion Campaign",
       "publisher": "Google Cloud",
       "date": "9 Oct 2025",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/oracle-ebusiness-suite-zero-day-exploitation"
@@ -340,10 +345,17 @@
     },
     {
       "id": "dualctl",
-      "title": "KBA 3557252: Dual Control Sensitive Fields",
+      "title": "Dual Control for Changing Master Records",
+      "publisher": "SAP Help",
+      "date": "SAP ERP, checked 5 Nov 2026",
+      "url": "https://help.sap.com/saphelp_globext607_10/helpdata/en/a4/330af7083911d395a200a0c942612c/content.htm"
+    },
+    {
+      "id": "dualkba",
+      "title": "KBA 3404779: Postings for unconfirmed vendors",
       "publisher": "SAP Support",
-      "date": "Sep 2025",
-      "url": "https://userapps.support.sap.com/sap/support/knowledge/en/3557252"
+      "date": "May 2025",
+      "url": "https://userapps.support.sap.com/sap/support/knowledge/en/3404779"
     },
     {
       "id": "atc",
