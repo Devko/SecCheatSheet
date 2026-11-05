@@ -1,14 +1,14 @@
 {
   "slug": "gdpr-security",
   "topic": "GDPR security duties",
-  "status": "draft",
+  "status": "published",
   "order": 57,
   "capability": "data/privacy",
   "title": "GDPR security: could you prove your measures fit the risk?",
   "short": "Require MFA on every remote login, link each processing record to its systems and keep dated proof that you test your measures.",
   "answer": "This quarter, require MFA on every remote, partner and admin login, and link each entry in your Article 30 records to the systems, processors and measures that protect it. Judge every other measure by the harm a breach would do to the people concerned and by what the state of the art offers, because in a damages claim you must prove your measures were appropriate[^c340].",
   "audience": "IT, security and data protection teams in companies in Germany and the EU",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,7 +24,7 @@
         },
         {
           "title": "Link your records of processing to your asset list.",
-          "text": "Add to each Article 30 entry the systems and processors it uses, beside the general description of security measures the GDPR asks for where possible[^gdpr], so no system goes live without an owner and a risk rating."
+          "text": "Give each Article 30 entry its systems and processors, next to the description of measures the GDPR asks for where possible[^gdpr], so no system goes live without an owner and a risk rating."
         },
         {
           "title": "Make processor contracts specific.",
@@ -77,7 +77,7 @@
       "items": [
         "**Weak remote logins.** The CNIL's €42 million fines on Free Mobile and Free in January 2026 cited weak VPN logins and ineffective detection of abnormal activity[^cnilfree]. In September 2026 the CNIL announced a €500,000 fine on a private hospital: external doctors reached records without VPN or MFA, and the attacker browsed for days unnoticed[^cnilhpl].",
         "**Accounts that see too much.** France Travail's €5 million fine in January 2026 cited weak authentication, too little logging and partner advisers who could see jobseekers they didn't support[^cnilft].",
-        "**Weak identity checks, unmonitored partners.** The BfDI fined Vodafone €45 million in June 2025: €30 million for portal and hotline authentication flaws that exposed eSIM profiles, €15 million for not monitoring partner agencies[^bfdi].",
+        "**Weak identity checks, unmonitored partners.** The BfDI fined Vodafone €45 million in June 2025: €30 million for portal and hotline authentication flaws that exposed eSIM profiles, €15 million for not monitoring partner agencies. Vodafone accepted and paid both[^bfdi].",
         "**Known flaws left open.** In October 2024, Italy's Garante announced a €900,000 fine on Postel for a flaw left unpatched for almost a year after the vendor and the national cyber agency flagged it[^postel].",
         "**No log review, no MFA.** IQVIA's €5 million fine in May 2026 included unreviewed connection logs and no MFA on a health data warehouse[^cniliqvia].",
         "**Secrets and design.** The Irish DPC fined Meta €91 million in 2024 for plaintext passwords[^dpc91] and €251 million after a flaw exposed access tokens, €240 million of it for failing data protection by design and default[^dpc251]."
@@ -113,7 +113,7 @@
       "navTitle": "German view",
       "items": [
         "**The SDM is the yardstick.** It maps GDPR duties to seven goals[^sdm], and the DSK recommends it with its catalog of reference measures[^sdmmv].",
-        "**Email needs enforced TLS.** For high risk, the DSK expects end-to-end plus qualified transport encryption: TR-02102-2 ciphers, forward secrecy and DNSSEC-checked servers. Professional secrecy can indicate high risk[^dskmail].",
+        "**Email needs enforced TLS.** For high risk, the DSK expects end-to-end and qualified transport encryption: TR-02102-2 ciphers, forward secrecy, DNSSEC-checked servers. Professional secrecy can signal high risk[^dskmail].",
         "**Check the DPIA must-list.** It names DLP that profiles staff, employee geolocation and AI that evaluates people or steers interaction with them[^dskmuss]."
       ]
     },
@@ -124,8 +124,8 @@
       "navTitle": "What changed",
       "items": [
         "**The SDM logging module was rewritten.** Building block 43 v2.0, valid since 1 June 2026, asks for an organization-wide logging concept[^b43].",
-        "**Fixed steps for cross-border cases.** In investigations opened after 2 April 2027, lead authorities must send preliminary findings and allow three to six weeks to reply[^proc].",
-        "**Fewer firms may need records.** The Omnibus IV deal would exempt firms under 1,000 staff except for high-risk processing[^pe790]; Parliament's vote is provisionally set for 23 November 2026[^oeil130]. The Digital Omnibus is still a proposal[^oeil360]; see the eu-security-laws sheet."
+        "**Fixed steps for cross-border cases.** For cases opened after 2 April 2027, you get preliminary findings and three to six weeks to reply[^proc].",
+        "**Fewer firms may need records.** The Omnibus IV deal would exempt firms under 1,000 staff except for high-risk processing[^pe790]; Parliament plans to vote on 23 November 2026[^oeil130]. The Digital Omnibus is still a proposal[^oeil360]."
       ]
     },
     {
@@ -186,6 +186,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which replaced a restricted Council document with Parliament's public text, scoped the new procedural rules to cases opened after 2 April 2027, corrected the SDM version and narrowed the court rulings to what they decided."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
