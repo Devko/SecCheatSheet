@@ -76,7 +76,7 @@
       "items": [
         {
           "title": "Week 1: what's in scope, and who answers?",
-          "text": "List services, sites, tenants, OT and suppliers, in the fewest separate assessments that still give an accurate picture[^c2m2]. Name one contact per area, such as HR for leavers[^std2002]."
+          "text": "List services, sites, tenants, OT and suppliers, in as few separate assessments as still give an accurate picture[^c2m2]. Name one contact per area[^std2002]."
         },
         {
           "title": "Weeks 2 and 3: interviews and samples.",
@@ -88,7 +88,7 @@
         },
         {
           "title": "Week 5: report and hand over.",
-          "text": "Present gaps and decisions, then turn the gaps into the roadmap, as the security program sheet describes."
+          "text": "Present gaps and decisions. The security program sheet turns the gaps into a roadmap."
         }
       ]
     },
@@ -135,11 +135,11 @@
       "title": "External assessor or your own team",
       "navTitle": "Who assesses",
       "items": [
-        "**Run the yearly cycle yourself.** Your people know where the evidence is. C2M2 is built for facilitated self-evaluation[^c2m2].",
-        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence than self-assessment, the NCSC says[^cafpage]. Bring one in every 2 to 3 years and when a customer or regulator relies on the result.",
-        "**Keep reviewers out of the line.** NIS2 digital providers need independent reviews by people with audit competence outside the reviewed area's line of authority[^nis2ir].",
-        "**Don't let the fixer grade.** An assessor who also sells the remediation has a conflict.",
-        "**Check the license.** CIS's free CSAT is for your own internal assessment; consultants need a SecureSuite consulting membership[^csat]."
+        "**Run the yearly cycle yourself.** Your people know where the evidence is; C2M2 is built for facilitated self-evaluation[^c2m2].",
+        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years and when customers or regulators rely on the result.",
+        "**Keep reviewers out of the line.** NIS2 digital providers need reviewers with audit competence outside the reviewed area's line of authority[^nis2ir].",
+        "**Don't let the fixer grade.** An assessor who also sells the fixes has a conflict.",
+        "**Check the license.** CIS's free CSAT covers only your own internal assessment; consultants need a SecureSuite consulting membership[^csat]."
       ]
     },
     {
@@ -168,10 +168,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Scoring the paper.** A signed policy is rated as a working control. The BSI rates \"yes\" only when measures are fully, effectively and appropriately implemented[^std2002].",
+        "**Scoring the paper.** The BSI rates \"yes\" only for measures implemented fully, effectively and appropriately[^std2002], not for a signed policy.",
         "**Chasing level 5 everywhere.** It costs most where risk is lowest; DOE calls the top level in all domains not typically optimal[^c2m2].",
         "**Buying a score.** Tools that turn questionnaires or external scans into a maturity number measure answers or the perimeter, not practice.",
-        "**Taking \"implemented\" for \"works\".** CIS's specification checks whether a safeguard is implemented, not yet how well[^cas]. Test a restore, an alert, a revoked account.",
+        "**Taking \"implemented\" for \"works\".** CIS's specification checks only whether a safeguard is implemented[^cas]. Test a restore, an alert, a revoked account.",
         "**Changing the yardstick.** A new model, scale or scope each year breaks the trend."
       ]
     },
@@ -226,7 +226,7 @@
     },
     {
       "id": "profqs",
-      "title": "SP 1301, Organizational Profiles quick-start guide",
+      "title": "SP 1301, Organizational Profiles guide",
       "publisher": "NIST",
       "date": "Feb 2024",
       "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1301.pdf"
@@ -261,7 +261,7 @@
     },
     {
       "id": "cafpage",
-      "title": "Cyber Assessment Framework",
+      "title": "CAF overview",
       "publisher": "NCSC (UK)",
       "date": "reviewed 30 Oct 2026",
       "url": "https://www.ncsc.gov.uk/collection/cyber-assessment-framework"
@@ -289,7 +289,7 @@
     },
     {
       "id": "cas",
-      "title": "Controls Assessment Specification v8.1",
+      "title": "Assessment Specification v8.1",
       "publisher": "CIS",
       "date": "checked 5 Nov 2026",
       "url": "https://cas.docs.cisecurity.org/en/latest/source/About%20the%20CIS%20Controls%20Assessment%20Specification/"
@@ -331,7 +331,7 @@
     },
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, Annex 2.3 and 7",
+      "title": "Regulation (EU) 2024/2690, Annex",
       "publisher": "EUR-Lex",
       "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"

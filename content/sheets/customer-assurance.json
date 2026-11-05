@@ -129,7 +129,7 @@
           "title": "Accept: the law requires them",
           "items": [
             "**Processor audits.** Allow and contribute to audits and inspections by the controller or its auditor[^gdpr].",
-            "**NIS2 flow-down.** Cloud and other digital providers must ask, where appropriate, for security rules, incident notice without undue delay, vulnerability handling, audits or reports, subcontractor and exit rules[^nis2ir].",
+            "**Digital provider customers under NIS2.** Security requirements, incident notice without undue delay, vulnerability handling, audits or reports, subcontractor and exit rules, where appropriate[^nis2ir].",
             "**DORA terms.** Data locations, incident help at no extra or preset cost, supervisor cooperation and exit support; for critical or important functions, unrestricted audit and access rights and threat-led tests[^dora]."
           ]
         },
@@ -273,7 +273,7 @@
     },
     {
       "id": "roi",
-      "title": "DORA ITS 2024/2956, Art. 3, Annex I",
+      "title": "DORA ITS 2024/2956, Annex I",
       "publisher": "EUR-Lex",
       "date": "Nov 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2956/oj"
@@ -303,7 +303,7 @@
       "id": "sig",
       "title": "SIG FAQ",
       "publisher": "Shared Assessments",
-      "date": "checked 5 Nov 2026",
+      "date": "Aug 2025",
       "url": "https://sharedassessments.org/about-sig/"
     },
     {
