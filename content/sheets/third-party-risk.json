@@ -8,7 +8,7 @@
   "short": "List every supplier with admin access, tokens or critical data, and make sure you can cut each one off within an hour.",
   "answer": "This quarter, list every supplier that holds admin access, tokens or a copy of your critical data, and make sure you can cut off each one's access within an hour. Then focus on that top tier: read their audit reports instead of sending questionnaires, fix the contract at renewal and plan for a week without them.",
   "audience": "IT, security, procurement and compliance leads in EU organizations, especially in Germany",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -131,7 +131,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Your own 300-question questionnaire.** Send low tiers a one-page form, or take a completed SIG or CAIQ, which ENISA names as evidence[^enisatig].",
+        "**Your own 300-question questionnaire.** Send low tiers a one-page form, or take the supplier's completed SIG or CAIQ, which ENISA names as evidence[^enisatig].",
         "**Custom terms with hyperscalers.** Compare their standard terms and audit reports with your clauses and record the gaps. ENISA suggests negotiating jointly[^enisatig]; DORA allows pooled audits[^rtscontract].",
         "**Mapping every fourth party.** NIS2 and the BSIG address direct suppliers[^bsifaq]; DORA adds subcontractors behind critical or important functions[^rtssub]. Ask the top tier which subcontractors touch your data.",
         "**A security rating feed before a supplier list.** No outside score tells you who holds admin rights in your tenant."
@@ -184,6 +184,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: clarified that low-tier suppliers can send their own completed SIG or CAIQ."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",

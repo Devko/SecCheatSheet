@@ -8,7 +8,7 @@
   "short": "Use company accounts, require the sandbox with bypass modes off, and have a second person approve every agent pull request.",
   "answer": "This month, move every developer to a company account, require the tool's sandbox with bypass modes switched off in managed settings, and keep production credentials away from agents. Judge every new tool, MCP server or automation by what outsiders can write into what it reads, and what it could run, reach or merge if that text took over.",
   "audience": "Engineering leads, platform and security teams whose developers use AI coding assistants and agents",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -139,7 +139,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Buy the business plan of one assistant and keep company code out of personal accounts.",
-            "Keep approval prompts on and the sandbox enabled; run autonomous tasks in the vendor's cloud agent, not in yolo mode on a laptop.",
+            "Require the sandbox and block bypass modes centrally, as Claude Code's server-managed settings on claude.ai allow without MDM[^ccsandbox]. Run autonomous tasks in the vendor's cloud agent, not in yolo mode on a laptop.",
             "Keep production tokens off developer laptops."
           ]
         },
@@ -164,6 +164,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: small teams now require the sandbox and block bypass modes centrally, through Claude Code's server-managed settings, instead of relying on each developer's settings."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

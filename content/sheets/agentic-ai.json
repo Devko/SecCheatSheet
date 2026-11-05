@@ -8,7 +8,7 @@
   "short": "Give each agent its own least-privilege identity and a human gate on anything irreversible.",
   "answer": "Before an agent touches real data or systems, give it its own identity with the least access that works, run it in a sandbox, and make a person approve anything it can't undo. Judge every other tool or permission by two questions: who else can write what the agent reads, and what could it do if they did?",
   "audience": "IT and security teams deploying or allowing AI agents",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-02",
   "reviewEveryDays": 30,
   "blocks": [
@@ -111,7 +111,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Prefer agent products that run in the vendor's sandbox, and keep approval prompts on for anything that writes, sends or pays.",
+            "Prefer business plans of agent products that run in the vendor's sandbox, and require approval for anything that writes, sends or pays, in the admin console where possible.",
             "Give agents their own accounts or API keys, read-only where possible.",
             "Allow only a short list of plugins and MCP servers from publishers you already trust.",
             "Keep agents that read email or the web away from finance and admin accounts."
@@ -166,6 +166,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: the small-team advice now names business plans and sets approvals in the admin console rather than in each user's prompts."
+    },
     {
       "date": "2026-11-02",
       "version": "1.0",
