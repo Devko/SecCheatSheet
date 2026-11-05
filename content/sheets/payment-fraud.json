@@ -1,14 +1,14 @@
 {
   "slug": "payment-fraud",
   "topic": "Payment fraud",
-  "status": "draft",
+  "status": "published",
   "order": 51,
   "capability": "govern/fraud",
   "title": "Payment fraud: could one convincing email, call or video call move your money?",
   "short": "Confirm every bank detail change on a number you already have, wait two business days before paying it, and require two signatures at the bank.",
   "answer": "This quarter, write down how bank details may change (a call back to a number you already have, a second approver and a waiting period before the first payment) and have your bank require two signatures for payments. Then run Verification of Payee on your payment files too, and treat any request to skip the process as fraud, however senior the voice or face.",
   "audience": "Finance, accounts payable, payroll and treasury teams, with the IT and security staff who support them",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -185,6 +185,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which tied Verification of Payee claims to the regulation's articles, corrected the trend in FBI loss figures and replaced dated deepfake detection data with the GDV's current advice."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
