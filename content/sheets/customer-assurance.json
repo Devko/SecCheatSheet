@@ -224,7 +224,7 @@
     },
     {
       "id": "enisatig",
-      "title": "NIS2 Technical Implementation Guidance",
+      "title": "Technical Implementation Guidance (NIS2)",
       "publisher": "ENISA",
       "date": "Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
@@ -273,7 +273,7 @@
     },
     {
       "id": "roi",
-      "title": "DORA ITS (EU) 2024/2956, Art. 3, Annex I",
+      "title": "DORA ITS 2024/2956, Art. 3, Annex I",
       "publisher": "EUR-Lex",
       "date": "Nov 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2956/oj"
@@ -315,7 +315,7 @@
     },
     {
       "id": "edpb0720",
-      "title": "Guidelines 07/2020 on controller and processor",
+      "title": "Guidelines 07/2020: controller, processor",
       "publisher": "EDPB",
       "date": "Sep 2022",
       "url": "https://www.edpb.europa.eu/system/files/documents/2023-10/EDPB_guidelines_202007_controllerprocessor_final_en.pdf"

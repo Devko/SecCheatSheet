@@ -28,7 +28,7 @@
         },
         {
           "title": "Build on tools you already run.",
-          "text": "Defender for Identity, Windows auditing, CloudTrail and Microsoft 365 alert policies keep alert data in systems you control. In a controlled test with over 130 red teamers, everyone facing decoys tripped one before exploiting a real machine[^tularosa]."
+          "text": "Defender for Identity, Windows auditing, CloudTrail and Microsoft 365 alert policies keep alert data in systems you control. Decoys work: in a controlled test with over 130 red teamers, everyone facing decoys tripped one before exploiting a real machine[^tularosa]."
         },
         {
           "title": "Trip each canary yourself.",
@@ -60,7 +60,7 @@
         },
         {
           "title": "A decoy secret and a decoy cloud user.",
-          "text": "Alert on any `SecretGet` for a fake Key Vault secret[^kvlog] and on any sign-in by a decoy Entra ID user, as for emergency access accounts[^breakglass]."
+          "text": "Alert on any `SecretGet` for a fake Key Vault secret[^kvlog] and on any sign-in by a decoy Entra ID user, the way Microsoft shows for emergency access accounts[^breakglass]."
         },
         {
           "title": "Names only a thief would use.",
@@ -146,7 +146,7 @@
         "**Internet-facing honeypots.** They tell you about the internet's scanners, not about your network. Put decoys inside.",
         "**Fake environments that engage intruders.** Decoy accounts, files and keys are enough to detect an intrusion.",
         "**Hundreds of decoys before five work.** Deception needs tuning as networks change[^ncsctrial]. Grow only as fast as you test.",
-        "**A deception platform before an on-call rota.** If nobody answers a High alert at night, a canary alert waits too (see the SOC and MDR sheet)."
+        "**A deception platform before an on-call rotation.** If nobody answers a High alert at night, a canary alert waits too (see the SOC and MDR sheet)."
       ]
     },
     {
@@ -187,7 +187,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Microsoft Learn pages on Defender for Identity and Windows auditing, AWS documentation, MITRE ATT&CK, the NCSC's deception trials, Thinkst's Canarytokens docs, terms and license, and German labor case law."
+      "text": "First draft, based on Microsoft Learn, AWS docs, MITRE ATT&CK, the NCSC trials, Thinkst docs and terms, and German labor law."
     }
   ],
   "sources": [
