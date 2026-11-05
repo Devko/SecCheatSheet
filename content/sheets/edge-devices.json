@@ -8,7 +8,7 @@
   "short": "Take management interfaces off the internet, keep 12 months of device logs elsewhere and replace devices before support ends.",
   "answer": "This month, take every edge device's management interface off the internet and send its logs to a system the device can't erase, and replace anything past end of support within 12 months. When a flaw in one is exploited, assume the device is compromised: collect evidence, reset or rebuild it and rotate every credential it held, because a patch doesn't remove an attacker who is already in.",
   "audience": "IT and network teams running firewalls, VPN gateways, routers, load balancers, file-transfer appliances and other internet-facing devices, in organizations of any size",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -142,7 +142,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Ask your IT provider to list every internet-facing device with its end-of-support date, and replace any past it.",
-            "Sign up for free exposure alerts: Shadowserver reports[^shadow] or NCSC Early Warning in the UK[^ncscew].",
+            "Get free exposure alerts from Shadowserver[^shadow]. In Germany, CERT-Bund alerts the operator of your IP range[^certbund]; UK-based organizations can join NCSC Early Warning[^ncscew].",
             "Check that the firewall's admin page is reachable only from inside and that VPN users need MFA."
           ]
         },
@@ -166,6 +166,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: added CERT-Bund's reports for German network operators and limited NCSC Early Warning to UK-based organizations."
+    },
     {
       "date": "2026-11-03",
       "version": "1.0",
@@ -324,6 +329,13 @@
       "publisher": "NCSC (UK)",
       "date": "checked 3 Nov 2026",
       "url": "https://www.ncsc.gov.uk/information/early-warning-service"
+    },
+    {
+      "id": "certbund",
+      "title": "CERT-Bund Reports",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Reaktion/CERT-Bund/CERT-Bund-Reports/cert-bund-reports_node.html"
     }
   ]
 }

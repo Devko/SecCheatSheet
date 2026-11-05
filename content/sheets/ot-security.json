@@ -8,7 +8,7 @@
   "short": "This month, take every PLC and HMI off the internet, change default passwords and keep offline copies of controller logic.",
   "answer": "This month, close port forwards and modems that reach your controllers from the internet, put vendor access behind your own gateway with MFA, and change every default or shared password. Then route remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse running the plant by hand.",
   "audience": "IT/OT security, engineering and plant operations leads at EU manufacturers, utilities, water and building operators, including KRITIS and NIS2 entities in Germany",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -186,7 +186,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Check the router for port forwards and look up your IP on internetdb.shodan.io[^bsi154].",
+            "Check the router for port forwards[^bsi154] and get Shadowserver's free reports for your IP addresses[^shadow].",
             "Get every remote access path, account, modem and PLC program from your integrator[^integr].",
             "Drop cloud links operation doesn't need[^bsi154]; practice manual operation yearly."
           ]
@@ -211,6 +211,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: Shadowserver's free reports replace Shodan InternetDB, which is free only for non-commercial use."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",
@@ -341,6 +346,13 @@
       "publisher": "BSI",
       "date": "version 1.1, 18 Nov 2024",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/oh-sza.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "shadow",
+      "title": "Subscribe to Reports",
+      "publisher": "Shadowserver Foundation",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
     }
   ]
 }

@@ -8,7 +8,7 @@
   "short": "Exploited and internet-facing: contain in 24 hours, patch within 72.",
   "answer": "If a vulnerability is being exploited and the system is reachable from the internet, contain it within 24 hours and patch within 72. Schedule everything else by exploitation and exposure, not by CVSS score alone.",
   "audience": "IT and security teams of any size",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-02",
   "reviewEveryDays": 30,
   "blocks": [
@@ -79,7 +79,7 @@
         },
         {
           "title": "Automate the routine.",
-          "text": "Turn on automatic updates for operating systems, browsers and apps, so people spend their time on the few urgent cases."
+          "text": "Enforce automatic updates for operating systems, browsers and apps centrally, so people can focus on the few urgent cases."
         },
         {
           "title": "Pre-approve the emergency path.",
@@ -169,7 +169,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Turn on automatic updates everywhere they exist.",
+            "Enforce automatic updates from device management.",
             "Where you can, use cloud services instead of self-hosted VPNs and gateways, so the provider patches the edge.",
             "Subscribe to advisories for the few products that face the internet.",
             "Name one person who owns patching, plus a backup."
@@ -238,6 +238,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: automatic updates are now enforced centrally from device management."
+    },
     {
       "date": "2026-11-02",
       "version": "1.0",

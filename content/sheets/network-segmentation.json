@@ -8,7 +8,7 @@
   "short": "Wall off management and backups first, block SMB and RDP between workstations, and scan from a user laptop every quarter.",
   "answer": "This quarter, move hypervisor, backup and device management into a zone reachable only from admin workstations, and block SMB, RDP and WinRM between workstations with the host firewall. Then put a default-deny firewall between users and servers one zone at a time, and count a rule as working only once you have tested it from a user's laptop.",
   "audience": "IT and network teams with flat or lightly segmented office networks, on-premises servers, some cloud and, in some cases, OT or building systems",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -152,10 +152,10 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Disable the File and Printer Sharing, Remote Desktop and WinRM firewall rules on laptops.",
+            "From Intune or Group Policy, disable the File and Printer Sharing, Remote Desktop and WinRM firewall rules on laptops.",
             "Put guest Wi-Fi, cameras and building systems on their own VLANs with internet access only.",
             "Move hypervisor, NAS and backup admin interfaces to a VLAN only one admin device can reach.",
-            "Ask your IT provider to show what a normal laptop can reach."
+            "Ask your IT provider what a user laptop can reach."
           ]
         },
         {
@@ -180,6 +180,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: laptop firewall rules are set from Intune or Group Policy."
+    },
     {
       "date": "2026-11-03",
       "version": "1.0",

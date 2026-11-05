@@ -8,7 +8,7 @@
   "short": "Rebuild your list of internet-facing assets from registrars, DNS, certificate logs and cloud accounts, rescan it every week and give each exposed service an owner.",
   "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and get free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
   "audience": "IT and security teams in organizations of any size that need to know what they expose to the internet",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -90,7 +90,7 @@
       "title": "Leaked credentials and secrets",
       "navTitle": "Leaked secrets",
       "items": [
-        "**Scan every repository and its history.** GitHub scans all branches and history for free on public repositories; private ones need Secret Protection, but a one-off assessment is free[^ghss]. GitGuardian counted 28.6 million new secrets in public GitHub commits in 2025[^gg].",
+        "**Scan every repository and its history.** GitHub scans all branches and history for free on public repositories; private ones need Secret Protection[^ghss], but Team and Enterprise plans get a free assessment[^ghsra]. GitGuardian counted 28.6 million new secrets in public GitHub commits in 2025[^gg].",
         "**Revoke first, then clean up.** Rewritten history still lives in forks and clones[^ghremove]. GitGuardian found 64% of valid secrets from 2022 still working four years later[^gg].",
         "**Look beyond code.** About 28% of GitGuardian's secret incidents came only from collaboration and productivity tools[^gg].",
         "**Act on leaked password alerts.** Entra ID's leaked credentials detection works with Entra ID Free; on-premises passwords need password hash sync[^entrarisk]. Reset the password and revoke sessions when it fires."
@@ -115,7 +115,7 @@
       "navTitle": "Free services",
       "items": [
         "**Shadowserver.** Free daily reports on exposed services for the IP ranges and domains you control[^shadow].",
-        "**CISA Cyber Hygiene (US).** Free weekly scan reports and urgent alerts for US governments and critical infrastructure[^cyhy].",
+        "**CISA Cyber Hygiene (US only).** Free weekly scan reports and urgent alerts for US-based governments and critical infrastructure[^cyhy].",
         "**NCSC Early Warning (UK).** Free alerts on vulnerable or exposed services for any UK organization that registers its IPs and domains[^ncscew].",
         "**CERT-Bund (Germany).** It reports infected systems and open services to the network operator of each IP range[^certbund]. Essential and important entities can ask the BSI to check their public systems[^bsig].",
         "**Commercial EASM.** It adds continuous discovery, takeover checks and history. Ask how it validates findings and how fresh its data is[^easm]."
@@ -167,7 +167,7 @@
           "items": [
             "Ask your IT provider for one list of domains, DNS records, public IPs and cloud accounts, each with an owner.",
             "Keep all domains in one registrar account with MFA, and subscribe to Shadowserver and your national service.",
-            "Run GitHub's free secret risk assessment on your organization and rotate what it finds[^ghss]."
+            "On GitHub Team or Enterprise, run the free secret risk assessment and rotate what it finds[^ghsra]."
           ]
         },
         {
@@ -190,6 +190,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: GitHub's free secret risk assessment needs a Team or Enterprise plan, and CISA Cyber Hygiene is for US organizations only."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",
@@ -285,6 +290,13 @@
       "publisher": "GitHub Docs",
       "date": "checked 4 Nov 2026",
       "url": "https://docs.github.com/en/code-security/concepts/secret-security/secret-scanning"
+    },
+    {
+      "id": "ghsra",
+      "title": "Running the secret risk assessment for your organization",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/how-tos/secure-at-scale/configure-organization-security/configure-specific-tools/assess-your-secret-risk"
     },
     {
       "id": "gg",

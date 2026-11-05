@@ -8,7 +8,7 @@
   "short": "Pick one baseline per server platform, audit each risky change for two to four weeks, enforce in rings and check drift weekly.",
   "answer": "This quarter, pick one published baseline per server platform, remove default and shared credentials and switch off the legacy protocols that relay attacks need, auditing each change before you enforce it. Then apply the baseline from code to every new and existing server and compare live settings with it every week, so drift becomes a finding with an owner.",
   "audience": "IT and platform teams running Windows and Linux servers, hypervisors, databases and other server software, on premises or on IaaS",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -87,7 +87,7 @@
       "navTitle": "Other platforms",
       "items": [
         "**Unused roles and services.** Remove what a server doesn't need, including firmware functions[^bsisys11]. On Windows, start with the Print Spooler on domain controllers and servers that don't print[^spooler].",
-        "**Linux.** RHEL 10's SCAP Security Guide has CIS, DISA STIG, PCI DSS and BSI SYS.1.1 and SYS.1.3 profiles[^rhel]. Ubuntu's USG has CIS and STIG profiles for 20.04 to 24.04 and needs an Ubuntu Pro subscription[^usg].",
+        "**Linux.** RHEL 10's SCAP Security Guide has CIS, DISA STIG, PCI DSS and BSI SYS.1.1 and SYS.1.3 profiles[^rhel]. Ubuntu's USG has CIS and STIG profiles for 20.04 to 24.04 and needs Ubuntu Pro, free only for personal use[^usg][^ubpro].",
         "**Databases.** Prefer Active Directory logins to SQL Server logins, keep `sa` disabled, leave `xp_cmdshell` off and enable only the features you use[^sqlbp].",
         "**ESXi.** Google advises not joining hosts to Active Directory[^gtigvs]; if you must, replace the default **ESX Admins** group with your own. Turn on audit records, off by default, and forward them[^vcfscg]. Encrypt Tier 0 VMs[^gtigvs].",
         "**Management controllers.** Put iLO, iDRAC and other BMCs on an isolated network with local accounts, and disable IPMI Cipher 0 and unused services[^vcfscg]."
@@ -112,7 +112,7 @@
       "title": "What you can skip",
       "items": [
         "**Every control at its strictest.** Broadcom offers a reasonable baseline, not a catalog of every control, because the strictest settings often impede daily administration[^vcfscg]. Use CIS Level 1 unless a rule requires Level 2.",
-        "**Buying CIS SecureSuite first.** Microsoft's baselines come in the Security Compliance Toolkit[^sct], RHEL ships CIS profiles[^rhel] and CIS Benchmark PDFs are free under a non-commercial license[^cisterms]. Membership starts at $2,400 a year and also excludes commercial use such as consulting[^cisprice].",
+        "**Buying CIS SecureSuite first.** Microsoft's baselines come in the Security Compliance Toolkit[^sct], RHEL ships CIS profiles[^rhel] and CIS Benchmark PDFs are free for non-commercial use[^cisterms]. CIS names hosting, consulting and security products as commercial use; membership starts at $2,400 a year[^cisprice].",
         "**Hardening the ESXi SSH daemon.** Broadcom dropped that control: keep SSH stopped except for brief, supervised diagnostics[^vcfscg]."
       ]
     },
@@ -163,6 +163,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: clarified what CIS counts as commercial use and that Ubuntu Pro is free only for personal use."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",
@@ -321,6 +326,13 @@
       "publisher": "Ubuntu docs",
       "date": "updated 22 Oct 2026",
       "url": "https://documentation.ubuntu.com/security/compliance/usg/"
+    },
+    {
+      "id": "ubpro",
+      "title": "Ubuntu Pro pricing",
+      "publisher": "Canonical",
+      "date": "checked 5 Nov 2026",
+      "url": "https://ubuntu.com/pricing/pro"
     },
     {
       "id": "vcfscg",
