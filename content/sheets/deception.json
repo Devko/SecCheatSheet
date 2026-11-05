@@ -1,14 +1,14 @@
 {
   "slug": "deception",
   "topic": "Canaries and honeytokens",
-  "status": "draft",
+  "status": "published",
   "order": 55,
   "capability": "detect-respond/deception",
   "title": "Canaries and honeytokens: would you know an intruder is already inside?",
   "short": "Plant five decoys on the paths intruders take, route every trip to someone on call and test each one quarterly.",
   "answer": "This month, plant decoys on the paths intruders take first, such as a Kerberoastable honeytoken account, a fake password file on a share and fake cloud keys on admin and developer machines, and route every trip to whoever handles high-severity alerts at night. Treat each trip as an intrusion until you can name the person or tool that caused it.",
   "audience": "IT and security teams in small and mid-size organizations, especially on Active Directory, Microsoft 365 and AWS",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -159,7 +159,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Put a fake password file in SharePoint with an alert policy on **Accessed file**; E1 or E3 is enough[^alertpol].",
+            "Put a fake password file in SharePoint with an alert policy on **Accessed file**[^alertpol]; check that your plan allows custom alert policies.",
             "Leave fake cloud keys on the admin laptop if you use AWS.",
             "Send alerts to two people's phones and trip every decoy each quarter."
           ]
@@ -184,6 +184,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which added the September 2026 joint guide on Active Directory compromise, scoped the red team study to decoy hosts, made AWS and Defender for Identity alerting complete and blocked honeytokens from signing in."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
