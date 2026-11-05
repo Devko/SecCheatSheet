@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "Turn on automatic updates for core and plugins.",
-          "text": "Enable auto-updates for core and for each plugin and theme[^wpauto]. In Patchstack's vendor report, heavily exploited WordPress flaws were first attacked a weighted median of 5 hours after disclosure[^patchstack]."
+          "text": "Enable them for core and each plugin and theme[^wpauto]. In Patchstack's vendor report, heavily exploited WordPress flaws were first attacked a weighted median of 5 hours after disclosure[^patchstack]."
         },
         {
           "title": "Delete every plugin you don't need.",
-          "text": "Of 11,334 new WordPress vulnerabilities in 2025, 91% were in plugins and 46% had no fix at disclosure[^patchstack]. Install new ones only from the official directory or a well-known vendor[^wphardening]."
+          "text": "Patchstack counted 11,334 new WordPress flaws in 2025: 91% in plugins, 46% unfixed at disclosure[^patchstack]. Install new ones only from the official directory or a well-known vendor[^wphardening]."
         },
         {
           "title": "Put MFA on every admin account.",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Write down who patches what.",
-          "text": "Name who updates the CMS and plugins, who patches PHP and who restores, and how fast. German law requires commercial online services to guard their servers against unauthorized access, in line with the state of the art[^tdddg]."
+          "text": "In agency and hosting contracts, name who updates the CMS, plugins and PHP, who restores, and how fast. German law makes businesses secure web systems against unauthorized access, within reason and considering the state of the art[^tdddg]."
         },
         {
           "title": "Leave end-of-life versions before December.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Take it offline and keep the evidence.",
-          "text": "Show a maintenance page, then copy the files, database and all logs before you change anything[^typo3hack]."
+          "text": "Show a maintenance page, then copy the files, database and all logs, or have the hoster do it, before anything changes[^typo3hack]."
         },
         {
           "title": "Lock everyone out.",
@@ -75,9 +75,9 @@
       "navTitle": "Updates",
       "items": [
         "**Check WordPress's settings.** Minor releases update automatically, but major ones only on sites installed since 5.6[^wpupgrade]. Enable both under Dashboard > Updates.",
-        "**Buy premium plugins in the company's name.** WordPress shows updates for plugins installed from a ZIP file only if the vendor built in an updater[^wpplugins]. Never use nulled copies: they come from the untrusted sources WordPress warns against[^wphardening].",
+        "**Buy premium plugins in the company's name.** WordPress shows updates for plugins installed from a ZIP file only if the vendor built in an updater[^wpplugins]. Never use nulled copies from untrusted sources[^wphardening].",
         "**Replace abandoned plugins.** Check each plugin's last release once a quarter, and replace any that no longer get updates.",
-        "**Patch PHP separately.** CMS updates don't fix flaws in the PHP runtime[^bsiphp]. Agree with the hoster who installs PHP updates, and how fast."
+        "**Patch PHP separately.** CMS updates don't fix the PHP runtime, and containers need a rebuild[^bsiphp]. Agree a PHP patch deadline with the hoster."
       ]
     },
     {
@@ -87,9 +87,9 @@
       "navTitle": "Admin access",
       "items": [
         "**One account per person.** No shared agency logins. Keep admin rights to a few named people and give content staff an editor role.",
-        "**Prefer company SSO.** Sign admins in through your identity provider with SAML or OpenID Connect, so leavers lose access with their company account.",
+        "**Prefer company SSO.** Sign admins in through your identity provider with SAML or OpenID Connect, so leavers lose access at once.",
         "**Restrict the admin path.** Allow the backend only from VPN or office IPs, with TYPO3's `IPmaskList`[^typo3be] or web server rules, and limit failed logins[^bsiapp31].",
-        "**Own every account.** Keep the domain, hosting, CDN, repositories and licenses in the company's name; registrar locks are in the DNS and domains sheet. When an agency leaves, remove its accounts and rotate SFTP, database and API credentials. Contracts are in the supplier risk sheet."
+        "**Own every account.** Keep the domain, hosting, CDN, repositories and licenses in the company's name; registrar locks are in the DNS and domains sheet. When an agency leaves, remove its accounts and rotate SFTP, database and API credentials."
       ]
     },
     {
@@ -98,7 +98,7 @@
       "title": "Online shops: scripts on the payment page",
       "navTitle": "Shops",
       "items": [
-        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on your pages, including one that embeds the provider's iframe or starts a redirect. SAQ A drops both but makes merchants confirm their site resists script attacks[^pcisupp].",
+        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on payment pages and on pages embedding the provider's iframe, not plain redirects[^pcisupp]. SAQ A drops both, but iframe users must confirm their site resists script attacks[^pcifaq].",
         "**Authorize every script (6.4.3).** Confirm each payment page script is authorized, assure its integrity and list it with a reason[^pcisupp].",
         "**Detect changes (11.6.1).** Alert on unauthorized script and security header changes as browsers see them, weekly or per risk analysis[^pcisupp].",
         "**Cut scripts from checkout.** Keep tag managers, chat widgets and pixels off payment pages, and limit sources with a Content Security Policy[^pcisupp]."
@@ -122,9 +122,9 @@
       "title": "End-of-support dates that set your schedule",
       "navTitle": "End of support",
       "items": [
-        "**PHP.** 8.1 and older get no fixes from the PHP project[^phpsa]. 8.2 ends on 31 Dec 2026, 8.3 on 31 Dec 2027[^phpver].",
+        "**PHP.** 8.1 and older get no releases; for October's flaws, the PHP project offered only source backports[^phpsa]. 8.2 ends on 31 Dec 2026, 8.3 on 31 Dec 2027[^phpver].",
         "**Drupal.** Drupal 7 ended on 5 Jan 2025. Drupal 10 ends on 9 Dec 2026, the week 12.0 ships[^drupalsched].",
-        "**TYPO3.** Only v14 and v13 get free fixes[^typo3versions]. v12 lost them on 30 Apr 2026; paid ELTS runs to 30 Apr 2030[^typo3v12].",
+        "**TYPO3.** Only v14 and v13 get free fixes[^typo3versions]. v12 lost them on 30 Apr 2026; paid ELTS runs to 30 Apr 2029, or 2030 via a TYPO3 partner[^typo3v12].",
         "**Joomla.** 5.x gets security fixes until 12 Oct 2027, 6.x until 16 Oct 2029[^joomla].",
         "**WordPress.** Only the newest version is actively supported[^wp714].",
         "**Shopware.** Its security plugin covers only versions still in support[^swsec]."
@@ -136,10 +136,10 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**PHP needed an emergency patch.** On 21 Oct 2026, PHP fixed two critical unauthenticated code execution flaws with no complete mitigation[^phpsa]. Both are exploited[^kev]. Check each site's PHP version[^bsiphp].",
+        "**PHP needed an emergency patch.** On 21 Oct 2026, PHP fixed two critical unauthenticated code execution flaws with no complete mitigation[^phpsa]. CISA listed both as exploited on 26 Oct[^kev]. Check each site's PHP; distro builds have their own numbers[^bsiphp].",
         "**WordPress core entered CISA's KEV catalog.** Four core flaws were added from July to November 2026[^kev].",
-        "**Hosting panels were exploited.** CISA lists a cPanel login bypass used by ransomware groups, and a LiteSpeed plugin flaw that gave cPanel users root[^kev].",
-        "**Drupal and Joomla too.** CISA added a Drupal core flaw in May and two Joomla extension flaws in June and July[^kev]."
+        "**Hosting panels were exploited.** CISA lists a cPanel login bypass used in ransomware attacks, and a LiteSpeed cPanel plugin flaw that gave any cPanel user root[^kev].",
+        "**Other CMS and shops too.** CISA added a Drupal core flaw in May, five Joomla extensions in June and July, and three Adobe Commerce flaws since September[^kev]."
       ]
     },
     {
@@ -148,7 +148,7 @@
       "title": "What you can skip",
       "items": [
         "**Hiding the CMS version or renaming the admin URL.** Neither stops an exploit. Spend the time on updates and MFA.",
-        "**A second or third security plugin.** Each one is more code to patch. One WAF layer is enough.",
+        "**A second or third security plugin.** Each one is more code to patch. One security plugin is enough.",
         "**Staging every security release.** WordPress strongly discourages turning off minor auto-updates[^wpupgrade]. Stage major upgrades only.",
         "**Perfect scores on header and TLS scanners.** Apply the encryption sheet's TLS baseline and a CSP on checkout, then get back to updates."
       ]
@@ -160,8 +160,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Restoring a backup and calling it fixed.** Backdoors survive, such as a harmless-looking admin account or hidden PHP file[^typo3hack].",
-        "**Deleting only the obvious malware.** Attackers inject code into legitimate files[^patchstack]. Replace core directories with clean copies[^wphacked].",
-        "**Assuming someone else patches.** Check that the contract covers plugins and PHP, not just hosting or the CMS.",
+        "**Deleting only the obvious malware.** Attackers often inject code into existing files[^typo3hack]. Replace core directories with clean copies[^wphacked].",
+        "**Assuming someone else patches.** Check that the contract covers plugins, PHP and a fast response to a compromise[^bsiapp32].",
         "**Forgetting old sites and APIs.** Microsites, staging copies and shop APIs need care too. See the attack surface and API security sheets."
       ]
     },
@@ -175,7 +175,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Ask your agency or hoster in writing who updates core, plugins and PHP, and how fast.",
+            "Ask your agency or hoster in writing who updates core, plugins and PHP, and to fix exploited flaws within 72 hours.",
             "Turn on automatic updates and MFA for every admin.",
             "Take card payments on your provider's hosted payment page, not in your own form."
           ]
@@ -193,7 +193,7 @@
           "items": [
             "Track CMS, plugin and PHP advisories against the patching sheet's deadlines.",
             "Keep a checkout script inventory and change detection, with evidence for the assessor[^pcisupp].",
-            "Send web server and CMS logs to the SIEM[^bsiapp32] and test shops after major releases."
+            "Review web server and CMS logs regularly[^bsiapp32], and test shops after major releases."
           ]
         }
       ]
@@ -349,10 +349,10 @@
     },
     {
       "id": "typo3v12",
-      "title": "TYPO3 12 ELTS",
-      "publisher": "Get TYPO3",
+      "title": "Extended Long Term Support (ELTS)",
+      "publisher": "TYPO3 GmbH",
       "date": "checked 5 Nov 2026",
-      "url": "https://get.typo3.org/version/12"
+      "url": "https://typo3.com/services/extended-support-elts"
     },
     {
       "id": "joomla",
@@ -367,6 +367,13 @@
       "publisher": "PCI SSC",
       "date": "Mar 2025",
       "url": "https://www.pcisecuritystandards.org/document_library/"
+    },
+    {
+      "id": "pcifaq",
+      "title": "FAQ 1588: SAQ A eligibility criteria for scripts",
+      "publisher": "PCI SSC",
+      "date": "Feb 2025",
+      "url": "https://www.pcisecuritystandards.org/faq/articles/Frequently_Asked_Question/how-does-an-e-commerce-merchant-meet-the-saq-a-eligibility-criteria-for-scripts/"
     },
     {
       "id": "cforigin",
