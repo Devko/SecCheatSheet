@@ -126,7 +126,7 @@
           "title": "Small team, no security staff",
           "items": [
             "In the organization's Actions settings, set read-only workflow permissions and require SHA pinning.",
-            "Keep Dependabot's default cooldown and turn on its malware alerts, security updates and secret scanning (paid Secret Protection for private repos)[^ghas].",
+            "Keep Dependabot's default cooldown and turn on its malware alerts, security updates and secret scanning (Secret Protection for private repos)[^ghsec].",
             "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
           ]
         },
@@ -135,14 +135,14 @@
           "items": [
             "Add `.github/workflows` to CODEOWNERS and turn on **Require review from Code Owners** (Team plan or higher for private repos)[^codeowners].",
             "Publish from an environment with required reviewers and **Prevent self-review** (public repositories only on Free, Pro and Team)[^envs].",
-            "Scan lockfiles for malicious packages in every pull request with the OSV-Scanner action."
+            "Run OSV-Scanner on lockfiles in every pull request."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
             "Route installs through a registry proxy that enforces a cooldown and checks for malware.",
-            "Attest builds with GitHub artifact attestations, which private repos get on Enterprise Cloud[^attest], and verify them before deploy.",
+            "Verify GitHub artifact attestations before deploy; private repos need Enterprise Cloud[^ghsec].",
             "Keep each release's SBOM for 10 years or the support period, if longer[^cra], and add build pipeline compromises to your CRA reporting path."
           ]
         }
@@ -185,7 +185,7 @@
     },
     {
       "id": "pnpmres",
-      "title": "Settings: Dependency resolution (minimumReleaseAge)",
+      "title": "Settings: Dependency resolution",
       "publisher": "pnpm",
       "date": "checked 3 Nov 2026",
       "url": "https://pnpm.io/settings/dependency-resolution"
@@ -352,18 +352,11 @@
       "url": "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
     },
     {
-      "id": "ghas",
-      "title": "About GitHub Advanced Security",
+      "id": "ghsec",
+      "title": "GitHub security features",
       "publisher": "GitHub Docs",
       "date": "checked 5 Nov 2026",
-      "url": "https://docs.github.com/en/get-started/learning-about-github/about-github-advanced-security"
-    },
-    {
-      "id": "attest",
-      "title": "Using artifact attestations",
-      "publisher": "GitHub Docs",
-      "date": "checked 5 Nov 2026",
-      "url": "https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations"
+      "url": "https://docs.github.com/en/code-security/getting-started/github-security-features"
     }
   ]
 }
