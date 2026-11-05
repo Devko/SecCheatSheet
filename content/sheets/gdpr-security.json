@@ -24,11 +24,11 @@
         },
         {
           "title": "Link your records of processing to your asset list.",
-          "text": "Give every Article 30 entry the systems and processors it uses and a general description of their security measures[^gdpr], so no system goes live without an owner and a risk rating."
+          "text": "Add to each Article 30 entry the systems and processors it uses, beside the general description of security measures the GDPR asks for where possible[^gdpr], so no system goes live without an owner and a risk rating."
         },
         {
           "title": "Make processor contracts specific.",
-          "text": "Attach a concrete security annex[^scc] that requires your approval for changes and a regular review[^edpb0720]."
+          "text": "Attach a concrete security annex[^scc] with a regular review, and no changes that lower security without your approval[^edpb0720]."
         },
         {
           "title": "Patch known flaws and watch for bulk data access.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Clear monitoring tools with the works council first.",
-          "text": "The works council co-determines any system that records individualizable behavior or performance data, whatever you intend[^bag]. DLP that builds staff profiles also needs a DPIA[^dskmuss]."
+          "text": "In Germany, the works council co-determines any system that records individualizable behavior or performance data, whatever you intend[^bag]. DLP that builds staff profiles also needs a DPIA[^dskmuss]."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Which systems process the data?",
-          "text": "Start from the Article 30 record. SDM 3.1 asks you to show that each means of processing, especially technical ones, is used lawfully[^sdmmv]."
+          "text": "Start from the Article 30 record. SDM 3.1a asks you to show that each means of processing, especially technical ones, is used lawfully[^sdmmv]."
         },
         {
           "title": "How much harm could a breach do?",
-          "text": "Rate the risk for the people concerned, not for the company. Where your IT-Grundschutz rating differs, the SDM suggests the measures for the higher one[^sdm]. Likely high risk needs a DPIA first[^gdpr]."
+          "text": "Rate the risk for the people concerned, not for the company. Where your IT-Grundschutz rating differs, the SDM says to use the higher one or work out why they differ[^sdm]. Likely high risk needs a DPIA first[^gdpr]."
         },
         {
           "title": "What does the state of the art offer?",
@@ -75,7 +75,7 @@
       "navTitle": "Recent fines",
       "span": "full",
       "items": [
-        "**Weak remote logins.** The CNIL's €42 million fines on Free Mobile and Free in January 2026 cited weak VPN logins and ineffective detection of abnormal activity[^cnilfree]. A private hospital was fined €500,000 in September 2026: external doctors reached records without VPN or MFA, and the attacker browsed for days unnoticed[^cnilhpl].",
+        "**Weak remote logins.** The CNIL's €42 million fines on Free Mobile and Free in January 2026 cited weak VPN logins and ineffective detection of abnormal activity[^cnilfree]. In September 2026 the CNIL announced a €500,000 fine on a private hospital: external doctors reached records without VPN or MFA, and the attacker browsed for days unnoticed[^cnilhpl].",
         "**Accounts that see too much.** France Travail's €5 million fine in January 2026 cited weak authentication, too little logging and partner advisers who could see jobseekers they didn't support[^cnilft].",
         "**Weak identity checks, unmonitored partners.** The BfDI fined Vodafone €45 million in June 2025: €30 million for portal and hotline authentication flaws that exposed eSIM profiles, €15 million for not monitoring partner agencies[^bfdi].",
         "**Known flaws left open.** In October 2024, Italy's Garante announced a €900,000 fine on Postel for a flaw left unpatched for almost a year after the vendor and the national cyber agency flagged it[^postel].",
@@ -101,7 +101,7 @@
       "title": "Security monitoring and staff",
       "navTitle": "Employees",
       "items": [
-        "**Don't rely on § 26 BDSG alone.** The CJEU found a Hessian clause worded like § 26(1) appears merely to restate the GDPR; clauses that fail Article 88(2) must be disregarded[^c34]. Document an Article 6 basis per tool.",
+        "**Don't rely on § 26 BDSG alone.** The CJEU said a Hessian clause much like § 26(1) appears merely to restate the GDPR; a court that agrees must in principle disregard it[^c34]. Document an Article 6 basis per tool.",
         "**Agree each tool with the works council.** Under § 87(1) no. 6 BetrVG it co-determines systems that record individualizable behavior or performance data, with no threshold for minor tools[^bag]. Courts fully review whether a works agreement's processing is necessary[^c65].",
         "**Write a logging concept.** Per processing activity, state what is logged, where, why, who may read it and when it is deleted[^b43]; the CNIL suggests six months to a year for access logs[^cnilbdd]. Logs kept to check admin work must not be used to rate their speed[^b43]."
       ]
@@ -113,7 +113,7 @@
       "navTitle": "German view",
       "items": [
         "**The SDM is the yardstick.** It maps GDPR duties to seven goals[^sdm], and the DSK recommends it with its catalog of reference measures[^sdmmv].",
-        "**Email needs enforced TLS.** For high risk, the DSK expects end-to-end plus qualified transport encryption: TR-02102-2 ciphers, forward secrecy and DNSSEC-checked servers. Professional secrecy indicates high risk[^dskmail].",
+        "**Email needs enforced TLS.** For high risk, the DSK expects end-to-end plus qualified transport encryption: TR-02102-2 ciphers, forward secrecy and DNSSEC-checked servers. Professional secrecy can indicate high risk[^dskmail].",
         "**Check the DPIA must-list.** It names DLP that profiles staff, employee geolocation and AI that evaluates people or steers interaction with them[^dskmuss]."
       ]
     },
@@ -124,8 +124,8 @@
       "navTitle": "What changed",
       "items": [
         "**The SDM logging module was rewritten.** Building block 43 v2.0, valid since 1 June 2026, asks for an organization-wide logging concept[^b43].",
-        "**Fixed steps for cross-border cases.** From 2 April 2027, lead authorities must send preliminary findings and allow three to six weeks to reply[^proc].",
-        "**Fewer firms may need records.** The agreed Omnibus IV text would exempt companies under 1,000 staff except for high-risk processing[^st10482]; Parliament is due to vote on 23 November 2026[^oeil130]. The Digital Omnibus still awaits a committee decision[^oeil360]."
+        "**Fixed steps for cross-border cases.** In investigations opened after 2 April 2027, lead authorities must send preliminary findings and allow three to six weeks to reply[^proc].",
+        "**Fewer firms may need records.** The Omnibus IV deal would exempt firms under 1,000 staff except for high-risk processing[^pe790]; Parliament's vote is provisionally set for 23 November 2026[^oeil130]. The Digital Omnibus is still a proposal[^oeil360]; see the eu-security-laws sheet."
       ]
     },
     {
@@ -147,8 +147,8 @@
       "items": [
         "**Naming measures and not building them.** The CNIL held it against France Travail that its DPIAs listed most of the missing measures[^cnilft].",
         "**Leaving processors out of scope.** A significant share of the large breaches the CNIL saw in 2024 involved a processor with weak security[^cnilbdd].",
-        "**Sharing by default.** The BGH found that open-by-default phone number search likely breached data minimization, and accepted about €100 per person for lost control[^bgh].",
-        "**Dropping records under Omnibus IV.** High-risk processing would still need them[^st10482], and without them you can't scope a breach."
+        "**Sharing by default.** The BGH said open-by-default phone number search likely breached data minimization, and saw no objection to about €100 for the loss of control alone[^bgh].",
+        "**Dropping records under Omnibus IV.** High-risk processing would still need them[^pe790], and without them you can't scope a breach."
       ]
     },
     {
@@ -170,7 +170,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Make the Article 30 entry, risk rating and owner required fields when a system enters the asset list.",
-            "Sign one framework works agreement for security tools that sets purposes, data, access, retention and the procedure on suspicion[^bfdifaq].",
+            "Sign one framework works agreement for security tools that sets purposes, data, access, retention and the procedure on suspicion, as the BfDI advises for web logs[^bfdifaq].",
             "Keep a yearly test plan and its results as Article 32 evidence."
           ]
         },
@@ -179,7 +179,7 @@
           "items": [
             "Map SDM goals to your ISMS controls so one evidence set serves the GDPR, NIS2 and ISO 27001 (see the isms and eu-security-laws sheets).",
             "Audit high-risk processors and the subprocessors behind them on a schedule.",
-            "From April 2027, name who replies to preliminary findings in cross-border cases, possibly within three weeks[^proc]."
+            "Name who replies to preliminary findings in cross-border cases opened after 2 April 2027, possibly within three weeks[^proc]."
           ]
         }
       ]
@@ -207,20 +207,20 @@
     { "id": "cnilft", "title": "Sanction: France Travail", "publisher": "CNIL", "date": "29 Jan 2026", "url": "https://www.cnil.fr/fr/violation-de-donnees-sanction-5millions-france-travail" },
     { "id": "cniliqvia", "title": "Sanction: IQVIA", "publisher": "CNIL", "date": "28 May 2026", "url": "https://www.cnil.fr/fr/donnees-sante-sanction-5-millions-iqvia" },
     { "id": "cnilhpl", "title": "Sanction: Hôpital privé de la Loire", "publisher": "CNIL", "date": "3 Sep 2026", "url": "https://www.cnil.fr/fr/sanction-hopital-prive-loire" },
-    { "id": "postel", "title": "Newsletter n. 528 (Postel)", "publisher": "Garante Privacy", "date": "22 Oct 2024", "url": "https://www.garanteprivacy.it/garante/doc.jsp?ID=10066116" },
+    { "id": "postel", "title": "Newsletter n. 528 (Postel)", "publisher": "Garante Privacy", "date": "22 Oct 2024", "url": "https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/10066116" },
     { "id": "dpc91", "title": "DPC fines Meta €91 million", "publisher": "DPC Ireland", "date": "27 Sep 2024", "url": "https://www.dataprotection.ie/en/news-media/press-releases/DPC-announces-91-million-fine-of-Meta" },
     { "id": "dpc251", "title": "DPC fines Meta €251 million", "publisher": "DPC Ireland", "date": "17 Dec 2024", "url": "https://www.dataprotection.ie/en/news-media/press-releases/irish-data-protection-commission-fines-meta-eu251-million" },
     { "id": "scc", "title": "Decision (EU) 2021/915, Annex III", "publisher": "EUR-Lex", "date": "4 Jun 2021", "url": "https://eur-lex.europa.eu/eli/dec_impl/2021/915/oj" },
-    { "id": "edpb0720", "title": "Guidelines 07/2020, version 2.1", "publisher": "EDPB", "date": "7 Jul 2021", "url": "https://www.edpb.europa.eu/system/files/2023-10/EDPB_guidelines_202007_controllerprocessor_final_en.pdf" },
-    { "id": "op22", "title": "Opinion 22/2024 on processors", "publisher": "EDPB", "date": "7 Oct 2024", "url": "https://www.edpb.europa.eu/system/files/2024-10/edpb_opinion_202422_relianceonprocessors-sub-processors_en.pdf" },
-    { "id": "edpb25", "title": "Guidelines 4/2019 on Article 25", "publisher": "EDPB", "date": "20 Oct 2020", "url": "https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_201904_dataprotection_by_design_and_by_default_v2.0_en.pdf" },
+    { "id": "edpb0720", "title": "Guidelines 07/2020, version 2.1", "publisher": "EDPB", "date": "20 Sep 2022", "url": "https://www.edpb.europa.eu/system/files/documents/2023-10/EDPB_guidelines_202007_controllerprocessor_final_en.pdf" },
+    { "id": "op22", "title": "Opinion 22/2024 on processors", "publisher": "EDPB", "date": "7 Oct 2024", "url": "https://www.edpb.europa.eu/system/files/documents/2024-10/edpb_opinion_202422_relianceonprocessors-sub-processors_en.pdf" },
+    { "id": "edpb25", "title": "Guidelines 4/2019 on Article 25", "publisher": "EDPB", "date": "20 Oct 2020", "url": "https://www.edpb.europa.eu/system/files/documents/files/file1/edpb_guidelines_201904_dataprotection_by_design_and_by_default_v2.0_en.pdf" },
     { "id": "wp248", "title": "DPIA guidelines, WP248 rev.01", "publisher": "Article 29 WP", "date": "4 Oct 2017", "url": "https://ec.europa.eu/newsroom/article29/redirection/document/47711" },
-    { "id": "sdm", "title": "SDM, Version 3.1", "publisher": "DSK", "date": "14 May 2024", "url": "https://www.datenschutzkonferenz-online.de/media/ah/SDM-Methode-V31.pdf" },
+    { "id": "sdm", "title": "SDM, Version 3.1a", "publisher": "DSK", "date": "26 Feb 2025", "url": "https://www.datenschutz-mv.de/static/DS/Dateien/Datenschutzmodell/SDM-Methode-V31a.pdf" },
     { "id": "sdmmv", "title": "SDM und Bausteine", "publisher": "LfDI M-V", "date": "checked 5 Nov 2026", "url": "https://www.datenschutz-mv.de/datenschutz/datenschutzmodell/" },
     { "id": "b43", "title": "SDM Baustein 43 Protokollieren, V2.0", "publisher": "DSK", "date": "1 Jun 2026", "url": "https://www.datenschutz-mv.de/static/DS/Dateien/Datenschutzmodell/Bausteine/SDM-V3.1_Protokollieren_V2.0.pdf" },
     { "id": "dskmail", "title": "OH E-Mail", "publisher": "DSK", "date": "16 Jun 2021", "url": "https://www.datenschutzkonferenz-online.de/media/oh/20210616_orientierungshilfe_e_mail_verschluesselung.pdf" },
-    { "id": "dskmuss", "title": "DSFA-Muss-Liste, V1.1", "publisher": "DSK", "date": "17 Oct 2018", "url": "https://datenschutz-hamburg.de/fileadmin/user_upload/HmbBfDI/Datenschutz/Informationen/DSFA_Muss-Liste_fuer_den_nicht-oeffentlicher_Bereich_-_Stand_17.10.2018.pdf" },
-    { "id": "st10482", "title": "ST 10482/26 ADD 3", "publisher": "Council of the EU", "date": "19 Jun 2026", "url": "https://data.consilium.europa.eu/doc/document/ST-10482-2026-ADD-3/en/pdf" },
+    { "id": "dskmuss", "title": "DSFA-Muss-Liste, V1.1", "publisher": "DSK", "date": "17 Oct 2018", "url": "https://www.datenschutzkonferenz-online.de/media/ah/20181017_ah_DSK_DSFA_Muss-Liste_Version_1.1_Deutsch.pdf" },
+    { "id": "pe790", "title": "Omnibus IV provisional agreement, PE790.249", "publisher": "European Parliament", "date": "26 Jun 2026", "url": "https://www.europarl.europa.eu/RegData/commissions/econ/inag/2026/06-26/CJ58_AG(2026)790249_EN.pdf" },
     { "id": "oeil130", "title": "2025/0130(COD), Omnibus IV", "publisher": "European Parliament", "date": "checked 5 Nov 2026", "url": "https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0130(COD)" },
     { "id": "oeil360", "title": "2025/0360(COD), Digital Omnibus", "publisher": "European Parliament", "date": "checked 5 Nov 2026", "url": "https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0360(COD)" }
   ]

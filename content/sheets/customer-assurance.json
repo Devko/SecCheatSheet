@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Build one evidence pack.",
-          "text": "Keep your certificate and scope, audit report, pentest summary, policies, sub-processor list and incident contact in one dated folder. NIS2's implementing rules let customers take audit reports instead of audit rights[^nis2ir]."
+          "text": "Keep your certificate and scope, audit report, pentest summary, policies, sub-processor list and incident contact in one dated folder. NIS2's implementing rules let cloud and other digital provider customers take audit reports instead of audit rights[^nis2ir]."
         },
         {
           "title": "Answer from one library in a standard format.",
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Which law drives the request?",
-          "text": "NIS2, DORA, the CRA and the GDPR each push different clauses; the EU security laws sheet shows who falls under each. The driver decides what you must accept and what you can negotiate."
+          "text": "NIS2, DORA, the CRA and the GDPR each push different clauses; the EU security laws sheet covers the first three. The driver decides what you must accept and what you can negotiate."
         },
         {
           "title": "Does the pack already answer it?",
-          "text": "Send the pack and your published CAIQ first, ideally within five working days, and answer only what they leave open. The third-party risk sheet shows what buyers check."
+          "text": "Send the pack and the STAR link to your CAIQ first, ideally within five working days, and answer only what they leave open. The third-party risk sheet shows what buyers check."
         },
         {
           "title": "Which product, entity and sites?",
@@ -74,7 +74,7 @@
       "title": "What goes in the evidence pack",
       "navTitle": "Evidence pack",
       "items": [
-        "**Certificate and scope.** ISO/IEC 27001, TISAX or C5, scoped to what you sell; see the ISMS sheet. The BSI says no general certificate proves NIS2 compliance[^bsifaq].",
+        "**Certificate and scope.** An ISO/IEC 27001 certificate or TISAX label, scoped to what you sell; see the ISMS sheet. The BSI says no general certificate proves NIS2 compliance[^bsifaq].",
         "**A report that tests operation.** SOC 2 or C5 Type 2 tests whether controls worked over a period, Type 1 only their design[^c5faq]. For critical functions, DORA customers may rely only on current reports that test key controls in operation[^rtscontract].",
         "**Pentest summary.** Date, scope, tester and fix status; see the penetration testing sheet.",
         "**Product security.** Support period, update policy and component list, which digital providers' purchasing rules must cover under NIS2[^nis2ir]; see the supply chain sheet.",
@@ -88,11 +88,11 @@
       "title": "Standard formats and their terms",
       "navTitle": "Formats",
       "items": [
-        "**CSA CAIQ v4.1.** 283 questions, released in January 2026; STAR accepts v4.0 until December 2027[^caiqtime]. Submit the STAR Level 1 version, not the copy in the CCM download[^ccm41].",
-        "**The CAIQ license.** CSA's free versions are for internal reference; changes, derivatives and commercial use need a license[^csalic]. Answer it as published and submit it to STAR[^ccm41], but don't build it into your own form or product.",
+        "**CSA CAIQ v4.1.** 283 questions, released in January 2026; STAR accepts v4.0 until December 2027[^caiqtime]. Submit the STAR Level 1 version, not the reference copy in the CCM workbook[^ccm41].",
+        "**The CAIQ license.** CSA's free files are for internal reference and may not be changed or redistributed; commercial use needs a license[^ccm41][^csalic]. Share your CAIQ through STAR, and ask CSA before emailing the file or building it into a product.",
         "**Trust page.** Certificates, a SOC 3, which can be freely distributed[^soc3], sub-processors, the security contact and an NDA request form. ENISA points customers to suppliers that publish security commitments[^enisatig].",
         "**AI-CAIQ.** CSA's AI Controls Matrix v1.1 of June 2026 includes one[^aicm]. Use it if you offer AI features, and list which AI services touch customer data.",
-        "**SIG or the customer's own form.** Answer from the same library, point to your CAIQ or report instead of writing new text and keep a copy of what you sent."
+        "**SIG or the customer's own form.** You can answer a customer's SIG, but a SIG of your own needs a Shared Assessments membership or subscription[^sig]. Answer from the same library, point to your STAR entry or report and keep a copy of what you sent."
       ]
     },
     {
@@ -113,9 +113,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Germany's NIS2 law took effect on 6 December 2025.** About 29,500 companies have new duties[^bsifaq]. The BSI says they must bind suppliers to security requirements and may have to drop those who can't meet them[^bsilk].",
+        "**Germany's NIS2 law took effect on 6 December 2025.** About 29,500 companies and federal bodies have new duties[^bsifaq]. The BSI says they must bind suppliers to security requirements and may have to drop those who can't meet them[^bsilk].",
         "**C5:2026 applies from 1 June 2027.** Until then, reports dated or ending from 28 February 2027 must describe planned changes[^c5faq].",
-        "**CRA duties reach suppliers.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities; from December 2027 they must exercise due diligence on third-party components[^cra]."
+        "**CRA duties reach suppliers.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities; from 11 December 2027 they must exercise due diligence on third-party components[^cra]."
       ]
     },
     {
@@ -129,7 +129,7 @@
           "title": "Accept: the law requires them",
           "items": [
             "**Processor audits.** Allow and contribute to audits and inspections by the controller or its auditor[^gdpr].",
-            "**NIS2 flow-down.** Security requirements, incident notice without undue delay, vulnerability handling, audits or reports, subcontractor and exit rules[^nis2ir].",
+            "**NIS2 flow-down.** Cloud and other digital providers must ask, where appropriate, for security rules, incident notice without undue delay, vulnerability handling, audits or reports, subcontractor and exit rules[^nis2ir].",
             "**DORA terms.** Data locations, incident help at no extra or preset cost, supervisor cooperation and exit support; for critical or important functions, unrestricted audit and access rights and threat-led tests[^dora]."
           ]
         },
@@ -137,8 +137,8 @@
           "title": "Negotiate the details",
           "items": [
             "**Incident notice.** Agree a trigger, such as a confirmed incident, and a time, such as 24 hours.",
-            "**Audit form.** Reports first, then remote or pooled audits[^rtscontract]; DORA allows alternative assurance if other clients' rights are affected[^dora].",
-            "**Sub-processor changes.** Notice and a right to object, not approval of each one; under DORA, ignoring an objection lets the customer terminate[^rtssub].",
+            "**Audit form.** Reports first, then remote[^edpb0720] or pooled audits[^rtscontract]; DORA allows alternative assurance if other clients' rights are affected[^dora].",
+            "**Sub-processor changes.** Notice and a right to object, not approval of each one. For DORA critical functions, an ignored objection allows termination[^rtssub].",
             "**Data location.** Commit to countries for storage and processing; DORA registers record both[^roi]."
           ]
         },
@@ -170,7 +170,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Saying yes to close the deal.** The US FTC barred GoDaddy from misrepresenting its security after it claimed award-winning security without MFA[^ftcgd]. In Germany, a customer deceived into signing can rescind the contract[^bgb].",
+        "**Saying yes to close the deal.** The US FTC barred GoDaddy from misrepresenting its security after alleging it claimed award-winning security without MFA[^ftcgd]. In Germany, a customer deliberately deceived into signing can void the contract[^bgb].",
         "**The wrong scope.** An office certificate doesn't cover a hosted service.",
         "**Notice times nobody can meet.** A two-hour clock without on-call staff breaks the contract on the first weekend.",
         "**Answers from a tool or template.** They describe controls you don't run."
@@ -217,7 +217,7 @@
   "sources": [
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, Annex",
+      "title": "Regulation (EU) 2024/2690",
       "publisher": "EUR-Lex",
       "date": "Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
@@ -300,6 +300,13 @@
       "url": "https://cloudsecurityalliance.org/artifacts/ccm-aicm-licensing-faq"
     },
     {
+      "id": "sig",
+      "title": "SIG FAQ",
+      "publisher": "Shared Assessments",
+      "date": "checked 5 Nov 2026",
+      "url": "https://sharedassessments.org/about-sig/"
+    },
+    {
       "id": "dora",
       "title": "DORA, Article 30",
       "publisher": "EUR-Lex",
@@ -365,7 +372,7 @@
     {
       "id": "bgb",
       "title": "BGB § 123",
-      "publisher": "BMJ",
+      "publisher": "BMJV (Germany)",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bgb/__123.html"
     }

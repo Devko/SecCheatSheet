@@ -4,7 +4,7 @@
   "status": "draft",
   "order": 59,
   "capability": "leadership/operating-model",
-  "title": "Operating model: does everyone know who decides, who does the work and who checks it?",
+  "title": "Operating model: who decides, who does the work and who checks it?",
   "short": "Name one accountable person for each of six core security processes and fit the whole operating model on two pages.",
   "answer": "This quarter, write down on two pages who decides, who does the work and who checks it for six core processes, from patching to exceptions, and have management approve it. Buy the work wherever that is cheaper, but keep decisions, risk acceptance and supplier oversight with your own named people.",
   "audience": "Heads of security and CISOs, IT leads who own security, and the managing directors they report to",
@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "Give each core process one accountable name.",
-          "text": "For patching, vulnerability management, access reviews, incident response, supplier onboarding and exceptions, name the one person who answers for the outcome and those who do the work. NIST suggests documenting who is responsible and accountable, and who is consulted and informed[^csfie]."
+          "text": "Name one A and the people who do the work for each of the six processes below. NIST suggests documenting who is responsible, accountable, consulted and informed[^csfie]."
         },
         {
           "title": "Write down who decides what.",
-          "text": "The BSI asks management to settle which cyber decisions need its approval[^bsicurr]. List who may accept which risk, grant which exception and isolate which system, so nobody has to ask during an incident."
+          "text": "The BSI asks management to settle which cyber decisions need its approval[^bsicurr]. Add who may accept which risk, grant which exception and isolate which system."
         },
         {
           "title": "Separate doing from checking.",
-          "text": "Assurance isn't credible if the reviewer designs or operates the process, the IIA says[^iia3l]. Don't let the people who run your systems audit them or sign off their own exceptions."
+          "text": "Assurance isn't credible if the reviewer designs or operates the process, the IIA says[^iia3l]. Don't let the people who run systems audit them or approve their own exceptions."
         },
         {
           "title": "Buy the work, keep the decisions.",
-          "text": "An MSP, MDR, pentesters or a virtual CISO can do much of the work. The BSI says entities that outsource all IT remain responsible and that management stays on the hook[^bsifaq]."
+          "text": "Entities that outsource all their IT stay responsible, and contracts alone aren't enough, the BSI says[^bsifaq]. Keep risk acceptance and supplier oversight with named staff."
         },
         {
           "title": "Fit it on two pages and get it approved.",
-          "text": "Management approves the result and reviews roles at planned intervals and after significant incidents or changes, as Regulation 2024/2690 requires of digital providers[^ir2690]. Do it yearly and after every reorganization."
+          "text": "Regulation 2024/2690 has management review roles at planned intervals and after significant incidents or changes[^ir2690]. Review yours yearly and after every reorganization."
         }
       ]
     },
@@ -48,23 +48,23 @@
       "items": [
         {
           "title": "Page 1, top: scope and structure.",
-          "text": "Name the legal entities, sites and main suppliers in scope, who leads security and whether you run it central, federated or hybrid."
+          "text": "Entities, sites and main suppliers in scope, who leads security, and whether it runs central, federated or hybrid."
         },
         {
           "title": "Page 1, middle: the RACI.",
-          "text": "One row per core process, with exactly one A per row. If a row needs two, split the process."
+          "text": "One row per core process and one A per row. If a row needs two, split the process."
         },
         {
           "title": "Page 1, bottom: the three lines.",
-          "text": "Who operates, who sets rules and monitors, who checks independently, and when the last independent review took place."
+          "text": "Who operates, who monitors, who checks independently, and the date of the last independent review."
         },
         {
           "title": "Page 2, top: services and decisions.",
-          "text": "List what security offers, how to ask and how fast. Then the decision table: who accepts which risk, approves which exception and may stop which system."
+          "text": "The service catalog, then the decision table: who accepts which risk, approves which exception and may stop which system."
         },
         {
           "title": "Page 2, bottom: escalation and approval.",
-          "text": "The phone chain with a deputy for each role, the next review date and management's approval. ENISA advises dating the organization chart and noting who updated it[^enisatig]."
+          "text": "The phone chain with deputies, the next review date and management's approval. ENISA advises dating the organization chart and naming who updated it[^enisatig]."
         }
       ]
     },
@@ -76,12 +76,12 @@
       "span": "full",
       "intro": "A is the one person who answers for the outcome, R does the work, C is asked before and I is told after. Use your own job titles but keep one A per row.",
       "items": [
-        "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets the deadlines from the patching sheet, and system owners for maintenance windows. I: management, about exploited flaws past their deadline.",
-        "**Vulnerability management.** A: head of security. R: security scans, rates and tracks findings; system owners fix what patching doesn't cover. C: IT operations. I: management, monthly. Record why a finding needs no fix[^ir2690].",
-        "**Access reviews.** A: each application's business owner, who knows who needs access. R: the owner's team leads, with lists pulled by IT. C: security, for admin rights. I: internal audit. Document results and changes[^ir2690].",
-        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection and communications. I: management, the insurer and authorities as required. Business shutdowns go to the crisis team in the business continuity sheet.",
-        "**Supplier onboarding.** A: the business owner who wants the supplier. R: procurement, with a named contract manager for each contract[^iiatp]. C: security, for the tier and clauses in the third-party risk sheet. I: IT, to grant access and remove it later.",
-        "**Exceptions.** A: the risk owner, at the authority level in the risk register sheet. R: the requester, who writes the case, the compensating measure and an end date. C: security, which rates the risk. I: management, through the list of open exceptions."
+        "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets deadlines from the patching sheet, and system owners for windows. I: management, about exploited flaws past deadline.",
+        "**Vulnerability management.** A: head of security. R: security scans, rates and tracks; system owners fix. C: IT operations. I: management, monthly. Record why a finding needs no fix[^ir2690].",
+        "**Access reviews.** A: each application's business owner. R: the owner's team leads, with lists from IT. C: security, for admin rights. I: internal audit. Document results and changes[^ir2690].",
+        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management, insurer, authorities. Shutting down business is for the crisis team.",
+        "**Supplier onboarding.** A: the business owner who wants the supplier. R: procurement, with a contract manager per contract[^iiatp]. C: security, for tier and clauses. I: IT, to grant and later remove access.",
+        "**Exceptions.** A: the risk owner, at the level set in the risk register sheet. R: the requester, with the case, a compensating measure and an end date. C: security. I: management, via the open exceptions list."
       ]
     },
     {
@@ -90,10 +90,10 @@
       "title": "Three lines, applied to security",
       "navTitle": "Three lines",
       "items": [
-        "**First line: whoever runs it.** IT operations, the MSP and application owners own the risk and operate the controls[^iia3l]. Patching and access reviews sit here.",
-        "**Second line: security.** It sets standards, monitors and challenges the first line[^iia3l]. Where security also runs the firewall or EDR, have someone else check that part.",
-        "**Third line: someone independent.** Internal audit, or an external auditor if you have none. The IIA treats 12 months between running a process and assuring it as typically sufficient[^iia3l].",
-        "**When a small company may merge lines.** The IIA ties separate lines to the risks[^iia3l], and ENISA lets IT staff take on security duties in small entities[^enisatig]. Merge the first two if you must, never the third: if size rules out an independent reviewer, 2024/2690 requires other measures to keep reviews impartial[^ir2690]."
+        "**First line: whoever runs it.** IT operations, the MSP and application owners own the risk and run the controls[^iia3l], including patching and access reviews.",
+        "**Second line: security.** It sets standards, monitors and challenges the first line[^iia3l]. Where it also runs the firewall or EDR, have someone else check that part.",
+        "**Third line: someone independent.** Internal audit, or an external auditor. The IIA treats 12 months between running a process and assuring it as typically sufficient[^iia3l].",
+        "**Small companies may merge the first two.** ENISA lets IT staff take on security duties in small entities[^enisatig]. Never merge the third: where size rules out an independent reviewer, 2024/2690 requires other ways to keep reviews impartial[^ir2690]."
       ]
     },
     {
@@ -102,10 +102,9 @@
       "title": "Central, federated or hybrid",
       "navTitle": "Structure",
       "items": [
-        "**Central.** One team sets the rules and runs the security services for everyone. Choose it when one IT team runs everything.",
-        "**Federated.** Each unit has its own security officer and decides within group rules. The BSI suggests area security officers in large organizations, chosen because they know their unit's work[^std2002]. Choose it when units are separate legal entities with their own IT, since each one's management has its own BSIG duties[^bsig].",
-        "**Hybrid.** Central security owns the standards, risk register, MDR and scanning; units patch, review access and name champions. Choose it for most growing companies and for groups with plants or OT.",
-        "**Keep one register whatever you pick.** One risk register, one exception list and one incident process across units, so management sees one picture."
+        "**Central.** One team sets the rules and runs security for everyone. Choose it when one IT team runs everything.",
+        "**Hybrid.** Central security owns the standards, risk register, MDR and scanning; units patch, review access and name champions. Choose it for most growing companies and for groups with plants.",
+        "**Federated.** Each unit has its own security officer, as the BSI suggests for large organizations[^std2002]. Choose it for legal entities with their own IT, since each one's management has its own BSIG duties[^bsig]. Keep one risk register across all of them."
       ]
     },
     {
@@ -114,11 +113,10 @@
       "title": "What to buy and what to keep",
       "navTitle": "Buy or keep",
       "items": [
-        "**Buy what is rare or round the clock.** The NCSC suggests outsourcing functions that are seldom used or that you lack the resources for, and notes that in-house teams know the business better[^ncscsoc]. That usually means 24/7 monitoring (see the SOC and MDR sheet), pentests and an incident response retainer.",
-        "**Put a responsibility matrix in the MSP contract.** The NCSC advises stating what the MSP does and what stays with you, including who tracks end-of-life dates[^ncscmsp].",
-        "**Know which line a provider is in.** The IIA places external providers in the line of the function that engages them[^iia3l]. A pentest ordered by IT is first-line testing, not independent assurance.",
-        "**Keep decisions, risk acceptance and supplier oversight.** Outsourcing doesn't change accountability[^iia3l]. DORA makes financial entities name a role or senior manager to monitor ICT supplier arrangements[^dora]; give every supplier an internal owner even if DORA doesn't apply.",
-        "**A virtual CISO advises, management decides.** The BSI accepts an external security officer for small companies[^std2002]; the security team sheet covers hiring one."
+        "**Buy what is rare or round the clock.** The NCSC suggests outsourcing functions that are seldom used or that you lack resources for, and notes that in-house teams know the business better[^ncscsoc]. Typical buys: 24/7 MDR (see the SOC and MDR sheet), pentests, an incident response retainer and a virtual CISO.",
+        "**Put a responsibility matrix in the MSP contract.** State what the MSP does and what stays with you, including who tracks end-of-life dates, as the NCSC advises[^ncscmsp].",
+        "**Know which line a provider is in.** The IIA places providers in the line of whoever engages them[^iia3l]. A pentest ordered by IT is first-line testing, not independent assurance.",
+        "**Keep decisions, risk acceptance and supplier oversight.** Outsourcing doesn't change accountability[^iia3l]. DORA has financial entities name a role to monitor ICT suppliers[^dora]; give every supplier an internal owner anyway."
       ]
     },
     {
@@ -127,11 +125,10 @@
       "title": "Decision rights and escalation",
       "navTitle": "Decisions",
       "items": [
-        "**Write a decision table.** Cover risk acceptance by size, exceptions, budget, scope, go-live against security advice and shutting down a service, each with a named decider and deputy.",
-        "**Let named delegates accept smaller risks.** 2024/2690 allows acceptance by people with the authority to manage risks, provided management gets adequate reports[^ir2690]. Set the levels in the risk register sheet.",
-        "**Pre-authorize containment.** Let the on-call engineer or MDR isolate a device or disable an account without asking first. Keep business shutdowns for the crisis team.",
-        "**Escalate on triggers.** The IIA expects a process to escalate quickly any risk that reaches an unacceptable level[^iiacyber]. Use fixed triggers: an exploited flaw past its deadline, an exception past expiry, a supplier refusing a key clause.",
-        "**Define when security must be asked.** Grundschutz++ requires involving the security officer in security-relevant projects and setting when that applies[^std3001]; the security projects sheet covers the gates."
+        "**Let delegates accept smaller risks.** 2024/2690 allows acceptance by people with the authority to manage risks, if management gets adequate reports[^ir2690]. Set amounts and expiry with the risk register sheet.",
+        "**Pre-authorize containment.** The on-call engineer or MDR may isolate a device or disable an account without asking. Shutting down a business service is for the crisis team.",
+        "**Escalate on triggers.** The IIA expects quick escalation of any risk that reaches an unacceptable level[^iiacyber]. Use triggers such as an exploited flaw past deadline, an exception past expiry or a supplier refusing a key clause.",
+        "**Set when security must be asked.** Grundschutz++ requires defining when the security officer joins security-relevant projects[^std3001]; the security projects sheet covers the gates."
       ]
     },
     {
@@ -140,10 +137,9 @@
       "title": "Security champions in business and IT teams",
       "navTitle": "Champions",
       "items": [
-        "**Start with the teams that hold the risk.** IT operations, development, finance for payment changes, HR for joiners and leavers, and plant operations for OT.",
-        "**Put their time in writing.** OWASP advises formally allocating time for champions' security work and getting management support, because formal priorities win when priorities conflict[^owaspsc].",
-        "**Give them tasks, not authority.** They triage their team's findings, review risky changes, act as first contact in an incident and pass on warnings. They don't approve exceptions or accept risk.",
-        "**Give the program an owner.** In OWASP's interviews, leading a champions program was a full-time job[^owaspsc]. In a smaller company, give it to the security lead with a fixed share of time."
+        "**Name one per team that holds risk.** IT operations, development, finance for payment changes, HR for joiners and leavers, and plant operations for OT.",
+        "**Put their time in writing.** OWASP advises formally allocating champions' time and getting management support, because formal priorities win when priorities conflict[^owaspsc].",
+        "**Give them tasks, not authority.** They triage findings, review risky changes and act as first contact in incidents. They don't approve exceptions or accept risk."
       ]
     },
     {
@@ -152,9 +148,8 @@
       "title": "A service catalog of what security offers",
       "navTitle": "Service catalog",
       "items": [
-        "**List each service with how to ask and how fast.** For example: project reviews within 5 working days, supplier checks and exception decisions within 10, incident response at once.",
-        "**Cover the usual set.** Advice and project reviews, exceptions, vulnerability scanning and rating, supplier checks, incident response, awareness, and evidence for customers and auditors. FIRST groups incident-related services into event, incident and vulnerability management, situational awareness and knowledge transfer[^firstcsf].",
-        "**Name who delivers each one.** In-house, MDR, MSP or a pentest firm, so requesters know who answers.",
+        "**List each service with how to ask and how fast.** For example, project reviews in 5 working days, supplier checks in 10 and incident response at once.",
+        "**Cover the usual set.** Advice and project reviews, exceptions, vulnerability scanning, supplier checks, incident response, awareness and audit evidence, each with who delivers it: in-house, MDR or MSP.",
         "**Say what security doesn't do.** It doesn't patch, grant access or sign supplier contracts. Name who does."
       ]
     },
@@ -164,11 +159,11 @@
       "title": "What the law and ISO 27001 say about roles",
       "navTitle": "Legal duties",
       "items": [
-        "**NIS2 Article 20.** Management bodies approve the risk management measures, oversee their implementation and can be held liable; their members must follow training[^nis2].",
-        "**BSIG § 38.** Management must implement and oversee the § 30 measures and attend training regularly[^bsig]. It can't delegate that responsibility, the BSI says[^bsihand], but it can delegate the work with clear roles, reporting lines, escalation and control[^bsicurr].",
-        "**Regulation 2024/2690.** Cloud, managed service and other digital providers assign roles and report them to management, have at least one person report directly to it, segregate conflicting duties and review roles regularly. Small entities may add the duties to existing roles[^ir2690].",
-        "**DORA.** Financial entities other than microenterprises give ICT risk to an independent control function, separated from internal audit by the three lines of defense or an internal model[^dora].",
-        "**ISO/IEC 27001.** ENISA maps the roles requirement of 2024/2690 to clause 5.3 and Annex A controls 5.2 to 5.4[^enisamap], so one RACI serves both the certificate and the law."
+        "**NIS2 Article 20.** Management bodies approve the risk management measures, oversee their implementation, can be held liable and must take training[^nis2].",
+        "**BSIG § 38.** Management must implement the § 30 measures, oversee them and train regularly, and is liable to the entity for culpable damage[^bsig].",
+        "**Regulation 2024/2690.** Digital providers such as cloud and managed service providers assign roles and report them to management, have one person report directly to it, segregate conflicting duties and review roles regularly[^ir2690].",
+        "**DORA.** Financial entities other than microenterprises separate ICT risk management, control and internal audit, by the three lines of defense or an internal model[^dora].",
+        "**ISO/IEC 27001.** ENISA maps the roles duties of 2024/2690 to clause 5.3 and Annex A 5.2 to 5.4[^enisatig], so one RACI serves both."
       ]
     },
     {
@@ -178,9 +173,8 @@
       "navTitle": "What changed",
       "items": [
         "**The IIA replaced its Three Lines Model.** The Statement of Position of 8 July 2026[^iiasop] adds guidance for organizations without separate assurance functions and says outsourcing doesn't change accountability[^iia3l]. Recheck where you've merged lines.",
-        "**Internal audit must now check cyber roles.** Since 5 February 2026, auditors giving cyber assurance must assess whether roles are established and risks escalated quickly[^iiacyber]; since 15 September 2026, also who selects, manages and monitors suppliers[^iiatp]. Expect them to ask for your RACI.",
-        "**The BSI drew the line on delegation.** Its October 2026 curriculum says the work can be delegated but not responsibility and oversight, and lists a responsibility matrix and a direct reporting line to management as evidence[^bsicurr].",
-        "**Grundschutz++ names the role conflicts.** BSI-Standard 300-1 of 20 October 2026 requires avoiding conflicts between the IT lead and the security officer, and between the data protection officer and the security officer[^std3001]."
+        "**Internal audit must check cyber roles.** Since 5 February 2026, auditors giving cyber assurance must assess roles and quick escalation[^iiacyber]; since 15 September 2026, also who selects, manages and monitors suppliers[^iiatp]. Have your RACI ready.",
+        "**The BSI drew the line on delegation.** Its October 2026 curriculum lets management delegate the work but not responsibility and oversight, and lists a responsibility matrix as evidence[^bsicurr]."
       ]
     },
     {
@@ -188,10 +182,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A RACI for every task.** Six core processes and a decision table settle most disputes. Add a row only when the same dispute comes back.",
-        "**An internal audit department in a small company.** Buy an independent review once a year, such as a certification audit or an auditor who neither runs nor advises on your IT.",
-        "**Reorganizing before you write it down.** Document how work is done today, then fix the two worst gaps.",
-        "**A target operating model deck.** Two pages people use beat 40 slides nobody opens."
+        "**A RACI for every task.** Six processes and a decision table settle most disputes. Add a row only when a dispute comes back.",
+        "**An internal audit department in a small company.** Buy a yearly independent review instead, such as a certification audit or an auditor who neither runs nor advises on your IT.",
+        "**A target operating model deck.** Two pages people use beat 40 slides nobody opens. Write down how work is done today before you reorganize."
       ]
     },
     {
@@ -201,8 +194,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Two accountable people for one process.** Then nobody is. Split the process or pick one.",
-        "**Security as A for everything.** If security owns patching and access reviews, IT and the business stop treating them as their job. Make the system's owner accountable.",
-        "**The admin as security officer.** The BSI warns that an active administrator in the role is likely to face conflicts of interest[^std2002].",
+        "**Security as A for everything.** Then IT and the business stop treating patching and access as their job. Make the system's owner accountable.",
         "**No deputies.** ENISA advises a deputy for each security role[^enisatig]. Name one for every A and test the phone chain twice a year."
       ]
     },
@@ -216,25 +208,25 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "The managing director accepts risks and approves exceptions; the IT lead or MSP runs the controls, with first and second line merged.",
-            "Write the two pages with your MSP, including its responsibility matrix, and approve them in a management meeting.",
-            "Once a year, get a review from someone who neither runs nor advises on your IT."
+            "The managing director accepts risks and approves exceptions; the IT lead or MSP runs the controls.",
+            "Write the two pages with your MSP and approve them in a management meeting.",
+            "Get a yearly review from someone who neither runs nor advises on your IT."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Run hybrid: central rules, risk register, MDR and scanning; IT and business teams patch, review access and name champions.",
-            "Keep the security role apart from IT management, as Grundschutz++ requires[^std3001]; the security team sheet covers where it reports.",
-            "Publish the service catalog and the decision table on the intranet."
+            "Run hybrid, with champions in IT and business teams.",
+            "Keep the security role apart from the IT lead, as Grundschutz++ requires[^std3001]; the security team sheet covers where it reports.",
+            "Publish the service catalog and the decision table."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Name security officers per unit or legal entity under one group standard and one risk register.",
-            "Keep an assurance map of who checks which control, which shows gaps and duplicated checks[^iia3l].",
-            "Under DORA, document the control function's independence and the supplier oversight role[^dora]."
+            "Name security officers per unit or entity under one group standard and one risk register.",
+            "Keep an assurance map of who checks which control, to find gaps and duplicated checks[^iia3l].",
+            "Under DORA, document the control function's independence from internal audit[^dora]."
           ]
         }
       ]
@@ -244,7 +236,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on the IIA's 2026 Three Lines Model and topical requirements, NIS2 Article 20, BSIG § 38, Implementing Regulation 2024/2690 with ENISA's guidance, DORA, and BSI standards and management training guidance."
+      "text": "First draft, based on the IIA's 2026 Three Lines Model and topical requirements, NIS2, BSIG § 38, Regulation 2024/2690 with ENISA's guidance, DORA and BSI guidance."
     }
   ],
   "sources": [
@@ -285,24 +277,17 @@
     },
     {
       "id": "ir2690",
-      "title": "Implementing Regulation (EU) 2024/2690, Annex points 1.2, 2.1, 2.3, 6.6, 6.10 and 11.2",
+      "title": "Implementing Regulation (EU) 2024/2690, Annex points 1.2, 2.1, 2.3, 6.10, 11.2",
       "publisher": "EUR-Lex",
       "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
     },
     {
       "id": "enisatig",
-      "title": "NIS2 Technical Implementation Guidance, version 1.0, section 1.2",
+      "title": "NIS2 Technical Implementation Guidance v1.0 and mapping table v1.2",
       "publisher": "ENISA",
       "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
-    },
-    {
-      "id": "enisamap",
-      "title": "NIS2 guidance mapping table, version 1.2",
-      "publisher": "ENISA",
-      "date": "21 Aug 2025",
-      "url": "https://www.enisa.europa.eu/sites/default/files/2025-09/ENISA_Technical_Implementation_Guidance_Mapping_table_version_1.2.xlsx"
     },
     {
       "id": "iiatp",
@@ -362,17 +347,10 @@
     },
     {
       "id": "owaspsc",
-      "title": "Security Champions Guide, principles 3, 4 and 9",
+      "title": "Security Champions Guide, principles 3 and 9",
       "publisher": "OWASP",
       "date": "checked 5 Nov 2026",
       "url": "https://securitychampions.owasp.org/"
-    },
-    {
-      "id": "firstcsf",
-      "title": "CSIRT Services Framework, version 2.1.0",
-      "publisher": "FIRST",
-      "date": "Nov 2019",
-      "url": "https://www.first.org/standards/frameworks/csirts/csirt_services_framework_v2.1"
     },
     {
       "id": "nis2",
@@ -380,13 +358,6 @@
       "publisher": "EUR-Lex",
       "date": "2022",
       "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
-    },
-    {
-      "id": "bsihand",
-      "title": "Schulung für Geschäftsleitungen (Handreichung), version 1.0",
-      "publisher": "BSI",
-      "date": "17 Apr 2026",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
     }
   ]
 }

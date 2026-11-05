@@ -1,0 +1,347 @@
+{
+  "slug": "maturity-assessment",
+  "topic": "Maturity assessments",
+  "status": "draft",
+  "order": 61,
+  "capability": "leadership/maturity",
+  "title": "Maturity assessments: where does your security really stand, and where should it be?",
+  "short": "Assess against one model every 12 months, rate only what evidence shows and set a target per function, not one score.",
+  "answer": "This quarter, pick one model that fits your company and run a five-week assessment that rates each outcome only on evidence you sampled. Set a target per function from your risks, not the top level everywhere, and show management gaps and decisions, not one maturity number.",
+  "audience": "Heads of security, CISOs, IT leads who own security, and the managing directors they report to",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Pick one model and keep it.",
+          "text": "Use the model your regulator or sector expects; otherwise NIST CSF 2.0 Profiles with the CIS Controls underneath. Keep the model, scale and scope from year to year, so results compare."
+        },
+        {
+          "title": "Scope by business service.",
+          "text": "Assess the services the company can't do without, with their cloud tenants, OT, suppliers and subsidiaries. A CSF Profile can cover the whole organization or one part, such as the financial systems[^csf]."
+        },
+        {
+          "title": "Rate only what you saw working.",
+          "text": "Interview the people who run each control, then check a sample: settings, tickets, a restore record. NIST's assessment methods are examine, interview and test[^sp80053a]. No evidence means not achieved."
+        },
+        {
+          "title": "Set a target per function.",
+          "text": "Decide where each function must be from your risks and duties. NIST encourages higher Tiers when risks or mandates are greater or a cost-benefit analysis supports it[^csf]."
+        },
+        {
+          "title": "Report gaps and decisions, not a score.",
+          "text": "Show current against target per function, the gaps that matter and what you need decided. A \"level 3\" is a set of qualities, not a numerical value, as NIST notes[^sp80055]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "choose",
+      "title": "Choose a model by company type",
+      "navTitle": "Choose a model",
+      "items": [
+        {
+          "title": "Do you run UK essential services?",
+          "text": "Use the NCSC CAF v4.0: 41 outcomes, each judged achieved, partially achieved or not achieved[^caf], against the cross-sector Core Profile[^cafcore]."
+        },
+        {
+          "title": "Do you run energy or OT?",
+          "text": "Use C2M2 v2.1: 356 practices in 10 domains, for IT and OT. DOE's self-evaluation tools are free to any organization; one function takes about a day[^c2m2]."
+        },
+        {
+          "title": "A German company under 50 staff?",
+          "text": "Book a CyberRisikoCheck (DIN SPEC 27076): an IT service provider checks 27 requirements in a 1 to 2 hour interview and reports a score and ranked recommendations[^crc]."
+        },
+        {
+          "title": "Is your ISMS built on IT-Grundschutz?",
+          "text": "Use the IT-Grundschutz-Check: interviews plus spot checks against each requirement[^std2002]. Grundschutz++ marks each requirement met, not met or not applicable, with evidence[^std3001]."
+        },
+        {
+          "title": "Everyone else?",
+          "text": "Build CSF 2.0 Current and Target Profiles in NIST's free template[^profqs], with CIS Controls as the checklist: IG1's 56 safeguards for small firms, IG2's 74 more once you have IT staff and sensitive data[^cisig]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "run",
+      "title": "Run one in five weeks",
+      "navTitle": "Five weeks",
+      "items": [
+        {
+          "title": "Week 1: what's in scope, and who answers?",
+          "text": "List services, sites, tenants, OT and suppliers, in the fewest separate assessments that still give an accurate picture[^c2m2]. Name one contact per area, such as HR for leavers[^std2002]."
+        },
+        {
+          "title": "Weeks 2 and 3: interviews and samples.",
+          "text": "Interview in pairs, one asking and one taking notes[^std2002]. For each outcome, collect one record and check one live sample."
+        },
+        {
+          "title": "Week 4: calibrate and set targets.",
+          "text": "Review the ratings with the interviewees[^c2m2] and one person outside the control's team. Agree targets with management."
+        },
+        {
+          "title": "Week 5: report and hand over.",
+          "text": "Present gaps and decisions, then turn the gaps into the roadmap, as the security program sheet describes."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "evidence",
+      "title": "Evidence over self-scoring",
+      "navTitle": "Evidence",
+      "items": [
+        "**Write the rule before you rate.** In the CAF, one \"not achieved\" indicator normally decides the rating, and \"achieved\" needs all of them[^caf].",
+        "**Sample, don't ask.** Check five leavers' accounts, three servers' patch levels and the last restore record. The BSI verifies interview answers with spot checks of documents, rooms and settings[^std2002].",
+        "**Record the source of each rating.** Grundschutz++ ties evidence to each measure and, for automated checks, records the tool, time and result[^std3001].",
+        "**Count coverage where you can.** CIS's Assessment Specification defines measures and metrics per safeguard, such as how many endpoints implement it[^cas]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "profiles",
+      "title": "Current and target profiles",
+      "navTitle": "Profiles",
+      "items": [
+        "**One row per outcome.** NIST's template has columns for practices, status, rating, priority and goals[^profqs]. Add evidence and an owner.",
+        "**Targets per function.** Set Tiers overall or per Function or Category, not per Subcategory[^tiers]. Tiers rate the rigor of risk governance and management[^csf]; per-outcome ratings show whether practices work.",
+        "**A floor everywhere.** C2M2 is built so every company can reach MIL1 in all domains[^c2m2]. Go higher where your risks need it.",
+        "**Reassess every 12 months and after big changes,** such as a major incident, acquisition or new platform, as C2M2 advises[^c2m2]. NIS2 entities in Germany must assess whether their measures work (BSIG § 30(2) no. 6)[^bsig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "report",
+      "title": "Presenting results to management",
+      "navTitle": "Reporting",
+      "items": [
+        "**No average.** An overall 2.7 hides a zero in Recover. Show current and target side by side for each function.",
+        "**Say how you know.** Name the model version, profile and scope, whether it was self-assessed or independently reviewed, and its limits, as the NCSC asks for CAF results[^cafpage].",
+        "**Tie each top gap to a risk.** Give the risk from the risk register, the cost to close it and your recommendation.",
+        "**Ask for a decision.** Fund it, accept it with an end date or defer it. Put progress on the security metrics sheet's quarterly page.",
+        "**Show what moved.** Next year, show what changed and why, on the same scale."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "external",
+      "title": "External assessor or your own team",
+      "navTitle": "Who assesses",
+      "items": [
+        "**Run the yearly cycle yourself.** Your people know where the evidence is. C2M2 is built for facilitated self-evaluation[^c2m2].",
+        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence than self-assessment, the NCSC says[^cafpage]. Bring one in every 2 to 3 years and when a customer or regulator relies on the result.",
+        "**Keep reviewers out of the line.** NIS2 digital providers need independent reviews by people with audit competence outside the reviewed area's line of authority[^nis2ir].",
+        "**Don't let the fixer grade.** An assessor who also sells the remediation has a conflict.",
+        "**Check the license.** CIS's free CSAT is for your own internal assessment; consultants need a SecureSuite consulting membership[^csat]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "items": [
+        "**The UK set a cross-sector CAF minimum.** The NCSC's Core Profile, published 30 October 2026, sets the expected level for each CAF v4.0 outcome against moderately sophisticated attackers[^cafcore].",
+        "**Grundschutz++ rates without levels.** BSI-Standard 300-1, dated 20 October 2026, marks each requirement met, not met or not applicable[^std3001]. The BSI plans performance indicators for each requirement by 31 March 2027[^gspp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A second framework for comparison.** Map once through informative references, which connect CSF outcomes to ISO/IEC 27001 and SP 800-53[^profqs].",
+        "**Tiers for every Subcategory.** NIST says Function or Category level gives a better picture[^tiers].",
+        "**Peer benchmark scores.** Ratings from different assessors, scopes and scales don't compare. Compare yourself with last year.",
+        "**A maturity platform before the first cycle.** NIST's spreadsheet template and your ticket system will do[^profqs]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Scoring the paper.** A signed policy is rated as a working control. The BSI rates \"yes\" only when measures are fully, effectively and appropriately implemented[^std2002].",
+        "**Chasing level 5 everywhere.** It costs most where risk is lowest; DOE calls the top level in all domains not typically optimal[^c2m2].",
+        "**Buying a score.** Tools that turn questionnaires or external scans into a maturity number measure answers or the perimeter, not practice.",
+        "**Taking \"implemented\" for \"works\".** CIS's specification checks whether a safeguard is implemented, not yet how well[^cas]. Test a restore, an alert, a revoked account.",
+        "**Changing the yardstick.** A new model, scale or scope each year breaks the trend."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "In Germany, book a CyberRisikoCheck[^crc] each year, ideally with a provider other than the one running your IT.",
+            "Elsewhere, rate yourself against CIS IG1 with one piece of evidence per safeguard.",
+            "Take the managing directors through the top five gaps in one hour."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Build Current and Target Profiles per CSF Function in NIST's template, with CIS IG2 as the checklist.",
+            "Have someone outside IT operations, such as internal audit, recheck a sample.",
+            "Bring in an external assessor every 2 to 3 years."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Use the model your regulator expects: CAF with the Core Profile for UK essential services, C2M2 for energy and OT sites.",
+            "Assess each subsidiary or business unit with the same scale and evidence rules.",
+            "Report independent review results to management, as Regulation 2024/2690 requires of digital providers[^nis2ir]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on NIST CSF 2.0 and its Profiles and Tiers guides, NCSC CAF v4.0 and its Core Profile, C2M2 v2.1, CIS Controls v8.1, BSI-Standards 200-2 and 300-1 and the BSI's CyberRisikoCheck."
+    }
+  ],
+  "sources": [
+    {
+      "id": "csf",
+      "title": "Cybersecurity Framework (CSF) 2.0",
+      "publisher": "NIST",
+      "date": "26 Feb 2024",
+      "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf"
+    },
+    {
+      "id": "profqs",
+      "title": "SP 1301, Organizational Profiles quick-start guide",
+      "publisher": "NIST",
+      "date": "Feb 2024",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1301.pdf"
+    },
+    {
+      "id": "tiers",
+      "title": "SP 1302, CSF Tiers quick-start guide",
+      "publisher": "NIST",
+      "date": "Oct 2024",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.1302.pdf"
+    },
+    {
+      "id": "sp80053a",
+      "title": "SP 800-53A Rev. 5",
+      "publisher": "NIST",
+      "date": "updated 27 Aug 2025",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/a/r5/final"
+    },
+    {
+      "id": "sp80055",
+      "title": "SP 800-55v1, Measurement Guide",
+      "publisher": "NIST",
+      "date": "Dec 2024",
+      "url": "https://csrc.nist.gov/pubs/sp/800/55/v1/final"
+    },
+    {
+      "id": "caf",
+      "title": "Cyber Assessment Framework 4.0",
+      "publisher": "NCSC (UK)",
+      "date": "6 Aug 2025",
+      "url": "https://www.ncsc.gov.uk/sites/default/files/documents/NCSC-Cyber-Assessment-Framework-4.0.pdf"
+    },
+    {
+      "id": "cafpage",
+      "title": "Cyber Assessment Framework",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 30 Oct 2026",
+      "url": "https://www.ncsc.gov.uk/collection/cyber-assessment-framework"
+    },
+    {
+      "id": "cafcore",
+      "title": "CAF Core Profile",
+      "publisher": "NCSC (UK)",
+      "date": "30 Oct 2026",
+      "url": "https://www.ncsc.gov.uk/collection/cyber-assessment-framework/core-profile"
+    },
+    {
+      "id": "c2m2",
+      "title": "C2M2 Version 2.1",
+      "publisher": "US DOE",
+      "date": "Jun 2022",
+      "url": "https://www.energy.gov/sites/default/files/2022-06/C2M2%20Version%202.1%20June%202022.pdf"
+    },
+    {
+      "id": "cisig",
+      "title": "Implementation Group 2",
+      "publisher": "CIS",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.cisecurity.org/controls/implementation-groups/ig2"
+    },
+    {
+      "id": "cas",
+      "title": "Controls Assessment Specification v8.1",
+      "publisher": "CIS",
+      "date": "checked 5 Nov 2026",
+      "url": "https://cas.docs.cisecurity.org/en/latest/source/About%20the%20CIS%20Controls%20Assessment%20Specification/"
+    },
+    {
+      "id": "csat",
+      "title": "CIS CSAT terms of use",
+      "publisher": "CIS",
+      "date": "checked 5 Nov 2026",
+      "url": "https://csat.cisecurity.org/accounts/terms-of-use"
+    },
+    {
+      "id": "std2002",
+      "title": "BSI-Standard 200-2",
+      "publisher": "BSI",
+      "date": "Oct 2017",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_2.pdf?__blob=publicationFile&v=2"
+    },
+    {
+      "id": "std3001",
+      "title": "BSI-Standard 300-1, v1.0",
+      "publisher": "BSI",
+      "date": "20 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_300-1.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "gspp",
+      "title": "Grundschutz++ milestone plan",
+      "publisher": "BSI",
+      "date": "Oct 2026",
+      "url": "https://www.bsi.bund.de/dok/grundschutz-plus-plus"
+    },
+    {
+      "id": "crc",
+      "title": "CyberRisikoCheck",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/KMU/CyberRisikoCheck/CyberRisikoCheck.html"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Regulation (EU) 2024/2690, Annex 2.3 and 7",
+      "publisher": "EUR-Lex",
+      "date": "17 Oct 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "bsig",
+      "title": "BSIG § 30",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/__30.html"
+    }
+  ]
+}

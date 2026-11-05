@@ -1,0 +1,235 @@
+{
+  "slug": "security-team",
+  "topic": "Security team structure",
+  "status": "draft",
+  "order": 60,
+  "capability": "leadership/team",
+  "title": "Security team: who leads security, whom do they report to, and who do you hire next?",
+  "short": "Within 30 days, name a head of security with a deputy and a direct line to management, outside IT operations.",
+  "answer": "Within 30 days, have management appoint one head of security or ISB in writing, with a named deputy and a direct reporting line to the managing directors, outside IT operations. Then add people in the order your biggest risks need them, describe each role with an ECSF profile, and buy any work you can't keep a person busy with.",
+  "audience": "Managing directors, heads of security and IT leads who also own security, in small and mid-size companies and regulated organizations",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Appoint one owner in writing.",
+          "text": "Have management name a head of security or ISB, a deputy and their authority in a minuted decision. ENISA's NIS2 guidance lists formal appointments, job descriptions and evidence of competence as proof[^enisatig]."
+        },
+        {
+          "title": "Give them a direct line to management.",
+          "text": "Digital providers must have at least one person reporting directly to the management body[^nis2ir]. The BSI's curriculum for German NIS2 managers lists the ISB or CISO reporting line among the first decisions[^bsicurr]."
+        },
+        {
+          "title": "Keep oversight out of IT operations.",
+          "text": "The BSI advises against placing the ISB in the IT department, where security shrinks to IT protection and role conflicts arise[^std2002]. Security engineering can sit in IT; the person who checks it shouldn't."
+        },
+        {
+          "title": "Give every security role a deputy.",
+          "text": "ENISA advises a deputy or other continuity measures for each security role[^enisatig], and the BSI says the ISB needs a qualified deputy[^std2002]. Let the deputy run the monthly report while the lead is on leave."
+        },
+        {
+          "title": "Hire for your top risk, buy the rest.",
+          "text": "Fill the role your biggest risk needs and buy work that specialists do a few days a year, such as penetration tests, forensics and 24/7 monitoring. In ENISA's 2025 survey, 45% named a lack of candidates with the required skills as the main hiring barrier[^nisinv]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "hire",
+      "title": "Hire in this order",
+      "navTitle": "Hiring order",
+      "intro": "Each step names the ECSF profile[^ecsfrp] and the closest NICE work role[^nice]. At first, one person can cover several steps.",
+      "items": [
+        {
+          "title": "Head of security or ISB.",
+          "text": "ECSF Chief Information Security Officer, which also covers the ISB and security manager titles; NICE Executive Cybersecurity Leadership. Owns strategy, policy, the ISMS and risk reporting."
+        },
+        {
+          "title": "Security engineer.",
+          "text": "ECSF Cybersecurity Implementer; NICE Systems Security Analysis. Owns identity, endpoint and cloud controls together with IT. Cloud, architecture and identity skills are among the most needed in ENISA's 2025 survey[^nisinv]."
+        },
+        {
+          "title": "Detection and response lead.",
+          "text": "ECSF Cyber Incident Responder; NICE Incident Response. Runs the MDR contract and the incident plan. Detection and response topped ENISA's list of needed skills, at 38%[^nisinv]."
+        },
+        {
+          "title": "Risk and compliance.",
+          "text": "ECSF Cybersecurity Risk Manager or Cyber Legal, Policy and Compliance Officer; NICE Cybersecurity Policy and Planning. Runs the risk register, NIS2 or DORA evidence and customer questionnaires."
+        },
+        {
+          "title": "Architect or deputy head.",
+          "text": "ECSF Cybersecurity Architect; NICE Cybersecurity Architecture. Reviews designs in IT projects and deputizes for the head. Keep buying penetration testers and forensic investigators."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "reporting",
+      "title": "Where the head of security reports",
+      "navTitle": "Reporting line",
+      "items": [
+        "**Report to the CEO or managing director.** In ENISA's 2021 survey, its latest to ask, 56% of heads of information security reported to the CEO or board, 29% to the CIO or an IT executive and 14% to risk management[^nisinv21].",
+        "**A CRO or COO works if they don't run IT.** ENISA's guidance says a reviewer must sit outside the line of authority of the area under review[^enisatig]. Keep a direct right to report to the managing directors either way.",
+        "**Under a CIO, write the safeguards down.** The BSI calls an active administrator in the ISB role a likely conflict of interest[^std2002]. Grant the head of security what the BSIG grants federal ISBs: a direct right to report to the head of the organization and protection from being penalized for doing the job[^bsig].",
+        "**Separate admin work from oversight.** Digital providers must segregate conflicting duties where applicable; micro entities may compensate with management oversight or more logging[^nis2ir]. Whoever reviews admin activity shouldn't hold those admin rights.",
+        "**Financial entities need a control function.** DORA requires all but microenterprises to give ICT risk oversight to an independent control function and to keep risk management, control and internal audit separate[^dora]. The operating model sheet covers the three lines."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "sizing",
+      "title": "How big the team should be",
+      "navTitle": "Team size",
+      "items": [
+        "**About one in ten IT staff work on security.** Security staff were 10.6% of IT staff in ENISA's 2025 survey, the lowest share yet[^nisinv]; the German median was 9.4%[^nisinvdata]. 83% of respondents were large organizations in NIS2's high-criticality sectors[^nisinv], so use this as a cross-check, not a target.",
+        "**Operations takes the largest share.** In ENISA's 2023 survey, operations held 40% of security staff, architecture and engineering 23%, governance and risk 21% and audit and compliance 16%[^nisinv23].",
+        "**Outsource operations, not governance.** 57% of those organizations used the most contractors in operations and only 9% in governance and risk; contractors were a median 20% of security staff[^nisinv23].",
+        "**Count the work, not the ratio.** List recurring tasks with hours per month: risk register, audits, customer questionnaires, project reviews, alert handling and supplier reviews. Every recurring task needs two trained people, in-house or at a provider.",
+        "**Log staffing gaps as risks.** NIST treats gaps in workforce numbers and competency as cybersecurity risk, met by upskilling, new positions, hiring or contracting[^sp1308]. Give each gap an owner in the risk register."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "isb",
+      "title": "The ISB and the data protection officer in Germany",
+      "navTitle": "ISB and DPO",
+      "items": [
+        "**The BSIG requires an ISB only of federal bodies.** Their heads appoint an ISB and at least one deputy, who report independently and may not be penalized for doing the job[^bsig]. Write the same into your ISB's appointment.",
+        "**The ISB covers all information.** In the BSI's model, the ISB steers the security process, advises management and joins major projects, for paper as much as for IT[^std2002].",
+        "**The DPO monitors data protection law.** The DPO takes no instructions on those tasks, reports to the highest management level and may be external[^gdpr]. In Germany, appoint one when at least 20 people regularly process personal data by computer, or for processing that needs a DPIA[^bdsg38].",
+        "**Keep the two apart.** The CJEU ruled that a DPO has a conflict of interest if other duties have them decide the purposes and means of processing[^c453]. Grundschutz++ lists DPO and ISB as roles whose conflicts must be avoided[^std3001]; the 2017 standard still allowed one person with clear interfaces and enough time[^std2002]. Use two people; in small companies, an external DPO."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "vciso",
+      "title": "A virtual or fractional CISO",
+      "navTitle": "Virtual CISO",
+      "items": [
+        "**It fits part-time work.** Use one below about 250 staff, while you build the first ISMS, or between hires. The BSI calls an external ISB useful especially in small companies[^std2002], and digital providers may assign security roles to external parties[^nis2ir].",
+        "**Accountability stays inside.** The BSI tells German NIS2 managers that operational work can be delegated, but responsibility and oversight can't[^bsicurr].",
+        "**Keep these in-house.** A named internal coordinator, risk acceptance, the decision to report an incident, admin and emergency credentials, and the asset and supplier lists.",
+        "**Write the contract for the bad day.** Name the person and a deputy, hours per month, response time in an incident, deliverables, who owns the documents and the handover on exit. See the third-party risk sheet.",
+        "**Don't hire your IT provider for it.** An MSP that runs your IT would check its own work, which ENISA's reviewer rule excludes[^enisatig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "people",
+      "title": "Hiring and keeping security staff",
+      "navTitle": "Hiring",
+      "items": [
+        "**Expect a skills gap.** In ENISA's 2025 survey, 94% of SMEs reported trouble attracting security staff[^nisinv]. In ISC2's survey, 59% had critical or significant skills needs, up from 44% in 2024[^isc2].",
+        "**Test problem solving, not tool names.** Hiring managers in ISC2's survey ranked problem solving, teamwork and communication above any technical skill[^isc2]. Give candidates a work sample from your own environment.",
+        "**Treat certificates as one filter.** Digital providers must check that hires are qualified, for example through references, vetting, validated certifications or written tests[^nis2ir]. ENISA lists certifications mapped to ECSF profiles[^ecsfcert]; choose training that matches the role.",
+        "**Fund training and the time for it.** 47% of organizations in ENISA's 2023 survey had no specific security training budget[^nisinv23]. Workload or burnout (28%), weak training (24%) and few career steps (23%) topped the 2025 retention problems[^nisinv]. Give each person a fixed budget and at least five protected days a year.",
+        "**Grow your own.** 24% of ENISA's respondents plan to add capacity by upskilling staff rather than hiring[^nisinv]. Move an admin or developer into the engineer role with a 12-month plan against the ECSF Implementer profile."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "Changes",
+      "items": [
+        "**German management duties apply.** Under BSIG § 38, management implements and oversees the security measures and is liable for them[^bsig]. The BSI's October 2026 curriculum asks management to confirm the ISB or CISO reporting line, ideally within 2 to 6 weeks of its first training[^bsicurr].",
+        "**Grundschutz++ names the conflicts.** BSI-Standard 300-1 of 20 October 2026 requires roles with defined qualifications and no conflicts between the IT lead and the ISB, or the DPO and the ISB[^std3001].",
+        "**Germany plans to drop the 20-person DPO rule.** On 4 December 2025, federal and state leaders agreed that the federal government will propose its repeal by the end of 2026, leaving GDPR Article 37[^fma]. Until then, it applies[^bdsg38].",
+        "**The role catalogs are moving.** NICE v2.2.0 added a supply chain risk management work role in April 2026[^nice]. ENISA plans a public consultation on a revised ECSF with proficiency levels for the end of 2026[^ecsf]; map roles to the current 12 profiles now."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A full-time CISO before there's a full-time job.** Below about 100 staff, a part-time ISB with a deputy, an IT provider and MDR cover it.",
+        "**An in-house 24/7 SOC.** A few analysts can't staff round-the-clock shifts. Buy MDR; see the SOC and MDR sheet.",
+        "**One hire per ECSF profile.** The 12 profiles describe work, not headcount.",
+        "**Certificates as the first filter.** Much of today's workforce came from other jobs through upskilling, ENISA notes[^nisinv]. Screen with a work sample instead."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Making the only admin the ISB.** They would judge their own work. If nobody else can take the role, buy an external ISB.",
+        "**One person who knows everything.** When they leave, the MDR contacts, admin paths and open risks leave too. Keep runbooks in a shared place and have the deputy use them twice a year.",
+        "**A title without time or budget.** The BSI says the people in security roles must be qualified and have enough resources[^std2002]. Put hours per week and a budget into the appointment.",
+        "**Hiring a CISO without a mandate.** Agree the budget, decision rights and reporting line before the first interview."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Have management name an ISB with at least one day a week for the role, and a deputy. Don't pick the only admin.",
+            "If nobody fits, buy an external ISB and keep a managing director as the internal owner.",
+            "Use an external DPO where you need one, separate from the ISB."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Make the first full-time hire a head of security or ISB who reports to a managing director.",
+            "Add a security engineer next, then a detection and response lead who runs the MDR contract.",
+            "Write job descriptions against ECSF profiles, with a training budget and protected days for each person."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Have the CISO report to the CEO or a board member who doesn't run IT, with a deputy who can sign.",
+            "Separate risk, policy and assurance from security engineering; under DORA, as an independent control function[^dora].",
+            "Cross-check size: the German median in ENISA's 2025 survey was 19 security FTEs, including contractors[^nisinvdata]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on ENISA's NIS Investments reports, the ECSF, NICE Framework v2.2.0, ISC2's 2025 workforce study, Regulation 2024/2690 and ENISA's guidance, BSI-Standards 200-2 and 300-1, the BSIG, the GDPR, the BDSG and DORA."
+    }
+  ],
+  "sources": [
+    { "id": "enisatig", "title": "NIS2 Implementation Guidance, v1.0", "publisher": "ENISA", "date": "26 Jun 2025", "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance" },
+    { "id": "nis2ir", "title": "Regulation (EU) 2024/2690, recitals and Annex 1.2 and 10", "publisher": "EUR-Lex", "date": "2024", "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj" },
+    { "id": "bsicurr", "title": "NIS-2 Curriculum Geschäftsleitungsschulung", "publisher": "BSI", "date": "28 Oct 2026", "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6" },
+    { "id": "std2002", "title": "BSI-Standard 200-2, chapter 4", "publisher": "BSI", "date": "2017", "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_200_2.pdf?__blob=publicationFile&v=2" },
+    { "id": "std3001", "title": "BSI-Standard 300-1, v1.0", "publisher": "BSI", "date": "20 Oct 2026", "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_300-1.pdf?__blob=publicationFile&v=3" },
+    { "id": "nisinv", "title": "NIS Investments 2025", "publisher": "ENISA", "date": "8 Dec 2025", "url": "https://www.enisa.europa.eu/publications/nis-investments-2025" },
+    { "id": "nisinvdata", "title": "NIS Investments 2025, survey data", "publisher": "ENISA", "date": "Dec 2025", "url": "https://www.enisa.europa.eu/sites/default/files/2025-12/NIS%20Investments%202025%20-%20Survey%20data%20companion%20document_0.pdf" },
+    { "id": "nisinv23", "title": "NIS Investments 2023", "publisher": "ENISA", "date": "16 Nov 2023", "url": "https://www.enisa.europa.eu/publications/nis-investments-2023" },
+    { "id": "nisinv21", "title": "NIS Investments 2021", "publisher": "ENISA", "date": "17 Nov 2021", "url": "https://www.enisa.europa.eu/publications/nis-investments-2021" },
+    { "id": "ecsfrp", "title": "ECSF Role Profiles", "publisher": "ENISA", "date": "19 Sep 2022", "url": "https://www.enisa.europa.eu/publications/european-cybersecurity-skills-framework-role-profiles" },
+    { "id": "ecsf", "title": "European Cybersecurity Skills Framework", "publisher": "ENISA", "date": "checked 5 Nov 2026", "url": "https://www.enisa.europa.eu/topics/skills-and-competences/skills-development/european-cybersecurity-skills-framework-ecsf" },
+    { "id": "ecsfcert", "title": "Certifications mapped to the ECSF", "publisher": "ENISA", "date": "checked 5 Nov 2026", "url": "https://www.enisa.europa.eu/topics/skills-and-competences/skills-development/european-cybersecurity-skills-framework-ecsf/certifications-mapped-to-the-ecsf" },
+    { "id": "nice", "title": "NICE Framework Components v2.2.0", "publisher": "NIST", "date": "28 Apr 2026", "url": "https://www.nist.gov/news-events/news/2026/04/nice-releases-nice-framework-components-v220" },
+    { "id": "isc2", "title": "2025 ISC2 Cybersecurity Workforce Study (association survey)", "publisher": "ISC2", "date": "4 Dec 2025", "url": "https://www.isc2.org/Insights/2025/12/2025-ISC2-Cybersecurity-Workforce-Study" },
+    { "id": "sp1308", "title": "SP 1308, CSF 2.0 ERM Quick-Start Guide", "publisher": "NIST", "date": "Mar 2026", "url": "https://csrc.nist.gov/pubs/sp/1308/final" },
+    { "id": "bsig", "title": "BSIG §§ 38 and 45", "publisher": "BMJV", "date": "checked 5 Nov 2026", "url": "https://www.gesetze-im-internet.de/bsig_2025/" },
+    { "id": "gdpr", "title": "GDPR, Articles 37 and 38", "publisher": "EUR-Lex", "date": "2016", "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj" },
+    { "id": "bdsg38", "title": "BDSG § 38", "publisher": "BMJV", "date": "checked 5 Nov 2026", "url": "https://www.gesetze-im-internet.de/bdsg_2018/__38.html" },
+    { "id": "c453", "title": "Judgment C-453/21 (X-FAB)", "publisher": "CJEU", "date": "9 Feb 2023", "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62021CJ0453" },
+    { "id": "fma", "title": "Föderale Modernisierungsagenda, measure 2.2", "publisher": "Federal Chancellor and Länder", "date": "4 Dec 2025", "url": "https://www.rlp.de/fileadmin/02/MPK_Vorsitz/Beschluesse_MPK_4._Dezember_2025_Berlin/Foederale_Modernisierungsagenda.pdf" },
+    { "id": "dora", "title": "DORA, Article 6(4)", "publisher": "EUR-Lex", "date": "2022", "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj" }
+  ]
+}
