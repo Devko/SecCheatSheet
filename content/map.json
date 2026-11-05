@@ -10,7 +10,8 @@
         { "id": "isms", "name": "ISMS and ISO 27001" },
         { "id": "insurance", "name": "Cyber insurance" },
         { "id": "metrics", "name": "Security metrics and reporting" },
-        { "id": "fraud", "name": "Payment fraud" }
+        { "id": "fraud", "name": "Payment fraud" },
+        { "id": "assurance", "name": "Customer security reviews" }
       ]
     },
     {
@@ -42,7 +43,8 @@
         { "id": "dlp", "name": "DLP and sensitivity labels" },
         { "id": "retention", "name": "Retention and deletion" },
         { "id": "encryption", "name": "Encryption and key management" },
-        { "id": "sharing", "name": "External sharing and collaboration" }
+        { "id": "sharing", "name": "External sharing and collaboration" },
+        { "id": "privacy", "name": "GDPR security duties" }
       ]
     },
     {
@@ -57,7 +59,9 @@
         { "id": "ot", "name": "OT and industrial systems" },
         { "id": "mobile", "name": "Mobile devices" },
         { "id": "wireless", "name": "Wi-Fi and network access control" },
-        { "id": "browsers", "name": "Browsers" }
+        { "id": "browsers", "name": "Browsers" },
+        { "id": "macos", "name": "Macs" },
+        { "id": "remote-access", "name": "Remote access" }
       ]
     },
     {
@@ -100,7 +104,8 @@
         { "id": "logging", "name": "Logging and monitoring" },
         { "id": "incident-response", "name": "Incident response" },
         { "id": "threat-intel", "name": "Threat intelligence" },
-        { "id": "mdr", "name": "SOC and MDR services" }
+        { "id": "mdr", "name": "SOC and MDR services" },
+        { "id": "deception", "name": "Canaries and honeytokens" }
       ]
     },
     {
