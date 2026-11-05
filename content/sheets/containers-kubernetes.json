@@ -1,14 +1,14 @@
 {
   "slug": "containers-kubernetes",
   "topic": "Containers and Kubernetes",
-  "status": "draft",
+  "status": "published",
   "order": 35,
   "capability": "infrastructure/containers",
   "title": "Containers and Kubernetes: could one compromised pod take over the cluster?",
   "short": "Make the API server private, enforce Pod Security baseline in every app namespace and upgrade within each version's 12 months of patches.",
   "answer": "This month, take the API server off the internet, enforce the baseline Pod Security Standard in every app namespace after a dry run and start replacing Ingress NGINX, which has had no upstream security fixes since March 2026[^r136]. Then judge every other setting by whether it stops one compromised pod from reaching its node, the cloud account or a more powerful service account.",
   "audience": "Platform, DevOps and security teams running Kubernetes on AKS, EKS, GKE or their own servers, from one cluster to many",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -196,6 +196,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which removed four outage risks from the advice and narrowed 12 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
