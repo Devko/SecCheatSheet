@@ -24,11 +24,11 @@
         },
         {
           "title": "Subscribe to the free primary sources.",
-          "text": "Register for CERT-Bund's WID, which emails advisories free of charge to match a profile you maintain[^wid]. Add CISA KEV[^kev], ENISA's EU KEV[^enisavs] and your vendors' advisories."
+          "text": "Follow CERT-Bund's WID, which publishes short advisories for organizations on its portal and by RSS[^wid]. Add CISA KEV[^kev], ENISA's EU KEV[^enisavs] and your vendors' advisories."
         },
         {
           "title": "Filter by your inventory, then act on every match.",
-          "text": "CERT-Bund issued 4,250 advisories in 2026 by 5 November, 55% more than in all of 2025[^widcsaf]. CISA added 284 KEV entries[^kev]: few enough to check each one."
+          "text": "WID lists 4,250 advisories first published in 2026 by 5 November, 55% more than in all of 2025[^widcsaf]. CISA added 284 to KEV in the same period[^kev]: few enough to check each one."
         },
         {
           "title": "Detect techniques, not just indicators.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Does it touch something on your list?",
-          "text": "Match product, version and exposure against the inventory. CSAF, the JSON format CERT-Bund and many vendors use, lets a tool match advisories against an asset list or SBOM[^csaf][^widcsaf]."
+          "text": "Match product, version and exposure against the inventory. CSAF, the JSON format of CERT-Bund's feed[^widcsaf], lets tools compare advisories with an asset database or SBOM[^csaf]."
         },
         {
           "title": "Is it being exploited?",
@@ -71,7 +71,7 @@
       "navTitle": "Requirements",
       "items": [
         "**Your technology.** Edge devices, identity, remote access and what suppliers run for you. Where ENISA knew the vector of an unauthorized access incident in the EU in 2025, 60.4% used a vulnerability[^etl].",
-        "**Your sector and region.** Public administration, business services, transport, manufacturing and finance were the most targeted EU sectors, and ideology-driven operations made up 57.3% of incidents[^etl].",
+        "**Your sector and region.** Public administration, business services, transport, manufacturing and finance were the most targeted EU sectors in 2025, and ideology-driven operations made up 57.3% of incidents[^etl].",
         "**Your suppliers and your own alerts.** Add your MSP and cloud suppliers, and feed phishing reports and blocked sign-ins back in.",
         "**Strategic reports, once a year.** Read your sector's part of the ENISA Threat Landscape[^etl], the BSI's Lagebericht[^bsilage] and M-Trends or the DBIR. Take one or two changes in priority from each."
       ]
@@ -82,11 +82,12 @@
       "title": "Free sources worth subscribing to",
       "navTitle": "Free sources",
       "items": [
-        "**CERT-Bund's WID.** Advisories, short notes and warnings by email, tailored to a profile you manage[^wid], and a CSAF feed for automation[^widcsaf].",
-        "**CISA KEV and ENISA's EU KEV.** KEV lists 1,768 exploited vulnerabilities[^kev]. EU KEV lists those EU CSIRTs and ENISA confirmed exploited against EU entities[^enisavs].",
-        "**Vendor advisories.** Subscribe for every product on your list. NIS2's rules for digital providers require reviewing such channels at planned intervals[^nis2ir].",
+        "**CERT-Bund's WID.** Short advisories for organizations on the portal and by RSS[^wid], and a CSAF feed for automated matching[^widcsaf].",
+        "**CISA KEV and ENISA's EU KEV.** KEV lists 1,768 exploited vulnerabilities[^kev], EU KEV those confirmed exploited against EU entities[^enisavs].",
+        "**Vendor advisories** for every product on your list. NIS2's rules for digital providers name suppliers as a channel to monitor[^nis2ir].",
         "**The BSI-Portal and the ACS.** Participants get BSI security notices (BITS), warnings and daily and monthly situation reports[^acsportal].",
-        "**Microsoft Defender threat analytics.** With any Defender license except Defender for Endpoint P1, reports show your vulnerable devices and the fixes, with email updates[^msta]."
+        "**Microsoft Defender threat analytics.** Reports show exposed devices and recommended actions; Defender for Endpoint P1 alone lacks it[^msta].",
+        "**Exposure alerts** about your own addresses: see the attack surface sheet."
       ]
     },
     {
@@ -108,8 +109,8 @@
       "navTitle": "Sharing",
       "items": [
         "**The law expects it.** NIS2 Article 29 has member states let entities share indicators, TTPs and alerts in sharing arrangements, including with suppliers[^nis2]. DORA Article 45 covers financial entities[^dora].",
-        "**Personal data needs a basis.** NIS2 recital 121 says legitimate interest under GDPR Article 6(1)(f) can cover sharing IP addresses, URLs and email addresses[^nis2].",
-        "**Tell the authority when you join,** as NIS2 and DORA require[^nis2][^dora]. In Germany, BSIG § 30(7) says sharing on the BSI's platform adds no obligations[^bsig].",
+        "**Personal data needs a basis.** NIS2 recital 121 says legitimate interest under GDPR Article 6(1)(f) could cover sharing IP addresses and URLs[^nis2].",
+        "**Tell the authority when you join.** DORA requires it[^dora], and NIS2 asks member states to require it[^nis2]. Under BSIG § 30(7), sharing on the BSI's platform adds no obligations[^bsig].",
         "**Label with TLP 2.0.** CLEAR is public, GREEN stays in the community, AMBER in your organization and its clients, AMBER+STRICT in your organization, RED with named recipients[^tlp]."
       ]
     },
@@ -130,9 +131,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The ACS moved into the BSI-Portal.** Existing participants must re-register there by 31 January 2027 or lose their participation[^acsportal].",
+        "**The ACS moved into the BSI-Portal in January 2026.** Existing participants must re-register there by 31 January 2027 or lose their participation[^acsportal].",
         "**ATT&CK split Defense Evasion** into Stealth and Defense Impairment in v19, April 2026[^attack19]. Re-tag rules mapped to the old tactic.",
-        "**Manufacturers' reports now feed EU KEV.** CRA reports of exploited vulnerabilities, required since 11 September 2026, will further enrich it[^enisavs]."
+        "**EU KEV will add manufacturers' reports.** The CRA has required them since 11 September 2026[^enisavs]."
       ]
     },
     {
@@ -140,7 +141,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Paid feeds before free ones turn into tickets.** Only 26% of KEV vulnerabilities in Verizon's data were fully fixed in 2025, after a median of 43 days[^dbir].",
+        "**Paid feeds before free ones turn into tickets.** Only 26% of KEV vulnerabilities in Verizon's data were fully fixed in 2025, and full fixes took a median of 43 days[^dbir].",
         "**Indicator lists without context.** Without campaign, date and confidence you can't judge them, and IP lists go stale fast[^ncsccovert].",
         "**Tracking actor names.** Microsoft lists 12 other names for its Forest Blizzard, APT28 among them[^msnames]. Track techniques instead.",
         "**A threat intelligence platform before a process.** A mailbox, a ticket queue and a one-page requirements list come first."
@@ -155,7 +156,7 @@
         "**Reading without a ticket.** A warning that ends in a chat has no owner. Every match gets a ticket, even when the answer is \"not affected\".",
         "**Blocking feeds unfiltered.** Feeds can include public DNS resolvers, popular domains and scanners. Check them against MISP's warninglists[^mispwl].",
         "**Forwarding labeled warnings to suppliers.** TLP:AMBER covers your organization and its clients, not your MSP. Ask the source first[^tlp].",
-        "**Stale subscriptions.** Update the WID profile and vendor subscriptions whenever you add a product."
+        "**Stale filters.** Update feed filters and subscriptions when you add a product. NIS2's rules for digital providers require reviewing these channels at planned intervals[^nis2ir]."
       ]
     },
     {
@@ -168,7 +169,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Register for WID with a profile for your internet-facing products, sent to a mailbox two people read.",
+            "Send WID's RSS feed and your vendors' advisories, filtered to your internet-facing products, to a mailbox two people read.",
             "Join the ACS, or your national CERT's community.",
             "Ask your IT provider which advisories it acted on last month."
           ]
@@ -185,7 +186,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Review intelligence requirements with risk owners every quarter.",
-            "Register the sharing arrangements you join and the notifications you made.",
+            "Keep a register of the sharing arrangements you join and the notifications you made.",
             "Put TLP handling in your MSSP contract and report the three measures to leadership."
           ]
         }
@@ -202,10 +203,10 @@
   "sources": [
     {
       "id": "wid",
-      "title": "Warning and Information Service",
+      "title": "Technische Sicherheitshinweise (WID)",
       "publisher": "BSI",
       "date": "checked 5 Nov 2026",
-      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Technische-Sicherheitshinweise-und-Warnungen/Technische-Sicherheitshinweise/technische-sicherheitshinweise.html"
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Technische-Sicherheitshinweise-und-Warnungen/Technische-Sicherheitshinweise/technische-sicherheitshinweise_node.html"
     },
     {
       "id": "widcsaf",
@@ -216,7 +217,7 @@
     },
     {
       "id": "csw",
-      "title": "Cyber security warnings",
+      "title": "BSI-IT-Security-Advisories",
       "publisher": "BSI",
       "date": "checked 5 Nov 2026",
       "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Technische-Sicherheitshinweise-und-Warnungen/Cyber-Sicherheitswarnungen/cyber-sicherheitswarnungen_node.html"
