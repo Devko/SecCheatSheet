@@ -1,14 +1,14 @@
 {
   "slug": "browsers",
   "topic": "Browsers",
-  "status": "draft",
+  "status": "published",
   "order": 50,
   "capability": "infrastructure/browsers",
   "title": "Browsers: which settings do you need to enforce?",
   "short": "Manage Edge and Chrome centrally, force every update to apply within 72 hours and allow sign-in only with work accounts.",
   "answer": "This month, put Edge and Chrome under central management, force every update to apply within 72 hours and allow browser sign-in only with work accounts. Judge every other browser setting by whether it keeps stolen sessions, unmanaged devices or unapproved AI tools away from company data.",
   "audience": "IT and security teams managing Windows and Mac computers, especially on Microsoft 365 or Google Workspace",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -87,9 +87,9 @@
       "title": "Profiles, sync and passwords",
       "navTitle": "Profiles and passwords",
       "items": [
-        "**Decide on personal browsing.** Edge for Business keeps a personal window apart from the work one, with its own cache and storage and no shared passwords, and still applies your security and update policies; RestrictSigninToPattern removes it[^efb]. On Google Workspace, set Chrome's ProfileSeparationSettings to Enforced[^chromepol].",
+        "**Decide on personal browsing.** Edge for Business keeps a personal window apart from the work one, with its own cache and storage and no shared passwords, and still applies your security and update policies, but the sign-in restriction above removes it[^efb]; choose per user group. On Google Workspace, set Chrome's ProfileSeparationSettings to Enforced[^chromepol].",
         "**Limit what syncs.** Exclude types such as passwords with SyncTypesListDisabled[^chromepol]. The BSI's federal standard requires turning off cloud sync of credentials, cookies and history[^bsimst].",
-        "**Keep passwords in one place.** The BSI advises external password managers because built-in ones usually fall short[^bsimst]; the NCSC accepts built-in ones[^ncscbrowser]. With a business password manager (SSO, shared vaults, offboarding), set PasswordManagerEnabled to false and have staff move saved passwords, which keep working[^chromepol]. Without one, keep the built-in manager in work profiles."
+        "**Keep passwords in one place.** The BSI advises external password managers because built-in ones usually fall short[^bsimst]; the NCSC accepts built-in ones[^ncscbrowser]. With a business password manager (SSO, shared vaults, offboarding), set PasswordManagerEnabled to false and have staff move saved passwords, which keep working[^chromepol]. Without one, keep the built-in manager and its sync in work profiles."
       ]
     },
     {
@@ -172,6 +172,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which tied the relaunch deadline to the patching sheet's tier for exploited flaws, kept built-in password managers for companies without a business one, reconciled conflicting Gemini defaults and corrected source dates."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
