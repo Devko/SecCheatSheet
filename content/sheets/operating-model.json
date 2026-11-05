@@ -24,7 +24,7 @@
         },
         {
           "title": "Write down who decides what.",
-          "text": "The BSI asks management to settle which cyber decisions need its approval[^bsicurr]. Then list who accepts which risk and approves which exception."
+          "text": "The BSI's training curriculum asks management which cyber decisions need its approval[^bsicurr]. Then list who accepts which risk and approves which exception."
         },
         {
           "title": "Separate doing from checking.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Get it approved and review it yearly.",
-          "text": "Regulation 2024/2690 has management review roles at planned intervals and after significant incidents or changes[^ir2690]. Add every reorganization."
+          "text": "For digital providers, Regulation 2024/2690 has management review roles at planned intervals and after significant incidents or changes[^ir2690]. Do the same yearly and after every reorganization."
         }
       ]
     },
@@ -56,7 +56,7 @@
         },
         {
           "title": "Page 2, top: the service catalog.",
-          "text": "Each service, such as project reviews, exceptions, scanning, supplier checks, incident response and audit evidence, with how to ask, how fast and who delivers it. Add what security doesn't do: patch, grant access, sign contracts."
+          "text": "Each service, such as project reviews, exceptions, scanning, supplier checks, incident response and audit evidence, with how to ask, how fast (project reviews within 5 working days, say) and who delivers it. Add what security doesn't do: patch, grant access, sign contracts."
         },
         {
           "title": "Page 2, middle: the decision table.",
@@ -74,12 +74,12 @@
       "title": "A RACI for six core processes",
       "navTitle": "RACI",
       "span": "full",
-      "intro": "A answers for the outcome, R does the work, C is asked before and I is told after. Keep one A per row. ENISA maps the NIS2 role duties to ISO/IEC 27001 clause 5.3[^enisatig], so one RACI serves both.",
+      "intro": "A answers for the outcome, R does the work, C is asked before and I is told after. Keep one A per row. ENISA maps the roles requirement of 2024/2690 to ISO/IEC 27001 clause 5.3[^enisatig], so one RACI can serve both.",
       "items": [
-        "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets deadlines from the patching sheet, and system owners for windows. I: management, about exploited flaws past deadline.",
+        "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets deadlines from the patching sheet, and system owners for maintenance windows. I: management, about exploited flaws past deadline.",
         "**Vulnerability management.** A: head of security. R: security scans, rates and tracks; system owners fix. C: IT operations. I: management, monthly. Record why a finding needs no fix[^ir2690].",
         "**Access reviews.** A: each application's business owner. R: the owner's team leads, with lists from IT. C: security, for admin rights. I: internal audit. Document results and changes[^ir2690].",
-        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management, insurer, authorities. Shutting down business is for the crisis team.",
+        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management, insurer, authorities. Stopping business processes is for the crisis team.",
         "**Supplier onboarding.** A: the business owner who wants the supplier. R: procurement, with a contract manager per contract[^iiatp]. C: security, for tier and clauses. I: IT, to grant and later remove access.",
         "**Exceptions.** A: the risk owner, at the level set in the risk register sheet. R: the requester, with the case, a compensating measure and an end date. C: security. I: management, via the open exceptions list."
       ]
@@ -90,10 +90,10 @@
       "title": "Three lines, applied to security",
       "navTitle": "Three lines",
       "items": [
-        "**First line: whoever runs it.** IT operations, the MSP and application owners own the risk and run the controls[^iia3l].",
-        "**Second line: security.** It sets standards, monitors and challenges the first line[^iia3l]. Where it also runs the firewall or EDR, have someone else check that part.",
-        "**Third line: someone independent.** Internal audit or an external auditor. The IIA treats 12 months between running a process and assuring it as typically sufficient[^iia3l].",
-        "**Small companies may merge the first two.** 2024/2690 lets smaller entities add security duties to existing roles, but where size rules out an independent reviewer, it requires other ways to keep reviews impartial[^ir2690]."
+        "**First line: whoever runs it.** The IIA's first line owns the risk and runs the controls[^iia3l]: IT operations, the MSP, application owners.",
+        "**Second line: security.** It advises, monitors and challenges the first line[^iia3l]. If it also runs the firewall or EDR, have someone else check that.",
+        "**Third line: someone independent.** Internal audit, in-house or bought in. The IIA treats a 12-month gap after running a process as typically sufficient[^iia3l].",
+        "**Small companies may merge the first two.** The rules for digital providers allow duties on top of existing roles and, where size rules out an independent reviewer, other ways to keep reviews impartial[^ir2690]."
       ]
     },
     {
@@ -104,7 +104,7 @@
       "items": [
         "**Central.** One team sets the rules and runs security for everyone. Choose it when one IT team runs everything.",
         "**Hybrid.** Central security owns the standards, risk register, MDR and scanning; units patch, review access and name champions. Choose it for most growing companies.",
-        "**Federated.** Each unit has its own security officer, as the BSI suggests for large organizations[^std2002]. Choose it for subsidiaries with their own IT and their own duties under the BSIG[^bsig], and keep one shared risk register."
+        "**Federated.** Each unit has its own security officer, as the BSI describes for large organizations[^std2002]. Choose it for subsidiaries with their own IT and their own duties under the BSIG[^bsig], and keep one shared risk register."
       ]
     },
     {
@@ -113,10 +113,10 @@
       "title": "What to buy and what to keep",
       "navTitle": "Buy or keep",
       "items": [
-        "**Buy what is rare or round the clock.** The NCSC suggests outsourcing seldom-used functions and notes that in-house teams know the business better[^ncscsoc]. Typical buys: MDR, pentests, a response retainer, a virtual CISO.",
+        "**Buy what is rare or round the clock.** The NCSC suggests outsourcing seldom-used functions and notes that in-house teams know the business better[^ncscsoc]. Typical buys: MDR (see the SOC and MDR sheet), pentests, a response retainer, a virtual CISO.",
         "**Put a responsibility matrix in the MSP contract.** State what the MSP does and what stays with you, as the NCSC advises[^ncscmsp].",
         "**Know which line a provider is in.** The IIA places providers in the line of whoever engages them[^iia3l]: a pentest ordered by IT isn't independent.",
-        "**Keep risk acceptance and supplier oversight.** DORA makes financial entities name a role to monitor ICT suppliers[^dora]. Give every supplier an internal owner anyway."
+        "**Keep risk acceptance and supplier oversight.** DORA makes financial entities above micro size name a role to monitor ICT suppliers[^dora]. Give every supplier an internal owner anyway."
       ]
     },
     {
@@ -126,8 +126,8 @@
       "navTitle": "Decisions",
       "items": [
         "**Let delegates accept smaller risks.** 2024/2690 allows it if they have the authority and management gets adequate reports[^ir2690]. Set levels with the risk register sheet.",
-        "**Pre-authorize containment.** On-call staff or the MDR may isolate a device or disable an account without asking; business shutdowns are for the crisis team.",
-        "**Escalate on triggers.** The IIA expects quick escalation of risks that reach an unacceptable level[^iiacyber], such as an exploited flaw past its deadline.",
+        "**Pre-authorize containment.** Let on-call staff or the MDR isolate a device or disable an account without asking. Leave business shutdowns to the crisis team.",
+        "**Escalate on triggers.** The IIA expects a process to escalate quickly any risk that reaches an unacceptable level[^iiacyber]. Set triggers such as an exploited flaw past its deadline.",
         "**Set when security must be asked.** Grundschutz++ requires defining when the security officer joins projects[^std3001]."
       ]
     },
@@ -148,9 +148,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The IIA replaced its Three Lines Model.** The 2026 Statement of Position adds guidance for organizations without separate assurance functions[^iia3l]. Recheck where you've merged lines.",
-        "**Internal audit now checks cyber roles.** Since 5 February 2026, auditors must assess cyber roles and escalation[^iiacyber], and since 15 September 2026 who manages suppliers[^iiatp]. Have your RACI ready.",
-        "**The BSI drew the line on delegation.** Its October 2026 curriculum says management can delegate the work under BSIG § 38, but not responsibility and oversight[^bsicurr]."
+        "**The IIA updated its Three Lines Model.** The 2026 Statement of Position adds guidance for organizations without separate assurance functions[^iia3l]. Recheck where you've merged lines.",
+        "**Internal audit now checks cyber roles.** Since 5 February 2026, internal auditors giving cyber assurance must assess roles and escalation[^iiacyber], and since 15 September 2026 who manages suppliers[^iiatp].",
+        "**The BSI drew the line on delegation.** Its October 2026 curriculum on BSIG § 38 lets management delegate work, not oversight, and lists a responsibility matrix as evidence[^bsicurr]."
       ]
     },
     {

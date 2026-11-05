@@ -136,7 +136,7 @@
       "navTitle": "Who assesses",
       "items": [
         "**Run the yearly cycle yourself.** Your people know where the evidence is; C2M2 is built for facilitated self-evaluation[^c2m2].",
-        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years, never from the firm selling the fixes.",
+        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years and when customers or regulators rely on the result, never from the firm selling the fixes.",
         "**Keep reviewers out of the line.** NIS2 digital providers need reviewers with audit competence outside the reviewed area's line of authority[^nis2ir].",
         "**Check the licenses.** CIS's Controls and Assessment Specification allow non-commercial use within your organization[^casterms]; consultants using CSAT on you need a CIS SecureSuite consulting membership[^csat]."
       ]
@@ -171,7 +171,7 @@
         "**Chasing level 5 everywhere.** It costs most where risk is lowest; DOE calls the top level in all domains not typically optimal[^c2m2].",
         "**Buying a score.** Tools that turn questionnaires or external scans into a maturity number measure answers or the perimeter, not practice.",
         "**Taking \"implemented\" for \"works\".** CIS's specification checks only whether a safeguard is implemented[^cas]. Test a restore or an alert.",
-        "**Changing the yardstick.** A new model, scale or scope each year breaks the trend."
+        "**Changing the yardstick.** A new model, scale or scope breaks the trend."
       ]
     },
     {
@@ -184,7 +184,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "In Germany, book a CyberRisikoCheck[^crc] each year, ideally with a provider other than the one running your IT.",
+            "In Germany, book a CyberRisikoCheck[^crc] yearly, ideally not from the provider that runs your IT.",
             "Elsewhere, rate yourself against CIS IG1 with one piece of evidence per safeguard.",
             "Take the managing directors through the top five gaps in one hour."
           ]
@@ -194,7 +194,7 @@
           "items": [
             "Build Current and Target Profiles per CSF Function in NIST's template, with CIS IG2 as the checklist.",
             "Have someone outside IT operations, such as internal audit, recheck a sample.",
-            "Finish the assessment before budget planning starts."
+            "Finish the assessment before budget planning."
           ]
         },
         {
@@ -202,7 +202,7 @@
           "items": [
             "Use the model your regulator expects: the CAF Core Profile for UK essential services, C2M2 for energy and OT.",
             "Assess each subsidiary or business unit with the same scale and evidence rules.",
-            "Report independent reviews to management, as Regulation 2024/2690 requires of digital providers[^nis2ir]."
+            "Report independent reviews to management, as 2024/2690 requires of digital providers[^nis2ir]."
           ]
         }
       ]
@@ -337,7 +337,7 @@
     },
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, Annex",
+      "title": "Regulation (EU) 2024/2690",
       "publisher": "EUR-Lex",
       "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"

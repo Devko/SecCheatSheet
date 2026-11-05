@@ -6,7 +6,7 @@
   "capability": "leadership/team",
   "title": "Security team: who leads it, and whom do you hire next?",
   "short": "Within 30 days, name a head of security with a deputy and a direct line to management, outside IT operations.",
-  "answer": "Within 30 days, have management appoint a head of security or ISB in writing, with a deputy and a direct line to the managing directors, outside IT operations. Then hire in the order your biggest risks need, describe each role with an ECSF profile, and buy work that can't keep a person busy.",
+  "answer": "Within 30 days, have management appoint a head of security or information security officer (ISB) in writing, with a deputy and a direct line to the managing directors, outside IT operations. Then hire in the order your risks need, describe roles with ECSF profiles, and buy work that can't keep a person busy.",
   "audience": "Managing directors, heads of security and IT leads who also own security, in small and mid-size companies and regulated organizations",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
@@ -45,7 +45,7 @@
       "id": "hire",
       "title": "Hire in this order",
       "navTitle": "Hiring order",
-      "intro": "With the ECSF profile[^ecsfrp] and closest NICE work role[^nice]. Small companies stop after step 1 and buy the rest; one person can cover several steps.",
+      "intro": "With the European Cybersecurity Skills Framework (ECSF) profile[^ecsfrp] and closest NICE work role[^nice]. Small companies stop after step 1 and buy the rest.",
       "items": [
         {
           "title": "Head of security or ISB.",
@@ -75,10 +75,9 @@
       "title": "Where the head of security reports",
       "navTitle": "Reporting line",
       "items": [
-        "**Report to the CEO or managing director.** In ENISA's 2021 survey, its latest to ask, 56% of heads of information security reported to the CEO or board, 29% to the CIO or an IT executive and 14% to risk management[^nisinv21].",
-        "**A CRO or COO works if they don't run IT.** A reviewer should be outside the line of authority of what they review, ENISA's guidance says[^enisatig]. Keep a direct right to report to the managing directors.",
-        "**Under a CIO, write safeguards down.** The BSI sees an active admin as ISB as a likely conflict of interest[^std2002]. Grant what the BSIG grants federal ISBs: a direct right to report, and no removal or disadvantage for doing the job[^bsig].",
-        "**Separate admin work from oversight.** Digital providers must segregate conflicting duties; micro entities may compensate with management oversight or more logging[^nis2ir]. DORA requires an independent ICT risk control function[^dora]; see the operating model sheet."
+        "**Report to the CEO or managing director.** A CRO or COO also works if they don't run IT. In ENISA's 2021 survey, its latest to ask, 56% of heads of information security reported to the CEO or board, 29% to the CIO or an IT executive and 14% to risk management[^nisinv21].",
+        "**Under a CIO, write safeguards down.** The BSI sees an active admin as ISB as a likely conflict of interest[^std2002]. Grant what the BSIG grants federal ISBs: a direct right to report to the top, and no removal or disadvantage for doing the job[^bsig].",
+        "**Separate admin work from oversight.** Digital providers must segregate conflicting duties; micro entities may compensate with management oversight or more logging[^nis2ir]. A reviewer should be outside the line of authority under review[^enisatig]. The operating model sheet covers the three lines."
       ]
     },
     {
@@ -90,7 +89,7 @@
         "**About one in ten IT staff work on security.** The share was 10.6% in ENISA's 2025 survey, the lowest yet[^nisinv], with a German median of 9.4%[^nisinvdata]. Most respondents were large organizations[^nisinv], so treat it as a cross-check, not a target.",
         "**Operations takes the largest share.** In ENISA's 2023 survey, operations held 40% of security staff, architecture and engineering 23%, governance and risk 21% and audit and compliance 16%[^nisinv23].",
         "**Outsource operations, not governance.** 57% of those organizations used the most contractors in operations, only 9% in governance and risk; contractors were a median 20% of security staff[^nisinv23].",
-        "**Count the work, not the ratio.** List recurring tasks with hours per month, from the risk register to alerts and supplier reviews. Make sure two trained people can do each one, in-house or at a provider."
+        "**Count the work, not the ratio.** List recurring tasks with hours per month, and make sure two trained people can do each one, in-house or at a provider."
       ]
     },
     {
@@ -101,8 +100,8 @@
       "items": [
         "**The BSIG requires an ISB only of federal bodies.** With a deputy, independent reporting and protection from being penalized for the job[^bsig]. Copy that into your ISB's appointment.",
         "**The ISB protects all information.** In the BSI's model, the ISB steers the security process, advises management and joins major projects, for paper as well as IT[^std2002].",
-        "**The DPO monitors data protection law.** The DPO takes no instructions on those tasks, reports to the top level and may be external[^gdpr]. Germany requires one from 20 people regularly processing personal data by computer, or for processing that needs a DPIA[^bdsg38].",
-        "**Keep the two apart.** A DPO whose other duties let them decide the purposes and means of processing may have a conflict of interest, the CJEU ruled[^c453]. Grundschutz++ calls DPO versus ISB a conflict to avoid[^std3001]."
+        "**The DPO monitors data protection law.** They take no instructions on it, report to the top and may be external[^gdpr]. Germany requires one from 20 people regularly processing personal data by computer, or for processing that needs a DPIA[^bdsg38].",
+        "**Keep the two apart.** The CJEU sees a possible conflict of interest when a DPO's other duties decide the purposes and means of processing[^c453]. Grundschutz++ calls DPO versus ISB a conflict to avoid[^std3001]."
       ]
     },
     {
@@ -126,7 +125,7 @@
         "**Expect a skills gap.** In ISC2's survey, 59% had critical or significant skills needs, up from 44%[^isc2]. ENISA found 94% of SMEs struggling to attract security staff[^nisinv].",
         "**Test problem solving, not tool names.** Hiring managers in ISC2's survey ranked problem solving, teamwork and communication above any technical skill[^isc2]. Use a work sample from your own environment.",
         "**Treat certificates as one filter.** Digital providers must check qualifications, for example by references, vetting, certifications or written tests[^nis2ir]. ENISA lists certifications mapped to ECSF profiles[^ecsfcert].",
-        "**Fund training and the time for it.** In ENISA's 2023 survey, 47% had no specific security training budget[^nisinv23]; in 2025, workload, training and career steps topped the retention problems[^nisinv]. Budget five protected days a year per person."
+        "**Fund training and the time for it.** In ENISA's 2023 survey, 47% had no specific security training budget[^nisinv23]; in 2025, workload, training and career steps topped the retention problems[^nisinv]. Budget five protected days a year each."
       ]
     },
     {
@@ -135,7 +134,7 @@
       "title": "What changed in 2026",
       "navTitle": "Changes",
       "items": [
-        "**German management duties apply.** Management implements and oversees the measures under BSIG § 38[^bsig]. The BSI's October 2026 curriculum recommends confirming the ISB or CISO line within 2 to 6 weeks of the first training[^bsicurr].",
+        "**German duties apply.** Under BSIG § 38, management implements and oversees the measures[^bsig]. The BSI's new curriculum recommends confirming the ISB or CISO line within 2 to 6 weeks of the first training[^bsicurr].",
         "**Grundschutz++ names the conflicts.** BSI-Standard 300-1 of 20 October 2026 asks for roles with defined qualifications and no IT lead versus ISB or DPO versus ISB conflicts[^std3001].",
         "**Germany plans to drop the 20-person DPO rule.** On 4 December 2025, federal and state leaders agreed the federal government will propose repealing it by the end of 2026[^fma]. It still applies[^bdsg38].",
         "**The role catalogs are moving.** NICE v2.2.0 added a supply chain risk role in April 2026[^nice]. ENISA plans to consult on a revised ECSF with proficiency levels at the end of 2026[^ecsf]. Map to the current 12 profiles now."
@@ -159,8 +158,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Making the only admin the ISB.** They would judge their own work. If nobody else fits, buy an external ISB.",
-        "**One person who knows everything.** When they leave, the contacts, admin paths and open risks go too. Have the deputy work from the runbooks twice a year.",
-        "**A title without time, budget or mandate.** Security roles need qualified people with enough resources, the BSI says[^std2002]. Put hours, budget and decision rights in the appointment."
+        "**One person who knows everything.** When they leave, contacts, admin paths and open risks go too. Have the deputy work from the runbooks twice a year.",
+        "**A title without time, budget or mandate.** Security roles need qualified people with enough resources, the BSI says[^std2002]. Put hours, budget and decision rights in writing."
       ]
     },
     {
@@ -190,7 +189,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Have the CISO report to the CEO or a board member who doesn't run IT.",
-            "Under DORA, give ICT risk oversight to a control function outside engineering[^dora].",
+            "Under DORA, keep ICT risk control independent[^dora].",
             "German median in ENISA's 2025 survey: 19 security FTEs, contractors included[^nisinvdata]."
           ]
         }

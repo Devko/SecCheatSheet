@@ -32,7 +32,7 @@
         },
         {
           "title": "Trip each canary yourself.",
-          "text": "Test it when placed and every quarter, timing the alert until a person answers. Microsoft 365 alert policies take up to 24 hours to start[^alertpol], and Key Vault logs up to 10 minutes[^kvlog]."
+          "text": "Test it when placed and every quarter, timing the alert until a person answers. Microsoft 365 alert policies take up to 24 hours to start[^alertpol], and Key Vault logs can lag up to 10 minutes[^kvlog]."
         },
         {
           "title": "Keep a register and tell almost no one.",
@@ -56,7 +56,7 @@
         },
         {
           "title": "Fake cloud keys.",
-          "text": "Create an IAM user without permissions in a separate AWS account; leave its keys on admin and developer machines and in CI. With an active trail, set an EventBridge rule in each Region to `ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS`, or it misses read-only calls[^ebct]."
+          "text": "Create an IAM user without permissions in a separate AWS account; leave its keys on admin and developer machines and in CI. With an active multi-Region trail, set an EventBridge rule in each Region to `ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS`, or it misses read-only calls[^ebct]."
         },
         {
           "title": "A decoy secret and a decoy cloud user.",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Names only a thief would use.",
-          "text": "Put a canary hostname in SSH configs, RDP files and runbooks and a unique email address in fake customer and HR records, and alert on lookups and mail."
+          "text": "Put a canary hostname in SSH configs, RDP files and runbooks and a unique email address in fake customer and HR records, and alert on lookups and on mail your systems didn't send."
         }
       ]
     },
