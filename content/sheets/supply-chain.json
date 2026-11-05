@@ -125,15 +125,15 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "In the organization's Actions settings, set read-only workflow permissions and require SHA-pinned actions.",
-            "Keep Dependabot's default cooldown and turn on Dependabot malware alerts, security updates and secret scanning, which private repositories get with paid Secret Protection[^ghas].",
+            "In the organization's Actions settings, set read-only workflow permissions and require SHA pinning.",
+            "Keep Dependabot's default cooldown and turn on its malware alerts, security updates and secret scanning (paid Secret Protection for private repos)[^ghas].",
             "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Add `.github/workflows` to CODEOWNERS and turn on **Require review from Code Owners** (Team plan or higher for private repositories)[^codeowners].",
+            "Add `.github/workflows` to CODEOWNERS and turn on **Require review from Code Owners** (Team plan or higher for private repos)[^codeowners].",
             "Publish from an environment with required reviewers and **Prevent self-review** (public repositories only on Free, Pro and Team)[^envs].",
             "Scan lockfiles for malicious packages in every pull request with the OSV-Scanner action."
           ]
@@ -142,7 +142,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Route installs through a registry proxy that enforces a cooldown and checks for malware.",
-            "Attest builds with GitHub artifact attestations and verify them before deploy; private repositories need Enterprise Cloud[^attest].",
+            "Attest builds with GitHub artifact attestations, which private repos get on Enterprise Cloud[^attest], and verify them before deploy.",
             "Keep each release's SBOM for 10 years or the support period, if longer[^cra], and add build pipeline compromises to your CRA reporting path."
           ]
         }
