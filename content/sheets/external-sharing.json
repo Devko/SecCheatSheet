@@ -1,0 +1,327 @@
+{
+  "slug": "external-sharing",
+  "topic": "External sharing and collaboration",
+  "status": "draft",
+  "order": 44,
+  "capability": "data/sharing",
+  "title": "External sharing: who outside your organization can open your files today?",
+  "short": "Make Specific people the default link, limit Anyone links to view-only and 30 days or turn them off, and check what's already shared every quarter.",
+  "answer": "This month, make Specific people the default sharing link, turn Anyone links off or limit them to view-only links that expire within 30 days, and allow external sharing only on the sites, teams and shared drives set up for it. Then run the oversharing reports every quarter and fix the broadest exposure first: Anyone links, sites open to everyone in the organization, and guests nobody owns.",
+  "audience": "IT, security and data protection leads in EU organizations on Microsoft 365 or Google Workspace who work with customers, partners and freelancers",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Make Specific people the default link.",
+          "text": "Set it with View permission, as CISA's SharePoint baseline requires[^scubasp]. Only the named recipients can open it, after signing in, so a forwarded link is useless to anyone else[^links]. In Google Drive, make new files private to their owner[^scubagws]."
+        },
+        {
+          "title": "Turn Anyone links off, or fence them in.",
+          "text": "Anyone links need no sign-in, so nobody can tell who opened the file[^links]. If you keep them, make them view-only, expire them within 30 days[^scubasp] and allow them only on sites that need them. In Google, turn off \"anyone with the link\" for units that share externally[^scubagws]."
+        },
+        {
+          "title": "Share outside only from places built for it.",
+          "text": "Keep sensitive sites internal and give each partner or project its own site or team; only SharePoint admins can change a site's sharing setting[^spsite]. In Google, allow external sharing only for one organizational unit that owns a shared drive for external work[^gext]."
+        },
+        {
+          "title": "Limit sharing to approved people and domains.",
+          "text": "Let only a security group share externally, and only with partner domains[^spshare]. The domain list skips people who already have a guest account[^scubasp], so remove guests from domains you no longer work with and set the same list in Entra."
+        },
+        {
+          "title": "Find what's overshared before Copilot or Gemini does.",
+          "text": "Both can surface anything a user can already open, and nothing more[^copilot][^gemini]. Microsoft advises running the site permissions report quarterly and the sharing links and \"Everyone except external users\" reports monthly[^dag]. In Google, check Data Protection Insights for sensitive files anyone on the web can open[^gdpi]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "m365",
+      "title": "Set up sharing in Microsoft 365",
+      "navTitle": "Microsoft 365 setup",
+      "items": [
+        {
+          "title": "Set the organization level.",
+          "text": "In the SharePoint admin center under **Policies** > **Sharing**, choose New and existing guests, or Anyone only if you need it; OneDrive can only be the same or stricter[^spshare]. Turn on guest access expiration (30 to 730 days) and cap People in your organization links (7 to 720 days)[^spotenant]."
+        },
+        {
+          "title": "Set each site.",
+          "text": "Under **Active sites** > **Settings** > **More sharing settings**, set sensitive sites to Only people in your organization and limit partner sites to the partner's domain[^spsite]. Check the root communication site: it defaults to Anyone[^spsite]."
+        },
+        {
+          "title": "Lock the most sensitive sites.",
+          "text": "Restricted access control limits a site to up to 10 groups. Nobody outside them can open it, even with a link, or find it through search and Copilot. Set it separately on channel sites[^rac]. It needs SharePoint Advanced Management (SAM), which comes with one Copilot license on an E plan, or as an add-on[^samprereq]."
+        },
+        {
+          "title": "Act on the reports.",
+          "text": "Send site access reviews from the data access governance reports to the owners of the broadest sites[^dag]. On E5 without SAM, turn on data collection for the activity reports first[^dag]. Otherwise, search the audit log for `AnonymousLinkCreated` and `SecureLinkCreated`[^audit]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "teams",
+      "title": "Teams, chat and other tenants",
+      "navTitle": "Teams and tenants",
+      "items": [
+        "**Use shared channels for partners on Microsoft 365.** B2B direct connect is blocked both ways by default and needs both tenants to allow it. Its participants have no account in your directory to forget; the channel owner manages them[^b2bdc].",
+        "**Work in a partner's channel stays with the partner.** Its files sit in the partner's SharePoint under the partner's retention, DLP and eDiscovery[^shch], and your tenant gets no audit logs of your users' activity there[^b2bdc]. Allow outbound direct connect only for named groups.",
+        "**Set cross-tenant defaults.** B2B collaboration is open to every Entra tenant, and their MFA isn't trusted[^xtenant]. Add key partners and trust their MFA if they enforce it. Limit Teams chat to named domains, as the cloud configuration sheet explains.",
+        "**Block exits through other tenants.** Tenant restrictions v2 stops users signing in to other tenants with outside accounts on your devices. Enforced through Windows, it can also block Anyone links and anonymous Teams meetings there (in preview)[^trv2]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "google",
+      "title": "If you run Google Workspace",
+      "navTitle": "Google Workspace",
+      "items": [
+        "**Allowlist partner domains.** CISA's baseline restricts sharing to allowlisted domains, warns before sharing elsewhere and blocks moving files to other organizations' shared drives[^scubagws].",
+        "**Allow visitors only from trusted domains.** Visitor sharing, for people without Google accounts, can be open to anyone or limited to trusted domains[^gext].",
+        "**Restrict Chat too.** Check **Only allow this for allowlisted domains**. Turning external chat off later doesn't remove outsiders from existing chats and spaces[^gchat]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Restricted SharePoint Search.** It isn't a security boundary, holds at most 100 sites and can't be newly turned on since 31 July 2026[^rss]. Use restricted access control, or Restricted Content Discovery from the DLP sheet.",
+        "**A sharing audit tool before the built-in reports.** SAM comes with a Copilot license, and E5 alone gets the activity reports[^samprereq][^dag].",
+        "**Turning external sharing off everywhere.** Partners still need the files. A partner site can be audited and revoked; an email attachment can't."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Using the site sharing report to find Anyone links.** It leaves them out[^sharerep]. Search the audit log for `AnonymousLinkCreated`[^audit].",
+        "**Expecting guest expiration to cover old guests.** It applies only to guests who join after you turn it on[^spotenant]. Review the rest as the joiners and leavers sheet describes.",
+        "**Removing a partner from the channel but not the files.** Access granted to a file through SharePoint sharing stays after the person leaves[^shch]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Every named external share creates a guest.** Between May and July 2026 Microsoft made Entra B2B integration permanent for SharePoint and OneDrive in commercial tenants, so Entra guest settings apply[^b2b].",
+        "**SharePoint one-time passcodes are retiring.** From October 2026, outsiders without a matching guest account lose access to Specific people links. Create the guest or reshare one item to restore access[^b2b].",
+        "**Google Workspace has guest accounts.** Since April 2026, inviting an outsider to Chat creates one, and inviting is on for everyone who can chat externally. The Workspace Guests unit gets its own default security settings, not your root ones, so apply 2-Step Verification there[^gguest]."
+      ],
+      "span": "full"
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Set the default link, Anyone limits and guest expiration in one sitting.",
+            "Give each customer or freelancer one site or team, and remove it when the work ends.",
+            "Each quarter, export the audit log's sharing events and remove links and guests nobody can explain."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Run the data access governance reports monthly and send reviews to owners of the broadest sites.",
+            "Put HR, finance and board sites behind restricted access control.",
+            "Set up B2B direct connect and MFA trust with your biggest partners."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Set sharing per sensitivity level with container labels, and alert when a site's label is lowered.",
+            "Enforce tenant restrictions v2 on managed Windows devices.",
+            "Record each partner's setup and owner in the supplier register (see the third-party risk sheet)."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn pages on SharePoint, Teams and Entra external collaboration, CISA's SCuBA baselines for SharePoint and Google Drive, and Google Workspace Admin Help."
+    }
+  ],
+  "sources": [
+    {
+      "id": "spshare",
+      "title": "Manage sharing settings for SharePoint and OneDrive",
+      "publisher": "Microsoft Learn",
+      "date": "30 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off"
+    },
+    {
+      "id": "spsite",
+      "title": "Change the sharing settings for a site",
+      "publisher": "Microsoft Learn",
+      "date": "7 May 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/change-external-sharing-site"
+    },
+    {
+      "id": "links",
+      "title": "How shareable links work in OneDrive and SharePoint",
+      "publisher": "Microsoft Learn",
+      "date": "12 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/shareable-links-anyone-specific-people-organization"
+    },
+    {
+      "id": "b2b",
+      "title": "Entra B2B integration for SharePoint and OneDrive",
+      "publisher": "Microsoft Learn",
+      "date": "18 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration"
+    },
+    {
+      "id": "spotenant",
+      "title": "Set-SPOTenant",
+      "publisher": "Microsoft Learn",
+      "date": "19 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/powershell/module/microsoft.online.sharepoint.powershell/set-spotenant"
+    },
+    {
+      "id": "scubasp",
+      "title": "CISA M365 Secure Configuration Baseline for SharePoint and OneDrive",
+      "publisher": "CISA (ScubaGear)",
+      "date": "ScubaGear v2.0.0, Oct 2026",
+      "url": "https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/sharepoint.md"
+    },
+    {
+      "id": "scubagws",
+      "title": "CISA Google Workspace Baseline for Google Drive and Docs",
+      "publisher": "CISA (ScubaGoggles)",
+      "date": "policies updated Aug 2025",
+      "url": "https://github.com/cisagov/ScubaGoggles/blob/main/scubagoggles/baselines/drive.md"
+    },
+    {
+      "id": "dag",
+      "title": "Data access governance reports for SharePoint sites",
+      "publisher": "Microsoft Learn",
+      "date": "9 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/data-access-governance-reports"
+    },
+    {
+      "id": "samprereq",
+      "title": "Prerequisites for SharePoint Advanced Management",
+      "publisher": "Microsoft Learn",
+      "date": "30 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharepoint-advanced-management-prerequisites"
+    },
+    {
+      "id": "rac",
+      "title": "Restrict SharePoint site access with groups",
+      "publisher": "Microsoft Learn",
+      "date": "30 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-access-control"
+    },
+    {
+      "id": "rss",
+      "title": "Restricted SharePoint Search",
+      "publisher": "Microsoft Learn",
+      "date": "6 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/restricted-sharepoint-search"
+    },
+    {
+      "id": "audit",
+      "title": "Use sharing auditing in the audit log",
+      "publisher": "Microsoft Learn",
+      "date": "19 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/audit-log-sharing"
+    },
+    {
+      "id": "sharerep",
+      "title": "Report on file and folder sharing in a SharePoint site",
+      "publisher": "Microsoft Learn",
+      "date": "7 May 2026",
+      "url": "https://learn.microsoft.com/en-us/sharepoint/sharing-reports"
+    },
+    {
+      "id": "copilot",
+      "title": "Data, Privacy, and Security for Microsoft Copilot",
+      "publisher": "Microsoft Learn",
+      "date": "9 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/copilot/plan/microsoft-365-copilot-privacy"
+    },
+    {
+      "id": "shch",
+      "title": "Shared channels in Microsoft Teams",
+      "publisher": "Microsoft Learn",
+      "date": "9 Feb 2025",
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/shared-channels"
+    },
+    {
+      "id": "b2bdc",
+      "title": "B2B direct connect overview",
+      "publisher": "Microsoft Learn",
+      "date": "24 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/external-id/b2b-direct-connect-overview"
+    },
+    {
+      "id": "xtenant",
+      "title": "Cross-tenant access overview",
+      "publisher": "Microsoft Learn",
+      "date": "28 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/external-id/cross-tenant-access-overview"
+    },
+    {
+      "id": "trv2",
+      "title": "Configure tenant restrictions",
+      "publisher": "Microsoft Learn",
+      "date": "20 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/external-id/tenant-restrictions-v2"
+    },
+    {
+      "id": "gext",
+      "title": "Manage external sharing for your organization",
+      "publisher": "Google Workspace Admin Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/drive/manage-external-sharing-for-your-organization"
+    },
+    {
+      "id": "gchat",
+      "title": "Control external Chat and spaces chat options",
+      "publisher": "Google Workspace Admin Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/chat/control-external-chat-and-spaces-chat-options"
+    },
+    {
+      "id": "gdpi",
+      "title": "DLP Data Protection Insights reports",
+      "publisher": "Google Workspace Admin Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/security/dlp-data-protection-insights-reports"
+    },
+    {
+      "id": "gguest",
+      "title": "Introducing guest accounts",
+      "publisher": "Google Workspace Updates",
+      "date": "30 Mar 2026",
+      "url": "https://workspaceupdates.googleblog.com/2026/03/introducing-guest-accounts.html"
+    },
+    {
+      "id": "gemini",
+      "title": "Generative AI in Google Workspace Privacy Hub",
+      "publisher": "Google Workspace Admin Help",
+      "date": "updated 6 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/generative-ai/generative-ai-in-google-workspace-privacy-hub"
+    }
+  ]
+}

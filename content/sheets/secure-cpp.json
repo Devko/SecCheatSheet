@@ -1,0 +1,418 @@
+{
+  "slug": "secure-cpp",
+  "topic": "Secure C and C++",
+  "status": "draft",
+  "order": 47,
+  "capability": "coding/cpp",
+  "title": "C and C++: how safe can you get without a rewrite?",
+  "short": "Ship every build with the OpenSSF hardening flags and a bounds-checked standard library (0.3% overhead at Google), fuzz parsers under ASan and write new components in a memory-safe language.",
+  "answer": "Before your next release, build with the OpenSSF hardening flags and a bounds-checked standard library, and run your tests and fuzzers under AddressSanitizer and UBSan in CI. Write new components in a memory-safe language, and judge every other change by whether it checks the size, owner and lifetime of memory that outside data reaches.",
+  "audience": "Developers and tech leads maintaining production C and C++, and the security people who review it",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "intro": "Seven of the 2025 CWE Top 25 are buffer overflows, out-of-bounds access, use after free or NULL dereference[^cwe25]. Memory-safety bugs fell from 76% of Android's vulnerabilities in 2019 to under 20% in 2025 as new code moved to memory-safe languages[^gsource][^android].",
+      "items": [
+        {
+          "title": "Build every release with the OpenSSF hardening flags.",
+          "text": "For GCC and Clang these include `-D_FORTIFY_SOURCE=3`, `-fstack-protector-strong`, `-fstack-clash-protection`, `-Wl,-z,relro`, `-Wl,-z,now`, `-fPIE -pie` and `-ftrivial-auto-var-init=zero`[^openssf]; GCC's `-fhardened` sets most at once[^gccinst]. On MSVC, add `/guard:cf` and `/CETCOMPAT`[^mscfg][^mscet]."
+        },
+        {
+          "title": "Bounds-check the standard library in production.",
+          "text": "Define `_GLIBCXX_ASSERTIONS`, set libc++ to `_LIBCPP_HARDENING_MODE_FAST`[^openssf][^libcxx] or define `_MSVC_STL_HARDENING=1`[^msstl]. At Google it cost 0.3% on average, found over 1,000 bugs and cut segfaults by 30%[^gretro]."
+        },
+        {
+          "title": "Run every test under ASan and UBSan.",
+          "text": "`-fsanitize=address` catches out-of-bounds access and use after free at about half speed[^asan], `-fsanitize=undefined` integer overflow and other undefined behavior[^ubsan]. Leave `_FORTIFY_SOURCE` out of these builds[^openssf]."
+        },
+        {
+          "title": "Fuzz every parser of outside data.",
+          "text": "Give each file format, protocol and decoder a libFuzzer target, and run it on every pull request with ClusterFuzzLite under ASan, MSan and UBSan[^cflite]."
+        },
+        {
+          "title": "Write new components in a memory-safe language.",
+          "text": "Five-year-old code has 3.4 to 7.4 times lower vulnerability density than new code[^gsource]. CISA and the FBI asked makers of C and C++ products to publish a memory-safety roadmap by the end of 2025[^cisabad]. See the Rust sheet."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "review",
+      "title": "Review a C or C++ pull request",
+      "navTitle": "Review",
+      "items": [
+        {
+          "title": "Does a length, count or offset come from the input?",
+          "text": "Check it against the bytes left and the destination's size before any copy, index or allocation."
+        },
+        {
+          "title": "Can a size calculation wrap?",
+          "text": "Look for `*` and `+` on sizes, `int` lengths and signed-to-unsigned casts. Ask for `__builtin_mul_overflow`[^gccovf]."
+        },
+        {
+          "title": "Who owns each pointer, and can anything outlive it?",
+          "text": "Check raw `new`, `delete` and `free`, stored `string_view` and `span` members, and callbacks that capture `this` or `&`."
+        },
+        {
+          "title": "Is every error code and union tag checked?",
+          "text": "Ask for `[[nodiscard]]` on functions that return errors and a tag check before each union read."
+        },
+        {
+          "title": "Does it switch off a check?",
+          "text": "Warning pragmas, `no_sanitize`, `_LIBCPP_HARDENING_MODE_NONE`, `[[indeterminate]]` and `/GS-` need a second reviewer."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "traps",
+      "title": "C and C++ traps and what to use instead",
+      "navTitle": "Traps",
+      "span": "full",
+      "items": [
+        "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV from ASN.1 parameters into a fixed-size stack buffer without checking that it fit, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches such copies only when it knows the buffer's size[^openssf].",
+        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps silently, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Ruby's C regex engine let crafted patterns run code on GitLab servers; CISA lists CVE-2026-97229 as exploited[^ruby][^kev]. Compute sizes with `__builtin_mul_overflow` and `__builtin_add_overflow`[^gccovf].",
+        "**Error codes that let a decoder keep going.** Brotli's decoder reported an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat each format error as final, check the bound on every append, and mark functions that return errors `[[nodiscard]]`.",
+        "**Ownership and lifetimes an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's own `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. In C++, own with `std::unique_ptr` and don't keep a `std::string_view` or `std::span` past its owner; Clang 23's `-Wlifetime-safety` catches some cases[^clang23]. In C, document who frees each argument.",
+        "**Reading a union member or downcast object without checking its type.** OpenSSL read an `ASN1_TYPE` union member without validating the type (CVE-2026-22796)[^openssl], and CISA lists type confusion in Chrome's V8 and in Windows as exploited this year[^kev]. Check the tag before each read; in C++ use `std::variant` and `std::get_if`.",
+        "**`printf(msg)` and your own logging wrappers.** OpenSSL passed a peer's distinguished name as the format string to `ERR_raise_data()`, so a name like `CN=%s%n` crashed CMP clients (CVE-2026-63073)[^openssl]. Pass data through `\"%s\"`, build with `-Werror=format-security`[^openssf] and mark wrappers `format(printf, m, n)` so their callers get checked[^gccattr]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Tools that catch it",
+      "navTitle": "Tools",
+      "items": [
+        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (needs every library instrumented, even libc) and TSan for data races (5x to 15x)[^asan][^msan][^tsan]. ASan and TSan can't be combined[^openssf]. MSVC has `/fsanitize=address`[^msasan].",
+        "**Fuzzers.** libFuzzer gets bug fixes only, as its authors moved to Centipede[^libfuzzer]; ClusterFuzzLite still runs it on pull requests and in batch jobs[^cflite].",
+        "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2`, `-Wconversion`[^openssf] and, in C++, Clang's `-Wunsafe-buffer-usage`, which flags buffer access through raw pointers so you can move it to `std::span`[^safebuf]. On MSVC, `/sdl` turns uninitialized-variable warnings into errors[^mssdl]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**GCC 16 (30 April) zero-initializes locals under `-std=c++26`,** implements C++26 contracts and erroneous behavior, and defaults to `-std=gnu++20`[^gcc16][^gccopt].",
+        "**Clang 23 (26 August) added `-Wlifetime-safety`,** an analysis that detects use after free within a function. Add it to your CI flags[^clang23].",
+        "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl]. OpenSSL 3.0 reached end of life on 7 September; move to 3.5, supported until April 2030[^openssleol].",
+        "**CISA added an exploited Brotli decoder overflow on 27 October.** Update every copy, including vendored ones such as Node.js bundles, to 1.0.10, 1.1.1 or 1.2.1[^cvebrotli][^kev][^nodejs]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Waiting for C++26.** Its library hardening standardizes checks libc++, libstdc++ and MSVC already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
+        "**Rewriting stable code all at once.** Vulnerabilities decay as code ages[^gsource]. Harden old code; rewrite the parsers and network code that take outside data.",
+        "**Valgrind in CI.** Sanitizers do similar work at a 2x to 4x slowdown, against 20x to 50x[^openssf]. Keep it for binaries you can't rebuild."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Checks only debug builds get.** GCC 15's libstdc++ enables its assertions by default only in unoptimized builds[^gcc15], and `_FORTIFY_SOURCE` needs `-O1` or higher[^openssf]. Set both in release builds.",
+        "**Shipping sanitizer runtimes.** Their environment-variable options can let attackers clobber root-owned files through setuid binaries. Only UBSan's minimal runtime or trap mode belongs in production[^openssf][^ubsan]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like for your code",
+      "navTitle": "By codebase",
+      "span": "full",
+      "columns": [
+        {
+          "title": "New project",
+          "items": [
+            "Ask first whether it can be Rust or another memory-safe language.",
+            "If it must be C++, use `std::span` and `std::unique_ptr`, and turn on `-Wunsafe-buffer-usage`[^safebuf].",
+            "Start with the OpenSSF flags, a hardened library, sanitizer jobs and a fuzz target per parser."
+          ]
+        },
+        {
+          "title": "Existing codebase",
+          "items": [
+            "Roll out hardening as Google did: tests first, then pre-production, then production over months[^gretro].",
+            "Replace `[0]` and `[1]` trailing arrays with `[]`, then add `-fstrict-flex-arrays=3`[^openssf].",
+            "Fuzz network-facing and crypto code first[^cisabad], and publish a date after which new code is memory-safe[^cisaroad]."
+          ]
+        },
+        {
+          "title": "High-assurance or regulated",
+          "items": [
+            "Follow Chromium's Rule of 2: of untrusted input, an unsafe language and high privilege, pick at most two[^ruleof2].",
+            "Use libc++ extensive mode where benchmarks allow[^libcxx], and MSan with every library instrumented[^msan].",
+            "On Arm cores with MTE, test with memory tagging: GCC 16 adds `-fsanitize=memtag` for the stack[^gcc16]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on the OpenSSF compiler hardening guide, GCC, Clang, libc++ and MSVC docs, WG21 papers, Google's memory-safety data, CISA and FBI guidance, OpenSSL advisories and the 2025 CWE Top 25."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cwe25",
+      "title": "2025 CWE Top 25",
+      "publisher": "MITRE",
+      "date": "updated 15 Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "gsource",
+      "title": "Eliminating Memory Safety Vulnerabilities at the Source",
+      "publisher": "Google",
+      "date": "25 Sep 2024",
+      "url": "https://security.googleblog.com/2024/09/eliminating-memory-safety-vulnerabilities-Android.html"
+    },
+    {
+      "id": "android",
+      "title": "Rust in Android: move fast and fix things",
+      "publisher": "Google",
+      "date": "13 Nov 2025",
+      "url": "https://blog.google/security/rust-in-android-move-fast-fix-things/"
+    },
+    {
+      "id": "openssf",
+      "title": "Compiler Options Hardening Guide for C and C++",
+      "publisher": "OpenSSF",
+      "date": "20 Aug 2026",
+      "url": "https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html"
+    },
+    {
+      "id": "gccinst",
+      "title": "GCC manual: Instrumentation Options",
+      "publisher": "GCC",
+      "date": "checked 5 Nov 2026",
+      "url": "https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html"
+    },
+    {
+      "id": "mscfg",
+      "title": "/guard (Enable Control Flow Guard)",
+      "publisher": "Microsoft Learn",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard"
+    },
+    {
+      "id": "mscet",
+      "title": "/CETCOMPAT (CET Shadow Stack compatible)",
+      "publisher": "Microsoft Learn",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat"
+    },
+    {
+      "id": "libcxx",
+      "title": "libc++ Hardening Modes",
+      "publisher": "LLVM",
+      "date": "checked 5 Nov 2026",
+      "url": "https://libcxx.llvm.org/Hardening.html"
+    },
+    {
+      "id": "msstl",
+      "title": "STL Hardening",
+      "publisher": "Microsoft STL wiki",
+      "date": "4 Mar 2026",
+      "url": "https://github.com/microsoft/STL/wiki/STL-Hardening"
+    },
+    {
+      "id": "gretro",
+      "title": "Retrofitting spatial safety to hundreds of millions of lines of C++",
+      "publisher": "Google",
+      "date": "15 Nov 2024",
+      "url": "https://security.googleblog.com/2024/11/retrofitting-spatial-safety-to-hundreds.html"
+    },
+    {
+      "id": "asan",
+      "title": "AddressSanitizer",
+      "publisher": "Clang docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "ubsan",
+      "title": "UndefinedBehaviorSanitizer",
+      "publisher": "Clang docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "cflite",
+      "title": "ClusterFuzzLite",
+      "publisher": "Google",
+      "date": "checked 5 Nov 2026",
+      "url": "https://google.github.io/clusterfuzzlite/"
+    },
+    {
+      "id": "cisabad",
+      "title": "Product Security Bad Practices, version 2",
+      "publisher": "CISA and FBI",
+      "date": "Jan 2025",
+      "url": "https://www.ic3.gov/CSA/2025/250117.pdf"
+    },
+    {
+      "id": "gccovf",
+      "title": "GCC manual: Integer Overflow Builtins",
+      "publisher": "GCC",
+      "date": "checked 5 Nov 2026",
+      "url": "https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html"
+    },
+    {
+      "id": "openssl",
+      "title": "Vulnerabilities",
+      "publisher": "OpenSSL",
+      "date": "checked 5 Nov 2026",
+      "url": "https://openssl-library.org/news/vulnerabilities/"
+    },
+    {
+      "id": "ruby",
+      "title": "Regexp compilation fixes related to GitLab's CVEs",
+      "publisher": "Ruby",
+      "date": "23 Oct 2026",
+      "url": "https://www.ruby-lang.org/en/news/2026/10/23/regexp-fixes-for-gitlab-cves/"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog (data feed)",
+      "publisher": "CISA",
+      "date": "1,768 entries on 4 Nov 2026",
+      "url": "https://github.com/cisagov/kev-data"
+    },
+    {
+      "id": "nodejs",
+      "title": "October 21, 2026 Security Releases",
+      "publisher": "Node.js",
+      "date": "21 Oct 2026",
+      "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+    },
+    {
+      "id": "clang23",
+      "title": "Clang 23.1.0 Release Notes",
+      "publisher": "LLVM",
+      "date": "26 Aug 2026",
+      "url": "https://releases.llvm.org/23.1.0/tools/clang/docs/ReleaseNotes.html"
+    },
+    {
+      "id": "gccattr",
+      "title": "GCC manual: Common Attributes",
+      "publisher": "GCC",
+      "date": "checked 5 Nov 2026",
+      "url": "https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html"
+    },
+    {
+      "id": "msan",
+      "title": "MemorySanitizer",
+      "publisher": "Clang docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://clang.llvm.org/docs/MemorySanitizer.html"
+    },
+    {
+      "id": "tsan",
+      "title": "ThreadSanitizer",
+      "publisher": "Clang docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://clang.llvm.org/docs/ThreadSanitizer.html"
+    },
+    {
+      "id": "msasan",
+      "title": "AddressSanitizer",
+      "publisher": "Microsoft Learn",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/cpp/sanitizers/asan"
+    },
+    {
+      "id": "libfuzzer",
+      "title": "libFuzzer",
+      "publisher": "LLVM",
+      "date": "checked 5 Nov 2026",
+      "url": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "safebuf",
+      "title": "C++ Safe Buffers",
+      "publisher": "Clang docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://clang.llvm.org/docs/SafeBuffers.html"
+    },
+    {
+      "id": "mssdl",
+      "title": "/sdl (Enable Additional Security Checks)",
+      "publisher": "Microsoft Learn",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/cpp/build/reference/sdl-enable-additional-security-checks"
+    },
+    {
+      "id": "gcc16",
+      "title": "GCC 16 Release Series: Changes",
+      "publisher": "GCC",
+      "date": "16.1, 30 Apr 2026",
+      "url": "https://gcc.gnu.org/gcc-16/changes.html"
+    },
+    {
+      "id": "gccopt",
+      "title": "GCC manual: Optimize Options",
+      "publisher": "GCC",
+      "date": "checked 5 Nov 2026",
+      "url": "https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html"
+    },
+    {
+      "id": "openssleol",
+      "title": "OpenSSL 3.0 End of Life",
+      "publisher": "OpenSSL",
+      "date": "16 Sep 2026",
+      "url": "https://openssl-library.org/post/2026-09-16-eol30/"
+    },
+    {
+      "id": "cvebrotli",
+      "title": "CVE-2026-111497: Out-of-Bounds Write in Google Brotli Decoder",
+      "publisher": "Google",
+      "date": "22 Oct 2026",
+      "url": "https://www.cve.org/CVERecord?id=CVE-2026-111497"
+    },
+    {
+      "id": "p3471",
+      "title": "P3471R4: Standard library hardening",
+      "publisher": "WG21",
+      "date": "14 Feb 2025",
+      "url": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3471r4.html"
+    },
+    {
+      "id": "gcc15",
+      "title": "GCC 15 Release Series: Changes",
+      "publisher": "GCC",
+      "date": "15.1, 25 Apr 2025",
+      "url": "https://gcc.gnu.org/gcc-15/changes.html"
+    },
+    {
+      "id": "cisaroad",
+      "title": "The Case for Memory Safe Roadmaps",
+      "publisher": "CISA, NSA, FBI and partners",
+      "date": "Dec 2023",
+      "url": "https://www.ic3.gov/CSA/2023/231206.pdf"
+    },
+    {
+      "id": "ruleof2",
+      "title": "The Rule Of 2",
+      "publisher": "Chromium",
+      "date": "checked 5 Nov 2026",
+      "url": "https://chromium.googlesource.com/chromium/src/+/main/docs/security/rule-of-2.md"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "slug": "soc-mdr",
+  "topic": "SOC and MDR services",
+  "status": "draft",
+  "order": 45,
+  "capability": "detect-respond/mdr",
+  "title": "SOC and MDR: would anyone stop an attack at 3 a.m.?",
+  "short": "Have alerts handled 24/7 by someone allowed to isolate devices and disable accounts, and plant a test attack every quarter.",
+  "answer": "This quarter, make sure someone can contain a high-severity alert within an hour, day or night, usually by buying managed detection and response (MDR) with written authority to isolate devices and disable accounts. Judge any provider by planted tests and the alerts it closed, not by its monthly report.",
+  "audience": "IT and security leads in small and mid-size organizations, many in Germany and the EU, deciding whether to build a SOC, buy managed detection and response or combine both, and larger organizations reviewing a provider",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Get someone on alerts around the clock.",
+          "text": "In the cases behind Sophos's 2026 report, 88% of ransomware was deployed outside business hours[^sophosaar]. If nobody on your team is on call at night, buy 24/7 coverage before another tool."
+        },
+        {
+          "title": "Authorize containment in writing.",
+          "text": "In the same cases, attackers went after Active Directory a median 3.4 hours after getting in[^sophosaar]. Pre-authorize isolating devices, disabling accounts and revoking sessions, and list what the provider must ask about first."
+        },
+        {
+          "title": "Find out what it can't see.",
+          "text": "Get covered sources and incident types in writing. Microsoft advises watching firewalls, VPNs, identity systems, RMM tools, email gateways and file transfers[^mddr]; Microsoft's own MDR excludes iOS, Android, IoT, DLP and custom detections[^dexfaq]."
+        },
+        {
+          "title": "Line up incident response separately.",
+          "text": "Check where the service stops: Microsoft's MDR doesn't respond to an active compromise[^dexov]. Agree who takes over, and how fast, through the retainer in the incident response sheet."
+        },
+        {
+          "title": "Test it yourself, out of hours.",
+          "text": "Each quarter, plant a harmless attack on a weekend night and time it until someone calls you. Each month, read a sample of the alerts it closed as benign and check the evidence."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "decide",
+      "title": "Build, buy or combine",
+      "navTitle": "Build or buy",
+      "items": [
+        {
+          "title": "Who answers a high-severity alert at 3 a.m. on a Sunday?",
+          "text": "If nobody does, buy 24/7 MDR. One seat staffed around the clock is 8,760 hours a year, about five full-time people. A 24/7 SOC also loses much of its value if the IT teams it needs work 9 to 5 with no on-call, the NCSC notes[^ncscsoc]."
+        },
+        {
+          "title": "Do you have staff who know your systems?",
+          "text": "Then combine. Let the provider take nights, weekends and first triage, and keep tuning, context and business decisions in-house. In-house teams have better business context, and most SOCs outsource some functions[^ncscsoc]."
+        },
+        {
+          "title": "Which detection tools do you already run?",
+          "text": "Buy MDR for the EDR or XDR you have, so the provider can act inside it, rather than adding a second agent."
+        },
+        {
+          "title": "Does anything force you to build?",
+          "text": "Build only for what no provider covers well, such as OT or in-house applications. Even KRITIS detection doesn't need your own staff: the BSI accepts named staff of a service provider[^bsisza]."
+        },
+        {
+          "title": "Can the provider show its own security?",
+          "text": "Ask for its ISO 27001 scope and latest audit report. In Germany, a managed security services provider with 50 or more staff, or turnover and balance sheet above €10 million each, is itself at least an important entity under the BSIG[^bsig]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "contract",
+      "title": "Contract terms that matter",
+      "navTitle": "Contract",
+      "intro": "Add these to the five clauses in the supplier risk sheet.",
+      "items": [
+        "**Times from alert to containment.** NCSC guidance for MSPs counts response time only until work starts, with under an hour standard for urgent issues[^ncscmsp]. For High severity, ask for work within 15 minutes and containment or a call within 60, from alert creation.",
+        "**A fallback when nobody answers.** Sophos, for one, offers to act on its own once it has phoned all your contacts without reply[^sophosmdr]. Agree the actions, exclusions and wait.",
+        "**Data location.** Defender Experts keeps case notes in the EU only for tenants in the EU Data Boundary[^dexpre]. Require notice before locations change.",
+        "**Your own logs.** Keep 12 months yourself, as in the logging sheet. Firewall log defaults of 7 days left gaps in Sophos's cases[^sophosaar].",
+        "**Exit.** Export case history and rules written for you first: Defender Experts deletes its data within 30 days of termination[^dexpre].",
+        "**Its access to your tenant.** Require time-limited roles, used from managed devices with MFA and logged in your sign-in logs, as Microsoft sets up for its experts[^dexperm]."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "onboard",
+      "title": "Onboard and tune",
+      "navTitle": "Onboarding",
+      "items": [
+        {
+          "title": "Hunt before you baseline.",
+          "text": "Ask for a compromise check first: a baseline taken on a compromised system includes the attacker, the NCSC warns[^ncscdet]."
+        },
+        {
+          "title": "Hand over your context.",
+          "text": "List critical systems, admin and service accounts, VPN ranges and admin jobs: Microsoft says these baselines let detections suppress noise[^mddr]. In Germany, agree the scope with the works council, which has a say in systems designed to monitor staff[^betrvg]."
+        },
+        {
+          "title": "Turn on what lets it act.",
+          "text": "Run Defender in active mode; in passive mode the experts can only advise[^dexpre]."
+        },
+        {
+          "title": "Tune with end dates, and hunt.",
+          "text": "Give each suppression an owner and an expiry date[^ncscdet], and report new systems so the provider recalibrates[^bsisza]. Mandiant advises routine hunting beyond alerts[^mtrends]: ask each quarter what was hunted and found."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "test",
+      "title": "How to tell whether it works",
+      "navTitle": "Testing",
+      "items": [
+        "**Plant a test each quarter.** Out of hours, on a test machine, add a local admin, install an unapproved remote tool or forward a mailbox outside. Microsoft counts an unsanctioned RMM agent among the most reliable signs of a hands-on attacker[^mddr].",
+        "**Purple team once a year.** Testers and the provider replay techniques and fix gaps as they go[^ncscdet]; see the penetration testing sheet.",
+        "**Sample what it closed.** Each month, read 10 incidents closed as false positives. Providers triage with AI that analysts validate[^dexfaq], so check the evidence for each.",
+        "**Ask for outcomes, not alert counts.** Time to triage, time to containment and how long incidents waited for you. Microsoft says alert counts no longer measure a SOC's maturity[^mddr]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Hand-offs take seconds.** Mandiant's median from initial access to a second group fell to 22 seconds, from over 8 hours in 2022. It advises treating routine malware alerts as high priority[^mtrends].",
+        "**AI does much of the triage.** Microsoft's own security team has AI agents investigate 75% of incoming incidents[^mddr]. Ask your provider which closures no analyst saw.",
+        "**An EU certificate is in draft.** ENISA's July 2026 draft for managed security services starts with incident response, not detection[^enisamss]. Don't wait for it.",
+        "**Microsoft moved third-party coverage to a new plan.** Third-party network enrichment in Defender Experts Plan 1 was deprecated on 1 September 2026 and ends at renewal; Plan 2 covers some non-Microsoft sources through Sentinel[^dexov]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A SIEM before MDR.** An MDR can work in the XDR you run; Microsoft's Plan 1 needs no Sentinel[^dexfaq].",
+        "**Long RFP questionnaires.** A planted test in the trial tells you more than 300 answers.",
+        "**Analyst rankings and feature counts.** They describe other networks; a timed test in yours decides.",
+        "**Your own 24/7 shift below enterprise size.** Five people per seat buy one pair of eyes. Use them for context and response."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Buying notify-only to save money.** The provider can then only watch. Sophos advises against its notify-only mode for long[^sophosmdr].",
+        "**Contacts who sleep through the call.** Test the phone chain with every planted test, and name a deputy.",
+        "**Coverage nobody checks.** Compare the provider's device count with your inventory monthly. A laptop without EDR is invisible to it.",
+        "**Standing admin rights for the provider.** Use time-limited roles[^dexperm] and remove partner roles you don't need, as in the supplier risk sheet."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Buy MDR for the EDR you run, such as Defender for Business, allowed to isolate devices and disable accounts.",
+            "Give the provider two night contacts and your IT firm's emergency number.",
+            "Time a planted test on a spare laptop."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Co-manage: the provider takes nights, weekends and first triage; your team keeps tuning and daytime response.",
+            "Add identity, email and firewall or VPN sources, and review 10 closed incidents a month.",
+            "Pick a retainer firm that knows your MDR provider. In Germany, the BSI lists 64 qualified APT response firms[^bsiapt]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run a yearly purple team with the provider and track each missed technique to closure.",
+            "KRITIS operators must run attack detection (BSIG § 31(2))[^bsig]; the BSI expects automatic response where it can't endanger the critical service[^bsisza].",
+            "Under DORA, use the supplier risk sheet's clauses for critical or important functions."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on M-Trends 2026, the Microsoft Digital Defense Report 2026, NCSC guidance on SOCs and MSPs, the BSI's attack detection guidance and APT response provider list, ENISA's draft scheme for managed security services and Microsoft and Sophos MDR documentation."
+    }
+  ],
+  "sources": [
+    {
+      "id": "sophosaar",
+      "title": "Active Adversary Report 2026 (vendor case data)",
+      "publisher": "Sophos",
+      "date": "24 Feb 2026",
+      "url": "https://www.sophos.com/en-us/blog/2026-sophos-active-adversary-report"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026 Executive Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "ncscsoc",
+      "title": "Building a SOC: Designing an operating model",
+      "publisher": "NCSC (UK)",
+      "date": "23 May 2022",
+      "url": "https://www.ncsc.gov.uk/collection/building-a-security-operations-centre/operating-model/designing-an-operating-model"
+    },
+    {
+      "id": "ncscdet",
+      "title": "Building a SOC: Detection practices",
+      "publisher": "NCSC (UK)",
+      "date": "23 May 2022",
+      "url": "https://www.ncsc.gov.uk/collection/building-a-security-operations-centre/detection/detection-practices"
+    },
+    {
+      "id": "ncscmsp",
+      "title": "Choosing a managed service provider (MSP)",
+      "publisher": "NCSC (UK)",
+      "date": "24 Nov 2025",
+      "url": "https://www.ncsc.gov.uk/guidance/choosing-a-managed-service-provider-msp"
+    },
+    {
+      "id": "dexov",
+      "title": "Defender Experts MDR overview",
+      "publisher": "Microsoft Learn",
+      "date": "7 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/defender-experts/defender-experts-mdr-overview"
+    },
+    {
+      "id": "dexfaq",
+      "title": "Defender Experts MDR FAQ",
+      "publisher": "Microsoft Learn",
+      "date": "7 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/defender-experts/defender-experts-mdr-faq"
+    },
+    {
+      "id": "dexpre",
+      "title": "Before you begin with Defender Experts MDR",
+      "publisher": "Microsoft Learn",
+      "date": "1 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/defender-experts/defender-experts-mdr-prerequisites"
+    },
+    {
+      "id": "dexperm",
+      "title": "How Defender Experts permissions work",
+      "publisher": "Microsoft Learn",
+      "date": "1 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/defender-experts/defender-experts-mdr-permissions"
+    },
+    {
+      "id": "sophosmdr",
+      "title": "MDR threat response",
+      "publisher": "Sophos Docs",
+      "date": "14 Sep 2026",
+      "url": "https://docs.sophos.com/central/customer/help/en-us/ManageYourProducts/MDR/MDRSettings/MDRThreatResponse/index.html"
+    },
+    {
+      "id": "bsiapt",
+      "title": "Qualifizierte APT-Response-Dienstleister",
+      "publisher": "BSI",
+      "date": "1 Jun 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Cyber-Sicherheit/Themen/Dienstleister_APT-Response-Liste.pdf?__blob=publicationFile&v=46"
+    },
+    {
+      "id": "bsisza",
+      "title": "Orientierungshilfe Angriffserkennung, version 1.1",
+      "publisher": "BSI",
+      "date": "18 Nov 2024",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/oh-sza.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "bsig",
+      "title": "BSIG, §§ 2, 28 and 31 and Annex 1",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "betrvg",
+      "title": "BetrVG, § 87",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
+    },
+    {
+      "id": "enisamss",
+      "title": "Have your say on EU managed security services certification",
+      "publisher": "ENISA",
+      "date": "24 Jul 2026",
+      "url": "https://certification.enisa.europa.eu/news/have-your-say-certification-eu-managed-security-services-2026-07-24_en"
+    }
+  ]
+}

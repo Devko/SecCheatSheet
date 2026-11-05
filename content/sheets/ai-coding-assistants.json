@@ -1,0 +1,355 @@
+{
+  "slug": "ai-coding-assistants",
+  "topic": "AI coding assistants",
+  "status": "draft",
+  "order": 46,
+  "capability": "ai/coding-assistants",
+  "title": "AI coding assistants: what can your agents reach and run?",
+  "short": "Use company accounts, require the sandbox with bypass modes off, and have a second person approve every agent pull request.",
+  "answer": "This month, move every developer to a company account, require the tool's sandbox with bypass modes switched off in managed settings, and keep production credentials away from agents. Judge every new tool, MCP server or automation by what outsiders can write into what it reads, and what it could run, reach or merge if that text took over.",
+  "audience": "Engineering leads, platform and security teams whose developers use AI coding assistants and agents",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Move everyone to company accounts.",
+          "text": "Since 24 April 2026 GitHub trains on Copilot Free, Pro and Pro+ interactions unless users opt out, but not on Business or Enterprise[^ghdata]. Block `*.individual.githubcopilot.com` at the firewall[^ghnet]. The BSI and ANSSI advise against private accounts for business code[^bsiaica]."
+        },
+        {
+          "title": "Keep production credentials away from agents.",
+          "text": "Agent commands run with the developer's credentials[^vscsec]. In April 2026 an agent found an account-scoped Railway token on a developer's machine and deleted a production database volume with it[^railway]. Hand out scoped, non-production tokens."
+        },
+        {
+          "title": "Require the sandbox and turn off bypass modes centrally.",
+          "text": "Claude Code's sandbox is off by default and still reads `~/.ssh` unless you deny it[^ccsandbox]. Require it in managed settings, set `disableBypassPermissionsMode` in Claude Code and Copilot[^ccmodes][^ghms] and keep yolo modes for throwaway containers[^ccmodes]."
+        },
+        {
+          "title": "Treat what an agent reads as instructions from its author.",
+          "text": "Issues, pull requests, docs and repository config can all steer it. Cline let any GitHub user's issue reach a triage agent with a shell, which exposed its publishing credentials; an npm token it failed to rotate later shipped an unauthorized release[^cline]. Agents that read outsiders' text get no shell and no secrets."
+        },
+        {
+          "title": "Have a second person approve every agent change.",
+          "text": "Copilot cloud agent can't approve its own pull requests, nor can the person who asked, and workflows wait for a human by default[^ghrisks]. Agents on laptops push as the developer, so require approval of the most recent push, as in the secure development sheet."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rollout",
+      "title": "Roll out an assistant or agent to a team",
+      "navTitle": "Rollout",
+      "items": [
+        {
+          "title": "Settle plans and data terms first.",
+          "text": "Choose business plans that don't train on your code, check retention and zero-retention options, and sign the processor contract the AI inputs sheet describes."
+        },
+        {
+          "title": "Write one managed settings file.",
+          "text": "Require the sandbox with `failIfUnavailable` and `allowUnsandboxedCommands: false`[^ccsandbox], disable bypass modes and allowlist MCP servers[^ghms]. Deliver it so developers can't weaken it[^ghsandbox]."
+        },
+        {
+          "title": "Move unattended work off laptops.",
+          "text": "Run long autonomous tasks in the vendor's cloud sandbox or a container. Copilot cloud agent pushes to one branch only and works behind a firewall[^ghrisks]."
+        },
+        {
+          "title": "Protect the files that steer the agent.",
+          "text": "Put `AGENTS.md`, `CLAUDE.md`, `.mcp.json` and the `.github`, `.vscode`, `.cursor`, `.claude` and `.gemini` folders under CODEOWNERS with **Require review from Code Owners**, as GitHub advises for its own agent files[^ghguard]."
+        },
+        {
+          "title": "Turn on logs before the first agent pull request.",
+          "text": "GitHub's audit log keeps agent events under `actor:Copilot` for 180 days, but no local prompts[^ghaudit]; Claude Code exports tool decisions over OpenTelemetry[^ccotel]. In Germany, agree this with the works council, which co-determines monitoring tools[^betrvg]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "defaults",
+      "title": "Defaults that catch teams out",
+      "navTitle": "Defaults",
+      "items": [
+        "**Claude Code starts in auto mode.** From version 2.1.283, a classifier, not the developer, reviews actions[^ccmodes]. Set `permissions.defaultMode` or `disableAutoMode` in managed settings if people should approve.",
+        "**Headless runs trust the repository.** `claude -p` runs a repository's hooks and `.mcp.json` servers without asking; add `--setting-sources user` on code you didn't write[^ccperm]. Until April 2026, Gemini CLI auto-trusted a checkout's `.gemini/` settings in CI, so a pull request could run code, a flaw rated CVSS 10[^gemadv].",
+        "**Ignore files and deny rules are not a boundary.** Copilot content exclusion skips symlinks and may miss indirect file access[^ghexcl]; Claude Code's `Read(**/.env)` rules miss scripts that open the file themselves[^ccperm]. Keep secrets out of the repository.",
+        "**Cursor trusts every workspace.** Workspace trust is off by default; enforce `security.workspace.trust.enabled` through MDM[^cursorsec]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "review",
+      "title": "Reviewing what agents write and install",
+      "navTitle": "Review",
+      "items": [
+        "**Working code can be exploitable.** On BaxBench, 35% of the top model's working backends were exploitable when the prompt didn't mention security[^baxbench]. Keep agent pull requests behind the same CI gates as everyone else's.",
+        "**Check that every new package is real.** In a 2025 study, 19.7% of packages in code from 16 models didn't exist, and 43% of those names recurred in all 10 repeats of a prompt[^usenix]. Check a new dependency's history before it enters the lockfile.",
+        "**Pin MCP servers.** The fake `postmark-mcp` built trust over 15 versions before 1.0.16 secretly BCC'd emails to an outside server[^postmark]. Allowlist servers in managed settings[^ghms] and pin versions."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Personal Copilot plans train on your code** since 24 April, unless users opt out[^ghdata].",
+        "**Copilot offers EU data residency** since April for GitHub Enterprise Cloud with data residency. It is off by default and adds 10% to AI credit use[^ghresidency].",
+        "**GitHub can require local sandboxing** for Copilot, generally available since 7 October, with policies developers can't weaken[^ghsandbox].",
+        "**Copilot can approve pull requests** if admins allow it, in preview since 1 September, and its approval counts toward required approvals[^ghcrapprove]. Leave it off where agents open pull requests.",
+        "**Claude Code made auto mode its default**, so a classifier reviews actions unless you configure otherwise[^ccmodes]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Banning assistants outright.** It pushes developers to private accounts you can't see. The BSI and ANSSI advise offering approved tools with clear rules instead[^bsiaica].",
+        "**Security rules in `AGENTS.md` or `CLAUDE.md`.** Instructions guide the model and are not an enforcement boundary[^vscsec]. Back each rule with a setting.",
+        "**Hand-tuned command allowlists.** Auto-approval rules parse commands on a best-effort basis, and aliases or quote tricks can slip past them[^vscsec]. A sandbox does more for less upkeep."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Giving a CI agent a shell and outsiders' text.** Cline calls that \"functionally equivalent to giving every GitHub user shell access\"[^cline].",
+        "**Letting agent pull requests run workflows unreviewed.** Since March, admins can skip the approval step for Copilot's pull requests, though workflows may hold tokens and secrets[^ghskip]. Keep it on.",
+        "**Putting deployment secrets in Agents secrets.** Copilot can read those. Keep what it shouldn't touch in Actions secrets, which it can't[^ghguard].",
+        "**Yolo mode in a container that holds secrets.** OpenAI warns that a malicious project can then exfiltrate anything inside, including the agent's credentials[^codex]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Buy the business plan of one assistant and keep company code out of personal accounts.",
+            "Keep approval prompts on and the sandbox enabled; run autonomous tasks in the vendor's cloud agent, not in yolo mode on a laptop.",
+            "Keep production tokens off developer laptops."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Push managed settings by MDM: sandbox required, bypass disabled, MCP allowlist, deny rules for secret paths.",
+            "Stream the GitHub audit log and agent telemetry to your SIEM.",
+            "Alert on permission mode changes and new MCP servers."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Turn on EU data residency or zero retention where offered, and record the tools in your DPIA.",
+            "Run unattended agents only in cloud sandboxes or ephemeral runners with an egress allowlist and short-lived credentials.",
+            "Red-team agent workflows with poisoned issues and pull requests before granting write access."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on GitHub, Anthropic and VS Code documentation, the BSI and ANSSI guidance on AI coding assistants, the USENIX Security 2025 package hallucination study, BaxBench and incident reports from Cline, Railway, Postmark and Gemini CLI."
+    }
+  ],
+  "sources": [
+    {
+      "id": "ghdata",
+      "title": "Updates to our Privacy Statement and Terms of Service",
+      "publisher": "GitHub Changelog",
+      "date": "25 Mar 2026",
+      "url": "https://github.blog/changelog/2026-03-25-updates-to-our-privacy-statement-and-terms-of-service-how-we-use-your-data/"
+    },
+    {
+      "id": "ghnet",
+      "title": "Managing Copilot access to your enterprise's network",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-access/manage-network-access"
+    },
+    {
+      "id": "bsiaica",
+      "title": "AI Coding Assistants",
+      "publisher": "ANSSI and BSI",
+      "date": "Sep 2024",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/KI/ANSSI_BSI_AI_Coding_Assistants.pdf"
+    },
+    {
+      "id": "vscsec",
+      "title": "Secure AI-assisted development in VS Code",
+      "publisher": "VS Code Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://code.visualstudio.com/docs/agents/run/security"
+    },
+    {
+      "id": "railway",
+      "title": "Your AI wants to nuke your database. Guardrails fix that.",
+      "publisher": "Railway",
+      "date": "29 Apr 2026",
+      "url": "https://blog.railway.com/p/your-ai-wants-to-nuke-your-database"
+    },
+    {
+      "id": "ccsandbox",
+      "title": "Claude Code: Configure the sandboxed Bash tool",
+      "publisher": "Anthropic",
+      "date": "checked 5 Nov 2026",
+      "url": "https://code.claude.com/docs/en/sandboxing"
+    },
+    {
+      "id": "ccmodes",
+      "title": "Claude Code: Choose a permission mode",
+      "publisher": "Anthropic",
+      "date": "checked 5 Nov 2026",
+      "url": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "id": "ghms",
+      "title": "Enterprise managed settings (Copilot)",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/reference/enterprise-administrators/enterprise-managed-settings"
+    },
+    {
+      "id": "cline",
+      "title": "Post-mortem: Unauthorized Cline CLI npm publish",
+      "publisher": "Cline",
+      "date": "23 Feb 2026",
+      "url": "https://cline.bot/blog/post-mortem-unauthorized-cline-cli-npm"
+    },
+    {
+      "id": "ghrisks",
+      "title": "Risks and mitigations for GitHub Copilot cloud agent",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/risks-and-mitigations"
+    },
+    {
+      "id": "ghsandbox",
+      "title": "Local sandboxing for GitHub Copilot now generally available",
+      "publisher": "GitHub Changelog",
+      "date": "7 Oct 2026",
+      "url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available/"
+    },
+    {
+      "id": "ghguard",
+      "title": "Building a secure cloud environment for agents",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/tutorials/cloud-agent/build-guardrails"
+    },
+    {
+      "id": "ghaudit",
+      "title": "Reviewing audit logs for GitHub Copilot",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/review-audit-logs"
+    },
+    {
+      "id": "ccotel",
+      "title": "Claude Code: Monitoring",
+      "publisher": "Anthropic",
+      "date": "checked 5 Nov 2026",
+      "url": "https://code.claude.com/docs/en/monitoring-usage"
+    },
+    {
+      "id": "betrvg",
+      "title": "Works Constitution Act (BetrVG), section 87(1)",
+      "publisher": "Gesetze im Internet",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/englisch_betrvg/englisch_betrvg.html"
+    },
+    {
+      "id": "ccperm",
+      "title": "Claude Code: Configure permissions",
+      "publisher": "Anthropic",
+      "date": "checked 5 Nov 2026",
+      "url": "https://code.claude.com/docs/en/permissions"
+    },
+    {
+      "id": "gemadv",
+      "title": "Gemini CLI remote code execution (CVE-2026-12537)",
+      "publisher": "GitHub Advisory Database",
+      "date": "24 Apr 2026",
+      "url": "https://github.com/advisories/GHSA-wpqr-6v78-jr5g"
+    },
+    {
+      "id": "ghexcl",
+      "title": "Content exclusion for GitHub Copilot",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/content-exclusion"
+    },
+    {
+      "id": "cursorsec",
+      "title": "Agent Security",
+      "publisher": "Cursor Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://cursor.com/docs/agent/security"
+    },
+    {
+      "id": "baxbench",
+      "title": "BaxBench leaderboard (no security reminder)",
+      "publisher": "ETH Zurich",
+      "date": "checked 5 Nov 2026",
+      "url": "https://baxbench.com/"
+    },
+    {
+      "id": "usenix",
+      "title": "We Have a Package for You! Package hallucinations by code generating LLMs",
+      "publisher": "USENIX Security",
+      "date": "Aug 2025",
+      "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen"
+    },
+    {
+      "id": "postmark",
+      "title": "Information regarding malicious \"postmark-mcp\" package",
+      "publisher": "Postmark",
+      "date": "25 Sep 2025",
+      "url": "https://postmarkapp.com/blog/information-regarding-malicious-postmark-mcp-package"
+    },
+    {
+      "id": "ghresidency",
+      "title": "GitHub Copilot with data residency",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/enterprise-cloud@latest/admin/data-residency/github-copilot-with-data-residency"
+    },
+    {
+      "id": "ghcrapprove",
+      "title": "Copilot code review can now approve pull requests",
+      "publisher": "GitHub Changelog",
+      "date": "1 Sep 2026",
+      "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests/"
+    },
+    {
+      "id": "ghskip",
+      "title": "Optionally skip approval for Copilot coding agent Actions workflows",
+      "publisher": "GitHub Changelog",
+      "date": "13 Mar 2026",
+      "url": "https://github.blog/changelog/2026-03-13-optionally-skip-approval-for-copilot-coding-agent-actions-workflows/"
+    },
+    {
+      "id": "codex",
+      "title": "Agent approvals and security (Codex)",
+      "publisher": "OpenAI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.chatgpt.com/docs/agent-approvals-security"
+    }
+  ]
+}
