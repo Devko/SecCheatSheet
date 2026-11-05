@@ -24,11 +24,11 @@
         },
         {
           "title": "Fix certificate templates.",
-          "text": "A template any user can enroll in, with a supplied subject name and client authentication, lets them become a domain admin[^mdicert]."
+          "text": "A template any user can enroll in, with a supplied subject name and client authentication, lets them impersonate anyone, even a domain admin[^mdicert]."
         },
         {
           "title": "Remove unconstrained delegation.",
-          "text": "Use resource-based constrained delegation instead, mark admins **sensitive and cannot be delegated** and stop the Print Spooler on DCs[^asdad]."
+          "text": "Use resource-based constrained delegation instead, set **Account is sensitive and cannot be delegated** on admins and stop the Print Spooler on DCs[^asdad]."
         },
         {
           "title": "Set the machine account quota to 0.",
@@ -60,7 +60,7 @@
         },
         {
           "title": "What do you fix first?",
-          "text": "What any user can exploit: templates, DCSync rights[^mdiacct] and write access to AdminSDHolder, GPOs or admin groups. Then delegation and NTLM."
+          "text": "What any user can exploit: templates, stray DCSync rights[^mdiacct] and write access to AdminSDHolder, GPOs or admin groups. Then delegation and NTLM."
         },
         {
           "title": "When do you look again?",
@@ -76,7 +76,7 @@
       "items": [
         "**Templates (ESC1 to ESC4, named by SpecterOps[^certified]).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
         "**CA flags (ESC6, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
-        "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove the role[^certipy].",
+        "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove it if unused[^certipy].",
         "**Log it.** Turn on CA auditing, off by default, and alert on events 4886, 4887, 4899 and 4900[^asdad]."
       ]
     },
@@ -97,7 +97,7 @@
       "title": "NTLM and LDAP",
       "navTitle": "NTLM and LDAP",
       "items": [
-        "**Log NTLM for the whole domain.** Enable **Log Enhanced Domain-wide NTLM Logs** on DCs. Events 4030 to 4033 show NTLM and NTLMv1 use; Server 2019 and 2022 got them in October 2026[^ntlmaudit].",
+        "**Log NTLM for the whole domain.** Check that **Log Enhanced Domain-wide NTLM Logs** is on for DCs. Events 4030 to 4033 show NTLM and NTLMv1 use; Server 2019 and 2022 got them in October 2026[^ntlmaudit].",
         "**Restrict it in stages.** Audit, add server exceptions, then deny with **Restrict NTLM: NTLM authentication in this domain**. Start with CA, Entra Connect and Cloud Sync servers, where Microsoft says to block it[^kb5005413][^connectprereq][^cloudsync].",
         "**Get ready for NTLM off by default** in the next major Windows Server release[^ntlmoff]. The secure-configuration sheet covers the rest.",
         "**Sign LDAP and bind it to TLS,** as BSI expects[^bsiapp22]. Defender for Identity lists clients that bind in clear text[^mdiacct]."
@@ -110,8 +110,8 @@
       "navTitle": "Directory hygiene",
       "items": [
         "**Take DCSync rights from non-admins.** Defender for Identity lists them[^mdiacct]; review the remaining holders every six months[^asdad].",
-        "**Check who can change the admins.** Remove non-admin rights on AdminSDHolder and sensitive groups[^mdiacct]. Domain Computers need write rights nowhere[^asdad].",
-        "**Clear risky attributes:** passwords in descriptions, **Password not required** and **Do not require Kerberos preauthentication**[^mdiacct].",
+        "**Check who can change the admins.** Remove non-admin rights on AdminSDHolder and sensitive groups[^mdiacct]. Give Domain Computers no write rights anywhere[^asdad].",
+        "**Clear risky attributes.** Remove passwords from descriptions, **Password not required** and **Do not require Kerberos preauthentication**[^mdiacct].",
         "**Disable accounts idle for 90 days** and delete them weeks later[^mdiacct], within your retention rules[^bsiapp22].",
         "**Guard DC backups like DCs.** They contain every password hash[^asdad]. The ransomware sheet covers forest recovery."
       ]
