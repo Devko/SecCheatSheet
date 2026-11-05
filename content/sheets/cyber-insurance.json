@@ -1,0 +1,369 @@
+{
+  "slug": "cyber-insurance",
+  "topic": "Cyber insurance",
+  "status": "draft",
+  "order": 41,
+  "capability": "govern/insurance",
+  "title": "Cyber insurance: would your policy actually pay after an attack?",
+  "short": "Back each questionnaire answer with evidence, call the insurer before any responder and read five clauses before renewal.",
+  "answer": "Before your next renewal, check every questionnaire answer against your systems and keep the evidence, because a wrong answer can cost you the cover. Then read the wording on war, provider outages, ransom, payment fraud and fines, and set the limits and the indemnity period from your measured recovery time.",
+  "audience": "IT, security, finance and risk leads in EU organizations buying, renewing or claiming on cyber insurance, especially in Germany",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Answer the questionnaire from evidence, not memory.",
+          "text": "Check each answer against your systems before you sign. Under German law, an insurer can withdraw over an intentional or grossly negligent wrong answer and then pays only if the misstated fact played no part in the claim; after a fraudulent answer it pays nothing[^vvg]."
+        },
+        {
+          "title": "Keep the policy's security duties all year.",
+          "text": "The GDV model terms make controls contractual duties: individual accounts, admin accounts used only for admin work, extra protection such as two-factor sign-in for internet-facing servers, timely patches, weekly backups no single system can alter, a backup server outside Active Directory and regular restore tests. Breaching them intentionally voids the payout; gross negligence reduces it[^avb]."
+        },
+        {
+          "title": "Call the insurer before you hire anyone.",
+          "text": "The GDV model pays forensic and response costs only after prior coordination with the insurer[^avb], and insurers often recommend incident response firms[^ncscpay]. Report the loss without undue delay, and facts that could lead to third-party claims within a week[^avb]."
+        },
+        {
+          "title": "Read five clauses before you renew.",
+          "text": "War and state-backed attacks, provider and infrastructure outages, ransom, payment fraud and fines. A 2026 paper by BIS and IAIS staff finds that policy terms remain ambiguous and exclusions still challenge policyholders[^fsi]."
+        },
+        {
+          "title": "Size the cover from your measured recovery time.",
+          "text": "The GDV model pays an agreed daily rate for business interruption, after a time deductible and only for the agreed indemnity period, and sublimits count against the main limit[^avb]. Take the restore time from the ransomware sheet's recovery test."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "questionnaire",
+      "title": "Answer the questionnaire",
+      "navTitle": "Questionnaire",
+      "items": [
+        {
+          "title": "Who answers?",
+          "text": "IT or security answers the technical questions, finance the revenue and payment ones. If a broker or other agent signs for you, both their knowledge and yours count[^avb]."
+        },
+        {
+          "title": "What exactly is asked?",
+          "text": "Mark scope words such as all, remote and admin. One German insurer asks about MFA for all remote access and for admins, the number of admins, patches within four weeks, flaws scored CVSS 8.0 or higher handled without delay and a yearly restore test of all backups[^markel]. Others ask about email filtering and MFA for webmail[^corvus]."
+        },
+        {
+          "title": "Is it true for every system?",
+          "text": "Check exports, not memory: MFA and Conditional Access reports, EDR coverage, patch compliance, backup and restore logs. Where the honest answer is mostly, describe the exception in writing."
+        },
+        {
+          "title": "Keep the evidence.",
+          "text": "Store a dated copy of the form and the exports behind each answer with the policy."
+        },
+        {
+          "title": "Report changes during the year.",
+          "text": "Don't drop a control you reported without the insurer's consent, and report any increase in risk without undue delay[^avb], such as an expired EDR license or a new MFA exception."
+        }
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "cover",
+      "title": "What a policy usually pays for",
+      "navTitle": "Cover",
+      "span": "full",
+      "intro": "The GDV model terms are non-binding and insurers may deviate from them[^avb], so check each line against your own wording.",
+      "columns": [
+        {
+          "title": "Usually covered",
+          "items": [
+            "**Response costs.** Forensics, legal advice, notification, call center and PR, often through the insurer's providers[^fsi][^ncscins].",
+            "**Data restoration.** Restoring affected data to its earlier state and removing malware[^avb].",
+            "**Business interruption.** Lost profit and running costs while systems are down[^avb].",
+            "**Liability.** Defending and paying third-party claims, including data protection claims up to a sublimit[^avb]."
+          ]
+        },
+        {
+          "title": "Only if you buy it, often sublimited",
+          "items": [
+            "**Ransom.** Excluded in the GDV model[^avb]; BaFin lets insurers bundle it with cyber cover[^bafinrs].",
+            "**Supplier outages.** Dependent business interruption isn't standard and is often limited to named providers[^fsi].",
+            "**Payment fraud.** Few cyber policies cover it directly, and then with sublimits and high retentions[^fsi].",
+            "**Non-malicious failures.** The GDV model covers only attacks, unauthorized access, interference, data protection breaches and malware[^avb]; many wordings add system malfunctions and human error[^fsi]."
+          ]
+        },
+        {
+          "title": "Usually excluded",
+          "items": [
+            "**War and state attacks**, including war by digital means and state attacks that impair critical infrastructure[^avb].",
+            "**Infrastructure failure** of power, telecom and internet networks[^avb].",
+            "**Fines and penalties**, unless agreed and insurable[^avb][^aon].",
+            "**Contractual liability** beyond what the law imposes, and **betterment** beyond restoring the earlier state[^avb].",
+            "**Earlier breaches** that began before the policy, unless retroactive cover was agreed[^avb]."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "claim",
+      "title": "When an incident starts",
+      "navTitle": "Claim",
+      "items": [
+        {
+          "title": "Call the insurer's hotline first.",
+          "text": "Use the crisis line and providers named in the policy. If you want your own responder, get written agreement before they start: the GDV model pays forensics after prior coordination and PR advisers after prior consent[^avb]."
+        },
+        {
+          "title": "Contain, but leave the damage in place.",
+          "text": "Keep the damage picture unchanged until the insurer agrees, and document any change you can't avoid[^avb]. Isolate rather than wipe, as the incident response sheet describes."
+        },
+        {
+          "title": "Ask for instructions and follow them.",
+          "text": "You must follow the insurer's reasonable instructions and ask for them when circumstances allow[^avb]. Keep each one in writing."
+        },
+        {
+          "title": "Don't admit liability or settle.",
+          "text": "An admission or settlement without the insurer's consent binds it only as far as the claim existed anyway[^avb]."
+        },
+        {
+          "title": "Count the loss from day one.",
+          "text": "Log downtime, overtime, extra costs and lost orders per day. A month after reporting, you can claim an interim payment of the minimum amount owed so far[^avb]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "wording",
+      "title": "Read these clauses in your wording",
+      "navTitle": "Wording",
+      "items": [
+        "**Territory.** The GDV model covers sites and systems you run yourself only in Germany unless extended, and third-party claims only when brought in EEA states under their law[^avb]. Add foreign subsidiaries and servers.",
+        "**The war clause.** Since 31 March 2023, Lloyd's has required standalone cyber policies to exclude state-backed attacks that significantly impair a state's functioning or security, with a defined way to attribute them[^y5381]. LMA5564A excludes every state cyber operation[^lma5564]; LMA5567A excludes those with a major detrimental impact on a state but keeps cover for your systems outside it[^lma5567].",
+        "**Who proves attribution.** The GDV model and the LMA clauses leave the burden of proof with the insurer and allow official attribution by the affected state's government as evidence[^avb][^lma5567].",
+        "**Limits.** Sublimits count toward the main limit, the limit is also the annual maximum for all events in the policy year, and related incidents from one cause count as one[^avb].",
+        "**Unpatched flaws.** The GDV model bars running systems with known flaws without extra safeguards[^avb]. Chubb allows 45 days after a CVE is published in NIST's NVD, then shifts more of the loss to you if it is still unpatched at 46, 90, 180 and 365 days[^chubb]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "outages",
+      "title": "Outages and widespread events",
+      "navTitle": "Outages",
+      "items": [
+        "**Provider outages are often out.** The GDV model excludes losses from the failure or disruption of a provider's service where it hits availability, but covers manipulated data or malware at the provider[^avb]. Dependent business interruption is often limited to named providers[^fsi], so name your cloud, SaaS and MSP providers.",
+        "**A faulty update isn't an attack.** The CrowdStrike update of July 2024 caused estimated losses of $5.4 billion for Fortune 500 companies alone[^fsi]. One loss event in four in Munich Re's claims data is non-malicious[^munichre], so ask how the policy treats system failure.",
+        "**Widespread events have their own limits.** Chubb, for example, sets separate limits, retentions and coinsurance for supply chain exploits, zero-days, mass exploitation of known flaws and cloud outages[^chubb].",
+        "**Power and network failures are excluded.** The GDV model excludes infrastructure failure[^avb], which a BIS and IAIS paper counts among the least understood exclusions[^fsi]. The business continuity sheet covers working without it."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "ransom",
+      "title": "Ransom, sanctions and payment fraud",
+      "navTitle": "Ransom and fraud",
+      "items": [
+        "**Ransom cover comes with duties.** BaFin allows it only if it isn't advertised, runs a year at most and obliges you to keep it secret and report the crime to the police without undue delay[^bafinrs]. From 2020 to 2022, German insurers paid ransoms only in very rare cases[^bafin24].",
+        "**Sanctions override the policy.** The GDV model gives no cover where EU or German sanctions, or US sanctions that EU law doesn't block, stand in the way[^avb]. The ransomware sheet covers screening and the decision.",
+        "**Payment fraud needs crime cover.** For voice cloning fraud, the GDV calls fidelity insurance (Vertrauensschadenversicherung) the main cover and cyber insurance relevant only in exceptional cases[^gdvvoice]. The GDV cyber model excludes outflows of assets[^avb]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**BaFin restated its ransom insurance rules.** Circular 01/2026 (VA) applies from 1 April 2026, replaces the 1998 circular without changing its substance and confirms that ransom cover may be bundled with cyber insurance[^bafinrs]. If your policy covers ransom, find its secrecy and police reporting duties.",
+        "**Fines in Germany should be treated as uninsurable.** A February 2026 review by Aon and A&O Shearman advises this until the law is clarified, while defense costs can still be covered[^aon]. Don't pay extra for fines cover; check the defense cost cover instead.",
+        "**Supervisors expect tighter underwriting.** The EU supervisory authorities warn that repricing, stricter underwriting and more exclusions could reduce cyber cover in the longer term[^esas]. BIS and IAIS staff expect insurers to raise requirements as AI speeds up attacks, and say firms that can't fix vulnerabilities may become less insurable[^fsi]. Have patch times ready for the renewal."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Polishing an external security rating.** Underwriters combine questionnaires with outside ratings[^fsi], but a claim turns on what you answered and kept up. Close the questionnaire gaps first.",
+        "**The highest limit on offer.** A large limit with small sublimits for ransom, outages and fraud pays less than it looks. Compare the sublimits with your likely incidents first.",
+        "**Every service the insurer bundles in.** Many insurers offer consulting and risk management support[^ncscins]. Take what closes a gap in your controls and leave the rest."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Answering yes for all when one system is missing.** One VPN, admin or service account without MFA makes all untrue. If you claim measures that aren't in place, the insurer may not have to pay any claims[^ncscins].",
+        "**Starting the renewal too late.** The GDV model renews for another year unless cancelled at least three months before expiry[^avb]. Start the review four months ahead.",
+        "**Assuming other policies cover cyber.** Property and liability policies may give some cyber cover or exclude it[^ncscins]. Check before you count on either.",
+        "**Treating the insurer's minimum as the target.** The NCSC advises against limiting yourself to an insurer's minimum requirements[^ncscins]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Have your IT provider check and sign off each technical answer, with the exports.",
+            "Go through the policy's list of security duties with your IT provider and fix any gap before renewal.",
+            "Use four-eyes approval and call-backs on a known number for payments and bank detail changes, as the GDV advises[^gdvvoice], and ask whether you need fidelity cover."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Give each questionnaire answer an owner and refresh the evidence before each renewal.",
+            "List your critical cloud, SaaS and MSP providers and check how the policy treats their outages.",
+            "Rehearse one tabletop with the insurer's panel firm and your broker."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Have legal and the broker review the war clause, territory, widespread event sublimits and fines wording.",
+            "Line up the policy's notice duties with your NIS2 or DORA reporting clocks from the EU security laws sheet.",
+            "Agree in advance with the board and insurer who decides on a ransom, as the ransomware sheet describes."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on the GDV model terms (AVB Cyber 2024), the German Insurance Contract Act, BaFin's 2026 ransom insurance circular, the BIS and IAIS 2026 cyber insurance paper, Lloyd's and LMA war clauses and NCSC guidance."
+    }
+  ],
+  "sources": [
+    {
+      "id": "avb",
+      "title": "AVB Cyber: model terms for cyber risk insurance",
+      "publisher": "GDV",
+      "date": "Feb 2024",
+      "url": "https://www.gdv.de/resource/blob/6100/a0fed56c4947751cdc20b5206c171d98/01-allgemeine-versicherungsbedingungen-fuer-die-cyberrisiko-versicherung-avb-cyber--data.pdf"
+    },
+    {
+      "id": "vvg",
+      "title": "Versicherungsvertragsgesetz (VVG), §§ 19 and 21",
+      "publisher": "gesetze-im-internet.de",
+      "date": "current",
+      "url": "https://www.gesetze-im-internet.de/vvg_2008/BJNR263110007.html"
+    },
+    {
+      "id": "fsi",
+      "title": "Cyber insurance unpacked: the corporate digital safety net (FSI Insights No 75)",
+      "publisher": "BIS FSI and IAIS",
+      "date": "17 Jun 2026",
+      "url": "https://www.bis.org/publications/fsi-insight-75-cyber-insurance-unpacked-corporate-digital-safety-net"
+    },
+    {
+      "id": "ncscpay",
+      "title": "Guidance for organisations considering payment in ransomware incidents",
+      "publisher": "NCSC (UK) with ABI, BIBA and IUA",
+      "date": "14 May 2024",
+      "url": "https://www.ncsc.gov.uk/guidance/organisations-considering-payment-in-ransomware-incidents"
+    },
+    {
+      "id": "ncscins",
+      "title": "Cyber insurance guidance",
+      "publisher": "NCSC (UK)",
+      "date": "6 Aug 2020",
+      "url": "https://www.ncsc.gov.uk/guidance/cyber-insurance-guidance"
+    },
+    {
+      "id": "markel",
+      "title": "Pro Cyber questionnaire (insurer's application form)",
+      "publisher": "Markel Germany",
+      "date": "version 2, Jun 2025",
+      "url": "https://content.markel.com/api/public/content/MARKEL-Cyber-Pro-Cyber-Fragebogen-GER"
+    },
+    {
+      "id": "corvus",
+      "title": "Smart Cyber application (insurer's application form), version 3.2",
+      "publisher": "Corvus Insurance",
+      "date": "Sep 2024",
+      "url": "https://help.corvusinsurance.com/hubfs/Corvus%20Smart%20Cyber%20Application.pdf"
+    },
+    {
+      "id": "y5381",
+      "title": "Market Bulletin Y5381: State backed cyber-attack exclusions",
+      "publisher": "Lloyd's",
+      "date": "17 Aug 2022",
+      "url": "https://assets.lloyds.com/media/e9a4058c-4c25-48d6-99d3-0c466987e099/Y5381%20Market%20Bulletin%20-%20Cyber-attack%20exclusions.pdf"
+    },
+    {
+      "id": "lma5564",
+      "title": "LMA5564A War and Cyber Operation Exclusion No. 1",
+      "publisher": "Lloyd's Market Association",
+      "date": "18 Jan 2023",
+      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5564A-1-1.pdf"
+    },
+    {
+      "id": "lma5567",
+      "title": "LMA5567A War and Cyber Operation Exclusion No. 4",
+      "publisher": "Lloyd's Market Association",
+      "date": "18 Jan 2023",
+      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5567A-1.pdf"
+    },
+    {
+      "id": "chubb",
+      "title": "Cyber endorsement factsheet (insurer's product sheet)",
+      "publisher": "Chubb (Germany)",
+      "date": "Nov 2021",
+      "url": "https://www.chubb.com/content/dam/chubb-sites/chubb-com/de-de/dokumente/cyber/Chubb_DE0422_Cyber_Endorsement_Factsheet_202111%20(1).pdf"
+    },
+    {
+      "id": "munichre",
+      "title": "Cyber insurance: risks and trends 2026 (insurer report)",
+      "publisher": "Munich Re",
+      "date": "25 Mar 2026",
+      "url": "https://www.munichre.com/en/insights/cyber/cyber-insurance-risks-and-trends-2026.html"
+    },
+    {
+      "id": "bafinrs",
+      "title": "Rundschreiben 01/2026 (VA): Betrieb von Lösegeldversicherungen",
+      "publisher": "BaFin",
+      "date": "1 Apr 2026",
+      "url": "https://www.bafin.de/SharedDocs/Veroeffentlichungen/DE/Rundschreiben/2026/rs_01_26_rundschreiben_va.html"
+    },
+    {
+      "id": "bafin24",
+      "title": "Cyberversicherungen: hohe Nachfrage und hohe Risiken?",
+      "publisher": "BaFin",
+      "date": "7 Feb 2024",
+      "url": "https://www.bafin.de/SharedDocs/Veroeffentlichungen/DE/Fachartikel/2024/fa_bj_2402_Cyberversicherung.html"
+    },
+    {
+      "id": "gdvvoice",
+      "title": "Voice-Cloning und KI-Avatare: Digitale Betrugsmöglichkeiten werden professioneller",
+      "publisher": "GDV",
+      "date": "updated 12 Aug 2026",
+      "url": "https://www.gdv.de/gdv/themen/digitalisierung/voice-cloning-und-ki-avatare-digitale-betrugsmoeglichkeiten-werden-professioneller-205926"
+    },
+    {
+      "id": "aon",
+      "title": "The Insurability of Cyber Fines (broker and law firm report)",
+      "publisher": "Aon and A&O Shearman",
+      "date": "Feb 2026",
+      "url": "https://assets.aon.com/-/media/files/aon/reports/2026/insurability-of-cyber-fines_report.pdf"
+    },
+    {
+      "id": "esas",
+      "title": "Joint Committee update on risks and vulnerabilities in the EU financial system, autumn 2026",
+      "publisher": "EBA, EIOPA and ESMA",
+      "date": "23 Sep 2026",
+      "url": "https://www.eiopa.europa.eu/document/download/fe387fa7-bbe3-4cb3-9b02-df5bd2ee3127_en?filename=Joint+Committee+Update+on+risks+and+vulnerabilities+in+the+EU+financial+system+-+Autumn+2026.pdf"
+    }
+  ]
+}

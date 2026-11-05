@@ -1,0 +1,215 @@
+{
+  "slug": "secure-java",
+  "topic": "Secure Java",
+  "status": "draft",
+  "order": 38,
+  "capability": "coding/java",
+  "title": "Java: which APIs and framework defaults turn into vulnerabilities?",
+  "short": "Never let outside data name the class it becomes, keep input out of queries and expressions, and move off Spring Boot 3.5, without free fixes since June 2026.",
+  "answer": "Before your next release, move to JDK 25 or 21 and Spring Boot 4.1[^sbsupport], stop deserializing outside data into classes it names, and make Find Security Bugs or CodeQL a required check. Judge everything else by whether outside data can pick a class, become SQL, an expression or a command line, reach an XML parser, a path or a URL, or slip past an authorization rule.",
+  "audience": "Developers and tech leads writing production Java, including Spring Boot services, and the security people who review it",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Run a supported JDK and Spring Boot, and patch every quarter.",
+          "text": "OpenJDK ships fixes on the third Tuesday of January, April, July and October[^ojvuln]; October's fixed 48 CVEs[^oj1020]. Spring Boot 3.5 lost free fixes in June 2026 and 4.0 loses them in December; 4.1 keeps them until July 2027[^sbsupport]. Patch within the patching sheet's deadlines."
+        },
+        {
+          "title": "Never let outside data name the class it becomes.",
+          "text": "Java deserialization creates whatever classes the stream names, and no filter runs unless you set one[^serfilter]. Jackson's default typing hands the same choice to the JSON[^jackson]. Read outside data as JSON into records or concrete DTOs."
+        },
+        {
+          "title": "Keep input out of queries, expressions and commands.",
+          "text": "Bind JDBC and JPQL values as parameters, never parse SpEL or OGNL built from input, and start processes with a `ProcessBuilder` argument list. SQL injection, OS command injection and code injection rank 2nd, 9th and 10th in the 2025 CWE Top 25[^cwe]."
+        },
+        {
+          "title": "Deny by default and keep management endpoints private.",
+          "text": "Spring Security applies the first rule that matches[^ssauthz], so end with `.anyRequest().denyAll()` or `.authenticated()`. Expose only `health`, Boot's default[^actuator]: ActiveMQ's Jolokia endpoint let logged-in users run code (CVE-2026-34197), and CISA lists it as exploited[^amq][^kev]."
+        },
+        {
+          "title": "Make the analyzers a required check.",
+          "text": "Run Find Security Bugs on SpotBugs or CodeQL on every pull request[^fsb][^cql], and set Dependency-Check's `failBuildOnCVSS`: its default of 11 never fails the build[^odc]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "review",
+      "title": "Review a Java pull request",
+      "navTitle": "Review",
+      "items": [
+        {
+          "title": "Where does outside data enter?",
+          "text": "Find the controllers, message listeners, uploads and batch jobs it touches. Each should bind a record or DTO made for that request, as Spring advises[^modelattr], not a JPA entity."
+        },
+        {
+          "title": "Who may call it, on which record?",
+          "text": "Ask why for each new `permitAll()` and for any matcher placed after a broader one, since the first match wins[^ssauthz]. Missing authorization ranks 4th in the CWE Top 25[^cwe]: check who owns the record, not just the login."
+        },
+        {
+          "title": "Can data choose a class or code?",
+          "text": "Search for `ObjectInputStream`, `XMLDecoder`, `activateDefaultTyping`, `Id.CLASS`, `Class.forName`, `parseExpression` and `lookup(`."
+        },
+        {
+          "title": "Does it reach SQL, a process, XML, a path or a URL?",
+          "text": "Check `createQuery` and `@Query` strings built with `+`, `ProcessBuilder`, new XML parser factories, `resolve(` and HTTP clients given URLs from input."
+        },
+        {
+          "title": "What does it expose?",
+          "text": "Check `exposure.include`, new `SecurityFilterChain` beans, which turn off Boot's own actuator rules[^actuator], error details and logged secrets."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "traps",
+      "title": "Java traps and what to use instead",
+      "navTitle": "Traps",
+      "span": "full",
+      "items": [
+        "**`ObjectInputStream.readObject()` and `XMLDecoder`.** The stream decides which classes are created, and gadget classes on the classpath turn that into code execution[^serfilter]. Tomcat's CVE-2025-24813 reached it through uploads and file-based session storage[^tomcat], and OWASP lists `XMLDecoder` as unsafe for untrusted input[^owaspdeser]. Where you must read Java serialization, set `jdk.serialFilter` to an allowlist ending in `!*`, with `maxbytes` and `maxdepth` limits[^serpattern].",
+        "**`activateDefaultTyping()` and `@JsonTypeInfo(use = Id.CLASS)`.** The JSON then names the class, and Jackson warns that the validator you pass is critical for security[^jackson]. Use `Id.NAME` and list the allowed subtypes[^fsb]. XStream with a relaxed allowlist, SnakeYAML without `SafeConstructor` and fastjson without safe mode have the same problem[^owaspdeser].",
+        "**`DocumentBuilderFactory.newInstance()` with its defaults.** JDK XML parsers fetch external DTDs and entities unless you turn on secure processing explicitly[^jaxp], and GeoServer's XXE (CVE-2025-58360) is on CISA's exploited list[^kev]. On JDK 22 and later, set `-Djdk.xml.dtd.support=deny`[^javaxml]; on older JDKs set `disallow-doctype-decl` on DOM and SAX factories and `SUPPORT_DTD` to false on StAX[^jaxp].",
+        "**`\"WHERE id = \" + id` in JDBC, JPQL or a native `@Query`.** Hibernate queries are injectable when you concatenate[^owaspsqli]. Bind `?` or `:name` parameters, and map sort columns and directions from a fixed list, since parameters can't stand for column names[^owaspsqli]. Spring Data JPA's `Sort` check on native queries could be bypassed until August (CVE-2026-47834)[^jpasort].",
+        "**`parseExpression(input)` in SpEL, and OGNL or templates built from input.** Spring says `StandardEvaluationContext` must never evaluate untrusted expressions and `SimpleEvaluationContext` restricts them only on a best-effort basis[^spel]. SpEL injection in Spring Cloud Function and OGNL injection in Confluence are on CISA's exploited list[^kev]. Pass input as variables to fixed expressions.",
+        "**`Class.forName(name)` and JNDI `lookup(name)` with names from data.** PaperCut's exploited CVE-2026-82078 let attackers who could change configuration run classpath code through unsafe reflection[^kev], and Log4Shell let anyone who controlled a log message run code loaded from LDAP[^log4j]. Map names from a fixed list.",
+        "**`@ModelAttribute` binding onto entities.** Spring4Shell (CVE-2022-22965) was remote code execution through data binding[^kev]. Spring recommends an object made for web binding or constructor binding, and `allowedFields` where you must bind properties[^modelattr]. Bind requests to records.",
+        "**`Runtime.exec(String)` and `sh -c`.** `exec(String)` splits the command on whitespace and is deprecated since JDK 18[^runtime]. Use `ProcessBuilder` with a fixed program and one list element per argument, put `--` before values that may start with a dash, and never pass input to `sh -c` or `cmd /c`.",
+        "**`base.resolve(name)`.** An absolute `name` replaces `base`, and `normalize()` drops `..` without checking symlinks[^path]. Require the normalized result to `startsWith(base)`, which compares whole name elements, and use `toRealPath()` where links matter[^path]. Check `ZipEntry` names the same way.",
+        "**`new URL(input).openStream()` and HTTP clients given URLs from input.** URL connections also open `file:` URLs[^fsb], and server-side request forgery ranks 22nd in the CWE Top 25[^cwe]. Allowlist hosts, check the resolved address and keep `HttpClient`'s default of not following redirects[^httpclient]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Tools that catch it",
+      "navTitle": "Tools",
+      "items": [
+        "**Find Security Bugs.** Add `findsecbugs-plugin` to the SpotBugs Maven or Gradle plugin and fix `OBJECT_DESERIALIZATION`, `JACKSON_UNSAFE_DESERIALIZATION`, `XXE_DOCUMENT`, `SQL_INJECTION_JPA`, `SPEL_INJECTION` and `COMMAND_INJECTION` first[^fsb].",
+        "**Error Prone.** `BanJNDI` is an error by default; turn on the experimental `BanSerializableRead` and `BanClassLoader` checks[^ep].",
+        "**CodeQL.** `java/unsafe-deserialization`, `java/xxe`, `java/spel-expression-injection`, `java/jndi-injection`, `java/zipslip` and `java/spring-boot-exposed-actuators` cover the traps above[^cql].",
+        "**The strict JAXP template.** Run tests with `java.xml.config.file` pointing to a copy of the JDK's `jaxp-strict.properties.template` to find parsers that fetch DTDs[^jaxp].",
+        "**Dependency-Check** needs `failBuildOnCVSS` and an NVD API key[^odc]. Gradle's `--write-verification-metadata sha256` records checksums that fail the build on mismatch[^gradle]. The supply-chain sheet covers the rest."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Oracle JDK 21 updates are no longer free for production.** Releases from 20 October 2026 come under the OTN license; Oracle JDK 25 updates stay free until September 2028[^oracle]. Temurin supports 21 until at least December 2029[^temurin].",
+        "**Compromised CA keys need another JDK update.** After eight eMudhra intermediate CA keys were compromised, install a runtime that fixes JDK-8395690 (CVE-2026-114820), even if you updated in October; on Debian and Ubuntu, also rebuild the Java keystore[^ojemudhra].",
+        "**Spring Boot 4.0.0 to 4.0.5 could leave every endpoint open** in apps on Boot's default web security with actuator autoconfiguration but without `spring-boot-health` (CVE-2026-40976, critical)[^sp40976].",
+        "**Free Spring fixes skip the 3.5 line.** August's critical Spring Security fix (CVE-2026-59270) shipped free only for 7.0 and 7.1[^sp59270]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**The Security Manager.** JDK 24 disabled it for good, and it was rarely used to secure server code[^jep486]. Run untrusted code in its own process or container.",
+        "**Hunting gadget classes.** OWASP expects more to be found[^owaspdeser], and Find Security Bugs meant its gadget detector mostly for researchers[^fsb]. Stop deserializing outside data instead.",
+        "**Find Security Bugs' inventory patterns.** `SPRING_ENDPOINT` fires on every Spring controller and `SERVLET_PARAMETER` on every request parameter[^fsb]. Exclude them and triage injection findings first.",
+        "**CSRF tokens for APIs no browser calls.** Spring says services used only by non-browser clients likely don't need them[^sscsrf]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Exposing actuator, JMX or Jolokia.** `exposure.include=*` publishes every endpoint, and `heapdump`, off by default, returns a heap dump of the running JVM[^actuator]. Serve them only to the monitoring network, behind authentication.",
+        "**Turning off CSRF in a browser app.** Spring shows a plain HTML form posting forged JSON as `text/plain`[^sscsrf]. Keep it on wherever session cookies authenticate.",
+        "**Updating the host JDK but not the one in the image.** Each standalone runtime has its own `cacerts`, and Debian and Ubuntu need a keystore rebuild[^ojemudhra]. Rebuild images and `jlink` runtimes after every JDK update."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like for your code",
+      "navTitle": "By codebase",
+      "span": "full",
+      "columns": [
+        {
+          "title": "New project",
+          "items": [
+            "Start on JDK 25 and Spring Boot 4.1, with `.anyRequest().denyAll()` as the last rule.",
+            "Set `-Djdk.serialFilter=!*` and `-Djdk.xml.dtd.support=deny` unless something needs Java serialization or DTDs.",
+            "Bind every request to a record and keep entities out of controllers."
+          ]
+        },
+        {
+          "title": "Existing codebase",
+          "items": [
+            "Move Oracle JDK 21 to JDK 25 or an OpenJDK build, and leave JDK 11 and 17 before October 2027[^temurin].",
+            "Search for `ObjectInputStream`, `activateDefaultTyping`, `parseExpression`, `createQuery(` with `+` and `exposure.include`.",
+            "Remove Log4j 1, at end of life since 2015[^log4j]."
+          ]
+        },
+        {
+          "title": "High-assurance or regulated",
+          "items": [
+            "Make CodeQL's `security-extended` suite and Find Security Bugs required checks.",
+            "Run with an allowlist `jdk.serialFilter` and the strict JAXP template as the JAXP configuration file[^jaxp].",
+            "Stay on Spring and JDK lines with free fixes, or pay for support on the ones you keep."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on OpenJDK, Oracle and Adoptium support and advisory pages, JDK 25 documentation, Spring documentation and advisories, CISA's KEV catalog, OWASP cheat sheets, analyzer documentation and the 2025 CWE Top 25."
+    }
+  ],
+  "sources": [
+    { "id": "oracle", "title": "Oracle Java SE Support Roadmap", "publisher": "Oracle", "date": "updated 20 Oct 2026", "url": "https://www.oracle.com/java/technologies/java-se-support-roadmap.html" },
+    { "id": "temurin", "title": "Temurin support roadmap", "publisher": "Adoptium", "date": "checked 5 Nov 2026", "url": "https://adoptium.net/support/" },
+    { "id": "ojvuln", "title": "OpenJDK Vulnerability Advisories", "publisher": "OpenJDK", "date": "updated 24 Oct 2026", "url": "https://openjdk.org/groups/vulnerability/advisories/" },
+    { "id": "oj1020", "title": "OpenJDK Vulnerability Advisory: 2026/10/20", "publisher": "OpenJDK", "date": "20 Oct 2026", "url": "https://openjdk.org/groups/vulnerability/advisories/2026-10-20" },
+    { "id": "ojemudhra", "title": "Compromised Certificates and OpenJDK Java Runtimes", "publisher": "OpenJDK", "date": "updated 24 Oct 2026", "url": "https://openjdk.org/emudhra" },
+    { "id": "sbsupport", "title": "Spring Boot: support", "publisher": "Spring", "date": "checked 5 Nov 2026", "url": "https://spring.io/projects/spring-boot#support" },
+    { "id": "sp40976", "title": "CVE-2026-40976: Spring Boot default web security", "publisher": "Spring", "date": "23 Apr 2026", "url": "https://spring.io/security/cve-2026-40976" },
+    { "id": "sp59270", "title": "CVE-2026-59270: Spring Security embedded LDAP server", "publisher": "Spring", "date": "20 Aug 2026", "url": "https://spring.io/security/cve-2026-59270" },
+    { "id": "jpasort", "title": "CVE-2026-47834: Spring Data JPA Sort validation bypass", "publisher": "Spring", "date": "20 Aug 2026", "url": "https://spring.io/security/cve-2026-47834" },
+    { "id": "ssauthz", "title": "Authorize HttpServletRequests", "publisher": "Spring Security docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html" },
+    { "id": "sscsrf", "title": "Cross Site Request Forgery (CSRF)", "publisher": "Spring Security docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-security/reference/features/exploits/csrf.html" },
+    { "id": "actuator", "title": "Actuator: Endpoints", "publisher": "Spring Boot docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-boot/reference/actuator/endpoints.html" },
+    { "id": "spel", "title": "SpEL: Evaluation, security considerations", "publisher": "Spring Framework docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-framework/reference/core/expressions/evaluation.html" },
+    { "id": "modelattr", "title": "@ModelAttribute", "publisher": "Spring Framework docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.html" },
+    { "id": "serfilter", "title": "Addressing Deserialization Vulnerabilities", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/core/addressing-serialization-vulnerabilities.html" },
+    { "id": "serpattern", "title": "Creating Pattern-Based Filters", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/core/creating-pattern-based-filters.html" },
+    { "id": "jaxp", "title": "JAXP Security Guide", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html" },
+    { "id": "javaxml", "title": "Module java.xml", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html" },
+    { "id": "path", "title": "Interface Path", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Path.html" },
+    { "id": "runtime", "title": "Class Runtime", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Runtime.html" },
+    { "id": "httpclient", "title": "Class HttpClient", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.net.http/java/net/http/HttpClient.html" },
+    { "id": "jep486", "title": "JEP 486: Permanently Disable the Security Manager", "publisher": "OpenJDK", "date": "updated 2 Sep 2025", "url": "https://openjdk.org/jeps/486" },
+    { "id": "jackson", "title": "ObjectMapper (jackson-databind 2.22)", "publisher": "FasterXML", "date": "checked 5 Nov 2026", "url": "https://javadoc.io/static/com.fasterxml.jackson.core/jackson-databind/2.22.4/com/fasterxml/jackson/databind/ObjectMapper.html" },
+    { "id": "log4j", "title": "Apache Log4j security", "publisher": "Apache Logging Services", "date": "checked 5 Nov 2026", "url": "https://logging.apache.org/security.html" },
+    { "id": "tomcat", "title": "Apache Tomcat 11.x vulnerabilities", "publisher": "Apache Tomcat", "date": "checked 5 Nov 2026", "url": "https://tomcat.apache.org/security-11.html" },
+    { "id": "amq", "title": "CVE-2026-34197 announcement", "publisher": "Apache ActiveMQ", "date": "7 Apr 2026", "url": "https://activemq.apache.org/security-advisories.data/CVE-2026-34197-announcement.txt" },
+    { "id": "kev", "title": "Known Exploited Vulnerabilities Catalog", "publisher": "CISA", "date": "checked 5 Nov 2026", "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog" },
+    { "id": "cwe", "title": "2025 CWE Top 25", "publisher": "MITRE CWE", "date": "Dec 2025", "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html" },
+    { "id": "owaspdeser", "title": "Deserialization Cheat Sheet", "publisher": "OWASP", "date": "checked 5 Nov 2026", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html" },
+    { "id": "owaspsqli", "title": "SQL Injection Prevention Cheat Sheet", "publisher": "OWASP", "date": "checked 5 Nov 2026", "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" },
+    { "id": "fsb", "title": "Find Security Bugs bug patterns", "publisher": "Find Security Bugs", "date": "checked 5 Nov 2026", "url": "https://find-sec-bugs.github.io/bugs.htm" },
+    { "id": "ep", "title": "Error Prone bug patterns", "publisher": "Error Prone", "date": "checked 5 Nov 2026", "url": "https://errorprone.info/bugpatterns" },
+    { "id": "cql", "title": "CodeQL query help for Java and Kotlin", "publisher": "GitHub", "date": "checked 5 Nov 2026", "url": "https://codeql.github.com/codeql-query-help/java/" },
+    { "id": "odc", "title": "dependency-check-maven configuration", "publisher": "OWASP Dependency-Check", "date": "13.0.0, 3 Aug 2026", "url": "https://dependency-check.github.io/DependencyCheck/dependency-check-maven/configuration.html" },
+    { "id": "gradle", "title": "Verifying dependencies", "publisher": "Gradle docs", "date": "checked 5 Nov 2026", "url": "https://docs.gradle.org/current/userguide/dependency_verification.html" }
+  ]
+}

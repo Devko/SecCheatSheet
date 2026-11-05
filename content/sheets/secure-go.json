@@ -1,0 +1,379 @@
+{
+  "slug": "secure-go",
+  "topic": "Secure Go",
+  "status": "draft",
+  "order": 39,
+  "capability": "coding/go",
+  "title": "Go: which habits still turn into vulnerabilities?",
+  "short": "Rebuild every binary with Go 1.27.3 or 1.26.10 now and on each point release, gate CI on govulncheck and gosec, and put a timeout and a size limit on every request.",
+  "answer": "Before your next release, rebuild every Go binary with Go 1.27.3 or 1.26.10, as Go 1.25 is unsupported[^policy][^release], and make `govulncheck` and `gosec` required CI checks. Judge everything else by whether outside data can reach SQL, a shell, a template, a path or a URL unchecked, or hold memory, a connection or a goroutine without a limit.",
+  "audience": "Developers and tech leads writing production Go services and tools, and the security people who review them",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Run a supported Go and rebuild on every point release.",
+          "text": "Only the two newest major releases get security fixes[^policy]: today 1.27.3 and 1.26.10[^release]. Rebuild to apply them; `go version -m` shows which Go built a binary[^emudhra]."
+        },
+        {
+          "title": "Make govulncheck and gosec required checks.",
+          "text": "`govulncheck ./...` narrows findings to vulnerabilities your code can reach and exits non-zero on them[^govulncheck]. gosec's taint rules G701 to G705 cover SQL, commands, paths, SSRF and XSS[^gosec]."
+        },
+        {
+          "title": "Bound every request in time and size.",
+          "text": "Zero `http.Server` timeouts mean none, and `http.DefaultClient` has none either[^nethttp]. Set `ReadHeaderTimeout`, wrap bodies in `http.MaxBytesReader` and time out every client."
+        },
+        {
+          "title": "Open files from input only through os.Root.",
+          "text": "Path traversal ranks 6th in the CWE Top 25[^cwe]. `filepath.Join` cleans `..` but doesn't confine it[^filepath]; `os.OpenInRoot` and `os.Root` refuse names and symlinks that leave the directory[^ospkg]."
+        },
+        {
+          "title": "Test with the race detector and fuzz your parsers.",
+          "text": "Races on interfaces, maps, slices and strings can corrupt memory[^memmodel], and `go test -race` finds only those your tests execute[^race]. Give every parser a `go test -fuzz` target[^fuzz]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "review",
+      "title": "Review a Go pull request",
+      "navTitle": "Review",
+      "items": [
+        {
+          "title": "Where does outside data enter?",
+          "text": "Find the handlers, gRPC methods and queue consumers it touches. Each should cap the body, decode into a struct and check the caller's right to the record: missing authorization ranks 4th in the CWE Top 25[^cwe]."
+        },
+        {
+          "title": "Does it start a goroutine?",
+          "text": "Ask what stops it, whether it gets the request's `context.Context` and what it shares without a lock[^memmodel]."
+        },
+        {
+          "title": "Does input reach SQL, a command, a template or a path?",
+          "text": "Search for `fmt.Sprintf` near `Query` or `Exec`, `\"sh\", \"-c\"`, `text/template`, `template.HTML(`, `filepath.Join`, `os.Open` and archive readers."
+        },
+        {
+          "title": "Does it call out over the network?",
+          "text": "Check URLs from input, clients without a `Timeout`, `InsecureSkipVerify` and `ReverseProxy.Director`, deprecated in Go 1.26 because clients can strip the headers it adds[^go126]."
+        },
+        {
+          "title": "Does it switch off Go's checks?",
+          "text": "`unsafe`, cgo, `//go:debug` lines and `godebug` blocks in `go.mod` need a second reviewer."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "traps",
+      "title": "Go traps and what to use instead",
+      "navTitle": "Traps",
+      "span": "full",
+      "items": [
+        "**`filepath.Join(dir, name)` and `http.Dir`.** `filepath.Join(\"a/b\", \"../../../xyz\")` returns `../xyz`[^filepath], and `http.Dir` follows symlinks out of its tree and serves dotfiles such as `.git`[^nethttp]. Use `os.OpenInRoot`, `os.Root` and `http.FileServerFS(root.FS())`[^ospkg], and patch: `os.Root` escapes were fixed in March, July and October[^osvulns].",
+        "**`zip.NewReader` and `tar.NewReader`.** Both accept entry names like `../x` unless `GODEBUG` sets `zipinsecurepath=0` or `tarinsecurepath=0`[^godebug]. Create each entry through an `os.Root` and copy with `io.CopyN` to cap its size, as gosec G110 asks[^gosec].",
+        "**`text/template`, `template.HTML(s)` and data inside `<script>`.** Only `html/template` escapes, and it trusts template authors and `template.HTML` values[^htmltpl]. Go fixed seven `html/template` escaping bugs in 2026, five in script contexts[^tplvulns]. Pass data in `data-` attributes, and never parse templates from user input. Cross-site scripting ranks 1st in the CWE Top 25[^cwe].",
+        "**`db.Query(fmt.Sprintf(...))` and ORM string methods.** Go's docs call SQL built with `fmt` a security risk: pass values as arguments with your driver's placeholder, such as `?` or `$1`[^gosql]. GORM doesn't escape `Order`, `Select`, `Table`, `Group` or `Raw`, and `db.First(&u, id)` with a string `id` is injectable[^gorm]. Map sort columns from a fixed list.",
+        "**`exec.Command(\"sh\", \"-c\", cmd)`.** `os/exec` deliberately runs no shell[^exec], and `sh -c` brings back OS command injection, 9th in the CWE Top 25[^cwe]. Pass each argument separately, put `--` before values that may start with `-`, and don't clear `exec.ErrDot`, which stops `Command` from running a program in the current directory[^exec].",
+        "**`http.Get(r.FormValue(\"url\"))`.** The default client has no timeout and follows up to 10 redirects[^nethttp]. Allowlist hosts, then reject loopback, private and link-local addresses in `net.Dialer.ControlContext`, which runs just before each connection is made[^net]. Server-side request forgery ranks 22nd in the CWE Top 25[^cwe].",
+        "**`json.Unmarshal(body, &req)`.** The v1 decoder matches names case-insensitively, lets the later of duplicate names win and ignores unknown fields, so two services can read one request differently[^jsonv2]. On Go 1.27, use `encoding/json/v2`, which rejects duplicates and invalid UTF-8 and matches names exactly, with `json.RejectUnknownMembers(true)`[^jsonv2].",
+        "**`go func() { ... }()` in a handler.** `net/http` recovers a panic in the handler itself[^nethttp], but an unrecovered panic in a goroutine it starts ends the program. Nil map writes, nil pointers, bad indexes and one-value type assertions all panic[^spec]. Use `v, ok := x.(T)` and a deferred `recover` in goroutines that handle input.",
+        "**`int32(n)` and other integer conversions.** They truncate with no indication of overflow, and arithmetic overflows without a panic[^spec]. Parse with the target size, as in `strconv.ParseInt(s, 10, 32)`, and check lengths before converting them, which gosec G115 flags[^gosec]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Tools that catch it",
+      "navTitle": "Tools",
+      "items": [
+        "**govulncheck.** Source mode checks the standard library of the `go` on your `PATH`, `-mode binary` a built binary. Calls through `reflect` are invisible[^govulncheck].",
+        "**gosec.** Fix G112 (no `ReadHeaderTimeout`), G115 (integer conversion), G204, G304, G305, G402, G404 (`math/rand`) and G701 to G705 first[^gosec].",
+        "**Race detector and fuzzer.** `go test -race` can use 5 to 10 times the memory and 2 to 20 times the time[^race]: run it in CI. Fuzz one target per run with `-fuzztime`[^fuzz].",
+        "**Goroutine leak profile.** Go 1.27's `goroutineleak` profile reports goroutines that can never wake up[^go127]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Go 1.27 shipped on 19 August,** ending support for Go 1.25[^release][^policy]. Old `go` lines no longer turn TLS 1.0 or 3DES back on by default[^go126][^go127].",
+        "**Go made its first URGENT release.** Go 1.27.3 and 1.26.10, out on 19 October, distrust eMudhra intermediates whose keys were trivially weak[^emudhra].",
+        "**Malicious proxies could bypass the checksum database** until fixes in May, August and October. Upgrade the installed Go, as pinning `GOTOOLCHAIN` isn't enough[^cmdgovulns]. The supply-chain sheet covers the rest.",
+        "**A compiler bug dropped bounds checks.** Go 1.26.2 and 1.25.9 fixed loop arithmetic that could let code without `unsafe` corrupt memory (CVE-2026-27143)[^cve27143]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Setting `GOFLAGS=-mod=readonly`.** Build commands have behaved that way since Go 1.16[^gomod].",
+        "**FIPS 140-3 mode you don't need.** Go says applications without a compliance need shouldn't enable it, and `fips140=only` isn't meant for production[^fips].",
+        "**Rushing govulncheck's informational findings.** It lists vulnerabilities your code doesn't call separately and says you may not need to act[^govultut]. Fix them in routine updates."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Patching the image, not the binary.** On Linux, Go checks certificates itself, without revocation checks[^emudhra]. Only binaries rebuilt with 1.27.3 or 1.26.10 reject the eMudhra intermediates. Scan what you deploy with `govulncheck -mode binary`.",
+        "**Leaving the `go` line in `go.mod` behind.** Most GODEBUG defaults follow it, so a `go 1.23` module built with Go 1.27 still accepts RSA keys under 1,024 bits. Check with `go list -f '{{.DefaultGODEBUG}}'`[^godebug]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like for your code",
+      "navTitle": "By codebase",
+      "span": "full",
+      "columns": [
+        {
+          "title": "New project",
+          "items": [
+            "Run `go get go@1.27.3` after `go mod init`, which writes an older `go` line[^go126], and use `encoding/json/v2` and `os.Root` from the start.",
+            "Give each `http.Server` timeouts, and put `http.NewCrossOriginProtection().Handler` in front of the mux against CSRF[^nethttp].",
+            "Make `govulncheck`, `gosec` and `go test -race` required checks."
+          ]
+        },
+        {
+          "title": "Existing codebase",
+          "items": [
+            "Leave Go 1.25, raise the `go` line and compare `DefaultGODEBUG` before and after[^godebug].",
+            "Search for `ListenAndServe(`, `filepath.Join(`, `\"sh\", \"-c\"`, `InsecureSkipVerify`, `Director:` and `math/rand`.",
+            "Run `govulncheck -mode binary` on the binaries you deploy[^govulncheck]."
+          ]
+        },
+        {
+          "title": "High-assurance or regulated",
+          "items": [
+            "For FIPS 140-3, build with `GOFIPS140=certified`: Go Cryptographic Module v1.0.0 holds CMVP certificate #5247[^fips].",
+            "Fuzz every parser continuously; OSS-Fuzz runs native Go fuzz tests[^fuzz].",
+            "Require CodeQL's `security-extended` suite, and build with `CGO_ENABLED=0` unless a reviewed package needs cgo[^go127]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Go's release notes, security policy, vulnerability database, standard library docs and blog, gosec and GORM docs and the 2025 CWE Top 25."
+    }
+  ],
+  "sources": [
+    {
+      "id": "policy",
+      "title": "Go Security Policy",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/security/policy"
+    },
+    {
+      "id": "release",
+      "title": "Release History",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/devel/release"
+    },
+    {
+      "id": "emudhra",
+      "title": "Our Response To The eMudhra Key Disclosure Incident",
+      "publisher": "Go Blog",
+      "date": "26 Oct 2026",
+      "url": "https://go.dev/blog/emudhra-incident"
+    },
+    {
+      "id": "go127",
+      "title": "Go 1.27 Release Notes",
+      "publisher": "Go",
+      "date": "Aug 2026",
+      "url": "https://go.dev/doc/go1.27"
+    },
+    {
+      "id": "go126",
+      "title": "Go 1.26 Release Notes",
+      "publisher": "Go",
+      "date": "Feb 2026",
+      "url": "https://go.dev/doc/go1.26"
+    },
+    {
+      "id": "govulncheck",
+      "title": "govulncheck command",
+      "publisher": "Go",
+      "date": "v1.9.0, 11 Oct 2026",
+      "url": "https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck"
+    },
+    {
+      "id": "govultut",
+      "title": "Tutorial: Find and fix vulnerable dependencies with govulncheck",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/tutorial/govulncheck"
+    },
+    {
+      "id": "gosec",
+      "title": "gosec rules",
+      "publisher": "securego",
+      "date": "v2.30.0, 23 Oct 2026",
+      "url": "https://github.com/securego/gosec/blob/master/RULES.md"
+    },
+    {
+      "id": "cwe",
+      "title": "2025 CWE Top 25",
+      "publisher": "MITRE CWE",
+      "date": "Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "nethttp",
+      "title": "Package net/http",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/net/http"
+    },
+    {
+      "id": "filepath",
+      "title": "Package path/filepath",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/path/filepath"
+    },
+    {
+      "id": "ospkg",
+      "title": "Package os",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/os"
+    },
+    {
+      "id": "osvulns",
+      "title": "Vulnerability reports: os",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/search?q=os&m=vuln"
+    },
+    {
+      "id": "memmodel",
+      "title": "The Go Memory Model",
+      "publisher": "Go",
+      "date": "6 Jun 2022",
+      "url": "https://go.dev/ref/mem"
+    },
+    {
+      "id": "race",
+      "title": "Data Race Detector",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/articles/race_detector"
+    },
+    {
+      "id": "fuzz",
+      "title": "Go Fuzzing",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/security/fuzz/"
+    },
+    {
+      "id": "spec",
+      "title": "The Go Programming Language Specification",
+      "publisher": "Go",
+      "date": "26 May 2026",
+      "url": "https://go.dev/ref/spec"
+    },
+    {
+      "id": "godebug",
+      "title": "Go, Backwards Compatibility, and GODEBUG",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/godebug"
+    },
+    {
+      "id": "htmltpl",
+      "title": "Package html/template",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/html/template"
+    },
+    {
+      "id": "tplvulns",
+      "title": "Vulnerability reports: html/template",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/search?q=html%2Ftemplate&m=vuln"
+    },
+    {
+      "id": "gosql",
+      "title": "Avoiding SQL injection risk",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/database/sql-injection"
+    },
+    {
+      "id": "gorm",
+      "title": "Security",
+      "publisher": "GORM docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://gorm.io/docs/security.html"
+    },
+    {
+      "id": "exec",
+      "title": "Package os/exec",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/os/exec"
+    },
+    {
+      "id": "net",
+      "title": "Package net",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/net"
+    },
+    {
+      "id": "jsonv2",
+      "title": "Package encoding/json/v2",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/encoding/json/v2"
+    },
+    {
+      "id": "cmdgovulns",
+      "title": "Vulnerability reports: cmd/go",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pkg.go.dev/search?q=cmd%2Fgo&m=vuln"
+    },
+    {
+      "id": "cve27143",
+      "title": "GO-2026-4868 (CVE-2026-27143)",
+      "publisher": "Go",
+      "date": "7 Apr 2026",
+      "url": "https://pkg.go.dev/vuln/GO-2026-4868"
+    },
+    {
+      "id": "gomod",
+      "title": "Go Modules Reference",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/ref/mod"
+    },
+    {
+      "id": "fips",
+      "title": "FIPS 140-3 Compliance",
+      "publisher": "Go",
+      "date": "checked 5 Nov 2026",
+      "url": "https://go.dev/doc/security/fips140"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "slug": "security-metrics",
+  "topic": "Security metrics and reporting",
+  "status": "draft",
+  "order": 42,
+  "capability": "govern/metrics",
+  "title": "Security metrics: which few numbers show the board whether you're getting safer?",
+  "short": "Report about seven outcome measures on one page each quarter, each with its coverage, target and the decision you need.",
+  "answer": "This quarter, pick about seven measures tied to how attacks start, count each one against your full inventory and have management agree a target and tolerance for each. Then report them on one page every quarter with trend, target and the decision you need, and drop any measure that hasn't changed a decision in a year.",
+  "audience": "CISOs and security and IT leads in EU organizations who report to management and boards, including management bodies with NIS2 or DORA duties",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Count outcomes, not activity.",
+          "text": "Report what an attacker would find. Microsoft says reporting should shift from patches deployed to exposure reduced, detection coverage increased and time to mitigate compressed[^mddr]."
+        },
+        {
+          "title": "Tie each measure to a way in.",
+          "text": "Exploitation is now the most common initial access vector in Verizon's data, at 31%[^dbir]. Pick a few measures for the paths that hurt you; NIST says that initially, less is often more[^sp80055v1]."
+        },
+        {
+          "title": "Count against the whole inventory.",
+          "text": "Give every share its denominator, including assets found this quarter. A system nobody listed never shows up as uncovered."
+        },
+        {
+          "title": "Agree targets and tolerances with management.",
+          "text": "The UK Cyber Governance Code asks boards for reporting at least quarterly, on metrics with tolerances based on the agreed risk appetite[^cgcop]."
+        },
+        {
+          "title": "End every report with a decision.",
+          "text": "Say whether findings fit the risk appetite and what decision is needed, as NIST suggests[^sp80055v1]. Minute the answer: the BSI recommends decisions as proof of active involvement[^bsicurr]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "build",
+      "title": "Build the set in this order",
+      "navTitle": "Build the set",
+      "items": [
+        {
+          "title": "Which ways in matter most to you?",
+          "text": "Start from your incidents, near misses and test findings of the last two years, then check the year's M-Trends and DBIR."
+        },
+        {
+          "title": "What would show each path closing?",
+          "text": "Write each measure's formula, target, data source, owner and frequency, as NIST's template does[^sp80055v1]. Prefer ages, times and shares to counts."
+        },
+        {
+          "title": "What is it counted against?",
+          "text": "Name the inventory behind each share. List hypervisors, appliances and OT that can't run an agent as gaps, not as out of scope."
+        },
+        {
+          "title": "What does good look like?",
+          "text": "After three months of data, propose a target and tolerance per measure, in days, euros or share of critical services, and have management sign them off."
+        },
+        {
+          "title": "Is each measure still earning its place?",
+          "text": "Review the set at planned intervals, say yearly, and after significant incidents, as Regulation 2024/2690 requires of digital providers[^nis2ir]. Drop any measure that changed no decision in a year."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "metrics",
+      "title": "A starter set, tied to how attacks start",
+      "navTitle": "Starter set",
+      "span": "full",
+      "intro": "Report each as a trend against its target and coverage. The linked sheets define the measures.",
+      "items": [
+        "**Internet exposure.** High-risk services open to the internet without an expiring exception, and assets others found first, from the attack surface sheet.",
+        "**Age of exploited vulnerabilities.** Days the oldest known-exploited flaw has been open, and first-tier deadlines met, from the patching sheet. Verizon found only 26% of KEV flaws fully fixed in 2025, after a median of 43 days[^dbir].",
+        "**Phishing-resistant MFA coverage.** Accounts, admins first, that Conditional Access holds to phishing-resistant methods. Entra's passwordless count includes phone sign-in[^entraact], which isn't phishing-resistant[^authstr].",
+        "**Standing privileged accounts.** Tier 0 rights held permanently, not on activation, against the privileged access sheet's limits. Microsoft ranks tiered administration among the best safeguards[^mddr].",
+        "**EDR coverage.** Devices and servers with EDR and tamper protection, out of all discovered; Defender's inventory lists devices not onboarded[^mdedisc]. Count hypervisors apart: virtualization has traditionally sat outside EDR's scope[^mtrends].",
+        "**Measured restore time.** Hours to restore each critical service in its last test, against its target, from the backups sheet. A target not met in a test is unmet.",
+        "**Time to detect and contain.** In real incidents and planted tests, with alerts proved monthly from the logging sheet and staff report speed from the awareness sheet. Mandiant's median dwell time rose to 14 days in 2025, from 11[^mtrends]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Counts of blocked attacks.** They follow attacker volume and filter settings, not your risk.",
+        "**Phishing click rates as a target.** A poorly designed test can show a better rate while saying less, NIST notes[^sp80055v1]. Report reports instead.",
+        "**Color-only heat maps and maturity levels.** NIST doesn't count color scales or rankings as measures[^sp80055v1]. Put a number behind each color.",
+        "**Live dashboards for the board.** It meets quarterly and needs trends and decisions."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Reports that ask for nothing.** Management can't oversee what it's never asked to decide.",
+        "**Shares without a denominator.** 98% EDR coverage of known devices can hide every hypervisor and appliance that can't run an agent.",
+        "**New definitions every quarter.** Each change breaks the trend. Restate past values when you must.",
+        "**A green report in the quarter of a breach.** The set measured the wrong things. Rework it after each significant incident."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "board-page",
+      "title": "What goes on the board page",
+      "navTitle": "Board page",
+      "items": [
+        "**One row per measure.** Value, four quarters of trend, target and tolerance, and why it moved; the NCSC tells boards to expect agreed target ranges[^ncscbt].",
+        "**Top risks and accepted risks.** The top risks with the status of their measures[^bsicurr], and each accepted risk with its expiry date.",
+        "**Incidents and near misses.** What happened, what it cost and what changed. A board may need only the main lessons, the NCSC says[^ncscbt].",
+        "**Decisions needed.** Each with options, cost and a recommendation.",
+        "**The same layout every quarter.** Consistent metrics are what show long-term trends, NIST notes[^sp80055v1]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "duties",
+      "title": "What management must do",
+      "navTitle": "Management duties",
+      "items": [
+        "**NIS2.** Management approves the measures, oversees them and can be held liable; the measures include assessing their effectiveness[^nis2].",
+        "**Germany.** Under BSIG § 38, management implements and oversees the § 30 measures, including effectiveness checks, and is liable to the entity[^bsig]. The BSI's model answer adds KPIs, KRIs and a yearly audit[^bsihand].",
+        "**Digital providers.** Indicators for the security policy, one person reporting directly to management, and measurement results reported to it[^nis2ir].",
+        "**DORA.** The management body approves the ICT risk framework, sets the risk tolerance and hears of major incidents; the strategy sets KPIs and key risk metrics[^dora]. BSIG § 38 doesn't apply[^bsig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "honest",
+      "title": "Keep the numbers honest",
+      "navTitle": "Honest numbers",
+      "items": [
+        "**Reward reporting.** Valuing the absence of reported problems teaches people to keep quiet, the NCSC warns[^ncscbt]. Count near misses as a success; NIS2 lets entities report them voluntarily[^nis2].",
+        "**Show the worst case.** Put the oldest exploited flaw and the slowest restore next to each median.",
+        "**Separate inventory growth.** Report newly found assets on their own line, so a better inventory doesn't look like decline.",
+        "**Have someone else recompute it.** Once a year, let someone outside the team rebuild two measures from raw data."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**The BSI expects a regular report.** Its October 2026 curriculum lists a resolution on a regular cyber risk report among the decisions to take, ideally within 2 to 6 weeks of management's first training[^bsicurr].",
+        "**Voice phishing overtook email.** It opened 11% of Mandiant's 2025 intrusions, after exploits; email phishing fell to 6%[^mtrends]. Measure how the help desk handles reset calls.",
+        "**Microsoft discounted alert counts.** Its 2026 report says they no longer show SOC maturity; measure detection fidelity and time to contain[^mddr]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Ask your IT provider for four numbers a quarter: admins on phishing-resistant MFA, EDR coverage, oldest missing critical patch, last restore time.",
+            "Give the managing directors one page and file their decisions with the training record."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Pull the numbers from Entra's authentication methods activity (P1 or P2)[^entraact], Defender's device inventory[^mdedisc] and a scanner matched against KEV.",
+            "Have management sign off targets and tolerances yearly, with the risk appetite."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Under DORA, write the KPIs and key risk metrics into the resilience strategy[^dora].",
+            "Show the gap to the board with CSF 2.0 Current and Target Profiles[^csf].",
+            "Use one set of definitions in every subsidiary."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on NIST SP 800-55 and CSF 2.0, the UK Cyber Governance Code and NCSC Board Toolkit, NIS2, DORA and the BSIG, the BSI's 2026 guidance for management training, M-Trends 2026, the 2026 DBIR and the Microsoft Digital Defense Report 2026."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6c3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "sp80055v1",
+      "title": "SP 800-55v1, Measurement Guide for Information Security: Identifying and Selecting Measures",
+      "publisher": "NIST",
+      "date": "Dec 2024",
+      "url": "https://csrc.nist.gov/pubs/sp/800/55/v1/final"
+    },
+    {
+      "id": "cgcop",
+      "title": "Cyber Governance Code of Practice",
+      "publisher": "DSIT and NCSC (UK)",
+      "date": "8 Apr 2025",
+      "url": "https://www.gov.uk/government/publications/cyber-governance-code-of-practice"
+    },
+    {
+      "id": "dora",
+      "title": "Regulation (EU) 2022/2554 (DORA), Articles 5, 6, 13 and 17",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "bsicurr",
+      "title": "Curriculum für eine Geschäftsleitungsschulung nach NIS-2",
+      "publisher": "BSI",
+      "date": "28 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Commission Implementing Regulation (EU) 2024/2690, Annex points 1, 2 and 7",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "entraact",
+      "title": "Authentication Methods Activity",
+      "publisher": "Microsoft Learn",
+      "date": "22 Oct 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/howto-authentication-methods-activity"
+    },
+    {
+      "id": "authstr",
+      "title": "Overview of Conditional Access Authentication Strengths",
+      "publisher": "Microsoft Learn",
+      "date": "4 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-authentication-strengths"
+    },
+    {
+      "id": "mdedisc",
+      "title": "Microsoft Defender for Endpoint device discovery overview",
+      "publisher": "Microsoft Learn",
+      "date": "8 May 2025",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/device-discovery"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026 Executive Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "ncscbt",
+      "title": "Board Toolkit: Questions for the board to ask about cyber security",
+      "publisher": "NCSC (UK)",
+      "date": "2025",
+      "url": "https://www.ncsc.gov.uk/files/NCSC-Cyber-Security-Toolkit-For-Boards-full-question-set.pdf"
+    },
+    {
+      "id": "nis2",
+      "title": "Directive (EU) 2022/2555 (NIS2), Articles 6, 20, 21 and 30",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "bsig",
+      "title": "BSI-Gesetz (BSIG), §§ 28, 30 and 38",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "bsihand",
+      "title": "Schulung für Geschäftsleitungen (Handreichung), version 1.0",
+      "publisher": "BSI",
+      "date": "17 Apr 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
+    },
+    {
+      "id": "csf",
+      "title": "The NIST Cybersecurity Framework (CSF) 2.0",
+      "publisher": "NIST",
+      "date": "26 Feb 2024",
+      "url": "https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf"
+    }
+  ]
+}
