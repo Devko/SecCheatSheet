@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Keep dozens of risks, not hundreds.",
-          "text": "Write one row per scenario management would act on; 20 to 50 cover most companies. NIST lets you set a minimum exposure for the register, since many low risks need no row[^ir8286]."
+          "text": "Write one row per scenario management would act on; aim for 20 to 50. NIST lets you set a minimum exposure for the register, since many low risks need no row[^ir8286]."
         },
         {
           "title": "Tie each row to the asset list.",
@@ -57,15 +57,15 @@
         },
         {
           "title": "What protects it today?",
-          "text": "List the controls in place and planned, with their status, as Grundschutz++ requires[^std3001]. Count only controls you have seen work in the maturity assessment."
+          "text": "List the controls in place and planned, with their status, as Grundschutz++ requires[^std3001]. Count only controls you have seen work, as the maturity sheet advises."
         },
         {
           "title": "How likely, and how bad?",
-          "text": "Rate both on the scales below for today's state. NIST uses current rather than inherent risk, since an enterprise typically has some measures in place[^ir8286]."
+          "text": "Rate both on the scales below for today's state. NIST rates current, not inherent, risk, since some measures are typically in place[^ir8286]."
         },
         {
           "title": "Who owns it?",
-          "text": "Name a person with the budget and authority to act. In a company, NIST suggests the business owner, such as a business unit's general manager[^ir8286c]."
+          "text": "Name a person with the budget and authority to act. NIST suggests the business owner, such as a business unit's general manager[^ir8286c]."
         },
         {
           "title": "What will you do, and by when?",
@@ -79,7 +79,7 @@
       "title": "Scales that two people score the same",
       "navTitle": "Scales",
       "items": [
-        "**Use four levels, defined in numbers.** The BSI's likelihood bands: at most once in five years, up to once a year, up to once a month, several times a month[^std2003]. Impact bands at €50 million revenue might be under €50,000, up to €500,000, up to €5 million, and above.",
+        "**Use four levels, defined in numbers.** The BSI's likelihood bands: at most once in five years, up to once a year, up to once a month, several times a month[^std2003]. Our impact bands at €50 million revenue: under €50,000, up to €500,000, up to €5 million, above.",
         "**Leave out the middle.** The BSI advises at most five levels, and says two staff rating one risk should get the same result[^std2003]. Four levels force a choice; test them on three sample risks.",
         "**Quantify the close calls.** When a decision hinges on whether a €300,000 measure pays off, estimate the yearly loss as a range. NIST describes three-point estimates, calibration and Monte Carlo simulation[^ir8286a].",
         "**Use FAIR where euros decide.** The Open Group's FAIR standards are O-RA 2.1 and O-RT 3.1 (May 2025)[^ora]. FAIR estimates how often losses occur; agencies told NIST calibrated ranges improve the yearly loss estimate[^ir8286a]."
@@ -92,7 +92,7 @@
       "navTitle": "Acceptance",
       "items": [
         "**Acceptance is the exception.** NIS2 requires measures appropriate to the risks[^nis2], and 2024/2690 treats acceptance as an option for exceptional cases[^nis2ir]. The BSI rules out blanket acceptance under the BSIG[^bsiiso].",
-        "**Set authority by impact.** Our ladder: the risk owner accepts low risks, a managing director medium ones, the board high and very high ones. 2024/2690 allows delegation with adequate reports to management[^nis2ir]; under Grundschutz++, management authorizes every residual risk[^std3001].",
+        "**Set authority by impact.** Our ladder: low risks the risk owner, medium a managing director, high and very high the management body. 2024/2690 allows delegation with adequate reports to management[^nis2ir]; under Grundschutz++, management authorizes every residual risk[^std3001].",
         "**Get it in writing, with reasons.** Digital providers must document the reasons[^nis2ir]; ENISA adds a cost estimate and a contingency plan[^enisatig].",
         "**Give it an end date,** 12 months at most. DORA has financial entities list accepted residual risks with reasons and recheck them yearly[^rts1774].",
         "**Don't accept critical flaws.** ENISA advises against it where possible[^enisatig]. Without a patch, digital providers must add measures and accept the residual risk[^nis2ir]."
@@ -154,6 +154,7 @@
         "**A register nobody reads.** Two hundred rows only the auditor sees decide nothing. Take the top ten to management and ask for a decision on each.",
         "**Every risk rated medium.** Scores bunch up; the BSI notes most users in effect work with two levels[^std2003]. Define four in numbers and have someone outside the team challenge ratings.",
         "**IT owning business risks.** IT then accepts outages it can't weigh against revenue. Make the process owner the risk owner and IT the action owner.",
+        "**Accepting by silence.** A risk nobody decides on is accepted by default. Put every undecided row on the next management agenda.",
         "**Exceptions without end dates.** They quietly become the policy. Alert 30 days before expiry and treat an expired exception as a finding."
       ]
     },
@@ -167,7 +168,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Keep 15 to 25 rows in a spreadsheet; the IT provider drafts, department heads own.",
+            "Keep 15 to 25 rows in a spreadsheet; the IT provider drafts scenarios, department heads own them.",
             "A managing director accepts anything above low, in writing.",
             "Review it with the managing directors for 30 minutes a quarter.",
             "Track exceptions on a second tab with end dates."
