@@ -6,7 +6,8 @@
       "capabilities": [
         { "id": "eu-regulation", "name": "EU regulation: NIS2, CRA, DORA" },
         { "id": "third-party", "name": "Supplier and third-party risk" },
-        { "id": "awareness", "name": "Security awareness" }
+        { "id": "awareness", "name": "Security awareness" },
+        { "id": "isms", "name": "ISMS and ISO 27001" }
       ]
     },
     {
@@ -15,7 +16,8 @@
       "capabilities": [
         { "id": "patching", "name": "Patching" },
         { "id": "attack-surface", "name": "Attack surface management" },
-        { "id": "hardening", "name": "Secure configuration" }
+        { "id": "hardening", "name": "Secure configuration" },
+        { "id": "pentest", "name": "Penetration testing" }
       ]
     },
     {
@@ -43,7 +45,9 @@
         { "id": "cloud", "name": "Cloud configuration" },
         { "id": "edge", "name": "Edge devices" },
         { "id": "segmentation", "name": "Network segmentation" },
-        { "id": "endpoint", "name": "Endpoints and email" }
+        { "id": "endpoint", "name": "Endpoints and email" },
+        { "id": "containers", "name": "Containers and Kubernetes" },
+        { "id": "ot", "name": "OT and industrial systems" }
       ]
     },
     {
@@ -61,7 +65,8 @@
       "capabilities": [
         { "id": "typescript", "name": "TypeScript and Node.js" },
         { "id": "rust", "name": "Rust" },
-        { "id": "python", "name": "Python" }
+        { "id": "python", "name": "Python" },
+        { "id": "csharp", "name": "C# and .NET" }
       ]
     },
     {
