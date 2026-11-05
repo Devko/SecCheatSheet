@@ -28,7 +28,7 @@
         },
         {
           "title": "Have management set the risk appetite.",
-          "text": "NIST calls risk appetite the guidepost for setting strategy, set by the most senior leadership[^ir8286]. Write it in hours of downtime, euros and records exposed, not in colors."
+          "text": "NIST calls risk appetite the guidepost for setting strategy, set by the most senior leadership[^ir8286]. Write it in hours of downtime, euros and records exposed, not in colors. A small company can stop at downtime and data loss per crown jewel."
         },
         {
           "title": "Pick three to five bets you can measure.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Get it approved, then review it yearly.",
-          "text": "Under NIS2, the management body approves the security measures and oversees them[^nis2]. Minute the decision. Review the page at least yearly and after significant incidents or changes, as Regulation 2024/2690 requires for digital providers' top security policy[^nis2ir]."
+          "text": "Under NIS2, the management body approves and oversees the security measures[^nis2]. Minute the decision. Review the page at least yearly and after significant incidents or changes, the cycle Regulation 2024/2690 sets for digital providers' security policy[^nis2ir]."
         }
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Week 1: what do you already know?",
-          "text": "Collect the business plan and budget, two years of incidents and near misses, the latest maturity assessment, audit and penetration test findings, customer and insurer demands, and the laws in scope from the EU security laws sheet."
+          "text": "Collect the business plan and budget, two years of incidents and near misses, the latest maturity assessment, audit and penetration test findings, customer and insurer demands, and the laws in scope from the EU security laws sheet. Book the management meeting for week 6 now."
         },
         {
           "title": "Week 2: what does the business need?",
@@ -75,7 +75,7 @@
       "navTitle": "The one page",
       "span": "full",
       "items": [
-        "**Business goals.** Three to five goals from the company plan that security must support, such as winning a regulated customer or moving production to the cloud. Regulation 2024/2690 requires digital providers' top security policy to fit the business strategy and objectives[^nis2ir].",
+        "**Business goals.** Three to five goals from the company plan that security must support, such as winning a regulated customer or moving production to the cloud. Regulation 2024/2690 requires digital providers' security policy to fit the business strategy and objectives[^nis2ir].",
         "**Crown jewels.** The processes, data and systems whose loss would stop the business or cost customer trust, each with an owner.",
         "**Threat picture.** The three or four attack paths most likely to reach them, one line each, with the evidence.",
         "**Risk appetite.** What management accepts, in numbers: for example, the web shop down at most 24 hours a year and no loss of payment data. NIST separates broad appetite from narrower tolerance: email available most of the day, but never down more than five minutes in core hours[^ir8286].",
@@ -92,8 +92,8 @@
       "navTitle": "Approval",
       "items": [
         "**NIS2 entities.** The management body approves the risk management measures, oversees their implementation and can be held liable[^nis2].",
-        "**Germany.** Under BSIG § 38, management implements and oversees the § 30 measures and is liable to the entity for culpable damage[^bsig]. It can delegate the operational work, not the responsibility[^bsihand][^bsicurr]. The BSI recommends resolutions as proof of involvement[^bsicurr].",
-        "**DORA.** The management body sets and approves the resilience strategy, including the ICT risk tolerance, and allocates the budget[^dora].",
+        "**Germany.** Under BSIG § 38, management implements and oversees the § 30 measures and is liable to the entity for culpable damage[^bsig]. The BSI says it can delegate implementation, not responsibility or oversight, and recommends resolutions as proof of involvement[^bsicurr].",
+        "**DORA.** The management body sets and approves the resilience strategy, including the ICT risk tolerance, and allocates the budget. Its ICT risk framework, strategy included, needs a yearly review[^dora].",
         "**Everyone else.** The managing directors sign it; unsigned, it moves no budget."
       ]
     },
@@ -105,7 +105,7 @@
       "items": [
         "**Every year, before the budget.** Review the strategy's outcomes, as CSF 2.0 expects[^csf], and update the threat picture.",
         "**Every three years, from scratch.** Redo the interviews and the crown jewels list.",
-        "**When an assumption breaks.** An incident at you or a peer, an acquisition, a new law, critical supplier or threat. ENISA lists peer incidents, legal changes and threat trends as inputs to the yearly policy review[^enisatig].",
+        "**When an assumption breaks.** An incident at you or a peer, an acquisition, a new law, critical supplier or threat. ENISA lists peer incidents, legal changes and threat trends among the inputs for reviewing digital providers' security policy[^enisatig].",
         "**Not for every headline.** Such events don't automatically require an update, ENISA notes; weigh them in the risk assessment first[^enisatig]."
       ]
     },
@@ -118,7 +118,7 @@
         "**A tool shopping list called a strategy.** Products say what you'll buy, not which risk goes down. Tools belong in the roadmap.",
         "**A compliance checklist as the strategy.** In ENISA's 2025 survey, 70% named regulatory compliance the main driver of their security investment[^nisinv]. Aim the bets at the crown jewels.",
         "**Fifteen priorities.** If everything is strategic, nothing is. Move the rest to the roadmap or the won't-do line.",
-        "**An appetite without numbers.** \"Low appetite for cyber risk\" decides nothing, because nobody can tell when it's exceeded."
+        "**An appetite without numbers.** \"Low appetite for cyber risk\" decides nothing until a tolerance in numbers says when it's exceeded."
       ]
     },
     {
@@ -141,8 +141,8 @@
       "span": "full",
       "items": [
         "**German management duties apply.** BSIG § 38 has applied since 6 December 2025, with no general transition period[^bsig][^bsifaq].",
-        "**The BSI listed the decisions to take.** Its October 2026 curriculum suggests, within 2 to 6 weeks of the first training, approving a § 30 measures register with priorities, owners and budget needs, and rules for accepting risk[^bsicurr]. Take them with the strategy.",
-        "**NIST tied CSF to enterprise risk.** IR 8286 Rev. 1 (December 2025) expresses appetite as permissible downtime, losses or a ceiling[^ir8286]; SP 1308 (March 2026) links profiles to risk and workforce decisions[^sp1308].",
+        "**The BSI listed the decisions to take.** Its October 2026 curriculum suggests, ideally within 2 to 6 weeks of the first training, approving a § 30 measures register with priorities, owners and budget needs, and rules for accepting risk[^bsicurr]. Take them with the strategy.",
+        "**NIST tied CSF to enterprise risk.** IR 8286 Rev. 1 (December 2025) lets you state appetite as permissible downtime, losses or a ceiling[^ir8286]; SP 1308 (March 2026) links profiles to risk and workforce decisions[^sp1308].",
         "**AI reaches more attack phases.** ENISA's 2026 Threat Landscape expects AI to directly enable more attack phases this year and still rates ransomware the most impactful short-term threat[^etl]. Recheck your threat picture."
       ]
     },
@@ -157,8 +157,8 @@
           "title": "Small team, no security staff",
           "items": [
             "The managing director owns it; the IT provider helps draft it in two half-day sessions.",
-            "Ask the provider for the BSI's CyberRisikoCheck: 27 requirements, a score and ranked recommendations[^crc]. Frame the rest with NIST's small business guide[^sp1300].",
-            "Three bets: a tested restore of email and files, phishing-resistant sign-in for admins and finance, a supplier cut-off list.",
+            "Have an IT provider run the BSI's CyberRisikoCheck, a 1 to 2 hour interview priced by the provider: 27 requirements, a score and fixes by urgency[^crc].",
+            "Three bets: a tested restore of email and files, phishing-resistant sign-in for admins and finance, exploited edge flaws patched within 72 hours.",
             "Won't do: hire security staff. Buy MDR."
           ]
         },
@@ -214,7 +214,7 @@
     },
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, Annex 1",
+      "title": "Regulation (EU) 2024/2690, Annex",
       "publisher": "EUR-Lex",
       "date": "2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
@@ -242,17 +242,10 @@
     },
     {
       "id": "bsicurr",
-      "title": "NIS-2 Curriculum Geschäftsleitungsschulung",
+      "title": "Curriculum für eine Geschäftsleitungsschulung nach NIS-2",
       "publisher": "BSI",
       "date": "28 Oct 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
-    },
-    {
-      "id": "bsihand",
-      "title": "Schulung für Geschäftsleitungen, v1.0",
-      "publisher": "BSI",
-      "date": "17 Apr 2026",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
     },
     {
       "id": "csf",
@@ -269,15 +262,8 @@
       "url": "https://csrc.nist.gov/pubs/sp/1308/final"
     },
     {
-      "id": "sp1300",
-      "title": "SP 1300, Small Business Quick-Start Guide",
-      "publisher": "NIST",
-      "date": "Feb 2024",
-      "url": "https://csrc.nist.gov/pubs/sp/1300/final"
-    },
-    {
       "id": "enisatig",
-      "title": "NIS2 Implementation Guidance",
+      "title": "NIS2 Technical Implementation Guidance",
       "publisher": "ENISA",
       "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
@@ -286,7 +272,7 @@
       "id": "etl",
       "title": "ENISA Threat Landscape 2026",
       "publisher": "ENISA",
-      "date": "Sep 2026",
+      "date": "22 Sep 2026",
       "url": "https://www.enisa.europa.eu/sites/default/files/2026-09/ENISA%20Threat%20Landscape%202026_Final.pdf"
     },
     {
