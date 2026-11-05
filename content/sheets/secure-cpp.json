@@ -90,7 +90,8 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (needs every library instrumented, even libc) and TSan for data races; ASan and TSan can't be combined[^asan][^msan][^openssf].",
+        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (needs every library instrumented, even libc) and TSan for data races; ASan and TSan can't be combined[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
+        "**Fuzzers.** libFuzzer gets bug fixes only, as its authors moved to Centipede[^libfuzzer]; ClusterFuzzLite still runs it on pull requests and in batch jobs[^cflite].",
         "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2` and `-Wconversion`[^openssf]; in C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers so you can move it to `std::span`[^safebuf]. On MSVC, `/sdl` turns uninitialized-variable warnings into errors[^mssdl]."
       ]
     },
@@ -102,7 +103,7 @@
       "items": [
         "**GCC 16 (30 April) zero-initializes locals under `-std=c++26`** and now defaults to `-std=gnu++20`[^gcc16][^gccopt].",
         "**Clang 23 (26 August) added `-Wlifetime-safety`,** which detects use after free within a function. Add it to CI[^clang23].",
-        "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl].",
+        "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl]. 3.0 reached end of life on 7 September; 3.5 is supported until April 2030[^openssleol].",
         "**CISA added an exploited Brotli overflow on 27 October.** Update every copy, vendored ones too, to 1.0.10, 1.1.1 or 1.2.1[^cvebrotli][^kev]."
       ]
     },
@@ -295,13 +296,6 @@
       "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
     },
     {
-      "id": "clang23",
-      "title": "Clang 23.1.0 Release Notes",
-      "publisher": "LLVM",
-      "date": "26 Aug 2026",
-      "url": "https://releases.llvm.org/23.1.0/tools/clang/docs/ReleaseNotes.html"
-    },
-    {
       "id": "gccattr",
       "title": "GCC manual: Common Attributes",
       "publisher": "GCC",
@@ -314,6 +308,20 @@
       "publisher": "Clang docs",
       "date": "checked 5 Nov 2026",
       "url": "https://clang.llvm.org/docs/MemorySanitizer.html"
+    },
+    {
+      "id": "msasan",
+      "title": "AddressSanitizer",
+      "publisher": "Microsoft Learn",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/cpp/sanitizers/asan"
+    },
+    {
+      "id": "libfuzzer",
+      "title": "libFuzzer",
+      "publisher": "LLVM",
+      "date": "checked 5 Nov 2026",
+      "url": "https://llvm.org/docs/LibFuzzer.html"
     },
     {
       "id": "safebuf",
@@ -342,6 +350,20 @@
       "publisher": "GCC",
       "date": "checked 5 Nov 2026",
       "url": "https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html"
+    },
+    {
+      "id": "clang23",
+      "title": "Clang 23.1.0 Release Notes",
+      "publisher": "LLVM",
+      "date": "26 Aug 2026",
+      "url": "https://releases.llvm.org/23.1.0/tools/clang/docs/ReleaseNotes.html"
+    },
+    {
+      "id": "openssleol",
+      "title": "OpenSSL 3.0 End of Life",
+      "publisher": "OpenSSL",
+      "date": "16 Sep 2026",
+      "url": "https://openssl-library.org/post/2026-09-16-eol30/"
     },
     {
       "id": "cvebrotli",

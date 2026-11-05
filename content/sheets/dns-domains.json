@@ -32,7 +32,7 @@
         },
         {
           "title": "Publish CAA everywhere and watch CT logs.",
-          "text": "Name the CAs you use, publish `issue \";\"` on domains that need no certificates[^rfc8659] and monitor certificate transparency logs for every domain, parked ones included[^googlecctld]."
+          "text": "Name the CAs you use, publish `issue \";\"` on domains that need no certificates[^rfc8659] and monitor certificate transparency logs for every domain, parked ones included[^googlecctld]. Parked domains also need the DMARC record from the endpoints and email sheet."
         },
         {
           "title": "Send all user DNS through a resolver you control.",
@@ -87,7 +87,7 @@
       "navTitle": "DNSSEC and CAA",
       "items": [
         "**Sign only where your provider automates the keys.** DNSSEC can't stop someone who logs in to your registrar or DNS provider, but it lets CAs detect forged CAA records[^rfc8659]. Use ECDSA P-256 or Ed25519; RSA/SHA-1 is deprecated[^icannalg].",
-        "**Know what breaks.** Since 15 March 2026, CAs must validate DNSSEC and can't issue on a validation error[^br], so a broken signature also blocks certificate renewals. Moving DNS provider? Remove the DS record first, as Route 53's migration steps do[^awsmigrate].",
+        "**Know what breaks.** Since 15 March 2026, CAs must validate DNSSEC and may not treat a validation error as permission to issue[^br], so a broken signature also blocks certificate renewals. Moving DNS provider? Remove the DS record first, as Route 53's migration steps do[^awsmigrate].",
         "**Bind CAA to your ACME account.** Let's Encrypt honors `accounturi` now[^lecaa]. All CAs must from 15 March 2027, and email validation ends on 15 March 2028[^br]. Whoever controls your DNS will be able to get certificates."
       ]
     },
@@ -101,7 +101,7 @@
         "**Validate DNSSEC** with automatic trust anchor updates, two time sources and QNAME minimization[^sp80081].",
         "**Block DNS that goes around them:** outbound port 53 except from your resolvers, port 853 and known public DoH servers[^sp80081].",
         "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081].",
-        "**Practice turning off validation for one zone.** In the .de outage of 5 May 2026, validating resolvers failed even for unsigned .de domains for about three hours; some large operators suspended validation for .de[^denicout]."
+        "**Practice turning off validation for one zone.** A faulty DENIC key rollover on 5 May 2026 broke .de names, signed or not, on validating resolvers; some large operators suspended validation for .de[^denicout]."
       ]
     },
     {
@@ -124,7 +124,7 @@
       "items": [
         "**Three ccTLD registries were hijacked.** Attackers compromised the registries of .gh, .sl and .as, changed DNS records and got certificates for Google and other brands. Google advises restrictive CAA with ACME account bindings[^googlecctld].",
         "**The root zone has a new key.** KSK-2024 (key tag 38696) has signed it since 11 October 2026. Check each validating resolver's trust anchors instead of assuming automatic updates worked[^ksk].",
-        "**.de verifies holder data.** Under NIS2, DENIC has risk-checked holder data since December 2025, now including a phone number, and existing domains must be verified too[^denicreg][^denicverify]. Real requests come through your provider, and DENIC never asks for passwords by email[^denicverify].",
+        "**.de verifies holder data.** Under NIS2, DENIC has risk-checked holder data since December 2025, now including a phone number, and existing domains can be asked to verify too[^denicreg][^denicverify]. Real requests come through your provider, and DENIC never asks for passwords by email[^denicverify].",
         "**Windows DNS Server speaks DoH.** Since the June 2026 update, Windows Server 2025 accepts DoH from clients, but not toward upstream servers[^kb5094125]. Clients can encrypt DNS without bypassing your resolver."
       ]
     },
@@ -144,8 +144,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Domains in an account that can close.** Closing an AWS account suspends its Route 53 domains on day 5[^awsdomains]. Keep domains in an account nobody closes.",
-        "**Recovery email on the domain itself.** If the domain lapses, warnings can't reach you[^awsdomains]; if it's hijacked, the attacker gets your resets.",
+        "**Domains in an account that can close.** Closing an AWS account suspends its Route 53 domains on day 5[^awsdomains]; use an account nobody closes.",
+        "**Recovery email on the domain itself.** A hijacker then gets your password resets. AWS advises a root email outside the account's own domains[^awsdomains].",
         "**Deleting the zone, not the delegation.** Anyone who opens an account at that DNS host can take over the name[^sp80081]."
       ]
     },
@@ -160,7 +160,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Move every domain into a registrar account you own, with two admins on security keys.",
-            "Turn on auto-renew and registrar lock everywhere, and CAA for your one CA.",
+            "Turn on auto-renew and registrar lock everywhere, and publish CAA for the CA you use.",
             "Point your router or firewall at a protective resolver such as DNS4EU's[^dns4eu]."
           ]
         },
