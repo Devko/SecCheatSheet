@@ -157,8 +157,8 @@
           "title": "High-assurance or regulated",
           "items": [
             "For FIPS 140-3, build with `GOFIPS140=certified`: Go Cryptographic Module v1.0.0 holds CMVP certificate #5247[^fips].",
-            "Fuzz every parser continuously; OSS-Fuzz runs native Go fuzz tests[^fuzz].",
-            "Require CodeQL's `security-extended` suite, and build releases with `CGO_ENABLED=0` unless a reviewed package needs cgo; `-race` needs it[^race]."
+            "Fuzz every parser continuously in your own CI.",
+            "Require CodeQL's `security-extended` suite; private code needs a paid GitHub Code Security license[^codeqlcli]. Build releases with `CGO_ENABLED=0` unless a reviewed package needs cgo; `-race` needs it[^race]."
           ]
         }
       ]
@@ -386,6 +386,13 @@
       "publisher": "Go",
       "date": "checked 5 Nov 2026",
       "url": "https://go.dev/doc/security/fips140"
+    },
+    {
+      "id": "codeqlcli",
+      "title": "CodeQL CLI",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-cli"
     }
   ]
 }

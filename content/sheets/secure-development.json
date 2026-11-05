@@ -147,7 +147,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Turn on Dependabot, push protection and CodeQL. Private GitHub repos need paid Secret Protection and Code Security[^ghpush].",
+            "Turn on Dependabot, push protection and CodeQL. Private GitHub repos need the Team plan or higher, with paid Secret Protection and Code Security[^ghpush][^rules].",
             "Publish security.txt with a mailbox two people read, and require one review before merge.",
             "Keep one list of open flaws with ship dates."
           ]

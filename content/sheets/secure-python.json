@@ -155,7 +155,7 @@
         {
           "title": "High-assurance or regulated",
           "items": [
-            "Run CodeQL's `security-extended` suite on every pull request and block new alerts.",
+            "Block new CodeQL `security-extended` alerts; private code needs paid Code Security[^codeqlcli].",
             "Parse untrusted archives and models in a separate process with OS-level limits[^tarfile].",
             "Subscribe to security-announce@python.org and close every advisory[^secann]."
           ]
@@ -378,6 +378,13 @@
       "publisher": "Django docs (6.1)",
       "date": "checked 3 Nov 2026",
       "url": "https://docs.djangoproject.com/en/stable/howto/deployment/checklist/"
+    },
+    {
+      "id": "codeqlcli",
+      "title": "CodeQL CLI",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-cli"
     }
   ]
 }

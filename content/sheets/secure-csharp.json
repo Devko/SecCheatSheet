@@ -125,7 +125,7 @@
       "items": [
         "**Patching the host but not the app.** Self-contained apps stay vulnerable until recompiled and redeployed[^kestrel], and October's Blazor WebAssembly fix needed updated package references[^oob]. Rebuild container images too.",
         "**Unprotected Data Protection keys.** Default storage encrypts them only on Windows, and naming your own store turns that off[^dpkeys]. Add `ProtectKeysWithAzureKeyVault`.",
-        "**Development settings in production.** Keep the `Development` environment and User Secrets, which aren't encrypted, on developer machines[^owaspdotnet]."
+        "**Development settings in production.** Keep the `Development` environment and unencrypted User Secrets on developer machines[^owaspdotnet]."
       ]
     },
     {
@@ -153,7 +153,7 @@
         {
           "title": "High-assurance or regulated",
           "items": [
-            "Require CodeQL's `security-extended` suite on every pull request.",
+            "Require CodeQL's `security-extended` suite; private code needs paid Code Security[^codeqlcli].",
             "Turn on `CheckForOverflowUnderflow` where code computes sizes or money.",
             "Keep a Key Vault-protected key ring per app and rehearse revoking it[^dataprot]."
           ]
@@ -369,6 +369,13 @@
       "publisher": "Microsoft Learn",
       "date": "checked 5 Nov 2026",
       "url": "https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/configuration/default-settings"
+    },
+    {
+      "id": "codeqlcli",
+      "title": "CodeQL CLI",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-cli"
     }
   ]
 }

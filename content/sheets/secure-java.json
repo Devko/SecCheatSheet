@@ -36,7 +36,7 @@
         },
         {
           "title": "Make the analyzers a required check.",
-          "text": "Run Find Security Bugs or CodeQL on every pull request[^fsb][^cql]. Set Dependency-Check's `failBuildOnCVSS`: by default it never fails[^odc]."
+          "text": "Run Find Security Bugs or CodeQL on every pull request[^fsb][^cql]; CodeQL on private code needs paid Code Security[^codeqlcli]. Set Dependency-Check's `failBuildOnCVSS`: by default it never fails[^odc]."
         }
       ]
     },
@@ -385,6 +385,13 @@
       "publisher": "OWASP Dependency-Check",
       "date": "13.0.0, 3 Aug 2026",
       "url": "https://dependency-check.github.io/DependencyCheck/dependency-check-maven/configuration.html"
+    },
+    {
+      "id": "codeqlcli",
+      "title": "CodeQL CLI",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-cli"
     }
   ]
 }

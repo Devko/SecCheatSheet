@@ -91,7 +91,7 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**tsc.** `strict` plus `noUncheckedIndexedAccess`, which isn't part of `strict`[^tsconfig].",
+        "**tsc.** `strict` plus `noUncheckedIndexedAccess`, which `strict` omits[^tsconfig].",
         "**typescript-eslint.** `strictTypeChecked` with `parserOptions.projectService: true` enables the `no-unsafe-*` rules, `no-implied-eval` and `no-non-null-assertion`. Add `no-unsafe-type-assertion` yourself[^tsestrict].",
         "**CodeQL.** `js/command-line-injection`, `js/path-injection`, `js/request-forgery`, `js/prototype-polluting-assignment` and `js/polynomial-redos` cover TypeScript too[^cql].",
         "**Node.js flags.** `--disable-proto=delete` removes `__proto__`[^nodecli] but not `constructor.prototype`[^owasppp]. `--permission` with `--allow-fs-read` limits what your code reads through `node:fs`[^nodeperm]."
@@ -148,7 +148,7 @@
         {
           "title": "High-assurance or regulated",
           "items": [
-            "Make CodeQL's `security-extended` suite a required check.",
+            "Make CodeQL's `security-extended` suite a required check; private code needs a paid GitHub Code Security license[^codeqlcli].",
             "Run services with `--permission`, `--disable-proto=delete` and minimal `--allow-*` grants.",
             "Pen-test `proxy.ts` and route handlers regularly, as Next.js advises[^nextsec]."
           ]
@@ -378,6 +378,13 @@
       "publisher": "ESLint Community",
       "date": "checked 3 Nov 2026",
       "url": "https://github.com/eslint-community/eslint-plugin-security"
+    },
+    {
+      "id": "codeqlcli",
+      "title": "CodeQL CLI",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/concepts/code-scanning/codeql/codeql-cli"
     }
   ]
 }
