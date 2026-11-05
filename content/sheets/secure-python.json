@@ -8,7 +8,7 @@
   "short": "Keep pickle-based loaders away from outside data, pass data as arguments instead of code, and move off Python 3.10, unsupported since 1 October 2026.",
   "answer": "Before your next release, move off Python 3.10 and older[^versions], keep pickle-based loaders away from outside data, and run Ruff's `S` rules and `pip-audit` in CI. Judge everything else by whether input stays data: never code, a shell command, SQL text, a template or a path outside the directory you meant.",
   "audience": "Developers and tech leads writing production Python, and the security people who review it",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -164,6 +164,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: CodeQL on private code needs a paid GitHub Code Security license."
+    },
     {
       "date": "2026-11-03",
       "version": "1.0",

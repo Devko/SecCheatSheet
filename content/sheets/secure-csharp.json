@@ -8,7 +8,7 @@
   "short": "Move off .NET 8 and 9 before support ends on 10 November 2026, never let data pick the type it deserializes into, and require authentication by default.",
   "answer": "Move every app off .NET 8 and 9 to .NET 10.0.14 or later now, as both lose support on 10 November 2026[^support][^oob], and before your next release remove `BinaryFormatter` and set a fallback authorization policy. Judge everything else by whether outside data can pick a type, reach SQL, a command line, a path, a URL or raw HTML, or skip an authorization check.",
   "audience": "Developers and tech leads writing production C# on .NET and ASP.NET Core, including legacy .NET Framework code, and the security people who review it",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -162,6 +162,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: CodeQL on private code needs a paid GitHub Code Security license."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

@@ -8,7 +8,7 @@
   "short": "Publish a disclosure policy, block secrets at push and fix reported flaws within 90 days, or 7 if exploited.",
   "answer": "This quarter, publish a vulnerability disclosure policy with a security.txt contact, block secrets at push and make review plus one precise static analysis check required before merge. Judge every other practice by whether it removes a whole class of bug by default or leaves evidence that a customer or regulator can check.",
   "audience": "Engineering leads, product security teams and developers who build and run their own software, from small product teams to regulated enterprises",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -172,6 +172,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: private GitHub repositories need the Team plan or higher for these checks."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",
