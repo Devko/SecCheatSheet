@@ -8,7 +8,7 @@
   "short": "Make new package versions wait 3 days, lock every GitHub Action to a commit and publish without long-lived tokens.",
   "answer": "This month, make new package versions wait three days before they install, lock every GitHub Action to a commit and replace long-lived publishing and cloud tokens with trusted publishing and OIDC. Judge every other control by whether it keeps credentials away from code you didn't write, or tells you within an hour where a bad version ran.",
   "audience": "Development, platform and DevOps teams that build and ship software, including small teams on GitHub",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -127,7 +127,7 @@
           "items": [
             "In the organization's Actions settings, set read-only workflow permissions and require SHA pinning.",
             "Keep Dependabot's default cooldown and turn on its malware alerts, security updates and secret scanning (Secret Protection for private repos)[^ghsec].",
-            "Move npm and PyPI publishing to trusted publishing, and run npm 12 or current pnpm in CI."
+            "Move npm and PyPI publishing to trusted publishing (npm needs cloud-hosted runners for it[^npmtp]), and run npm 12 or current pnpm in CI."
           ]
         },
         {
@@ -150,6 +150,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Noted that npm trusted publishing works only on cloud-hosted CI runners."
+    },
     {
       "date": "2026-11-05",
       "version": "1.1",

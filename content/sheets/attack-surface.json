@@ -8,7 +8,7 @@
   "short": "Rebuild your list of internet-facing assets from registrars, DNS, certificate logs and cloud accounts, rescan it every week and give each exposed service an owner.",
   "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and get free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
   "audience": "IT and security teams in organizations of any size that need to know what they expose to the internet",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -115,7 +115,6 @@
       "navTitle": "Free services",
       "items": [
         "**Shadowserver.** Free daily reports on exposed services for the IP ranges and domains you control[^shadow].",
-        "**CISA Cyber Hygiene (US only).** Free weekly scan reports and urgent alerts for US-based governments and critical infrastructure[^cyhy].",
         "**NCSC Early Warning (UK).** Free alerts on vulnerable or exposed services for any UK organization that registers its IPs and domains[^ncscew].",
         "**CERT-Bund (Germany).** It reports infected systems and open services to the network operator of each IP range[^certbund]. Essential and important entities can ask the BSI to check their public systems[^bsig].",
         "**Commercial EASM.** It adds continuous discovery, takeover checks and history. Ask how it validates findings and how fresh its data is[^easm]."
@@ -192,6 +191,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Dropped CISA Cyber Hygiene, which serves only US organizations."
+    },
+    {
+      "date": "2026-11-05",
       "version": "1.1",
       "text": "Reviewed for company readers: GitHub's free secret risk assessment needs a Team or Enterprise plan, and CISA Cyber Hygiene is for US organizations only."
     },
@@ -213,13 +217,6 @@
       "publisher": "Shadowserver Foundation",
       "date": "checked 4 Nov 2026",
       "url": "https://www.shadowserver.org/what-we-do/network-reporting/get-reports/"
-    },
-    {
-      "id": "cyhy",
-      "title": "Cyber Hygiene Services",
-      "publisher": "CISA",
-      "date": "checked 4 Nov 2026",
-      "url": "https://www.cisa.gov/cyber-hygiene-services"
     },
     {
       "id": "cisaerg",
