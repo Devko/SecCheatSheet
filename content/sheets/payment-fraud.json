@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "Write down how bank details change, and let the system enforce it.",
-          "text": "Accept new or changed bank details for suppliers and staff only after a call back to a number you held before the request, approval by a second person and at least two business days before the first payment. In Dynamics 365 Finance, turn on the vendor bank account change proposal workflow; the import setting **Allow changes without approval** bypasses it[^d365]."
+          "text": "Accept new or changed bank details for suppliers and staff only after a call back to a number you held before the request, approval by a second person and at least two business days before the first payment. In Dynamics 365 Finance, turn on the vendor bank account change proposal workflow; the import option **Allow changes without approval** lets updates skip it[^d365]."
         },
         {
-          "title": "Require two signatures at the bank.",
-          "text": "The German banking industry recommends joint signing for EBICS, so one deceived employee can't release a payment alone[^dksec]. Give ERP and payment servers only a transport signature (T), which uploads files but can't authorize them[^bbkebics]."
+          "title": "Require two people for large payments, at the bank too.",
+          "text": "Above an amount you set, a second person approves in the ERP and a second signature releases at the bank; the German banking industry recommends joint signing for EBICS[^dksec]. Give ERP and payment servers only a transport signature (T), which uploads files but can't authorize them[^bbkebics]."
         },
         {
           "title": "Run Verification of Payee on payment files.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Call your bank's fraud line.",
-          "text": "Use the number from your contract or the bank's website. Ask for a recall with the reason fraud, which the bank can send once per payment[^sct], and for a freeze at the receiving bank. Instant transfers can't be revoked, and getting money back depends on the recipient's consent[^bbkfaq], so every minute counts."
+          "text": "Use the number from your contract or the bank's website. Ask for a recall with the reason fraud, which the bank can send once per payment[^sct], and for a freeze at the receiving bank. Transfers, instant or not, generally can't be revoked, and getting money back depends on the recipient's consent[^bbkfaq], so every minute counts."
         },
         {
           "title": "Stop the follow-ups.",
@@ -90,7 +90,7 @@
         "**It never blocks.** You can pay after a warning; the bank then isn't liable[^reg886].",
         "**Opted-out files lose it.** Non-consumers may opt out for payment packages[^reg886]; BaFin even tolerates it for EBICS files with one payment[^bafinfaq].",
         "**A match is not proof.** It can't detect a fraudulent payee or request[^bbkfaq].",
-        "**Register your trading names.** Banks may store commercial names as extra payee names[^bafinfaq], so your customers see a match, not a warning."
+        "**Register your trading names.** Ask your bank to store them as extra payee names, which BaFin allows[^bafinfaq], so customers see a match, not a warning."
       ]
     },
     {
@@ -111,9 +111,9 @@
       "title": "Who owns what",
       "navTitle": "Owners",
       "items": [
-        "**Finance owns the process.** The CFO or head of accounting owns the bank detail rule, signing rights, limits, VoP settings and exceptions.",
-        "**HR owns payroll changes.** Only in the HR system, after an identity check, confirmed outside the employee's mailbox.",
-        "**IT protects the accounts.** Phishing-resistant sign-in for finance, HR and executives (passkeys and MFA sheet) and alerts on new inbox rules[^msp].",
+        "**Finance owns the process, not IT.** The CFO or head of accounting owns the bank detail rule, signing rights, limits, VoP settings and exceptions.",
+        "**HR owns payroll changes.** In the HR system only, confirmed by phone.",
+        "**IT protects the accounts.** Passkeys for finance, HR and executives (passkeys and MFA sheet), DMARC and BEC detection (endpoints and email sheet), alerts on new inbox rules[^msp].",
         "**Management backs the no.** No exceptions requested by phone or chat."
       ]
     },
@@ -133,8 +133,8 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Deepfake detection software.** The BSI notes detectors generalize poorly: the best in a 2020 challenge was 65.18% accurate, guessing 50%[^bsideep].",
-        "**Teaching staff to hear fake voices.** The GDV calls such cues unreliable[^gdvvoice]. Teach the call back instead.",
+        "**Deepfake detection before the call back.** In a 2020 challenge the best detector was 65.18% accurate, against 50% for guessing[^bsideep].",
+        "**Teaching staff to hear fake voices.** The GDV calls such cues unreliable[^gdvvoice]. Teach the call back instead (security awareness sheet).",
         "**Call backs on every routine payment.** Spend them on new payees, changed details and unusual requests.",
         "**Paid name checks for euro payments.** Verification of Payee is free[^reg886]."
       ]
@@ -189,7 +189,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Regulation (EU) 2024/886, EPC rulebooks, BaFin, Bundesbank and DK guidance, the 2025 IC3 report and the EBA-ECB fraud report."
+      "text": "First draft, based on Regulation (EU) 2024/886, EPC rulebooks, BaFin, Bundesbank and DK guidance, the 2025 IC3 report and the EBA-ECB fraud report. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. "
     }
   ],
   "sources": [
