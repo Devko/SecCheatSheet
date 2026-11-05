@@ -52,7 +52,8 @@ In every reviewed sheet, even when nothing else changed:
 ## 5. Build and check
 
 Run `npm run build`. It fails on unknown citations and missing fields, and prints each PDF's page
-count; fix any sheet over two pages. If no Chrome or Edge is available the PDF step is skipped:
+count; fix any sheet over two pages. Then run `npm test`, which checks that the security advisor
+plugin can still read every sheet and that its search still finds the right one for each question. If no Chrome or Edge is available the PDF step is skipped:
 say so in the pull request.
 
 ## 6. Open a pull request
