@@ -49,7 +49,7 @@
   { "query": "what Article 32 GDPR requires and fines for missing MFA", "sheet": "gdpr-security" },
   { "query": "what our cyber insurance policy requires before we call the insurer", "sheet": "cyber-insurance" },
   { "query": "first hours of an incident", "sheet": "incident-response" },
-  { "query": "which log sources to collect and how long to keep them", "sheet": "logging" },
+  { "query": "which log sources to collect and how long to keep logs", "sheet": "logging" },
   { "query": "threat intelligence feeds and indicators", "sheet": "threat-intelligence" },
   { "query": "honeytoken accounts and fake AWS keys to detect intruders", "sheet": "deception" },
   { "query": "should we buy MDR or build our own 24/7 SOC", "sheet": "soc-mdr" },
