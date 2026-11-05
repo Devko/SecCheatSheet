@@ -53,6 +53,12 @@ The report gives, per condition: checks met, errors, false positives, mean rank,
 cost, time, length, and whether the advisor was used. It then gives a per-case table and the judge's
 notes.
 
+## Past results
+
+[`history/`](history/) keeps the reports, judgments and answers of past runs, with a summary of what
+each showed. Start with [5 November 2026](history/2026-11-05/README.md): the plugin against plain
+Claude Code, 1.0 against 1.1, and Haiku against Opus.
+
 ## Read it with care
 
 - The judge is also Claude, and blinding is partial, because answers that use the plugin mention the

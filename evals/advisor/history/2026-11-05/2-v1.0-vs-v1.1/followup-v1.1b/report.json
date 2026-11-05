@@ -1,0 +1,842 @@
+{
+  "setup": {
+    "conditions": [
+      {
+        "name": "base",
+        "plugin": null
+      },
+      {
+        "name": "v2",
+        "plugin": "<scratch>/v2c/plugins/security-advisor"
+      },
+      {
+        "name": "v2b",
+        "plugin": "/home/user/SecCheatSheet/plugins/security-advisor"
+      }
+    ],
+    "runs": 3,
+    "cases": [
+      "Q1-patch-vpn",
+      "Q3-torch-load",
+      "Q4-ai-agents",
+      "Q6-password-rotation"
+    ]
+  },
+  "summary": [
+    {
+      "name": "base",
+      "answers": 12,
+      "checks": 0.8333333333333334,
+      "byKind": {
+        "ask": 0.8333333333333334
+      },
+      "errors": 8,
+      "falsePositives": 0,
+      "meanRank": 2.5,
+      "firsts": 3,
+      "cost": {
+        "ask": 0.09881516666666668
+      },
+      "seconds": {
+        "ask": 20.639416666666673
+      },
+      "words": 497.5833333333333,
+      "advisorUsed": 0,
+      "webCalls": 0
+    },
+    {
+      "name": "v2",
+      "answers": 12,
+      "checks": 0.9365079365079365,
+      "byKind": {
+        "ask": 0.9365079365079365
+      },
+      "errors": 0,
+      "falsePositives": 0,
+      "meanRank": 1.8333333333333333,
+      "firsts": 5,
+      "cost": {
+        "ask": 0.20479481666666668
+      },
+      "seconds": {
+        "ask": 28.210333333333335
+      },
+      "words": 453,
+      "advisorUsed": 12,
+      "webCalls": 0
+    },
+    {
+      "name": "v2b",
+      "answers": 12,
+      "checks": 0.9365079365079365,
+      "byKind": {
+        "ask": 0.9365079365079365
+      },
+      "errors": 1,
+      "falsePositives": 0,
+      "meanRank": 1.6666666666666667,
+      "firsts": 4,
+      "cost": {
+        "ask": 0.21494920000000003
+      },
+      "seconds": {
+        "ask": 28.519166666666663
+      },
+      "words": 465.8333333333333,
+      "advisorUsed": 12,
+      "webCalls": 0
+    }
+  ],
+  "pairs": [
+    "base vs v2: 3–9",
+    "base vs v2b: 3–9",
+    "v2 vs v2b: 5–7"
+  ],
+  "judgments": [
+    {
+      "case": "Q3-torch-load",
+      "kind": "ask",
+      "run": 1,
+      "results": {
+        "v2": {
+          "cost": 0.19789420000000002,
+          "seconds": 25.931,
+          "words": 419,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "v2b": {
+          "cost": 0.1959122,
+          "seconds": 31.107,
+          "words": 416,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "base": {
+          "cost": 0.1007384,
+          "seconds": 19.818,
+          "words": 447,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            0.5,
+            1,
+            1,
+            0
+          ],
+          "errors": [
+            "Recommends PyTorch >= 2.6 as the patched baseline. This is outdated: GHSA-63cw-57p8-fm3p (Jan 2026) showed a weights_only=True code-execution bypass in all versions before 2.10.0.",
+            "Omits the 2026 bypass and implies weights_only=True on 2.6+ blocks pickle code execution, which is incorrect for 2.6 through 2.9."
+          ],
+          "falsePositives": [],
+          "rank": 3
+        }
+      },
+      "reason": "A and B are both correct and current, naming the 2.10.0 fix and safetensors. B edges ahead with more concrete safeguards (separate isolation step, trust_remote_code pinned to a revision) and a clear bottom line. C misses the 2026 advisory and wrongly treats PyTorch 2.6+ as sufficient.",
+      "judgeCost": 0.059283999999999996
+    },
+    {
+      "case": "Q3-torch-load",
+      "kind": "ask",
+      "run": 2,
+      "results": {
+        "v2": {
+          "cost": 0.19770379999999999,
+          "seconds": 30.138,
+          "words": 358,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "base": {
+          "cost": 0.10052639999999999,
+          "seconds": 19.452,
+          "words": 527,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            0.5,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [
+            "Recommends PyTorch ≥ 2.6 as the safe minimum and calls weights_only=True on a 'current' PyTorch a reasonable safeguard. This is outdated: the January 2026 advisory GHSA-63cw-57p8-fm3p shows weights_only=True could still execute code in versions before 2.10.0."
+          ],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2b": {
+          "cost": 0.1955464,
+          "seconds": 28.865,
+          "words": 379,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        }
+      },
+      "reason": "C and A are both correct and current, naming the 2026 advisory and requiring 2.10.0. C ranks first because it adds practical points: libraries calling torch.load without the flag, and use_safetensors=True. B is thorough but sets the version floor at 2.6, which leaves users exposed to the 2026 bypass.",
+      "judgeCost": 0.059752
+    },
+    {
+      "case": "Q4-ai-agents",
+      "kind": "ask",
+      "run": 2,
+      "results": {
+        "base": {
+          "cost": 0.099266,
+          "seconds": 21.933,
+          "words": 526,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "v2b": {
+          "cost": 0.23103539999999997,
+          "seconds": 35.371,
+          "words": 495,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            0.5,
+            1,
+            1,
+            0.5,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "v2": {
+          "cost": 0.200608,
+          "seconds": 33.544,
+          "words": 618,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            0.5,
+            0.5,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        }
+      },
+      "reason": "A meets every check: it gives agents their own identities, sandboxes them, restricts egress and builds everything on limiting what a prompt-injected agent can do. B and C have no clear errors and give useful tool-specific settings, but they only restrict network access for VS Code. B is more concise and gives agents their own identity, which C skips.",
+      "judgeCost": 0.064912
+    },
+    {
+      "case": "Q1-patch-vpn",
+      "kind": "ask",
+      "run": 2,
+      "results": {
+        "v2b": {
+          "cost": 0.2456404,
+          "seconds": 26.424,
+          "words": 531,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "base": {
+          "cost": 0.0982622,
+          "seconds": 22.887,
+          "words": 546,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            0.5,
+            0
+          ],
+          "errors": [
+            "Says the CISA KEV catalog 'normally gives US federal agencies about 2–3 weeks'. That reflects BOD 22-01, which BOD 26-04 replaced in June 2026; the new directive sets 3 days for the highest-risk cases and 14 days for other known-exploited flaws."
+          ],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2": {
+          "cost": 0.17877719999999997,
+          "seconds": 25.197,
+          "words": 454,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        }
+      },
+      "reason": "A and C are both correct, current and well sourced. A ranks first because it also covers capturing evidence before patching and rebuilding the device if it was compromised. B is actionable but cites outdated CISA KEV deadlines as current and gives no verifiable sources.",
+      "judgeCost": 0.061156
+    },
+    {
+      "case": "Q1-patch-vpn",
+      "kind": "ask",
+      "run": 3,
+      "results": {
+        "v2b": {
+          "cost": 0.1802358,
+          "seconds": 24.563,
+          "words": 427,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "base": {
+          "cost": 0.0981062,
+          "seconds": 23.247,
+          "words": 507,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2": {
+          "cost": 0.2416114,
+          "seconds": 22.775,
+          "words": 474,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        }
+      },
+      "reason": "C and A are both correct, current and sourced, but C is more actionable: it says to save evidence before patching, confirm the running version and not trust a clean integrity check. B gives sound, fast guidance but cites no verifiable sources and never mentions CISA's new 3-day tier for the highest-risk known-exploited flaws.",
+      "judgeCost": 0.060444
+    },
+    {
+      "case": "Q1-patch-vpn",
+      "kind": "ask",
+      "run": 1,
+      "results": {
+        "v2b": {
+          "cost": 0.24429060000000002,
+          "seconds": 30.078,
+          "words": 481,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "base": {
+          "cost": 0.0946622,
+          "seconds": 21.994,
+          "words": 509,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2": {
+          "cost": 0.179593,
+          "seconds": 22.628,
+          "words": 466,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        }
+      },
+      "reason": "A and C both set a concrete 24h containment and 72h patch deadline and cite verifiable sources. A gives fuller compromise handling, including collecting evidence before rebooting and rebuilding without restoring a compromised config. B is correct and actionable but names no specific sources and omits the new 3-day tier for the highest-risk cases.",
+      "judgeCost": 0.059532
+    },
+    {
+      "case": "Q3-torch-load",
+      "kind": "ask",
+      "run": 3,
+      "results": {
+        "v2": {
+          "cost": 0.1989574,
+          "seconds": 31.173,
+          "words": 400,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "v2b": {
+          "cost": 0.19725759999999998,
+          "seconds": 32.149,
+          "words": 447,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "base": {
+          "cost": 0.10052639999999999,
+          "seconds": 20.949,
+          "words": 530,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            0.5,
+            0.5,
+            1,
+            1,
+            0
+          ],
+          "errors": [
+            "Recommends PyTorch ≥ 2.6 as sufficient for torch.load with weights_only=True, which is outdated: GHSA-63cw-57p8-fm3p (Jan 2026) shows versions before 2.10.0 remain vulnerable to code execution",
+            "Says weights_only=True on a current PyTorch shuts down the classic malicious-.pt attack, citing only the CVE fixed in 2.6.0 and missing the 2026 bypass"
+          ],
+          "falsePositives": [],
+          "rank": 3
+        }
+      },
+      "reason": "A and B are both correct and cite the 2026 advisory with the 2.10.0 fix and practical safeguards; A is slightly more concise. C misses the 2026 bypass and wrongly treats PyTorch ≥ 2.6 as safe, and its 'mostly yes' opening undercuts the warning.",
+      "judgeCost": 0.066184
+    },
+    {
+      "case": "Q6-password-rotation",
+      "kind": "ask",
+      "run": 1,
+      "results": {
+        "v2b": {
+          "cost": 0.22512320000000002,
+          "seconds": 24.905,
+          "words": 424,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "base": {
+          "cost": 0.09644740000000002,
+          "seconds": 17.818,
+          "words": 404,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            0.5,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [
+            "Dates NIST SP 800-63B Rev. 4 to 2024. The final version was published in July/August 2025; 2024 was only a draft."
+          ],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2": {
+          "cost": 0.222603,
+          "seconds": 28.083,
+          "words": 348,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        }
+      },
+      "reason": "C is correct and the most concise, with concrete admin steps, breached-password screening and an accurate PCI DSS 8.3.9 caveat. A is equally correct but longer, and it hedges on facts that are in fact correct. B gives broad, good advice but misdates NIST Rev. 4 as 2024 and is the most verbose.",
+      "judgeCost": 0.050928
+    },
+    {
+      "case": "Q6-password-rotation",
+      "kind": "ask",
+      "run": 2,
+      "results": {
+        "v2b": {
+          "cost": 0.206734,
+          "seconds": 26.295,
+          "words": 394,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "base": {
+          "cost": 0.09655540000000001,
+          "seconds": 17.341,
+          "words": 431,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2": {
+          "cost": 0.2077882,
+          "seconds": 33.308,
+          "words": 429,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        }
+      },
+      "reason": "All three are correct and match NIST SP 800-63B-4 and PCI DSS 8.3.9. C ranks first because it gives concrete Entra and AD steps to turn off expiry and stays concise. A is equally accurate but less hands-on, and B is correct but longer and less focused.",
+      "judgeCost": 0.053512000000000004
+    },
+    {
+      "case": "Q6-password-rotation",
+      "kind": "ask",
+      "run": 3,
+      "results": {
+        "v2b": {
+          "cost": 0.20874879999999998,
+          "seconds": 25.376,
+          "words": 449,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        },
+        "v2": {
+          "cost": 0.2214002,
+          "seconds": 35.86,
+          "words": 355,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "base": {
+          "cost": 0.09742740000000001,
+          "seconds": 18.535,
+          "words": 457,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            0.5,
+            1,
+            1,
+            1,
+            0.5
+          ],
+          "errors": [
+            "Claims removing expiration without MFA leaves you 'worse off than before' and makes dropping rotation conditional on MFA. That conflicts with NIST SP 800-63B-4, which prohibits periodic rotation regardless and treats rotation as having little security value."
+          ],
+          "falsePositives": [],
+          "rank": 3
+        }
+      },
+      "reason": "A and B are equally correct and current, with NIST rev 4, PCI DSS 8.3.9 scoped correctly, and concrete replacement controls. B ranks first because it is tighter and turns the Entra and AD steps into its action list. C is the most verbose and wrongly makes dropping rotation depend on having MFA first, which contradicts NIST.",
+      "judgeCost": 0.05738
+    },
+    {
+      "case": "Q4-ai-agents",
+      "kind": "ask",
+      "run": 3,
+      "results": {
+        "v2": {
+          "cost": 0.20107740000000002,
+          "seconds": 25.449,
+          "words": 644,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "base": {
+          "cost": 0.10419400000000001,
+          "seconds": 22.973,
+          "words": 537,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            0.5,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "v2b": {
+          "cost": 0.22827599999999998,
+          "seconds": 28.503,
+          "words": 473,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            0.5,
+            1,
+            0.5,
+            0.5
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 2
+        }
+      },
+      "reason": "B covers every check with no errors: separate agent identities, isolation, egress allowlisting and a clear explanation of prompt injection. C is concise and gives agents their own identities, but treats logging and injection only briefly; A substitutes scoped developer tokens for real agent identities.",
+      "judgeCost": 0.067908
+    },
+    {
+      "case": "Q4-ai-agents",
+      "kind": "ask",
+      "run": 1,
+      "results": {
+        "base": {
+          "cost": 0.09906999999999999,
+          "seconds": 20.726,
+          "words": 550,
+          "advisorUsed": false,
+          "webCalls": 0,
+          "checks": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 1
+        },
+        "v2": {
+          "cost": 0.209524,
+          "seconds": 24.438,
+          "words": 471,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            0.5,
+            0.5,
+            1,
+            1,
+            0,
+            1
+          ],
+          "errors": [],
+          "falsePositives": [],
+          "rank": 3
+        },
+        "v2b": {
+          "cost": 0.22059,
+          "seconds": 28.594,
+          "words": 674,
+          "advisorUsed": true,
+          "webCalls": 0,
+          "checks": [
+            1,
+            0.5,
+            1,
+            1,
+            1,
+            1
+          ],
+          "errors": [
+            "Says to set `disableBypassPermissionsMode` in Copilot enterprise managed settings. That is a Claude Code setting key, not a Copilot policy."
+          ],
+          "falsePositives": [],
+          "rank": 2
+        }
+      },
+      "reason": "A meets every check with no errors and is concise. It also explains why prompt injection makes limiting the agent's reach the main defense. C is the most tool-specific and actionable, but it misattributes a Claude Code setting to Copilot and recommends general outbound network restriction only weakly; B never explains prompt injection and does not give agents their own identities.",
+      "judgeCost": 0.0363666
+    }
+  ]
+}
