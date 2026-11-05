@@ -24,6 +24,8 @@ remember, trust the sheet.
      know them. Include a mistake to avoid or something they can skip only when it bears on the
      question.
    - Keep the sheet's numbers and deadlines exactly. Don't invent thresholds the sheet doesn't give.
+   - Keep its top actions at full strength. Tool settings and quick wins can come first, but don't
+     present them as a substitute for a stronger action the sheet ranks higher.
    - Add specifics the sheet doesn't have when they matter, such as a vendor's settings or versions.
    - Don't describe the sheets, their tiers or how the library works. Say "we recommend" or state the
      advice directly, not "the sheet says".
