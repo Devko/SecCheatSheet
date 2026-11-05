@@ -15,6 +15,20 @@
       ]
     },
     {
+      "id": "leadership",
+      "name": "Security leadership",
+      "capabilities": [
+        { "id": "strategy", "name": "Security strategy" },
+        { "id": "operating-model", "name": "Operating model" },
+        { "id": "team", "name": "Security team structure" },
+        { "id": "maturity", "name": "Maturity assessments" },
+        { "id": "program", "name": "Security program and roadmap" },
+        { "id": "projects", "name": "Security projects" },
+        { "id": "risk", "name": "Risk register and exceptions" },
+        { "id": "policies", "name": "Policies and standards" }
+      ]
+    },
+    {
       "id": "exposure",
       "name": "Vulnerabilities and exposure",
       "capabilities": [
