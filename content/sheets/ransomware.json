@@ -141,7 +141,7 @@
       "title": "What you can skip",
       "items": [
         "**Buying another detection product before a tested restore.** If no one has timed a full restore, spend the money and time there first.",
-        "**Counting sync as a backup.** Cloud services often sync encrypted files over the good copies immediately, and NCSC advises against relying on several copies in one cloud service[^ncscmit]. Even Microsoft 365 Backup, with append-only restore points at $0.15 per GiB per month, can be deleted by a Backup admin after a 90-day grace period[^m365backup].",
+        "**Counting sync as a backup.** Cloud services often sync encrypted files over the good copies immediately, and NCSC advises against relying on several copies in one cloud service[^ncscmit]. Even Microsoft 365 Backup's append-only restore points can be deleted by a Backup admin after a 90-day grace period[^m365backup]; only cutting it to 7 days needs a second approver[^m365off].",
         "**Taking every backup offline.** One offline or immutable copy of what the first week needs is enough to start. Keep the rest online for fast restores."
       ]
     },
@@ -326,8 +326,15 @@
       "id": "m365backup",
       "title": "Overview of Microsoft 365 Backup",
       "publisher": "Microsoft Learn",
-      "date": "18 Aug 2026",
+      "date": "4 Nov 2026",
       "url": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-overview"
+    },
+    {
+      "id": "m365off",
+      "title": "Offboarding in Microsoft 365 Backup",
+      "publisher": "Microsoft Learn",
+      "date": "1 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/backup/backup-offboarding"
     }
   ]
 }

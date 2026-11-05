@@ -157,7 +157,7 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Grundschutz++ arrived.** BSI-Standard 300-1 version 1.0, dated 20 October 2026, targets experienced early adopters[^std3001]. Certification applications on its basis open on 1 January 2027; classic IT-Grundschutz certification ends on 30 November 2031[^gspp].",
+        "**Grundschutz++ arrived.** BSI-Standard 300-1 version 1.0, dated 20 October 2026, targets experienced early adopters[^std3001]. Certification applications on its basis open on 1 January 2027; classic IT-Grundschutz stays certifiable until 30 November 2031[^gspp].",
         "**TISAX moved to yearly catalogs.** Under ISA2027, published on 1 July 2026, suppliers to organizations with very high protection needs are expected to show a TISAX label, an equivalent assessment or a supplier audit. New catalogs follow each summer[^enxisa]."
       ]
     },
@@ -170,7 +170,7 @@
         "**A GRC tool before the first cycle.** A spreadsheet register and your ticket system will do.",
         "**Separate programs for ISO, TISAX and NIS2.** Keep one register and one SoA with a column for each mapping.",
         "**Waiting for Grundschutz++.** Its method requirements mirror ISO 27001 clauses 4 to 10[^std3001], so scope, risk and audit work carries over.",
-        "**A climate change study.** Record whether it is relevant and why; IAF treats the amendment as a clarification[^iafclimate]."
+        "**A climate change study.** Record whether it is relevant and why; IAF treated the amendment as a clarification[^iafclimate]."
       ]
     },
     {
@@ -284,9 +284,9 @@
     {
       "id": "iaf26",
       "title": "IAF MD 26:2023",
-      "publisher": "IAF",
+      "publisher": "IAF (now Global ACI)",
       "date": "15 Feb 2023",
-      "url": "https://iaf.nu/iaf_system/uploads/documents/IAF_MD26_Issue_2_15012023.pdf"
+      "url": "https://sys.global-aci.org/uploads/documents/IAF_MD26_Issue_2_15012023.pdf"
     },
     {
       "id": "iso27001",
@@ -297,10 +297,10 @@
     },
     {
       "id": "iafclimate",
-      "title": "IAF-ISO climate communiqué",
-      "publisher": "IAF",
+      "title": "Climate communiqué",
+      "publisher": "IAF (now Global ACI)",
       "date": "22 Feb 2024",
-      "url": "https://iaf.nu/wp-content/uploads/2024/02/IAF-ISO-Joint-Communique-_2024F.pdf"
+      "url": "https://global-aci.org/wp-content/uploads/2024/02/IAF-ISO-Joint-Communique-_2024F.pdf"
     },
     {
       "id": "enisatig",

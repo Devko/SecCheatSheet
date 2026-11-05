@@ -56,7 +56,7 @@
         },
         {
           "title": "Lock the attacker out and restore.",
-          "text": "Change the passwords and MFA of every account that can change DNS records, and audit every public record on all authoritative servers, as ED 19-01 required[^ed1901]. Revoke API keys and compare against your last zone export."
+          "text": "Change the passwords and MFA of every account that can change DNS records, and audit every public record on all authoritative servers, as ED 19-01 required before CISA retired it in 2026[^ed1901][^cisaed]. Revoke API keys and compare against your last zone export."
         },
         {
           "title": "Hunt down certificates.",
@@ -100,7 +100,7 @@
         "**Recurse only for your own clients.** No internet-facing server should be both authoritative and recursive[^sp80081].",
         "**Validate DNSSEC** with automatic trust anchor updates, two time sources and QNAME minimization[^sp80081].",
         "**Block DNS that goes around them:** outbound ports 53 and 853 except from your resolvers, and known public DoH servers[^sp80081].",
-        "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081].",
+        "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081]. In Germany, agree per-user logs and their retention with the works council[^betrvg][^bag].",
         "**Practice turning off validation for one zone.** A faulty DENIC key rollover on 5 May 2026 broke .de names, signed or not, on validating resolvers; some large operators suspended validation for .de[^denicout]."
       ]
     },
@@ -162,7 +162,7 @@
           "items": [
             "Move every domain into a registrar account you own, with two admins on security keys.",
             "Turn on auto-renew and registrar lock everywhere, and publish CAA for the CA you use.",
-            "Point your firewall at protective DNS built for businesses, such as Cloudflare's free plan or Quad9."
+            "Point your firewall at business-ready protective DNS, such as Cloudflare's free plan or Quad9."
           ]
         },
         {
@@ -208,6 +208,13 @@
       "publisher": "FDIC OIG",
       "date": "24 Sep 2019",
       "url": "https://www.fdicoig.gov/sites/default/files/reports/2022-08/19-006AUD.pdf"
+    },
+    {
+      "id": "cisaed",
+      "title": "CISA Retires Ten Emergency Directives",
+      "publisher": "CISA",
+      "date": "8 Jan 2026",
+      "url": "https://www.cisa.gov/news-events/news/cisa-retires-ten-emergency-directives-marking-era-federal-cybersecurity"
     },
     {
       "id": "sp80081",
@@ -292,6 +299,20 @@
       "publisher": "DENIC",
       "date": "11 Jun 2026",
       "url": "https://blog.denic.de/en/final-report-dns-outage-of-5-may-2026/"
+    },
+    {
+      "id": "betrvg",
+      "title": "BetrVG, § 87",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
+    },
+    {
+      "id": "bag",
+      "title": "Decision 1 ABR 7/15",
+      "publisher": "Federal Labor Court (Germany)",
+      "date": "13 Dec 2016",
+      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-abr-7-15/"
     },
     {
       "id": "ksk",
