@@ -109,7 +109,7 @@
         "**Oracle JDK 21 updates are no longer free for production.** Releases from 20 October 2026 come under the OTN license; Oracle JDK 25 updates stay free until September 2028[^oracle]. Temurin supports 21 until at least December 2029[^temurin].",
         "**Compromised CA keys need another JDK update.** After eight eMudhra intermediate CA keys were compromised, install a runtime that fixes JDK-8395690 (CVE-2026-114820), even if you updated in October; on Debian and Ubuntu, also rebuild the Java keystore[^ojemudhra].",
         "**Spring Boot 4.0.0 to 4.0.5 could leave every endpoint open** in apps on Boot's default web security with actuator autoconfiguration but without `spring-boot-health` (CVE-2026-40976, critical)[^sp40976].",
-        "**Free Spring fixes skip the 3.5 line.** August's critical Spring Security fix (CVE-2026-59270) shipped free only for 7.0 and 7.1[^sp59270]."
+        "**Free Spring fixes now skip Spring Security 6.5.** August's critical fix for its embedded LDAP server (CVE-2026-59270) shipped free only for 7.0 and 7.1[^sp59270]."
       ]
     },
     {
@@ -176,40 +176,250 @@
     }
   ],
   "sources": [
-    { "id": "oracle", "title": "Oracle Java SE Support Roadmap", "publisher": "Oracle", "date": "updated 20 Oct 2026", "url": "https://www.oracle.com/java/technologies/java-se-support-roadmap.html" },
-    { "id": "temurin", "title": "Temurin support roadmap", "publisher": "Adoptium", "date": "checked 5 Nov 2026", "url": "https://adoptium.net/support/" },
-    { "id": "ojvuln", "title": "OpenJDK Vulnerability Advisories", "publisher": "OpenJDK", "date": "updated 24 Oct 2026", "url": "https://openjdk.org/groups/vulnerability/advisories/" },
-    { "id": "oj1020", "title": "OpenJDK Vulnerability Advisory: 2026/10/20", "publisher": "OpenJDK", "date": "20 Oct 2026", "url": "https://openjdk.org/groups/vulnerability/advisories/2026-10-20" },
-    { "id": "ojemudhra", "title": "Compromised Certificates and OpenJDK Java Runtimes", "publisher": "OpenJDK", "date": "updated 24 Oct 2026", "url": "https://openjdk.org/emudhra" },
-    { "id": "sbsupport", "title": "Spring Boot: support", "publisher": "Spring", "date": "checked 5 Nov 2026", "url": "https://spring.io/projects/spring-boot#support" },
-    { "id": "sp40976", "title": "CVE-2026-40976: Spring Boot default web security", "publisher": "Spring", "date": "23 Apr 2026", "url": "https://spring.io/security/cve-2026-40976" },
-    { "id": "sp59270", "title": "CVE-2026-59270: Spring Security embedded LDAP server", "publisher": "Spring", "date": "20 Aug 2026", "url": "https://spring.io/security/cve-2026-59270" },
-    { "id": "jpasort", "title": "CVE-2026-47834: Spring Data JPA Sort validation bypass", "publisher": "Spring", "date": "20 Aug 2026", "url": "https://spring.io/security/cve-2026-47834" },
-    { "id": "ssauthz", "title": "Authorize HttpServletRequests", "publisher": "Spring Security docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html" },
-    { "id": "sscsrf", "title": "Cross Site Request Forgery (CSRF)", "publisher": "Spring Security docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-security/reference/features/exploits/csrf.html" },
-    { "id": "actuator", "title": "Actuator: Endpoints", "publisher": "Spring Boot docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-boot/reference/actuator/endpoints.html" },
-    { "id": "spel", "title": "SpEL: Evaluation, security considerations", "publisher": "Spring Framework docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-framework/reference/core/expressions/evaluation.html" },
-    { "id": "modelattr", "title": "@ModelAttribute", "publisher": "Spring Framework docs", "date": "checked 5 Nov 2026", "url": "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.html" },
-    { "id": "serfilter", "title": "Addressing Deserialization Vulnerabilities", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/core/addressing-serialization-vulnerabilities.html" },
-    { "id": "serpattern", "title": "Creating Pattern-Based Filters", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/core/creating-pattern-based-filters.html" },
-    { "id": "jaxp", "title": "JAXP Security Guide", "publisher": "Oracle (JDK 25)", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html" },
-    { "id": "javaxml", "title": "Module java.xml", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html" },
-    { "id": "path", "title": "Interface Path", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Path.html" },
-    { "id": "runtime", "title": "Class Runtime", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Runtime.html" },
-    { "id": "httpclient", "title": "Class HttpClient", "publisher": "JDK 25 API docs", "date": "checked 5 Nov 2026", "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.net.http/java/net/http/HttpClient.html" },
-    { "id": "jep486", "title": "JEP 486: Permanently Disable the Security Manager", "publisher": "OpenJDK", "date": "updated 2 Sep 2025", "url": "https://openjdk.org/jeps/486" },
-    { "id": "jackson", "title": "ObjectMapper (jackson-databind 2.22)", "publisher": "FasterXML", "date": "checked 5 Nov 2026", "url": "https://javadoc.io/static/com.fasterxml.jackson.core/jackson-databind/2.22.4/com/fasterxml/jackson/databind/ObjectMapper.html" },
-    { "id": "log4j", "title": "Apache Log4j security", "publisher": "Apache Logging Services", "date": "checked 5 Nov 2026", "url": "https://logging.apache.org/security.html" },
-    { "id": "tomcat", "title": "Apache Tomcat 11.x vulnerabilities", "publisher": "Apache Tomcat", "date": "checked 5 Nov 2026", "url": "https://tomcat.apache.org/security-11.html" },
-    { "id": "amq", "title": "CVE-2026-34197 announcement", "publisher": "Apache ActiveMQ", "date": "7 Apr 2026", "url": "https://activemq.apache.org/security-advisories.data/CVE-2026-34197-announcement.txt" },
-    { "id": "kev", "title": "Known Exploited Vulnerabilities Catalog", "publisher": "CISA", "date": "checked 5 Nov 2026", "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog" },
-    { "id": "cwe", "title": "2025 CWE Top 25", "publisher": "MITRE CWE", "date": "Dec 2025", "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html" },
-    { "id": "owaspdeser", "title": "Deserialization Cheat Sheet", "publisher": "OWASP", "date": "checked 5 Nov 2026", "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html" },
-    { "id": "owaspsqli", "title": "SQL Injection Prevention Cheat Sheet", "publisher": "OWASP", "date": "checked 5 Nov 2026", "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" },
-    { "id": "fsb", "title": "Find Security Bugs bug patterns", "publisher": "Find Security Bugs", "date": "checked 5 Nov 2026", "url": "https://find-sec-bugs.github.io/bugs.htm" },
-    { "id": "ep", "title": "Error Prone bug patterns", "publisher": "Error Prone", "date": "checked 5 Nov 2026", "url": "https://errorprone.info/bugpatterns" },
-    { "id": "cql", "title": "CodeQL query help for Java and Kotlin", "publisher": "GitHub", "date": "checked 5 Nov 2026", "url": "https://codeql.github.com/codeql-query-help/java/" },
-    { "id": "odc", "title": "dependency-check-maven configuration", "publisher": "OWASP Dependency-Check", "date": "13.0.0, 3 Aug 2026", "url": "https://dependency-check.github.io/DependencyCheck/dependency-check-maven/configuration.html" },
-    { "id": "gradle", "title": "Verifying dependencies", "publisher": "Gradle docs", "date": "checked 5 Nov 2026", "url": "https://docs.gradle.org/current/userguide/dependency_verification.html" }
+    {
+      "id": "oracle",
+      "title": "Oracle Java SE Support Roadmap",
+      "publisher": "Oracle",
+      "date": "updated 20 Oct 2026",
+      "url": "https://www.oracle.com/java/technologies/java-se-support-roadmap.html"
+    },
+    {
+      "id": "temurin",
+      "title": "Temurin support roadmap",
+      "publisher": "Adoptium",
+      "date": "checked 5 Nov 2026",
+      "url": "https://adoptium.net/support/"
+    },
+    {
+      "id": "ojvuln",
+      "title": "OpenJDK Vulnerability Advisories",
+      "publisher": "OpenJDK",
+      "date": "updated 24 Oct 2026",
+      "url": "https://openjdk.org/groups/vulnerability/advisories/"
+    },
+    {
+      "id": "oj1020",
+      "title": "OpenJDK Vulnerability Advisory: 2026/10/20",
+      "publisher": "OpenJDK",
+      "date": "20 Oct 2026",
+      "url": "https://openjdk.org/groups/vulnerability/advisories/2026-10-20"
+    },
+    {
+      "id": "ojemudhra",
+      "title": "Compromised Certificates and OpenJDK Java Runtimes",
+      "publisher": "OpenJDK",
+      "date": "updated 24 Oct 2026",
+      "url": "https://openjdk.org/emudhra"
+    },
+    {
+      "id": "sbsupport",
+      "title": "Spring Boot: support",
+      "publisher": "Spring",
+      "date": "checked 5 Nov 2026",
+      "url": "https://spring.io/projects/spring-boot#support"
+    },
+    {
+      "id": "sp40976",
+      "title": "CVE-2026-40976: Spring Boot default web security",
+      "publisher": "Spring",
+      "date": "23 Apr 2026",
+      "url": "https://spring.io/security/cve-2026-40976"
+    },
+    {
+      "id": "sp59270",
+      "title": "CVE-2026-59270: Spring Security embedded LDAP server",
+      "publisher": "Spring",
+      "date": "20 Aug 2026",
+      "url": "https://spring.io/security/cve-2026-59270"
+    },
+    {
+      "id": "jpasort",
+      "title": "CVE-2026-47834: Spring Data JPA Sort validation bypass",
+      "publisher": "Spring",
+      "date": "20 Aug 2026",
+      "url": "https://spring.io/security/cve-2026-47834"
+    },
+    {
+      "id": "ssauthz",
+      "title": "Authorize HttpServletRequests",
+      "publisher": "Spring Security docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.spring.io/spring-security/reference/servlet/authorization/authorize-http-requests.html"
+    },
+    {
+      "id": "sscsrf",
+      "title": "Cross Site Request Forgery (CSRF)",
+      "publisher": "Spring Security docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.spring.io/spring-security/reference/features/exploits/csrf.html"
+    },
+    {
+      "id": "actuator",
+      "title": "Actuator: Endpoints",
+      "publisher": "Spring Boot docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.spring.io/spring-boot/reference/actuator/endpoints.html"
+    },
+    {
+      "id": "spel",
+      "title": "SpEL: Evaluation, security considerations",
+      "publisher": "Spring Framework docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.spring.io/spring-framework/reference/core/expressions/evaluation.html"
+    },
+    {
+      "id": "modelattr",
+      "title": "@ModelAttribute",
+      "publisher": "Spring Framework docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.html"
+    },
+    {
+      "id": "serfilter",
+      "title": "Addressing Deserialization Vulnerabilities",
+      "publisher": "Oracle (JDK 25)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/core/addressing-serialization-vulnerabilities.html"
+    },
+    {
+      "id": "serpattern",
+      "title": "Creating Pattern-Based Filters",
+      "publisher": "Oracle (JDK 25)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/core/creating-pattern-based-filters.html"
+    },
+    {
+      "id": "jaxp",
+      "title": "JAXP Security Guide",
+      "publisher": "Oracle (JDK 25)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/security/java-api-xml-processing-jaxp-security-guide.html"
+    },
+    {
+      "id": "javaxml",
+      "title": "Module java.xml",
+      "publisher": "JDK 25 API docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.xml/module-summary.html"
+    },
+    {
+      "id": "path",
+      "title": "Interface Path",
+      "publisher": "JDK 25 API docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Path.html"
+    },
+    {
+      "id": "runtime",
+      "title": "Class Runtime",
+      "publisher": "JDK 25 API docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Runtime.html"
+    },
+    {
+      "id": "httpclient",
+      "title": "Class HttpClient",
+      "publisher": "JDK 25 API docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.oracle.com/en/java/javase/25/docs/api/java.net.http/java/net/http/HttpClient.html"
+    },
+    {
+      "id": "jep486",
+      "title": "JEP 486: Permanently Disable the Security Manager",
+      "publisher": "OpenJDK",
+      "date": "updated 2 Sep 2025",
+      "url": "https://openjdk.org/jeps/486"
+    },
+    {
+      "id": "jackson",
+      "title": "ObjectMapper (jackson-databind 2.22)",
+      "publisher": "FasterXML",
+      "date": "checked 5 Nov 2026",
+      "url": "https://javadoc.io/static/com.fasterxml.jackson.core/jackson-databind/2.22.4/com/fasterxml/jackson/databind/ObjectMapper.html"
+    },
+    {
+      "id": "log4j",
+      "title": "Apache Log4j security",
+      "publisher": "Apache Logging Services",
+      "date": "checked 5 Nov 2026",
+      "url": "https://logging.apache.org/security.html"
+    },
+    {
+      "id": "tomcat",
+      "title": "Apache Tomcat 11.x vulnerabilities",
+      "publisher": "Apache Tomcat",
+      "date": "checked 5 Nov 2026",
+      "url": "https://tomcat.apache.org/security-11.html"
+    },
+    {
+      "id": "amq",
+      "title": "CVE-2026-34197 announcement",
+      "publisher": "Apache ActiveMQ",
+      "date": "7 Apr 2026",
+      "url": "https://activemq.apache.org/security-advisories.data/CVE-2026-34197-announcement.txt"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "cwe",
+      "title": "2025 CWE Top 25",
+      "publisher": "MITRE CWE",
+      "date": "Dec 2025",
+      "url": "https://cwe.mitre.org/top25/archive/2025/2025_cwe_top25.html"
+    },
+    {
+      "id": "owaspdeser",
+      "title": "Deserialization Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 5 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html"
+    },
+    {
+      "id": "owaspsqli",
+      "title": "SQL Injection Prevention Cheat Sheet",
+      "publisher": "OWASP",
+      "date": "checked 5 Nov 2026",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+    },
+    {
+      "id": "fsb",
+      "title": "Find Security Bugs bug patterns",
+      "publisher": "Find Security Bugs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://find-sec-bugs.github.io/bugs.htm"
+    },
+    {
+      "id": "ep",
+      "title": "Error Prone bug patterns",
+      "publisher": "Error Prone",
+      "date": "checked 5 Nov 2026",
+      "url": "https://errorprone.info/bugpatterns"
+    },
+    {
+      "id": "cql",
+      "title": "CodeQL query help for Java and Kotlin",
+      "publisher": "GitHub",
+      "date": "checked 5 Nov 2026",
+      "url": "https://codeql.github.com/codeql-query-help/java/"
+    },
+    {
+      "id": "odc",
+      "title": "dependency-check-maven configuration",
+      "publisher": "OWASP Dependency-Check",
+      "date": "13.0.0, 3 Aug 2026",
+      "url": "https://dependency-check.github.io/DependencyCheck/dependency-check-maven/configuration.html"
+    },
+    {
+      "id": "gradle",
+      "title": "Verifying dependencies",
+      "publisher": "Gradle docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.gradle.org/current/userguide/dependency_verification.html"
+    }
   ]
 }
