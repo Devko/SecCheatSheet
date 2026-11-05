@@ -82,7 +82,7 @@
         "**Use four levels, defined in numbers.** The BSI's likelihood bands: at most once in five years, up to once a year, up to once a month, several times a month[^std2003]. Our impact bands at €50 million revenue: under €50,000, up to €500,000, up to €5 million, above.",
         "**Leave out the middle.** The BSI advises at most five levels, and says two staff rating one risk should get the same result[^std2003]. Four levels force a choice; test them on three sample risks.",
         "**Quantify the close calls.** When a decision hinges on whether a €300,000 measure pays off, estimate the yearly loss as a range. NIST describes three-point estimates, calibration and Monte Carlo simulation[^ir8286a].",
-        "**Use FAIR where euros decide.** The Open Group's FAIR standards are O-RA 2.1 and O-RT 3.1 (May 2025)[^ora]. FAIR estimates how often losses occur; agencies told NIST calibrated ranges can improve the yearly loss estimate[^ir8286a]."
+        "**Use FAIR where euros decide.** The Open Group's FAIR standards are O-RA 2.1 and O-RT 3.1 (May 2025)[^ora]. Agencies told NIST calibrated frequency ranges can improve the yearly loss estimate[^ir8286a]."
       ]
     },
     {
@@ -91,10 +91,10 @@
       "title": "Who may accept which risk",
       "navTitle": "Acceptance",
       "items": [
-        "**Acceptance is the exception.** NIS2 requires measures appropriate to the risks[^nis2], and 2024/2690 treats acceptance as an option for exceptional cases[^nis2ir]. The BSI rules out blanket acceptance under the BSIG[^bsiiso].",
-        "**Set authority by impact.** Our ladder: low risks the risk owner, medium a managing director, high and very high the management body. 2024/2690 allows delegation with adequate reports to management[^nis2ir]; under Grundschutz++, management authorizes every residual risk[^std3001].",
-        "**Get it in writing, with reasons.** Digital providers must document the reasons[^nis2ir]; ENISA adds a cost estimate and a contingency plan[^enisatig].",
-        "**Give it an end date,** 12 months at most. DORA has financial entities list accepted residual risks with reasons and recheck them yearly[^rts1774].",
+        "**Acceptance is the exception.** NIS2 requires measures appropriate to the risks[^nis2], and 2024/2690's recitals keep acceptance for exceptional cases[^nis2ir]. The BSI rules out blanket acceptance under the BSIG, though risks that don't matter for the regulated services may be accepted[^bsiiso].",
+        "**Set authority by impact.** Our ladder: low risks the risk owner, medium a managing director, high and very high the management body. For digital providers, 2024/2690 allows delegation if management gets adequate reports[^nis2ir]. Grundschutz++ has management authorize all residual risks[^std3001], so have it sign off delegated acceptances each quarter.",
+        "**Get it in writing, with reasons.** Digital providers must document the reasons[^nis2ir]; ENISA adds a loss estimate and a contingency plan[^enisatig].",
+        "**Give it an end date,** 12 months at most. DORA's standards have financial entities outside the simplified framework list accepted residual risks with reasons and recheck them at least yearly[^rts1774].",
         "**Don't accept critical flaws.** ENISA advises against it where possible[^enisatig]. Without a patch, digital providers must add measures and accept the residual risk[^nis2ir]."
       ]
     },
@@ -105,9 +105,9 @@
       "navTitle": "Exceptions",
       "items": [
         "**Treat an exception as a small acceptance,** with the same authority levels. Record clause, systems, reason, compensating controls, end date and approver in one ticket form linked to the register row. ENISA lists request and approval records with compensating controls as evidence[^enisatig].",
-        "**Demand controls that serve the rule's purpose.** ENISA's example is a system that can't support MFA, excepted while alternative measures go in[^enisatig]: access via a jump host with MFA, from a fixed network, with alerts.",
+        "**Demand controls that serve the rule's purpose.** ENISA's example is a system that can't support MFA, excepted while alternative measures go in[^enisatig]. Our choice: a jump host with MFA, a fixed source network and alerts.",
         "**End it, or approve it again one level up.** Grant up to 6 months, 12 at most. A renewal needs fresh approval and proof the compensating controls run.",
-        "**Fix rules that collect exceptions.** Change the standard instead; see the policies sheet. Grundschutz++ warns that piling up permanently unmet requirements can mean missing the state of the art[^std3001]."
+        "**Fix rules that collect exceptions.** Change the standard instead; see the policies sheet. Grundschutz++ allows no exception to a MUSS requirement, and many permanently unmet SOLLTE ones can mean missing the state of the art[^std3001]."
       ]
     },
     {
@@ -130,7 +130,7 @@
       "span": "full",
       "items": [
         "**Grundschutz++ set minimum register fields.** BSI-Standard 300-1 (20 October 2026) requires ID, object, description, protection goals, risk level and owner per risk, priority, treatment and linked measures where treated, and a time limit on temporary acceptance[^std3001].",
-        "**The BSI told management what to decide.** Its October 2026 curriculum suggests settling accepted risks, escalation thresholds and rules for accepting residual risk within 2 to 6 weeks of the first training[^bsicurr].",
+        "**The BSI listed management's decisions.** Its non-binding curriculum suggests settling accepted risks, escalation thresholds and residual-risk rules, ideally within 2 to 6 weeks of the first training[^bsicurr].",
         "**NIST revised its register series.** IR 8286, 8286A and 8286C Rev. 1 came out in December 2025[^ir8286a][^ir8286c]. IR 8286 encourages stating risk in money wherever feasible[^ir8286]."
       ]
     },
@@ -140,7 +140,7 @@
       "title": "What you can skip",
       "items": [
         "**A row per threat catalog entry.** The BSI's 47 elementary threats[^std3001] help find scenarios; copied per asset, they bury the ten that matter.",
-        "**Inherent risk scores.** Nobody can estimate a world without controls. Rate today's state and the target.",
+        "**Inherent risk scores.** A world without controls is guesswork. Rate today's state and the target.",
         "**FAIR for every row.** Quantify the three to five close decisions; the four-level scale serves the rest.",
         "**A separate exceptions database.** Keep exceptions as tickets linked to register rows, with the end date as the due date."
       ]
@@ -152,7 +152,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**A register nobody reads.** Two hundred rows only the auditor sees decide nothing. Take the top ten to management and ask for a decision on each.",
-        "**Every risk rated medium.** Scores bunch up; the BSI notes most users in effect work with two levels[^std2003]. Define four in numbers and have someone outside the team challenge ratings.",
+        "**Every risk rated medium.** Scores bunch up; the BSI notes most users tend to use just two levels in practice[^std2003]. Define four in numbers and have someone outside the team challenge ratings.",
         "**IT owning business risks.** IT then accepts outages it can't weigh against revenue. Make the process owner the risk owner and IT the action owner.",
         "**Accepting by silence.** A risk nobody decides on is accepted by default. Put every undecided row on the next management agenda.",
         "**Exceptions without end dates.** They quietly become the policy. Alert 30 days before expiry and treat an expired exception as a finding."
@@ -188,7 +188,7 @@
           "items": [
             "Keep a register per entity on group scales and roll them up, as IR 8286C describes[^ir8286c].",
             "Score on the ERM scales, so cyber risks join the CRO's register.",
-            "Under DORA, keep the inventory of accepted residual risks and review it yearly[^rts1774].",
+            "Under DORA's full framework, review the inventory of accepted residual risks at least yearly[^rts1774].",
             "Have internal audit sample acceptances."
           ]
         }
