@@ -1,14 +1,14 @@
 {
   "slug": "secure-go",
   "topic": "Secure Go",
-  "status": "draft",
+  "status": "published",
   "order": 39,
   "capability": "coding/go",
   "title": "Go: which habits still turn into vulnerabilities?",
   "short": "Rebuild every binary with Go 1.27.3 or 1.26.10 now and on each point release, gate CI on govulncheck and gosec, and put a timeout and a size limit on every request.",
   "answer": "Before your next release, rebuild every Go binary with Go 1.27.3 or 1.26.10, as Go 1.25 is unsupported[^policy][^release], and make `govulncheck` and `gosec` required CI checks. Judge everything else by whether outside data can reach SQL, a shell, a template, a path or a URL unchecked, or hold memory, a connection or a goroutine without a limit.",
   "audience": "Developers and tech leads writing production Go services and tools, and the security people who review them",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -140,7 +140,7 @@
         {
           "title": "New project",
           "items": [
-            "Run `go get go@1.27.3` after `go mod init`, which writes an older `go` line[^go126], and use `encoding/json/v2` and `os.Root` from the start.",
+            "For services, run `go get go@1.27.3` after `go mod init`, which writes an older `go` line[^go126], and use `encoding/json/v2` and `os.Root` from the start.",
             "Give each `http.Server` timeouts, and put `http.NewCrossOriginProtection().Handler` in front of the mux against CSRF[^nethttp].",
             "Make `govulncheck`, `gosec` and `go test -race` required checks."
           ]
@@ -165,6 +165,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which added the April os.Root fix and narrowed 5 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
