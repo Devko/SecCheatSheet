@@ -5,7 +5,7 @@
   "order": 34,
   "capability": "exposure/pentest",
   "title": "Penetration testing: are you testing what attackers target, and fixing what testers find?",
-  "short": "Scope tests around identity, internet-facing systems and critical apps, and retest every critical finding within 30 days.",
+  "short": "Scope tests around identity, internet-facing systems and critical apps, and fix and retest critical and high findings within 30 days.",
   "answer": "Before the next test, write down the question it must answer and scope it around identity, internet-facing systems and critical apps, not an IP list. Judge each test by how many findings were fixed and retested on time.",
   "audience": "IT, security and engineering leads in EU organizations, many in Germany, who commission penetration tests or red team exercises, or must under DORA or PCI DSS",
   "version": "0.1",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Get written authorization from every owner.",
-          "text": "The BSI says never to test without a written contract that includes any hoster running the service[^bsipt]. Microsoft won't authorize testers for you[^azpt]."
+          "text": "The BSI says never to test without a written contract, and to include any hoster[^bsipt]. Microsoft won't authorize testers for you[^azpt]."
         },
         {
           "title": "Retest and track every finding to closure.",
@@ -78,7 +78,7 @@
         "**Vulnerability scan: which known flaws are open?** Automated and frequent; see the attack surface sheet. A penetration test adds a competent manual attacker[^pci].",
         "**Penetration test: does this system hold up against a skilled tester?** Days of manual work on one system with full information, after go-live and significant changes[^bsipt].",
         "**Assumed breach: how far does one compromised laptop or account get?** The tester starts inside, as in the NCSC's lost laptop scenario[^ncscpt].",
-        "**Red team: would you detect and stop a real attacker?** A covert, threat-led attack on live systems; DORA's lasts at least 12 weeks[^rts]. Wait until logging and alert handling work.",
+        "**Red team: would you detect and stop a real attacker?** A covert, threat-led attack on live systems; under DORA the active phase lasts at least 12 weeks[^rts]. Wait until logging and alert handling work.",
         "**Purple teaming: which attacker techniques do you detect?** Testers and defenders work together and tune detections as they go. DORA requires it after every threat-led test[^rts].",
         "**Bug bounty: what do outsiders find over time?** See the secure development sheet."
       ]
@@ -135,7 +135,7 @@
       "title": "Tests a regulation or contract requires",
       "navTitle": "Required tests",
       "span": "full",
-      "intro": "NIS2 requires checks that security measures work[^nis2], and a risk-based testing policy for cloud and managed service providers[^nis2ir]. DORA adds yearly tests[^dora].",
+      "intro": "NIS2 requires checks that security measures work[^nis2], and a risk-based testing policy for cloud and managed service providers[^nis2ir]. DORA requires yearly tests of systems behind critical or important functions[^dora].",
       "items": [
         {
           "name": "DORA threat-led penetration test (TLPT)",
@@ -216,7 +216,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Test your cloud tenant and internet edge yearly.",
-            "Have high findings fixed in 30 days and retested.",
+            "Fix and retest critical and high findings in 30 days.",
             "Shortlist from the BSI list or CREST."
           ]
         },

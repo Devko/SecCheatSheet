@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Close every path in from the internet.",
-          "text": "Find port forwards and modems[^bsi154]. Iranian-affiliated actors have changed the logic of exposed PLCs since at least March 2026[^aa26097a]."
+          "text": "Check routers for port forwards and cabinets for modems[^bsi154]. Iranian-affiliated actors have changed the logic of exposed PLCs since at least March 2026[^aa26097a]."
         },
         {
           "title": "Change every default and shared password.",
@@ -28,15 +28,15 @@
         },
         {
           "title": "Put all remote access through one broker.",
-          "text": "One gateway in the OT DMZ with phishing-resistant MFA, enabled per job, replaces vendor VPNs and modems[^ncscot]."
+          "text": "One gateway in the OT DMZ, with phishing-resistant MFA and enabled per job, replaces per-vendor VPNs[^ncscot] and stray modems."
         },
         {
           "title": "Keep offline copies of controller logic.",
-          "text": "Back up PLC programs and configurations offline and test a restore[^aa26097a]. Keep spares and firmware for a bricked controller."
+          "text": "Back up PLC programs and configurations offline and test a restore[^aa26097a]. Keep spares[^inventory] and firmware for a bricked controller."
         },
         {
           "title": "Rehearse running the plant by hand.",
-          "text": "Test manual operation and islanding[^primary] and a staged isolation plan, from one vendor link to the whole site[^ncscot]."
+          "text": "Test manual operation and islanding[^primary], and an isolation plan with options from one vendor link to the whole site[^ncscot]."
         }
       ]
     },
@@ -60,7 +60,7 @@
         },
         {
           "title": "Rank by consequence, keep it current.",
-          "text": "Classify assets by what their failure would do to safety, group them into zones and update the list with every change, even emergency ones[^inventory]."
+          "text": "Classify assets by what their failure would do to safety, group them into zones, and update the list whenever a device is added or removed, even in emergencies[^inventory]."
         }
       ]
     },
@@ -70,10 +70,10 @@
       "title": "Protect what you can't patch",
       "navTitle": "Can't patch",
       "items": [
-        "**Split the deadlines.** Remote access gateways rarely affect real-time control, so patch them on IT deadlines[^bsi108]. Patch PLCs in planned downtime unless a flaw is known exploited[^aa26097a], and test first[^nsas7].",
+        "**Split the deadlines.** Remote access gateways rarely affect real-time control, so patch them promptly[^bsi108], within the patching sheet's deadlines. Patch PLCs in planned downtime unless a flaw is known exploited[^aa26097a], and test first[^nsas7].",
         "**Wrap obsolete devices.** Put a current protocol gateway or hardened jump host in front, and log every interaction[^ncscot].",
         "**Use the protection you have.** Keep mode switches in RUN[^aa26097a] and allow programming only from named engineering workstations[^nsas7]. None of the Polish RTUs that supported signed firmware had it on[^certpl].",
-        "**Switch off what you don't use.** Web servers, FTP, Telnet and VNC[^aa26097a][^nsas7]. A relay's default FTP account let attackers delete its system files[^certpl]."
+        "**Switch off what you don't use.** Disable unused web servers, FTP, Telnet and VNC[^aa26097a][^nsas7]. A relay's default FTP account let attackers delete its system files[^certpl]."
       ]
     },
     {
@@ -82,8 +82,8 @@
       "title": "Monitoring that understands OT",
       "navTitle": "Monitoring",
       "items": [
-        "**Watch passively.** Feed SPAN ports or taps at the OT boundary[^sp80082] into ICS-aware intrusion detection[^nsas7]. A small site can start with CISA's free Malcolm suite[^bsi154].",
-        "**Alert on changes to the process.** Program downloads, mode changes, controller writes and programming from non-engineering machines or outside change windows[^aa26097a][^nsas7].",
+        "**Watch passively.** Feed SPAN ports or taps at the OT boundary[^sp80082] into ICS-aware intrusion detection[^nsas7]. On a small site, Malcolm shows which devices connect out[^bsi154].",
+        "**Alert on changes to the process.** Flag program downloads, mode changes, controller writes, and programming from non-engineering machines or outside change windows[^aa26097a][^nsas7].",
         "**Tie alerts to work orders.** Tell the SOC about maintenance windows, and make any break-glass login its top alarm[^ncscot].",
         "**Get logs off the devices.** The Polish attackers factory-reset firewalls, erasing their logs[^certpl]. Forward gateway, firewall, modem and HMI logs."
       ]
@@ -114,7 +114,7 @@
       "title": "Engineering access and safety systems",
       "navTitle": "Engineering and safety",
       "items": [
-        "**Dedicate engineering workstations.** Keep them in OT, without email or browsing, with application allowlisting[^nsas7]. Polish HMIs fell to an admin password set at commissioning[^certpl].",
+        "**Dedicate engineering workstations.** Use application allowlisting[^nsas7], and keep them in OT with no email or web access. Polish HMIs fell to an admin password set at commissioning[^certpl].",
         "**Control media and laptops.** Use registered company media, scan it on a station with a different operating system, block unused USB ports and quarantine contractor laptops[^bsitop10].",
         "**Keep safety systems separate.** Combined control and safety networks could give an attacker both; keep safety keys in RUN unless programming[^sp80082]. F-series safety CPUs are among the Siemens targets[^nsas7]."
       ]
@@ -125,9 +125,9 @@
       "title": "Suppliers and products",
       "navTitle": "Suppliers",
       "items": [
-        "**Buy secure by default.** Require the 12 Secure by Demand elements, such as no default passwords, and IEC 62443-4-2 Security Level 3[^sbd].",
-        "**Contract the remote access.** Integrators use your broker, install no modems, hand over all accounts and backups, and come on site if you cut access[^ncscot].",
-        "**Mind 2027.** CRA obligations apply from 11 December 2027[^eccra]; machines placed on the market from 20 January 2027 need protection against corruption[^dguv]."
+        "**Buy secure by default.** Require the 12 Secure by Demand elements, such as no default passwords; they align with IEC 62443-4-2 Security Level 3[^sbd].",
+        "**Contract the remote access.** Integrators use your broker, add no modems, hand over all accounts and backups and, if you cut remote access, come on site[^ncscot].",
+        "**Mind 2027.** The CRA's main obligations apply from 11 December 2027[^eccra]. Under the Machinery Regulation, machines placed on the market from 20 January 2027 must be protected against corruption[^dguv]."
       ]
     },
     {
@@ -136,9 +136,9 @@
       "title": "What regulators expect in Germany",
       "navTitle": "Regulators",
       "items": [
-        "**Treat plant systems as in scope.** § 30 BSIG covers the IT systems, components and processes you use to provide your services[^bsig]. Reporting is in the EU security laws sheet.",
-        "**Critical facilities need attack detection.** § 31 BSIG requires it[^bsig], covering OT as well as IT[^ohsza], with proof to the BSI every three years[^bsig].",
-        "**Exposed OT is a breach of duty.** BSI says so of operators who expose OT to the internet without adequate protection[^bsi154]."
+        "**Treat plant systems as in scope.** For NIS2 entities, § 30 BSIG covers the IT systems, components and processes used to provide their services[^bsig]. Reporting is in the EU security laws sheet.",
+        "**Critical facilities need attack detection.** § 31 BSIG requires it[^bsig], BSI's guidance includes OT[^ohsza], and operators prove their measures to the BSI every three years[^bsig].",
+        "**Exposed OT is a breach of duty.** BSI says an operator who exposes OT to the internet without adequate protection acts in breach of their duties[^bsi154]."
       ]
     },
     {
@@ -148,9 +148,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Destructive attacks reached EU energy.** On 29 December 2025, attackers damaged controllers at over 30 Polish wind and solar sites and hit two CHP plants[^certpl], one through a private APN[^certpl2].",
-        "**PLC attacks moved to logic changes.** The FBI saw a project file override logic that kept a process within safe limits[^aa26097a].",
-        "**Attackers use AI to write PLC exploits.** An August 2026 advisory describes AI-generated scripts that read and write Siemens S7 memory; block TCP port 102[^nsas7].",
+        "**Destructive attacks reached EU energy.** On 29 December 2025, attackers damaged controllers at over 30 Polish wind and solar sites and hit two CHP plants, one through a private APN[^certpl][^certpl2]. Audit your APNs[^certpl2].",
+        "**PLC attacks moved to logic changes.** In its July 2026 update, the FBI describes a malicious project file that overrode logic keeping a process within safe limits[^aa26097a].",
+        "**Attackers use AI to write PLC exploits.** An August 2026 advisory describes AI-generated scripts that read and write Siemens S7 memory. Block TCP port 102 at the perimeter[^nsas7].",
         "**BSI set a baseline for small plants** in October 2026: no direct internet access, secured remote access, current software, routine checks[^bsi154]."
       ]
     },
@@ -162,7 +162,7 @@
         "**Active scans of a running plant.** Run them only in planned outages[^sp80082].",
         "**Emergency patching every ICS advisory.** Fix exposed and known exploited flaws first; the rest can wait for planned downtime[^aa26097a].",
         "**Agents the vendor hasn't approved.** Measures must not cost you warranty or support[^bsitop10].",
-        "**Anomaly detection instead of blocking.** It must not replace disabling unused commands, services and ports[^ncscot]."
+        "**Anomaly detection instead of blocking.** The NCSC says it must not replace disabling unused commands, services and ports[^ncscot]."
       ]
     },
     {
@@ -171,8 +171,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Calling a VLAN isolation.** An attacker with admin rights on the Polish sites' firewalls reached every VLAN[^certpl].",
-        "**Running OT on the corporate domain.** At a Polish CHP plant, attackers with domain admin rights pushed a wiper through Group Policy[^certpl].",
+        "**Calling a VLAN isolation.** The Polish sites had separate VLANs, but the attacker held admin rights on the firewall that joined them[^certpl].",
+        "**Letting one domain reach everything.** At the large Polish CHP plant, attackers with domain admin rights pushed a wiper through Group Policy; EDR stopped it[^certpl]. The segmentation sheet covers a separate OT identity.",
         "**Assuming the integrator handled it.** Owners whose providers have remote access may not know their PLCs are exposed[^nsas7]."
       ]
     },
@@ -202,7 +202,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Run attack detection in OT[^bsig] and use your sector's B3S where one exists[^bsi154].",
+            "Run attack detection that covers OT[^ohsza] and use your sector's B3S where one exists[^bsi154].",
             "Exercise an attack on all sites at once and test fleet-wide isolation[^ncscot].",
             "Put Secure by Demand and IEC 62443-4-2 in tenders, and CRA conformity for later deliveries."
           ]
