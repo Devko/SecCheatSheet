@@ -1,14 +1,14 @@
 {
   "slug": "secure-csharp",
   "topic": "Secure C# and .NET",
-  "status": "draft",
+  "status": "published",
   "order": 37,
   "capability": "coding/csharp",
   "title": "C# and .NET: which APIs and defaults turn into vulnerabilities?",
   "short": "Move off .NET 8 and 9 before support ends on 10 November 2026, never let data pick the type it deserializes into, and require authentication by default.",
   "answer": "Move every app off .NET 8 and 9 to .NET 10.0.14 or later now, as both lose support on 10 November 2026[^support][^oob], and before your next release remove `BinaryFormatter` and set a fallback authorization policy. Judge everything else by whether outside data can pick a type, reach SQL, a command line, a path, a URL or raw HTML, or skip an authorization check.",
   "audience": "Developers and tech leads writing production C# on .NET and ASP.NET Core, including legacy .NET Framework code, and the security people who review it",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -28,7 +28,7 @@
         },
         {
           "title": "Require login by default, then check each record.",
-          "text": "The fallback policy is `null`, so endpoints without authorization metadata are public[^authz]. Set it to `RequireAuthenticatedUser()`, then check records with `IAuthorizationService.AuthorizeAsync`[^owaspdotnet]."
+          "text": "The default fallback policy is `null`, so endpoints without authorization metadata are public[^authz]. Set it to `RequireAuthenticatedUser()`, then check records with `IAuthorizationService.AuthorizeAsync`[^owaspdotnet]."
         },
         {
           "title": "Keep input out of SQL, command lines and paths.",
@@ -76,10 +76,10 @@
       "span": "full",
       "items": [
         "**`BinaryFormatter` and its relatives.** `SoapFormatter`, `NetDataContractSerializer`, `LosFormatter` and `ObjectStateFormatter` also let the payload pick the type[^bfsec]. .NET 9 and later throw on `BinaryFormatter`, but the `System.Runtime.Serialization.Formatters` package restores it, risks included. Read old payloads with the NRBF reader, which creates no types[^bfmig].",
-        "**Json.NET `TypeNameHandling` other than `None`.** The JSON then names the type to create, and Newtonsoft says to vet it with a `SerializationBinder`[^newtonsoft]. Keep `None`, never give a serializer `Type.GetType(name)` with a name from data[^owaspdeser], and declare subtypes with `[JsonDerivedType]`.",
+        "**Json.NET `TypeNameHandling` other than `None`.** The JSON then names the type to create, and Newtonsoft says to vet it with a `SerializationBinder`[^newtonsoft]. Keep `None`, never give a serializer `Type.GetType(name)` with a name from data[^owaspdeser], and in System.Text.Json declare subtypes with `[JsonDerivedType]`.",
         "**Known `machineKey` values in ASP.NET Framework.** Microsoft found over 3,000 public keys usable for ViewState code injection[^mskeys], and CISA lists Sitecore's default keys as exploited[^kev]. Generate unique keys, rotate them and encrypt the `machineKey` section[^mskeys].",
         "**`FromSqlRaw($\"... {id}\")`.** `FromSqlRaw` and `ExecuteSqlRaw` paste interpolated values into the SQL; `FromSql` and `ExecuteSql` send each as a `DbParameter`[^efsql], and EF Core 10 warns on concatenation[^ef10]. Map column names from a fixed list[^owaspdotnet].",
-        "**`Process.Start(\"cmd.exe\", \"/c ...\")`.** `UseShellExecute` defaults to `true` on .NET Framework[^useshell]. Set it to `false`, use a fixed full path and `ArgumentList`, and never pass input to `cmd.exe`, `powershell.exe` or `sh -c`[^owaspcmd].",
+        "**`Process.Start(\"cmd.exe\", \"/c ...\")`.** Start a fixed full path with `UseShellExecute = false`, not the .NET Framework default[^useshell], use `ArgumentList` on .NET, and never pass input to `cmd.exe`, `powershell.exe` or `sh -c`[^owaspcmd].",
         "**`Path.Combine(root, name)`.** A rooted `name` discards `root`, and Microsoft says to use `Path.Join` for user input[^pathcombine]. That still lets `..` climb out, so require `Path.GetFullPath()` of the result to start with the root plus a separator.",
         "**`HttpClient.GetAsync(url)` with a URL from input.** Server-side request forgery ranks 22nd in the CWE Top 25[^cwe]. Allowlist hosts, check the resolved address in `SocketsHttpHandler.ConnectCallback` and set `AllowAutoRedirect = false`.",
         "**`Html.Raw`, `HtmlString` and `MarkupString`.** They skip Razor's encoding[^owaspdotnet][^blazor], and cross-site scripting ranks 1st in the CWE Top 25[^cwe]. Sanitize user HTML with a maintained sanitizer."
@@ -92,7 +92,7 @@
       "navTitle": "Tools",
       "items": [
         "**.NET analyzers.** Set `<AnalysisModeSecurity>All</AnalysisModeSecurity>`[^msbuild], then fix CA2300 to CA2330 (deserializers), CA2100 and CA3001 (SQL), CA3006 (processes) and CA5359 (certificates) first[^secrules].",
-        "**BannedApiAnalyzers** warns on every use of the APIs listed in `BannedSymbols.txt`[^banned].",
+        "**BannedApiAnalyzers** flags every use of the APIs listed in `BannedSymbols.txt`[^banned].",
         "**NuGet Audit** runs on every restore: add NU1903 and NU1904 to `<WarningsAsErrors>`[^nugetaudit]. The supply-chain sheet covers the rest."
       ]
     },
@@ -103,8 +103,8 @@
       "navTitle": "What changed",
       "items": [
         "**.NET 8 and 9 reach end of support on 10 November**[^support], and .NET Framework 4.6.2 on 12 January 2027[^fwlife].",
-        "**October brought 44 .NET CVEs,** including critical Kestrel request smuggling (CVE-2026-88092)[^net1013][^kestrel]. Two fixes were complete only in the 25 October releases[^oob].",
-        "**Data Protection let attackers forge auth cookies** in 10.0.0 to 10.0.6 (CVE-2026-40372). If you ran those exposed, rotate the key ring and tokens issued meanwhile[^dataprot]."
+        "**October's two .NET 10 releases fixed 46 CVEs,** including critical Kestrel request smuggling (CVE-2026-88092)[^net1013][^kestrel]. Two fixes were complete only in 10.0.14[^oob].",
+        "**Data Protection let attackers forge auth cookies** in the NuGet package 10.0.0 to 10.0.6, mainly outside the shared framework on Linux and macOS (CVE-2026-40372). If you ran it exposed, rotate the key ring and tokens issued meanwhile[^dataprot]."
       ]
     },
     {
@@ -123,7 +123,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Patching the host but not the app.** Self-contained apps stay vulnerable until recompiled and redeployed[^kestrel]. Rebuild container images too.",
+        "**Patching the host but not the app.** Self-contained apps stay vulnerable until recompiled and redeployed[^kestrel], and October's Blazor WebAssembly fix needed updated package references[^oob]. Rebuild container images too.",
         "**Unprotected Data Protection keys.** Default storage encrypts them only on Windows, and naming your own store turns that off[^dpkeys]. Add `ProtectKeysWithAzureKeyVault`.",
         "**Development settings in production.** Keep the `Development` environment and User Secrets, which aren't encrypted, on developer machines[^owaspdotnet]."
       ]
@@ -140,13 +140,13 @@
           "items": [
             "Start on .NET 10 with nullable checks, all security rules and warnings as errors.",
             "Set the fallback policy before the first endpoint.",
-            "Bind request bodies with the settings of .NET 10's `JsonSerializerOptions.Strict`[^net10lib]."
+            "Reject unknown and duplicate JSON properties, as .NET 10's `JsonSerializerOptions.Strict` does, but keep your naming policy[^net10lib]."
           ]
         },
         {
           "title": "Existing codebase",
           "items": [
-            "Leave .NET 8 and 9 now; move .NET Framework 4.6.2 to 4.8.1 before 12 January 2027[^fwlife].",
+            "Leave .NET 8 and 9 now; move .NET Framework 4.6.2 to 4.8 or 4.8.1 before 12 January 2027[^fwlife].",
             "Set `<NuGetAuditMode>all</NuGetAuditMode>` in `Directory.Build.props`."
           ]
         },
@@ -162,6 +162,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the October CVE count and the Data Protection CVE's scope and narrowed 6 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -192,7 +197,7 @@
     },
     {
       "id": "oob",
-      "title": ".NET October 2026 out-of-band updates",
+      "title": ".NET October 2026 out-of-band security updates",
       "publisher": "Microsoft",
       "date": "25 Oct 2026",
       "url": "https://github.com/dotnet/announcements/issues/496"
@@ -229,14 +234,14 @@
       "id": "bfsec",
       "title": "BinaryFormatter security guide",
       "publisher": "Microsoft Learn",
-      "date": "updated 13 Nov 2024",
+      "date": "updated 8 Aug 2024",
       "url": "https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide"
     },
     {
       "id": "bfmig",
       "title": "BinaryFormatter migration guide",
       "publisher": "Microsoft Learn",
-      "date": "updated 13 Aug 2024",
+      "date": "updated 8 Aug 2024",
       "url": "https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-migration-guide/"
     },
     {
@@ -255,8 +260,8 @@
     },
     {
       "id": "mskeys",
-      "title": "Code injection attacks using disclosed ASP.NET machine keys",
-      "publisher": "Microsoft",
+      "title": "Code injection attacks using publicly disclosed ASP.NET machine keys",
+      "publisher": "Microsoft Threat Intelligence",
       "date": "6 Feb 2025",
       "url": "https://www.microsoft.com/en-us/security/blog/2025/02/06/code-injection-attacks-using-publicly-disclosed-asp-net-machine-keys/"
     },
@@ -271,7 +276,7 @@
       "id": "authz",
       "title": "Policy-based authorization",
       "publisher": "Microsoft Learn",
-      "date": "updated 18 Sep 2026",
+      "date": "updated 20 Sep 2026",
       "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies"
     },
     {
@@ -314,7 +319,7 @@
       "title": "Razor components: raw HTML",
       "publisher": "Microsoft Learn",
       "date": "checked 5 Nov 2026",
-      "url": "https://learn.microsoft.com/en-us/aspnet/core/blazor/components/"
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/blazor/components/#raw-html"
     },
     {
       "id": "net10lib",
@@ -342,13 +347,13 @@
       "title": "BannedApiAnalyzers help",
       "publisher": ".NET on GitHub",
       "date": "checked 5 Nov 2026",
-      "url": "https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md"
+      "url": "https://github.com/dotnet/roslyn/blob/main/src/RoslynAnalyzers/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md"
     },
     {
       "id": "nugetaudit",
       "title": "Auditing package dependencies",
       "publisher": "NuGet docs",
-      "date": "updated 1 Oct 2025",
+      "date": "updated 5 May 2026",
       "url": "https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages"
     },
     {
