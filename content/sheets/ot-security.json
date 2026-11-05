@@ -4,9 +4,9 @@
   "status": "draft",
   "order": 36,
   "capability": "infrastructure/ot",
-  "title": "OT and industrial systems: how do you protect plants you can't patch or reboot?",
+  "title": "OT and industrial systems: what if you can't patch or reboot?",
   "short": "This month, take every PLC and HMI off the internet, change default passwords and keep offline copies of controller logic.",
-  "answer": "This month, close every path from the internet to your controllers, including port forwards, cellular modems and vendor VPNs, and change every default or shared password on them. Then route all remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse isolating the plant and running it by hand.",
+  "answer": "This month, close every path from the internet to your controllers, including port forwards, modems and vendor VPNs, and change every default or shared password. Then route remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse running the plant by hand.",
   "audience": "IT/OT security, engineering and plant operations leads at EU manufacturers, utilities, water and building operators, including KRITIS and NIS2 entities in Germany",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Close every path in from the internet.",
-          "text": "Check routers for port forwards and cabinets for modems[^bsi154]. Iranian-affiliated actors have been changing the logic of exposed PLCs since March 2026[^aa26097a]."
+          "text": "Find port forwards and modems[^bsi154]. Iranian-affiliated actors have changed the logic of exposed PLCs since at least March 2026[^aa26097a]."
         },
         {
           "title": "Change every default and shared password.",
@@ -95,12 +95,8 @@
       "navTitle": "Response",
       "items": [
         {
-          "title": "Make the process safe first.",
-          "text": "Operations decides on manual operation or shutdown; security advises."
-        },
-        {
-          "title": "Suspect unexplained trips.",
-          "text": "A Polish CHP plant first blamed a contractor for a turbine shutdown that was an attack[^certpl2]."
+          "title": "Make the process safe, then suspect an attack.",
+          "text": "Operations decides on manual operation or shutdown. A Polish CHP plant first blamed a contractor for a turbine shutdown that was an attack[^certpl2]."
         },
         {
           "title": "Isolate in stages.",
@@ -131,7 +127,7 @@
       "items": [
         "**Buy secure by default.** Require the 12 Secure by Demand elements, such as no default passwords, and IEC 62443-4-2 Security Level 3[^sbd].",
         "**Contract the remote access.** Integrators use your broker, install no modems, hand over all accounts and backups, and come on site if you cut access[^ncscot].",
-        "**Mind 2027.** The CRA's main obligations apply from 11 December 2027[^eccra]; machines placed on the market from 20 January 2027 need protection against corruption[^dguv]."
+        "**Mind 2027.** CRA obligations apply from 11 December 2027[^eccra]; machines placed on the market from 20 January 2027 need protection against corruption[^dguv]."
       ]
     },
     {
@@ -153,7 +149,7 @@
       "span": "full",
       "items": [
         "**Destructive attacks reached EU energy.** On 29 December 2025, attackers damaged controllers at over 30 Polish wind and solar sites and hit two CHP plants[^certpl], one through a private APN[^certpl2].",
-        "**PLC attacks moved to logic changes.** The FBI saw a project file override logic that kept a process within safe limits; Siemens and Schneider PLCs are targets too[^aa26097a].",
+        "**PLC attacks moved to logic changes.** The FBI saw a project file override logic that kept a process within safe limits[^aa26097a].",
         "**Attackers use AI to write PLC exploits.** An August 2026 advisory describes AI-generated scripts that read and write Siemens S7 memory; block TCP port 102[^nsas7].",
         "**BSI set a baseline for small plants** in October 2026: no direct internet access, secured remote access, current software, routine checks[^bsi154]."
       ]

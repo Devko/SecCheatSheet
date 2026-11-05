@@ -157,7 +157,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Exempting a controller from Pod Security.** Exempting the ReplicaSet controller exempts everyone who can create a Deployment[^psa].",
-        "**Giving CI a cluster-wide service account.** UNC4899 made CI jobs print service account tokens to logs, then used a highly privileged one to escalate[^th]. Scope deploy accounts to namespaces.",
+        "**Running CI with a powerful service account.** UNC4899 made CI jobs print service account tokens to logs, then used a highly privileged one to escalate[^th]. Scope deploy accounts to namespaces.",
         "**Binding roles to built-in groups.** `system:unauthenticated` is anyone who can reach the API server[^rbacgp]; on GKE, `system:authenticated` includes any Google account[^gkeharden]."
       ]
     },

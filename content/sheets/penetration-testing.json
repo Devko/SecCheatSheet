@@ -139,7 +139,7 @@
       "items": [
         {
           "name": "DORA threat-led penetration test (TLPT)",
-          "scope": "Entities their authority selects, at least every 3 years, on live systems[^dora]. In Germany the Bundesbank runs it[^tiberde]. Clocks run from the notice, then from the end of red teaming[^rts].",
+          "scope": "Entities their authority selects, at least every 3 years, on live systems[^dora]. In Germany the Bundesbank runs tests BaFin or the ECB orders[^tiberde]. Clocks start at the notice, then at the end of red teaming[^rts].",
           "steps": [
             {
               "at": "3 months",
