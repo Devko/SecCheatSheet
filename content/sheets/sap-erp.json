@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Take ERP web components off the internet.",
-          "text": "Publish only the HTTP paths partners need, through a reverse proxy in front of SAP Web Dispatcher[^app42], and never the gateway, message server or start service ports[^ports]."
+          "text": "Publish only the HTTP paths partners need, through a reverse proxy in front of SAP Web Dispatcher[^app42], and never the SAP GUI, gateway, message server or start service ports[^ports]."
         },
         {
           "title": "Patch every month, by exploitation and exposure.",
@@ -52,7 +52,7 @@
         },
         {
           "title": "How fast must each one go in?",
-          "text": "Use the patching sheet's tiers: exploited (in KEV[^kev]) first, then Critical and High notes within 14 days on internet-facing systems and 30 days inside[^sapoct26]."
+          "text": "Use the patching sheet's tiers: exploited (in KEV[^kev]) first, then Critical[^sapoct26] and High notes within 14 days on internet-facing systems and 30 days inside."
         },
         {
           "title": "Did the fix reach production?",
@@ -72,7 +72,7 @@
       "span": "full",
       "items": [
         "**SAP NetWeaver Visual Composer, CVE-2025-31324.** Unauthenticated file upload; in KEV since 29 April 2025, with ransomware use[^kev].",
-        "**Oracle EBS, CVE-2025-61882.** A zero-day from 9 August 2025; Cl0p-branded extortionists stole data[^gtigebs]. In KEV since 6 October[^kev].",
+        "**Oracle EBS, CVE-2025-61882.** Google saw likely zero-day attacks from 9 August 2025 and data theft[^gtigebs]; in KEV since 6 October[^kev].",
         "**Oracle PeopleSoft, CVE-2026-35273.** ShinyHunters exploited it from 27 May 2026, before Oracle's 10 June alert[^gtigps]; in KEV since 12 June[^kev].",
         "**Oracle Payments in EBS, CVE-2026-46817.** An unauthenticated takeover rated 9.8, fixed on 28 May 2026[^oracspu]; in KEV since 15 July[^kev]."
       ]
@@ -107,7 +107,7 @@
       "title": "Logs, transports and custom code",
       "navTitle": "Logs and code",
       "items": [
-        "**Get the audit log to your SIEM.** Log all message types[^sentprep]. Microsoft Sentinel's SAP solution charges hourly per production system and needs SAP Integration Suite[^sentinel][^sentprep].",
+        "**Send the audit log to your SIEM.** Microsoft Sentinel for SAP charges per production system and needs SAP Integration Suite[^sentinel][^sentprep].",
         "**Gate every transport.** Build roles and code only in development[^app42]; the ABAP Test Cockpit checks them at release[^atc]. Its security checks, Code Vulnerability Analyzer, need a license on premises or SAP BTP[^cva].",
         "**Follow APP.4.6 in custom ABAP.** Check AUTHORITY-CHECK results; avoid dynamic Open SQL, ADBC and INSERT REPORT[^app46]."
       ]
@@ -119,7 +119,7 @@
       "navTitle": "End of maintenance",
       "items": [
         "**End of 2027.** Mainstream maintenance ends for SAP ERP 6.0, EHP 6 to 8[^bs7], and SAP Solution Manager[^sysrec].",
-        "**2028 to 2030.** Optional extended maintenance, at 2 percentage points more[^bs7]. Then customer-specific maintenance: new high and critical notes for 12 months only[^sapnotes].",
+        "**2028 to 2030.** Optional extended maintenance, at 2 percentage points more[^bs7]. Then, in customer-specific maintenance, SAP considers new high and critical notes for 12 months only[^sapnotes].",
         "**RISE transition option.** Security patches from 2031 to 2033 for systems moved to SAP ERP, private edition on HANA by the end of 2030[^transopt]."
       ]
     },
@@ -129,9 +129,10 @@
       "title": "What to demand from RISE and partners",
       "navTitle": "RISE and partners",
       "items": [
-        "**Know what RISE leaves to you.** Without Cloud Application Services packages, you find and request notes; testing and the application security concept stay yours[^rr].",
+        "**Know what RISE leaves you.** Without Cloud Application Services, you find and request notes; testing and the application's security concept stay yours[^rr].",
         "**Own the SIEM rules.** LogServ is optional, and SAP doesn't confirm receipt, write correlation rules or watch alerts[^rr].",
-        "**Write it into the contract.** Monthly patch status, deadlines for exploited and Critical notes, personal accounts; see the third-party-risk sheet."
+        "**Write it into the contract.** Monthly patch status, deadlines for exploited and Critical notes, personal accounts; see the third-party-risk sheet.",
+        "**Check partner admins in Business Central.** Delegated admins appear as users, and their actions are logged[^bcperm]."
       ]
     },
     {
@@ -141,7 +142,7 @@
       "navTitle": "Changed in 2026",
       "items": [
         "**Oracle patches monthly.** Critical Security Patch Updates, first on 28 May, now fill the months between quarterly updates[^oraalerts].",
-        "**Oracle ERP web tiers kept being hit.** PeopleSoft and Oracle Payments flaws entered KEV in June and July[^kev]. Patch them like edge devices.",
+        "**SAP's own npm packages were poisoned.** Malicious CAP database packages and MTA Build Tool versions appeared in April[^sapapr26]. See the supply-chain sheet.",
         "**ECC on RISE until 2035.** Since 13 October, transition option subscriptions may run to the end of 2035[^transopt]."
       ]
     },
@@ -152,7 +153,7 @@
       "items": [
         "**Buying threat detection first.** Sentinel for SAP or SAP Enterprise Threat Detection sees little while the audit log is off and notes lag.",
         "**Applying every note on Patch Day.** Support Package Security Notes can wait for the next support package[^sapnotes].",
-        "**A full SoD rule set first.** Removing SAP_ALL, debug and replace and all-table access cuts more risk."
+        "**A full SoD rule set first.** Removing SAP_ALL and debug and replace cuts more risk, sooner."
       ]
     },
     {
@@ -163,7 +164,7 @@
       "items": [
         "**Leaving unused components installed.** Visual Composer, exploited in 2025, got another 9.9 note in October 2026[^sapoct26].",
         "**Falling behind on cumulative patches.** Oracle's fix for CVE-2025-61882 needed the October 2023 Critical Patch Update first[^oraebsalert].",
-        "**Trusting a WAF instead.** Google warns that WAF body-inspection rules alone can be bypassed[^gtigps]."
+        "**Trusting a WAF.** Google warns WAF body-inspection rules can be bypassed[^gtigps]."
       ]
     },
     {
@@ -201,7 +202,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on SAP's Patch Day pages and maintenance rules, SAP Help, BSI APP.4.2 and APP.4.6, the DSAG audit guide, SAP's RISE responsibilities, CISA KEV, Oracle alerts, Google Threat Intelligence and Microsoft Learn."
+      "text": "First draft, based on SAP's Patch Day pages, SAP Help, BSI APP.4.2 and APP.4.6, SAP's RISE responsibilities, CISA KEV and Google Threat Intelligence."
     }
   ],
   "sources": [
@@ -209,15 +210,22 @@
       "id": "sapnotes",
       "title": "SAP Security Notes & News",
       "publisher": "SAP Support",
-      "date": "2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/my-support/knowledge-base/security-notes-news.html"
     },
     {
       "id": "sysrec",
       "title": "System Recommendations",
       "publisher": "SAP Support",
-      "date": "2025",
+      "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/alm/solution-manager/integrated-tools/system-recommendations.html"
+    },
+    {
+      "id": "sapapr26",
+      "title": "SAP Patch Day, April 2026",
+      "publisher": "SAP Support",
+      "date": "Apr 2026",
+      "url": "https://support.sap.com/en/my-support/knowledge-base/security-notes-news/april-2026.html"
     },
     {
       "id": "sapoct26",
@@ -230,7 +238,7 @@
       "id": "kev",
       "title": "Known Exploited Vulnerabilities Catalog",
       "publisher": "CISA",
-      "date": "4 Nov 2026",
+      "date": "version 2026.11.04",
       "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
     },
     {
@@ -328,7 +336,7 @@
       "id": "eam",
       "title": "Monitoring the Emergency Access Session",
       "publisher": "SAP Learning",
-      "date": "2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://learning.sap.com/courses/discovering-the-main-functionalities-of-sap-access-control/monitoring-the-emergency-access-session_ed466dd1-8d00-4989-aa3d-331e8bfbebe5"
     },
     {
@@ -349,7 +357,7 @@
       "id": "cva",
       "title": "SAP Code Vulnerability Analyzer",
       "publisher": "SAP Community",
-      "date": "2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://pages.community.sap.com/topics/abap-testing-analysis/code-vulnerability-analyzer"
     },
     {
@@ -370,7 +378,7 @@
       "id": "bs7",
       "title": "Clarity and Choice on SAP Business Suite 7",
       "publisher": "SAP Support",
-      "date": "2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/release-upgrade-maintenance/maintenance-information/maintenance-strategy/s4hana-business-suite7.html"
     },
     {

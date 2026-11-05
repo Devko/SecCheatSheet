@@ -24,7 +24,7 @@
         },
         {
           "title": "Fix certificate templates.",
-          "text": "A template any user can enroll in, with a supplied subject name and client authentication, lets them impersonate anyone, even a domain admin[^mdicert]."
+          "text": "A template any user can enroll in, with a supplied subject name, client authentication and no approval, lets them impersonate anyone, even a domain admin[^mdicert]."
         },
         {
           "title": "Remove unconstrained delegation.",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Set the machine account quota to 0.",
-          "text": "By default any user can add ten computers to the domain[^asdad]. BSI requires limiting this to admin accounts[^bsiapp22]. First delegate join rights on computer OUs to the accounts that join PCs."
+          "text": "By default any user can add ten computers to the domain[^asdad]; BSI requires limiting this to admins[^bsiapp22]. Delegate join rights to the accounts that join PCs first."
         },
         {
           "title": "Rotate krbtgt twice a year.",
@@ -52,7 +52,7 @@
         },
         {
           "title": "What does a free scan find?",
-          "text": "PingCastle's open source edition is free for internal use, also by your IT provider, but not to sell as a service[^pingcastle]. Purple Knight is free and needs no admin rights[^pkfaq], but can't be used in or for China, Russia and other listed countries[^pkterms]. Ask Semperis for its EULA before a provider runs it."
+          "text": "PingCastle's open source edition is free for internal use, also by your IT provider, but not to sell as a service[^pingcastle]. Purple Knight is free, needs no admin rights[^pkfaq] and is barred in or for China, Russia and other listed countries[^pkterms]. Ask Semperis for its EULA first."
         },
         {
           "title": "Who can reach Tier 0?",
@@ -75,7 +75,7 @@
       "navTitle": "AD CS",
       "items": [
         "**Templates (ESC1 to ESC4, named by SpecterOps[^certified]).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
-        "**CA settings (ESC6, ESC7, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, take CA rights from broad groups, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
+        "**CA settings (ESC6, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
         "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove it if unused[^certipy].",
         "**Log it.** Turn on CA auditing, off by default, and alert on events 4886, 4887, 4899 and 4900[^asdad]."
       ]
@@ -88,7 +88,7 @@
       "items": [
         "**Find what still uses RC4.** KDCSVC errors 203, 204, 208 and 209 show requests DCs now block; keytab devices can fail with no event[^rc4kb]. Run `Get-KerbEncryptionUsage.ps1 -Encryption RC4` and reset accounts without AES keys[^rc4detect].",
         "**Check all delegation.** Defender for Identity flags any delegation that exposes sensitive accounts[^mdiacct]. Protected Users can't be delegated[^asdad], and BSI requires privileged accounts there[^bsiapp22].",
-        "**Rotate krbtgt in two steps.** Let the first reset replicate to every DC[^asdad] and wait at least 10 hours, the default ticket lifetime. RODCs have their own `krbtgt_` accounts[^krbtgt]. Move SPN accounts to gMSAs, as the non-human identities sheet describes."
+        "**Rotate krbtgt in two steps.** Let the first reset reach every DC before the second[^asdad]. RODCs have their own `krbtgt_` accounts[^krbtgt]. Move SPN accounts to gMSAs, as the non-human identities sheet describes."
       ]
     },
     {
@@ -98,9 +98,9 @@
       "navTitle": "NTLM and LDAP",
       "items": [
         "**Log NTLM for the whole domain.** Check that **Log Enhanced Domain-wide NTLM Logs** is on for DCs. Events 4030 to 4033 show NTLM and NTLMv1 use; Server 2019 and 2022 got them in October 2026[^ntlmaudit].",
-        "**Restrict it in stages.** After the audit, deny incoming NTLM on CA, Entra Connect and Cloud Sync servers first, as Microsoft advises[^kb5005413][^connectprereq][^cloudsync]. Then add server exceptions and deny with **Restrict NTLM: NTLM authentication in this domain**.",
+        "**Restrict it in stages.** After the audit, deny NTLM on CA, Entra Connect and Cloud Sync servers first, as Microsoft advises[^kb5005413][^connectprereq][^cloudsync]. Then deny it domain-wide with **Restrict NTLM** and server exceptions.",
         "**Get ready for NTLM off by default** in the next major Windows Server release[^ntlmoff].",
-        "**Require LDAP signing and channel binding** once their audit events stop, as BSI expects[^bsiapp22] and the secure-configuration sheet describes. Defender for Identity lists clients that bind in clear text[^mdiacct]."
+        "**Require LDAP signing and channel binding** once their audit events stop, as BSI expects[^bsiapp22]. Defender for Identity lists clear-text binds[^mdiacct]."
       ]
     },
     {
@@ -122,10 +122,10 @@
       "title": "Entra Connect, Cloud Sync and Seamless SSO",
       "navTitle": "Hybrid sync",
       "items": [
-        "**Move Connect Sync to application-based authentication** on version 2.6.84.0 or later by 7 April 2027, or sync stops[^connectprereq]. Keep its key in a TPM, delete the old `Sync_` account and treat Application Administrators, who can act as the app, as sync admins[^appauth].",
-        "**Rotate the `MSOL_` account's password** every 90 days, keep it out of Domain Admins and remove its replication rights if you don't use password hash sync[^mdihybrid].",
-        "**Roll the Seamless SSO key at least every 30 days** with `Update-AzureADSSOForest`, once per forest[^ssofaq]. Whoever holds it can impersonate any synced user[^mdihybrid].",
-        "**Harden Cloud Sync the same way,** with its gMSA agent on a Tier 0 server and NTLM denied[^cloudsync]. For both, turn off soft matching and hard match takeover[^connectprereq]."
+        "**Move Connect Sync to application-based authentication** on 2.6.84.0 or later by 7 April 2027, or sync stops[^connectprereq]. Keep its key in a TPM, delete the `Sync_` account and treat Application Administrators as sync admins: they can act as the app[^appauth].",
+        "**Rotate the `MSOL_` password** in AD and Connect every 90 days, keep it out of admin groups and drop replication rights without password hash sync[^mdihybrid].",
+        "**Roll the Seamless SSO key at least every 30 days** with `Update-AzureADSSOForest`, once per forest[^ssofaq]. Its holder can impersonate any synced user[^mdihybrid].",
+        "**Harden Cloud Sync the same way:** gMSA agent, Tier 0 server, no NTLM[^cloudsync]. For both, block soft matching and hard match takeover[^connectprereq]."
       ]
     },
     {
@@ -147,7 +147,7 @@
       "items": [
         "**Paid AD audit suites first.** Fix what the free tools find, then buy continuous monitoring.",
         "**Studying all 17 ESC classes.** Let a scanner find them. Some need parts you may not run, like web enrollment (ESC8) or a YubiHSM (ESC12)[^certipy].",
-        "**Monthly krbtgt rotation.** ASD asks for every six months and after a suspected compromise[^asdad]. Spend the time removing DCSync rights."
+        "**Monthly krbtgt rotation.** ASD asks for every six months and after a suspected compromise[^asdad]."
       ]
     },
     {
@@ -353,7 +353,7 @@
     {
       "id": "pingcastle",
       "title": "PingCastle README: License",
-      "publisher": "Netwrix on GitHub",
+      "publisher": "Netwrix",
       "date": "checked 5 Nov 2026",
       "url": "https://github.com/netwrix/pingcastle"
     },
@@ -366,7 +366,7 @@
     },
     {
       "id": "pkterms",
-      "title": "Deployment Restrictions for Semperis Software",
+      "title": "Deployment restrictions",
       "publisher": "Semperis",
       "date": "Nov 2025",
       "url": "https://www.semperis.com/docs/Semperis_Product%20Documentation_Deployment%20Restrictions.pdf"
@@ -374,7 +374,7 @@
     {
       "id": "bhce",
       "title": "BloodHound CE license",
-      "publisher": "SpecterOps on GitHub",
+      "publisher": "SpecterOps",
       "date": "checked 5 Nov 2026",
       "url": "https://github.com/SpecterOps/BloodHound"
     }
