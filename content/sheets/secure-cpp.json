@@ -25,11 +25,11 @@
         },
         {
           "title": "Bounds-check the standard library in production.",
-          "text": "Define `_GLIBCXX_ASSERTIONS`, set libc++'s mode to `_LIBCPP_HARDENING_MODE_FAST`[^openssf][^libcxx] or define `_MSVC_STL_HARDENING=1`[^msstl]. At Google it cost 0.3% on average, found over 1,000 bugs and cut segfaults by 30%[^gretro]."
+          "text": "Define `_GLIBCXX_ASSERTIONS`, set libc++'s mode to `_LIBCPP_HARDENING_MODE_FAST`[^openssf][^libcxx] or define `_MSVC_STL_HARDENING=1`[^msstl]. At Google, hardened libc++ cost 0.3% on average, found over 1,000 bugs and cut segfaults by 30%[^gretro]."
         },
         {
           "title": "Run every test under ASan and UBSan.",
-          "text": "`-fsanitize=address` finds out-of-bounds access and use after free at about half speed[^asan], `-fsanitize=undefined` signed overflow and other undefined behavior[^ubsan]. Leave out `_FORTIFY_SOURCE` there[^openssf]."
+          "text": "`-fsanitize=address` finds out-of-bounds access and use after free at about half speed[^asan], `-fsanitize=undefined` signed overflow and other undefined behavior[^ubsan]. Build those jobs with `-U_FORTIFY_SOURCE`, as distros often enable it[^openssf]."
         },
         {
           "title": "Fuzz every parser of outside data.",
@@ -77,7 +77,7 @@
       "span": "full",
       "items": [
         "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV into a fixed-size stack buffer without a length check, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches it only if it knows the size[^openssf].",
-        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, let crafted patterns run code on GitLab (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow`[^gccovf].",
+        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, could let crafted patterns run code on GitLab (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow`[^gccovf].",
         "**Error codes that let a decoder keep going.** Brotli's decoder treated an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat format errors as final, bound every append and mark error returns `[[nodiscard]]`.",
         "**Ownership an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. Own with `std::unique_ptr`, don't keep a `std::string_view` past its owner, and in C document who frees what.",
         "**Reading a union member as the wrong type.** OpenSSL read an `ASN1_TYPE` union member without checking its type (CVE-2026-22796)[^openssl], and CISA added type confusion bugs in V8 and Windows to its exploited list in 2026[^kev]. Check the tag first; in C++ use `std::variant`.",
@@ -90,7 +90,7 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (every library instrumented, even libc) and TSan for data races, which can't run with ASan[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
+        "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (every library instrumented, and no `-ftrivial-auto-var-init`, which masks them) and TSan for data races, which can't run with ASan[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
         "**Fuzzers.** libFuzzer now gets only bug fixes[^libfuzzer]; ClusterFuzzLite runs it on pull requests and in batch jobs[^cflite].",
         "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2`, `-Wconversion` and `-Werror=format-security`[^openssf]. In C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers[^safebuf]. On MSVC, `/sdl` makes uninitialized-variable warnings errors[^mssdl]."
       ]
@@ -112,7 +112,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Waiting for C++26.** Its library hardening standardizes checks the three major libraries already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
+        "**Waiting for C++26.** It isn't final after the October 2026 ballot[^p4433], its library hardening standardizes checks the three major libraries already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
         "**Rewriting stable code at once.** Vulnerabilities decay as code ages[^gsource]: harden old code and rewrite the parsers that take outside data.",
         "**Valgrind in CI.** Sanitizers find similar bugs at a 2x to 4x slowdown, against up to 20x to 50x[^openssf]."
       ]
@@ -378,6 +378,13 @@
       "publisher": "WG21",
       "date": "14 Feb 2025",
       "url": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p3471r4.html"
+    },
+    {
+      "id": "p4433",
+      "title": "P4433R0: Do not remove Contracts from C++26",
+      "publisher": "WG21",
+      "date": "23 Oct 2026",
+      "url": "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2026/p4433r0.pdf"
     },
     {
       "id": "gcc15",
