@@ -98,7 +98,7 @@
       "title": "Online shops: scripts on the payment page",
       "navTitle": "Shops",
       "items": [
-        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on payment pages and on pages embedding the provider's iframe; with a redirect, only scripts that perform it[^pcisupp]. SAQ A drops both, but iframe users must confirm their site resists script attacks[^pcifaq].",
+        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on payment pages and on pages embedding the provider's iframe; with a redirect, confirm the scope with your acquirer or QSA[^pcisupp]. SAQ A drops both, but iframe users must confirm their site resists script attacks[^pcifaq].",
         "**Authorize every script (6.4.3).** Confirm each payment page script is authorized, assure its integrity and list it with a reason[^pcisupp].",
         "**Detect changes (11.6.1).** Alert on unauthorized script and security header changes as browsers see them, weekly or per risk analysis[^pcisupp].",
         "**Cut scripts from checkout.** Keep tag managers, chat widgets and pixels off payment pages, and limit sources with a Content Security Policy[^pcisupp]."

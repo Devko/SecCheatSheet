@@ -60,7 +60,7 @@
         },
         {
           "title": "Deploy the Wi-Fi profile.",
-          "text": "Choose EAP-TLS, the SCEP certificate and **Machine** authentication[^intunewifi]; the mobile devices sheet covers phones. Turn on WPA3 where APs and clients support it: 6 GHz requires it[^wfa], as does enterprise Wi-Fi 7 on Windows 11[^wifi7]."
+          "text": "Choose EAP-TLS, the SCEP certificate and **Machine** authentication[^intunewifi]; the mobile devices sheet covers phones. Turn on WPA3 where APs and clients support it: 6 GHz requires it[^wfa], as does enterprise Wi-Fi 7 on Windows 11[^wifi7]. Intune's template lacks WPA3; import an XML profile[^intunewifi][^wificsp]."
         },
         {
           "title": "Run both, then remove the old network.",
@@ -253,6 +253,13 @@
       "publisher": "Microsoft Learn",
       "date": "15 May 2025",
       "url": "https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wifi-settings-windows"
+    },
+    {
+      "id": "wificsp",
+      "title": "WiFi CSP",
+      "publisher": "Microsoft Learn",
+      "date": "14 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/client-management/mdm/wifi-csp"
     },
     {
       "id": "eapwin11",

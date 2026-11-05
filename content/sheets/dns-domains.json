@@ -100,7 +100,7 @@
         "**Recurse only for your own clients.** No internet-facing server should be both authoritative and recursive[^sp80081].",
         "**Validate DNSSEC** with automatic trust anchor updates, two time sources and QNAME minimization[^sp80081].",
         "**Block DNS that goes around them:** outbound ports 53 and 853 except from your resolvers, and known public DoH servers[^sp80081].",
-        "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081]. In Germany, agree per-user logs and their retention with the works council[^betrvg][^bag].",
+        "**Log queries.** Always log blocked queries, and keep a full log for forensics even if the SIEM gets less[^sp80081]. In Germany, agree per-user logs and their retention with the works council[^betrvg].",
         "**Practice turning off validation for one zone.** A faulty DENIC key rollover on 5 May 2026 broke .de names, signed or not, on validating resolvers; some large operators suspended validation for .de[^denicout]."
       ]
     },
@@ -308,13 +308,6 @@
       "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
     },
     {
-      "id": "bag",
-      "title": "Decision 1 ABR 7/15",
-      "publisher": "Federal Labor Court (Germany)",
-      "date": "13 Dec 2016",
-      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-abr-7-15/"
-    },
-    {
       "id": "ksk",
       "title": "Root KSK rollover",
       "publisher": "ICANN",
@@ -366,7 +359,7 @@
     {
       "id": "quad9",
       "title": "DNS forwarder best practices",
-      "publisher": "Quad9 docs",
+      "publisher": "Quad9",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.quad9.net/Quad9_For_Organizations/DNS_Forwarder_Best_Practices/"
     },

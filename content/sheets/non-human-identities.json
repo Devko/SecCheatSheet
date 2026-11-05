@@ -164,7 +164,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Keep the inventory in a shared spreadsheet; review it quarterly.",
-            "Block new Entra client secrets (free[^wlfaq]), exempting apps that need them[^amp]."
+            "Block new Entra client secrets (free, per Microsoft's FAQ[^wlfaq]), exempting apps that need them[^amp]."
           ]
         },
         {

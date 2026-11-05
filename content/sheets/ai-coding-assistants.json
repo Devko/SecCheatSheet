@@ -56,7 +56,7 @@
         },
         {
           "title": "Move unattended work off laptops.",
-          "text": "Run long autonomous tasks in the vendor's cloud sandbox or a container. Copilot cloud agent pushes to one branch only and works behind a firewall[^ghrisks]."
+          "text": "Run long autonomous tasks in the vendor's cloud sandbox or a container. Copilot cloud agent pushes to one branch only and works behind a firewall[^ghrisks], which covers only processes its Bash tool starts, not MCP servers, and can be bypassed[^ghfw]."
         },
         {
           "title": "Protect the files that steer the agent.",
@@ -250,6 +250,13 @@
       "publisher": "GitHub Docs",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/risks-and-mitigations"
+    },
+    {
+      "id": "ghfw",
+      "title": "Customizing or disabling the firewall for GitHub Copilot",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall"
     },
     {
       "id": "ghsandbox",
