@@ -1,0 +1,323 @@
+{
+  "slug": "payment-fraud",
+  "topic": "Payment fraud",
+  "status": "draft",
+  "order": 51,
+  "capability": "govern/fraud",
+  "title": "Payment fraud: could one convincing email, call or video call move your money?",
+  "short": "Confirm every bank detail change on a number you already have, wait two business days before paying it, and require two signatures at the bank.",
+  "answer": "This quarter, write down how bank details may change (a call back to a number you already have, a second approver and a waiting period before the first payment) and have your bank require two signatures for payments. Then run Verification of Payee on your payment files too, and treat any request to skip the process as fraud, however senior the voice or face.",
+  "audience": "Finance, accounts payable, payroll and treasury teams, with the IT and security staff who support them",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Write down how bank details change, and let the system enforce it.",
+          "text": "Accept new or changed bank details for suppliers and staff only after a call back to a number you held before the request, approval by a second person and at least two business days before the first payment. In Dynamics 365 Finance, turn on the vendor bank account change proposal workflow; the import setting **Allow changes without approval** bypasses it[^d365]."
+        },
+        {
+          "title": "Require two signatures at the bank.",
+          "text": "The German banking industry recommends joint signing for EBICS, so one deceived employee can't release a payment alone[^dksec]. Give ERP and payment servers only a transport signature (T), which uploads files but can't authorize them[^bbkebics]."
+        },
+        {
+          "title": "Run Verification of Payee on payment files.",
+          "text": "Companies may skip the name check for files with several payments[^reg886]. In German EBICS, the old order types CCT and CIP skip it, while CTV and CIV run it[^dkvop]. Move supplier and payroll runs to the checking types, at least for payees whose details changed."
+        },
+        {
+          "title": "Verify unusual requests outside the channel they came in.",
+          "text": "Fake executives open on email or WhatsApp and follow up on video calls built from public footage[^hkgov][^spf]. Call back on a known number, agree code words for critical transactions[^gdvvoice] and agree that nobody is blamed for making the board wait while they check[^dksec]."
+        },
+        {
+          "title": "Prepare the first hour.",
+          "text": "Keep the bank's fraud line and who may call it on paper. The FBI's recovery team froze 58% of the $1.16 billion it tried to stop in 2025 and says time is of the essence[^ic3]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "first-hour",
+      "title": "The first hour after a fraudulent transfer",
+      "navTitle": "First hour",
+      "items": [
+        {
+          "title": "Call your bank's fraud line.",
+          "text": "Use the number from your contract or the bank's website. Ask for a recall with the reason fraud, which the bank can send once per payment[^sct], and for a freeze at the receiving bank. Instant transfers can't be revoked, and getting money back depends on the recipient's consent[^bbkfaq], so every minute counts."
+        },
+        {
+          "title": "Stop the follow-ups.",
+          "text": "In a Singapore case the fraudsters came back for another US$1.4 million; the bank's quick alert let police hold the US$494,000 already moved to Hong Kong[^spf]. Block the receiving IBAN, hold open payment runs and have the bank block EBICS users whose keys may be exposed[^dksec]."
+        },
+        {
+          "title": "Report it to the police.",
+          "text": "In Germany, use the state police cybercrime contact point (ZAC) listed in the incident-response sheet. For transfers to US banks, also file at ic3.gov with the full transaction details, whatever the amount[^ic3]."
+        },
+        {
+          "title": "Keep the evidence.",
+          "text": "Save the emails as files with headers, chat messages, call logs, invoices, VoP results and bank confirmations before anyone deletes or resets anything. If a real mailbox sent the request, follow the incident-response sheet."
+        },
+        {
+          "title": "Warn whoever is next.",
+          "text": "Tell the supplier or employee whose details were faked, and your insurer: this is usually a fidelity insurance claim, not a cyber claim[^gdvvoice] (see the cyber insurance sheet)."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "scams",
+      "title": "How companies lose the money",
+      "navTitle": "The scams",
+      "span": "full",
+      "items": [
+        "**CEO fraud, now with deepfakes.** A Hong Kong employee paid about HK$200 million into five accounts after a group video call in which a pre-recorded deepfake of the UK head office's CFO gave instructions[^hkgov]. Europol says AI makes BEC and CEO fraud more realistic[^iocta].",
+        "**Fake invoices and changed bank details.** Microsoft counted over 46 million attacks posing as executives, staff, suppliers or partners in a year, and one in four impersonation emails pushes the victim to a phone call[^mddr]. In the EU, payers tricked into paying caused 74% of credit transfer fraud by value in 2024[^ebaecb].",
+        "**Payroll diversion.** Attackers pose as employees and ask HR to change the salary account; 51% of the attempts Microsoft saw landed on a Monday or Tuesday[^mddr]. Others take over the employee's own login: Storm-2657 changed salary bank details in Workday and hid the alert emails with inbox rules[^msp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "vop",
+      "title": "What Verification of Payee does and doesn't do",
+      "navTitle": "Verification of Payee",
+      "items": [
+        "**It checks name against IBAN.** The payee's bank reports a match, a close match with the registered name, no match or no check possible[^vop]. Euro-area banks must offer it free since 9 October 2025, other EU banks from 9 July 2027[^reg886].",
+        "**It never blocks.** You can pay after a warning, and the bank then isn't liable[^reg886].",
+        "**Opted-out files lose it.** Non-consumers may opt out for payment packages[^reg886]; BaFin even tolerates it for EBICS files with one payment[^bafinfaq].",
+        "**A match is not proof.** It can't detect a fraudulent payee or request[^bbkfaq].",
+        "**Register your trading names.** Banks may store commercial names as extra payee names[^bafinfaq], so your customers see a match, not a warning."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "bank",
+      "title": "Set up the bank side",
+      "navTitle": "Bank setup",
+      "items": [
+        "**Map signing rights to the process.** EBICS has single (E), first (A), second (B) and transport-only (T) signatures[^bbkebics]. Give no one E rights for large payments.",
+        "**Use chip cards, not key files.** Malware can copy key files with their passwords[^dksec].",
+        "**Set limits that take time to raise.** A limit on online transfers may have a waiting period for increases; one on instant transfers alone must be changeable at any time[^bafinfaq].",
+        "**Review signing rights against HR.** Remove leavers and changed roles at the bank too[^dksec]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "owners",
+      "title": "Who owns what",
+      "navTitle": "Owners",
+      "items": [
+        "**Finance owns the process.** The CFO or head of accounting owns the bank detail rule, signing rights, limits, VoP settings and exceptions.",
+        "**HR owns payroll changes.** Only in the HR system, after an identity check, confirmed outside the employee's mailbox.",
+        "**IT protects the accounts.** Phishing-resistant sign-in for finance, HR and executives (passkeys and MFA sheet) and alerts on new inbox rules[^msp].",
+        "**Management backs the no.** Executives never ask for exceptions by phone or chat."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**BEC losses keep rising.** The FBI counted $3.05 billion in 2025, up from $2.77 billion, including over $30 million in BEC involving AI[^ic3].",
+        "**Microsoft now tracks business contact impersonation.** It saw a 121% surge in April 2026; most first messages were bland small talk[^mddr].",
+        "**EU data shows who pays.** Tricked payers caused 74% of credit transfer fraud by value in 2024, up from 65%, and customers bore about 85% of losses[^ebaecb]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Deepfake detection software.** The BSI notes detectors generalize poorly: the best in a 2020 challenge was 65.18% accurate, guessing 50%[^bsideep].",
+        "**Teaching staff to hear fake voices.** The GDV calls such cues unreliable[^gdvvoice]. Teach the call back instead.",
+        "**Call backs on every routine payment.** Spend them on new payees, changed details and unusual requests.",
+        "**Paid name checks for euro payments.** Banks must provide Verification of Payee free[^reg886]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Calling the number in the request.** It belongs to the fraudster. Call one you already knew[^gdvvoice].",
+        "**Paying through a no match.** After a warning the loss is usually yours[^reg886][^ebaecb]. Stop until the call back.",
+        "**Letting secrecy beat the process.** The Singapore fraud used a fake lawyer, a confidential restructuring and a nondisclosure agreement[^spf].",
+        "**Confirming changes to the same mailbox.** Attackers who control it delete the confirmation[^msp]. Use phone or letter."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Write a one-page payment rule: call back on a known number, a second person for bank detail changes, no exceptions for the owner.",
+            "Ask your bank how a second person can release online payments, and set a daily limit.",
+            "Tell customers how you would announce new bank details."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Enforce bank detail approval in the ERP and HR system, and close import paths that bypass it.",
+            "Switch payment runs to VoP order types and route each no match to a second person.",
+            "Alert on supplier and payroll bank changes and on new inbox rules in finance and HR mailboxes."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run treasury payments through EBICS with chip cards, A and B signatures and T-only server users.",
+            "With the CEO's consent, have someone pose as them on video and see whether finance pays.",
+            "Report attempts and losses to the audit committee."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Regulation (EU) 2024/886, EPC rulebooks, BaFin, Bundesbank and DK guidance, the 2025 IC3 report and the EBA-ECB fraud report."
+    }
+  ],
+  "sources": [
+    {
+      "id": "reg886",
+      "title": "Regulation (EU) 2024/886",
+      "publisher": "EUR-Lex",
+      "date": "13 Mar 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj"
+    },
+    {
+      "id": "vop",
+      "title": "VOP Rulebook v1.1",
+      "publisher": "EPC",
+      "date": "16 Mar 2026",
+      "url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2026-03/EPC218-23%20v1.1%202026%20Verification%20Of%20Payee%20Scheme%20Rulebook_0.pdf"
+    },
+    {
+      "id": "sct",
+      "title": "SCT Rulebook 2025 v1.2",
+      "publisher": "EPC",
+      "date": "30 Sep 2026",
+      "url": "https://www.europeanpaymentscouncil.eu/sites/default/files/kb/file/2026-09/EPC125-05%202025%20SCT%20Rulebook%20version%201.2.pdf"
+    },
+    {
+      "id": "bafinfaq",
+      "title": "FAQ Echtzeitüberweisungen",
+      "publisher": "BaFin",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bafin.de/SharedDocs/Fragen-antworten/DE/faq-voechtzeitueberweisungen/faq-voechtzeitueberweisungen_node.html"
+    },
+    {
+      "id": "bbkfaq",
+      "title": "FAQ Empfängerüberprüfung",
+      "publisher": "Bundesbank",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/veroeffentlichungen/fragen-und-antworten-zu-echtzeitueberweisungen-und-empfaengerueberpruefung"
+    },
+    {
+      "id": "dkvop",
+      "title": "VOP im EBICS-Verfahren",
+      "publisher": "Deutsche Kreditwirtschaft",
+      "date": "15 Apr 2025",
+      "url": "https://www.ebics.de/de/ebics-standard/hinweise-hersteller-kunden"
+    },
+    {
+      "id": "dksec",
+      "title": "EBICS-Sicherheitsempfehlungen",
+      "publisher": "Deutsche Kreditwirtschaft",
+      "date": "4 May 2026",
+      "url": "https://www.ebics.de/de/ebics-standard/hinweise-hersteller-kunden"
+    },
+    {
+      "id": "bbkebics",
+      "title": "EBICS-Bedingungen, Anlage 1",
+      "publisher": "Bundesbank",
+      "date": "5 Oct 2025",
+      "url": "https://www.bundesbank.de/resource/blob/964232/9f0e7cd5f9bbdf2be58ce5e17e65e750/472B63F073F071307366337C94F8C870/besondere-bedingungen-ebics-10-2025-data.pdf"
+    },
+    {
+      "id": "d365",
+      "title": "Vendor bank account workflow",
+      "publisher": "Microsoft Learn",
+      "date": "20 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/vendor-bank-account-workflow"
+    },
+    {
+      "id": "ic3",
+      "title": "2025 IC3 Annual Report",
+      "publisher": "FBI IC3",
+      "date": "Apr 2026",
+      "url": "https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf"
+    },
+    {
+      "id": "ebaecb",
+      "title": "2025 Report on Payment Fraud",
+      "publisher": "EBA and ECB",
+      "date": "Dec 2025",
+      "url": "https://www.ecb.europa.eu/press/intro/publications/pdf/ecb.ebaecb202512.en.pdf"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "msp",
+      "title": "Payroll pirate attacks",
+      "publisher": "Microsoft",
+      "date": "9 Oct 2025",
+      "url": "https://www.microsoft.com/en-us/security/blog/2025/10/09/investigating-targeted-payroll-pirate-attacks-affecting-us-universities/"
+    },
+    {
+      "id": "iocta",
+      "title": "IOCTA 2026",
+      "publisher": "Europol",
+      "date": "28 Apr 2026",
+      "url": "https://www.europol.europa.eu/cms/sites/default/files/documents/IOCTA-2026.pdf"
+    },
+    {
+      "id": "hkgov",
+      "title": "LCQ9 on deepfake fraud",
+      "publisher": "HKSAR Government",
+      "date": "26 Jun 2024",
+      "url": "https://www.info.gov.hk/gia/general/202406/26/P2024062600192.htm"
+    },
+    {
+      "id": "spf",
+      "title": "Police recover over $670,000",
+      "publisher": "Singapore Police",
+      "date": "7 Apr 2025",
+      "url": "https://www.police.gov.sg/media-hub/news/2025/04/20250407_singapore_and_hong_kong_police_force_recover_over_%24670000_in_a_scam"
+    },
+    {
+      "id": "bsideep",
+      "title": "Deep Fakes: Threats and Countermeasures",
+      "publisher": "BSI",
+      "date": "Aug 2022",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Kuenstliche-Intelligenz/Deepfakes/deepfakes_node.html"
+    },
+    {
+      "id": "gdvvoice",
+      "title": "Voice-Cloning und KI-Avatare",
+      "publisher": "GDV",
+      "date": "updated 12 Aug 2026",
+      "url": "https://www.gdv.de/gdv/themen/digitalisierung/voice-cloning-und-ki-avatare-digitale-betrugsmoeglichkeiten-werden-professioneller-205926"
+    }
+  ]
+}

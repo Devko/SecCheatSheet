@@ -28,11 +28,11 @@
         },
         {
           "title": "Enforce lifetimes in policy.",
-          "text": "Block new Entra client secrets or cap them at 180 days[^scuba]. Google keys never expire unless you set a limit[^gcpkeys]."
+          "text": "Block new Entra client secrets or cap them at 180 days[^scuba]. Google service account keys never expire unless you set a limit[^gcpkeys]."
         },
         {
           "title": "Log what they do.",
-          "text": "Send service principal and managed identity sign-ins to your SIEM[^scuba]. Intruders hunt for service principals and API keys[^mddr]."
+          "text": "Send service principal and managed identity sign-ins to your SIEM[^scuba]. Intruders who compromise a person's account go looking for service principals and API keys[^mddr]."
         },
         {
           "title": "Move on-premises services to gMSAs.",
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Export Entra apps and their credentials.",
-          "text": "List app registrations, service principals and managed identities with credential type and end date."
+          "text": "List app registrations, service principals and managed identities with credential type and end date. Treat those with privileged roles as Tier 0, as the privileged-access sheet describes."
         },
         {
           "title": "Pull the cloud credential reports.",
-          "text": "AWS's lists access keys and their last use but skips service-specific credentials such as Bedrock API keys[^awscred]. In Google Cloud, list user-managed service account keys."
+          "text": "The AWS report lists access keys and their last use but skips service-specific credentials such as Bedrock long-term API keys[^awscred]. In Google Cloud, list user-managed service account keys. The cloud configuration sheet covers removing cloud keys."
         },
         {
           "title": "Search AD for service accounts.",
@@ -74,9 +74,9 @@
         "**Azure: managed identities.** Where an app registration is unavoidable, use a managed identity as its federated credential[^mi].",
         "**Into Entra: federated credentials.** They accept tokens from GitHub Actions, Kubernetes, Google Cloud, AWS and SPIFFE[^wif].",
         "**Into AWS: roles.** From outside AWS, use IAM Roles Anywhere with an X.509 certificate, or `AssumeRoleWithWebIdentity`[^awsbp].",
-        "**Into Google Cloud: Workload Identity Federation.** Then block key creation, the default only in organizations created since 3 May 2024[^gcpbase].",
-        "**Secrets that must stay: your platform's store.** Use Key Vault, AWS Secrets Manager or Google Secret Manager, with an expiry date. Key Vault can trigger rotation 30 days before expiry[^akvrot].",
-        "**Self-hosted stores: check the license.** HashiCorp Vault's Business Source License allows internal production use, but not a competing hosted or embedded paid offering[^vaultlic]. OpenBao, an OpenSSF fork, is MPL 2.0[^openbao]."
+        "**Into Google Cloud: Workload Identity Federation.** Then block key creation; organizations created before 3 May 2024 may not block it by default[^gcpbase].",
+        "**Secrets that must stay: your platform's store.** Key Vault, AWS Secrets Manager or Google Secret Manager, each with an expiry date. Key Vault can trigger rotation 30 days before expiry[^akvrot]. Encryption keys are in the encryption sheet.",
+        "**Self-hosted stores: check the license.** HashiCorp Vault's Business Source License allows internal production use, but not a competing hosted or embedded paid offering[^vaultlic]. OpenBao, a fork managed by the Linux Foundation's OpenSSF, uses the open-source MPL 2.0[^openbao]."
       ]
     },
     {
@@ -98,15 +98,15 @@
       "items": [
         {
           "title": "Revoke it where it was issued.",
-          "text": "Add a new credential, switch over, then delete the leaked one, or all of them if unsure[^wlrisk]. Deleting it from the repository isn't enough[^gcpkeys]."
+          "text": "Add a new credential, switch over, then delete the leaked one, or all of them if unsure[^wlrisk]. Deleting it from the repository isn't enough[^gcpkeys]; for scanning, see the attack-surface sheet."
         },
         {
           "title": "Check whether it was used.",
-          "text": "Search sign-in and audit logs since the leak for new credentials, configuration changes and app roles[^wlrisk]."
+          "text": "Search sign-in and audit logs since the leak for unusual sign-ins, new credentials, configuration changes and app roles[^wlrisk]."
         },
         {
           "title": "Rotate what it could reach.",
-          "text": "Include vault secrets the identity could read[^wlrisk], and other keys on the machine it leaked from[^mddr]."
+          "text": "Include vault secrets the identity could read[^wlrisk] and, if a developer machine leaked it, that machine's SSH, API and cloud keys[^mddr]."
         }
       ]
     },
@@ -117,8 +117,8 @@
       "navTitle": "Monitoring",
       "items": [
         "**Keep the logs.** Entra keeps sign-ins 7 days on Free and 30 on P1 or P2. Graph activity logs need P1 or P2 and an export[^entralogs].",
-        "**Use the free detections.** ID Protection flags leaked app credentials and anomalous activity, with full details only on Workload ID Premium[^wlrisk].",
-        "**Pay to block.** Workload ID Premium, $3 per identity a month[^wlfaq], lets Conditional Access block your single-tenant apps by location or risk[^wlca]."
+        "**Read the detections.** ID Protection flags leaked app credentials and anomalous activity, but not for managed identities[^wlrisk].",
+        "**Pay for details and blocking.** Workload ID Premium, $3 per workload identity a month[^wlfaq], adds full risk details[^wlrisk] and Conditional Access by location or risk for your own single-tenant apps[^wlca]."
       ]
     },
     {
@@ -127,9 +127,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Agents got their own identities.** Entra Agent ID became generally available in April 2026, and sponsorship now passes to a departing sponsor's manager[^entranew]. Its security features need Agent 365[^agentid].",
-        "**CISA capped app credentials.** ScubaGear 2.0 adds 180-day secrets and 365-day certificates; enter 181 and 366 in the portal[^scuba].",
-        "**AWS federates outward.** Since November 2025, workloads can prove their identity to external services with short-lived tokens[^awsoutblog]."
+        "**Agents got their own identities.** Entra Agent ID became generally available in April 2026, and Lifecycle Workflows can hand sponsorship to a leaver's manager[^entranew]. Entra security features for agents need Agent 365[^agentid].",
+        "**CISA capped app credentials.** ScubaGear 2.0 limits app secrets to 180 days and certificates to 365. Enter 181 and 366 in the portal[^scuba].",
+        "**AWS federates outward.** Since November 2025, workloads can use short-lived tokens instead of stored API keys for external services[^awsoutblog]."
       ]
     },
     {
@@ -137,7 +137,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**An NHI security platform before a list.** Credential reports and sign-in logs hold most of the data.",
+        "**An NHI security platform before a list.** Credential reports and sign-in logs hold most of the data. Buy tooling once owners are named.",
         "**Workload ID Premium everywhere.** Its Conditional Access covers only your own single-tenant apps[^wlca]. Buy it for privileged ones.",
         "**Vaulting secrets you could delete.** A vaulted secret is still a secret, and a self-hosted vault is one more Tier 0 system."
       ]
@@ -149,7 +149,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**One person as the only owner.** When they leave, the identity is orphaned. Name a team too.",
-        "**Expecting a policy to fix old credentials.** Entra app management policies don't block existing apps[^amp], and Google's key expiry isn't retroactive[^gcpcons].",
+        "**Expecting a policy to fix old credentials.** Entra app management policies leave existing apps working[^amp], and Google's key expiry limit doesn't apply to existing keys[^gcpkeys].",
         "**Trusting private repositories.** GitGuardian's vendor report found secrets in 32.2% of internal repositories and 5.6% of public ones[^gg]."
       ]
     },
@@ -177,7 +177,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Buy Workload ID Premium for privileged single-tenant apps; reviews need P2 for reviewers[^wlfaq].",
+            "Buy Workload ID Premium for privileged single-tenant apps; reviewing them also needs P2 for reviewers[^wlfaq].",
             "Give each AI agent a sponsor who confirms twice a year that it's still needed."
           ]
         }
@@ -188,7 +188,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Microsoft Learn, AWS and Google Cloud IAM documentation, CISA's Entra baseline, the OWASP NHI Top 10 and the Microsoft Digital Defense Report 2026."
+      "text": "First draft, based on Microsoft Learn, AWS and Google Cloud documentation, CISA's Entra baseline, the OWASP NHI Top 10 and the Microsoft Digital Defense Report 2026."
     }
   ],
   "sources": [
@@ -219,7 +219,6 @@
     {"id": "agentid", "title": "What is Microsoft Entra Agent ID?", "publisher": "Microsoft Learn", "date": "14 Apr 2026", "url": "https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id"},
     {"id": "awsoutblog", "title": "Simplify access to external services using AWS IAM outbound identity federation", "publisher": "AWS News Blog", "date": "19 Nov 2025", "url": "https://aws.amazon.com/blogs/aws/simplify-access-to-external-services-using-aws-iam-outbound-identity-federation/"},
     {"id": "amp", "title": "Microsoft Entra application management policy API overview", "publisher": "Microsoft Learn", "date": "13 Sep 2024", "url": "https://learn.microsoft.com/en-us/graph/api/resources/applicationauthenticationmethodpolicy"},
-    {"id": "gcpcons", "title": "Organization policy constraints", "publisher": "Google Cloud", "date": "updated 26 Oct 2026", "url": "https://docs.cloud.google.com/organization-policy/reference/org-policy-constraints"},
     {"id": "gg", "title": "The State of Secrets Sprawl 2026 (vendor research report)", "publisher": "GitGuardian", "date": "2026", "url": "https://www.gitguardian.com/state-of-secrets-sprawl-report-2026"}
   ]
 }
