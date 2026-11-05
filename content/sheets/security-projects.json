@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Who and what is in scope?",
-          "text": "Count from the inventory, not the new tool; Defender's device discovery finds devices not yet onboarded[^discovery]. The security program sheet decides what goes first."
+          "text": "Count from the inventory, not the new tool; Defender's device discovery (Plan 2) finds devices not yet onboarded[^discovery]. The security program sheet decides what goes first."
         },
         {
           "title": "What would break?",
@@ -76,7 +76,7 @@
       "items": [
         "**Tell users what changes, when, and how to get help**[^caplan], a week before their ring and on the day.",
         "**Brief the help desk before each ring:** the script, known errors and what to collect, including the correlation ID from **More details**[^caplan].",
-        "**Write the rollback first:** the trigger and the switch. Disable the CA policy or exclude a group, keeping break-glass accounts excluded[^caplan]. Exclude the app from ASR or return the rule to audit[^asrtest]. Pausing Intune deployments stops only later rings; revert the policy[^intune].",
+        "**Write the rollback first:** the trigger and the switch. Disable the CA policy or exclude a group[^caplan]. Exclude the app from ASR or return the rule to audit[^asrtest]. Pausing Intune deployments stops only later rings; revert the policy[^intune].",
         "**Exclude Mac, iOS and Android from report-only compliance policies,** or their users may get certificate prompts[^careport]. Test them in an enforced pilot.",
         "**In Germany, ask the works council early** about EDR, DLP and logging; it co-determines systems designed to monitor behavior or performance[^betrvg]."
       ]
@@ -87,7 +87,7 @@
       "title": "Exceptions that end",
       "navTitle": "Exceptions",
       "items": [
-        "**Exclude groups, not people.** One assigned Entra group per policy shows who is excluded[^caexcl].",
+        "**Exclude groups, not people.** One assigned Entra group per policy shows who is excluded[^caexcl]; break-glass accounts go in every one[^caplan].",
         "**Record why, what instead and until when:** a reason, a compensating control, an owner and an end date per member. Approval levels are in the risk register sheet.",
         "**Let reviews remove people.** Entra access reviews can ask members weekly and remove those who don't answer (Entra ID P2 or ID Governance)[^caexcl].",
         "**Cap them.** Our rule: at most 2% of the scope at go-live; any still open at the done date is renewed one level up, as in the risk register sheet. Report the count and the oldest monthly."
@@ -102,7 +102,7 @@
         "**Coverage is enforced over in scope,** counted weekly from the inventory by ring and business unit, with the tail named.",
         "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** lists who is MFA or passwordless capable and counts single-factor sign-ins[^authact].",
         "**Conditional Access.** The gap analyzer workbook lists sign-ins no policy applied to (P1 and Log Analytics)[^gap].",
-        "**EDR and ASR.** Compare onboarded with discovered devices[^discovery]; the ASR rules report needs Plan 2 or Defender for Business, else forward event 1122[^asrtest]."
+        "**EDR and ASR.** Compare onboarded with discovered devices[^discovery]; the ASR report needs Plan 2 or Defender for Business, else forward event 1122[^asrtest]."
       ]
     },
     {
@@ -124,10 +124,10 @@
       "navTitle": "Project gates",
       "items": [
         "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
-        "**Rate the processes it serves: normal or high.** Grundschutz++ sets these two; on its catalog, high need adds a risk analysis[^std3001].",
+        "**Rate the processes the system serves: normal or high.** Grundschutz++ sets these two; on its catalog, high need adds a risk analysis[^std3001].",
         "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
-        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA advises testing at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
-        "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]."
+        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA advises testing at set-up[^enisatig]. Otherwise scan and check settings. See the penetration testing sheet.",
+        "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones, which Grundschutz++ rules out for MUSS requirements[^std3001]."
       ]
     },
     {
@@ -162,7 +162,7 @@
         "**A risk analysis for every project.** With the Grundschutz++ catalog, normal need requires none unless a requirement stays unmet[^std3001].",
         "**A pentest before every go-live.** A standard SaaS app behind SSO needs a check of your tenant's configuration.",
         "**Auditing the standard ASR rules.** Microsoft says they can typically go to block or warn without testing[^asrtest].",
-        "**Months in report-only.** A week to a month of real sign-ins shows the impact. Enforce, then fix the tail."
+        "**Months in report-only.** Our limit: a week to a month of real sign-ins. Enforce, then fix the tail."
       ]
     },
     {
