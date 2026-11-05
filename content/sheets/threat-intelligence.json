@@ -8,7 +8,7 @@
   "short": "Subscribe to CERT-Bund, the KEV catalogs and your vendors' advisories, and give every warning that matches your inventory an owner and a decision within one working day, the same day if it is exploited and exposed.",
   "answer": "This month, write down the products, suppliers and sector you need warnings about, and subscribe to the free sources that cover them: CERT-Bund's WID, CISA's and ENISA's catalogs of exploited vulnerabilities and your vendors' advisories. Give every warning that matches your inventory an owner and a decision (patch, block, hunt or detect) within one working day, or the same day if it is exploited and exposed, and judge your intelligence by the actions it produced, not by what you read.",
   "audience": "IT and security teams in EU organizations of any size, many in Germany, from teams without analysts to those with a small SOC",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -36,7 +36,7 @@
         },
         {
           "title": "Join one sharing community.",
-          "text": "In Germany, the Allianz für Cyber-Sicherheit is free for organizations with a seat or branch there[^acs] and passes on the BSI's confidential TLP-labeled warnings[^csw]. Elsewhere, ask your national CERT or your sector's ISAC."
+          "text": "In Germany, the Allianz für Cyber-Sicherheit is free[^acs] and passes on the BSI's confidential TLP-labeled warnings[^csw]. Elsewhere, ask your national CERT or your sector's ISAC."
         }
       ]
     },
@@ -170,7 +170,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Send WID's RSS feed and your vendors' advisories, filtered to your internet-facing products, to a mailbox two people read.",
-            "Join the ACS, or your national CERT's community.",
+            "Join the ACS, or ask your national CERT what it shares with companies.",
             "Ask your IT provider which advisories it acted on last month."
           ]
         },
@@ -194,6 +194,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: small teams outside Germany now ask their national CERT what it shares with companies, since some CERT communities serve only public bodies."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",
@@ -229,10 +234,10 @@
     },
     {
       "id": "acs",
-      "title": "Teilnahmebedingungen",
+      "title": "Teilnehmer",
       "publisher": "ACS (BSI)",
-      "date": "Nov 2025",
-      "url": "https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/Teilnahmebedingungen.pdf?__blob=publicationFile&v=2"
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.allianz-fuer-cybersicherheit.de/Webs/ACS/DE/Ueber-uns/Teilnehmer/teilnehmer_node.html"
     },
     {
       "id": "acsportal",

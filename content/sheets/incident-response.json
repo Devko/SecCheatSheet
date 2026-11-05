@@ -8,7 +8,7 @@
   "short": "Check today that your audit log is on; in an incident, isolate rather than wipe and export the logs within the first hours.",
   "answer": "This month, confirm that Microsoft 365 auditing is on, keep sign-in logs for at least a year and agree who leads, who decides and whom you call. When something looks wrong, isolate accounts and devices without wiping them, export the logs in the first hours and, if the GDPR requires it, notify within 72 hours[^edpb].",
   "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-03",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,7 +24,7 @@
         },
         {
           "title": "Line up outside help before you need it.",
-          "text": "Sign an incident response retainer, or find out which firm your cyber insurer sends and what it needs from you first. The NCSC recommends that all UK organizations, regardless of size, use an assured incident response provider for significant incidents, and notes that insurance may include one[^ncsctech]."
+          "text": "Sign an incident response retainer, or find out which firm your cyber insurer sends and what it needs from you first. The NCSC advises UK organizations of any size to use an assured provider, and notes that insurance may include one[^ncsctech]; in Germany, the BSI lists qualified APT response firms[^bsiapt]."
         },
         {
           "title": "Set up a channel the attacker can't read.",
@@ -162,6 +162,11 @@
   ],
   "changes": [
     {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: the UK-only advice on assured responders now sits next to the BSI's list of qualified APT response firms for German companies."
+    },
+    {
       "date": "2026-11-03",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check, which corrected an inbox rule command, narrowed 7 statements to what the sources say and replaced the M-Trends blog post with the report."
@@ -207,6 +212,13 @@
       "publisher": "NCSC (UK)",
       "date": "1 Oct 2026",
       "url": "https://www.ncsc.gov.uk/collection/disruptive-cyber-attacks/preparing/3-prepare-technical-recovery"
+    },
+    {
+      "id": "bsiapt",
+      "title": "Qualifizierte APT-Response-Dienstleister",
+      "publisher": "BSI",
+      "date": "1 Jun 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Cyber-Sicherheit/Themen/Dienstleister_APT-Response-Liste.pdf?__blob=publicationFile&v=46"
     },
     {
       "id": "ncscpeople",
