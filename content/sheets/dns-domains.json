@@ -8,7 +8,7 @@
   "short": "Put phishing-resistant MFA on every registrar and DNS account this month, registry-lock the domains you sign in and mail with, and send all user DNS through a resolver you control.",
   "answer": "This month, put phishing-resistant MFA on every registrar and DNS provider account, registry-lock the few domains that sign-in, email and your website depend on, and publish CAA records on every domain. Then send all user DNS through a validating, filtering resolver you control, and sign zones with DNSSEC only where your provider automates the keys.",
   "audience": "IT and security teams in organizations of any size that own domains, run public DNS and resolve DNS for their users",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -110,8 +110,9 @@
       "title": "Protective DNS and DNS over HTTPS",
       "navTitle": "Protective DNS",
       "items": [
-        "**Check public-sector services.** UK central government must use the NCSC's free PDNS[^ncscpdns]. DNS4EU's free resolver is for individuals only; public institutions get their own service[^dns4eu].",
-        "**Or buy one with logs and an API.** Ask for current deny lists, editable allow lists and block logs your SIEM can pull. It doesn't replace your own DNS logs[^ncscpriv].",
+        "**Small teams can start free.** Cloudflare's Zero Trust Free plan, for teams under 50 users, includes its web gateway and keeps logs 24 hours[^cfplans]. Quad9 welcomes business forwarders if it is their only upstream; log queries there yourself[^quad9].",
+        "**Otherwise buy one with logs and an API.** Ask for current deny lists, editable allow lists and block logs your SIEM can pull; Cloudflare exports logs only on contract plans[^cfplans]. It doesn't replace your own DNS logs[^ncscpriv].",
+        "**Want resolution kept in the EU?** DNS4EU's free resolver is for individuals only; companies use Whalebone Immunity, its commercial version on European infrastructure[^dns4eu].",
         "**Control DoH in browsers.** Chrome sends no DoH on managed devices unless the `DnsOverHttpsMode` policy allows it[^chromedoh]. Lock Firefox's `DNSOverHTTPS` policy to off or to your resolver's `ProviderURL`[^ffdoh]."
       ]
     },
@@ -161,7 +162,7 @@
           "items": [
             "Move every domain into a registrar account you own, with two admins on security keys.",
             "Turn on auto-renew and registrar lock everywhere, and publish CAA for the CA you use.",
-            "Point your router or firewall at a protective DNS service that allows business use."
+            "Point your firewall at protective DNS built for businesses, such as Cloudflare's free plan or Quad9."
           ]
         },
         {
@@ -184,6 +185,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Reviewed for company readers: protective DNS now names services businesses may use (Cloudflare's Zero Trust Free plan and Quad9 for small teams, Whalebone Immunity for resolution kept in the EU), since DNS4EU's free resolver is for individuals only, and drops UK government PDNS."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",
@@ -330,11 +336,18 @@
       "url": "https://blog.google/security/chromes-response-to-recent-cctld-registry-hijacks/"
     },
     {
-      "id": "ncscpdns",
-      "title": "Protective DNS (PDNS)",
-      "publisher": "NCSC (UK)",
-      "date": "reviewed 17 Sep 2024",
-      "url": "https://www.ncsc.gov.uk/information/pdns"
+      "id": "cfplans",
+      "title": "SASE and Zero Trust pricing",
+      "publisher": "Cloudflare",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.cloudflare.com/plans/sase-zero-trust.md"
+    },
+    {
+      "id": "quad9",
+      "title": "DNS forwarder best practices",
+      "publisher": "Quad9 docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.quad9.net/Quad9_For_Organizations/DNS_Forwarder_Best_Practices/"
     },
     {
       "id": "ncscpriv",
