@@ -5,8 +5,8 @@
   "order": 35,
   "capability": "infrastructure/containers",
   "title": "Containers and Kubernetes: could one compromised pod take over the cluster?",
-  "short": "Make the API server private, enforce Pod Security baseline in every namespace and upgrade within each version's 12 months of patches.",
-  "answer": "This month, take the API server off the internet, enforce the baseline Pod Security Standard in every namespace and start replacing Ingress NGINX, which has had no security fixes since March 2026[^r136]. Then judge every other setting by whether it stops one compromised pod from reaching its node, the cloud account or a more powerful service account.",
+  "short": "Make the API server private, enforce Pod Security baseline in every app namespace and upgrade within each version's 12 months of patches.",
+  "answer": "This month, take the API server off the internet, enforce the baseline Pod Security Standard in every app namespace after a dry run and start replacing Ingress NGINX, which has had no upstream security fixes since March 2026[^r136]. Then judge every other setting by whether it stops one compromised pod from reaching its node, the cloud account or a more powerful service account.",
   "audience": "Platform, DevOps and security teams running Kubernetes on AKS, EKS, GKE or their own servers, from one cluster to many",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
@@ -23,8 +23,8 @@
           "text": "EKS, AKS and GKE expose it by default[^eksendpoint][^aksapi][^gkeharden]. Make it private or admin-only: Microsoft finds exposed APIs, default credentials and unpatched images behind most container compromises[^mddr]."
         },
         {
-          "title": "Enforce Pod Security baseline in every namespace.",
-          "text": "Set the Pod Security Admission label `enforce` to `baseline` to block privileged containers, hostPath and host namespaces[^pss], and `warn` and `audit` to `restricted`[^psa]. North Korea-linked UNC4899 used a privileged pod to break out of its container[^th]."
+          "title": "Enforce Pod Security baseline in every app namespace.",
+          "text": "After a dry run, set the label `enforce` to `baseline` to block privileged containers, hostPath and host namespaces[^pss], and `warn` and `audit` to `restricted`[^nslabels]. North Korea-linked UNC4899 broke out through a privileged infrastructure pod[^th]."
         },
         {
           "title": "Treat pod creation as a privileged right.",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Keep workload credentials short-lived.",
-          "text": "Set `automountServiceAccountToken: false` unless a pod calls the API[^appcheck], avoid non-expiring token Secrets[^checklist] and block pods from the node's cloud role[^eksbpiam]. UNC4899 stole database passwords from a pod's environment variables[^th]."
+          "text": "Set `automountServiceAccountToken: false` unless a pod calls the API[^appcheck], avoid non-expiring token Secrets[^checklist] and block pods from the node's cloud role[^eksbpiam]. UNC4899 stole database credentials from a pod's environment variables[^th]."
         },
         {
           "title": "Stay on a supported version, add-ons included.",
@@ -52,11 +52,11 @@
         },
         {
           "title": "Which pods would Pod Security reject?",
-          "text": "Set the `pod-security.kubernetes.io/warn` and `audit` labels first. They also check Deployments, while `enforce` checks only pods, so a noncompliant Deployment is accepted but its pods are rejected[^psa]."
+          "text": "Label namespaces with `--dry-run=server` to list pods that would fail[^nslabels], and set the `warn` and `audit` labels first. They also check Deployments, while `enforce` checks only pods, so a noncompliant Deployment is accepted but its pods are rejected[^psa]."
         },
         {
           "title": "Does your network plugin enforce NetworkPolicy?",
-          "text": "If not, a NetworkPolicy has no effect[^netpol]. Add default-deny ingress and egress policies to each namespace, then allow what you need, DNS included."
+          "text": "If not, a NetworkPolicy has no effect. Namespace by namespace, allow the traffic you need, DNS included, then add default-deny ingress and egress policies[^netpol]."
         },
         {
           "title": "What does Pod Security miss?",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Would you see a takeover?",
-          "text": "Turn on audit logs: they are off by default on EKS[^ekslogs] and need a diagnostic setting on AKS[^aksmon]. Alert on `exec` into pods, new cluster role bindings and Secrets listed by people. Retention is in the logging sheet."
+          "text": "Turn on audit logs: they are off by default on EKS[^ekslogs] and need a diagnostic setting with `kube-audit` on AKS[^aksmon]. Alert on `exec` into pods, new cluster role bindings and Secrets listed by people. Retention is in the logging sheet."
         }
       ]
     },
@@ -87,7 +87,7 @@
           "title": "Azure AKS",
           "items": [
             "**Public API server.** Use a private cluster or at least authorized IP ranges[^aksapi].",
-            "**Local accounts.** On by default and unaudited, they bypass Entra ID. Set `--disable-local-accounts` and rotate certificates[^akslocal].",
+            "**Local accounts.** On by default and unaudited. Move tools off `--admin`, set `--disable-local-accounts` and rotate certificates off-hours[^akslocal].",
             "**Support.** 12 months per version; 1.34 reaches end of life in November 2026[^aksver]."
           ]
         },
@@ -95,7 +95,7 @@
           "title": "Google GKE",
           "items": [
             "**Reachable control plane.** Use only the DNS-based endpoint, or authorized networks[^gkeharden].",
-            "**Anonymous access.** Only clusters created on 1.35 or later limit it by default; elsewhere set `--anonymous-authentication-config=LIMITED`[^gkeharden].",
+            "**Anonymous access.** Set `--anonymous-authentication-config=LIMITED` on clusters created before 1.35.0-gke.1171000[^gkeharden].",
             "**Upgrades.** Use a release channel with accelerated patch auto-upgrades[^gkeharden]."
           ]
         }
@@ -108,9 +108,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Ingress NGINX is archived.** It has had no fixes since 24 March 2026[^r136]. Move to Gateway API or another controller[^ingstmt].",
+        "**Ingress NGINX is retired.** Upstream has had no fixes since 24 March 2026[^r136]; AKS patches its managed NGINX add-on only through November 2026[^aksnginx]. Move to Gateway API or another controller[^ingstmt].",
         "**Kubernetes 1.36 closed old gaps.** It disabled `gitRepo` volumes for good and deprecated Service `externalIPs`[^r136].",
-        "**AKS will upgrade unsupported clusters itself.** From 1 June 2027, after a 60-day grace period and regardless of maintenance windows[^akspiu].",
+        "**AKS will upgrade unsupported clusters itself.** From 1 June 2027, then 60 days after each version's end of life, ignoring maintenance windows[^aksver].",
         "**Linux root exploits came with public code.** Three flaws disclosed from 29 April to 13 May 2026 gave local users root on major distributions[^mddr]. Patch node images within the patching sheet's deadlines."
       ]
     },
@@ -123,7 +123,7 @@
         "**`get`, `list` or `watch` on Secrets.** List and watch return the contents too[^rbacgp].",
         "**`escalate`, `bind` and `impersonate`.** They bypass RBAC's escalation checks or borrow another user's rights[^rbacgp].",
         "**Any right on `nodes/proxy`.** Even `get` runs commands in every pod on the node, unaudited and past admission control[^rbacgp].",
-        "**Webhook, token and volume rights.** Control of webhook configurations, `serviceaccounts/token` or PersistentVolumes exposes admitted objects, mints tokens or mounts the node's disk[^rbacgp].",
+        "**Webhook, token and volume rights.** Control of webhook configurations, or `create` on `serviceaccounts/token` or PersistentVolumes, exposes admitted objects, mints tokens or mounts the node's disk[^rbacgp].",
         "**`patch` on namespaces.** It lets a user relabel a namespace to a looser Pod Security level[^rbacgp]."
       ]
     },
@@ -134,9 +134,9 @@
       "navTitle": "Pod and node",
       "items": [
         "**Non-root, read-only, no escalation.** Restricted requires `runAsNonRoot`, no privilege escalation, seccomp and dropping `ALL` capabilities[^pss]. Add `readOnlyRootFilesystem`[^appcheck].",
-        "**User namespaces.** Set `hostUsers: false`, GA since 1.36, to map container root to an unprivileged host user[^userns].",
+        "**User namespaces.** Set `hostUsers: false`, GA on Linux since 1.36, to map container root to an unprivileged host user[^userns].",
         "**Minimal images by digest.** Ship no shells or debug tools, pin sha256 digests instead of tags and scan at build and deploy[^checklist].",
-        "**Secrets as files.** They leak less than environment variables; mount them from an external store with the Secrets Store CSI Driver[^checklist].",
+        "**Secrets as files.** Environment variables may leak more easily; mount secrets from an external store with the Secrets Store CSI Driver[^checklist].",
         "**Kubelet API.** On your own nodes, turn off `--anonymous-auth` and set `--authorization-mode=Webhook`: the defaults allow anonymous access[^kubeletauth]."
       ]
     },
@@ -157,7 +157,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Exempting a controller from Pod Security.** Exempting the ReplicaSet controller exempts everyone who can create a Deployment[^psa].",
-        "**Running CI with a powerful service account.** UNC4899 made CI jobs print service account tokens to logs, then used a highly privileged one to escalate[^th]. Scope deploy accounts to namespaces.",
+        "**Giving CI cluster-wide rights.** UNC4899 made CI jobs print service account tokens to logs, then used a highly privileged one to escalate[^th].",
         "**Binding roles to built-in groups.** `system:unauthenticated` is anyone who can reach the API server[^rbacgp]; on GKE, `system:authenticated` includes any Google account[^gkeharden]."
       ]
     },
@@ -171,9 +171,9 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Prefer a managed mode with secure defaults: GKE Autopilot disallows privileged pods[^th].",
+            "Prefer a managed mode with secure defaults: GKE Autopilot blocks privileged pods by default[^gkeap].",
             "Limit the API server to your VPN or office addresses, and turn on audit logs.",
-            "Label every namespace `enforce: baseline` and turn on automatic patch upgrades."
+            "Enforce baseline in every app namespace and turn on automatic patch upgrades."
           ]
         },
         {
@@ -181,13 +181,13 @@
           "items": [
             "Reach a private API server through a VPN or bastion, with SSO groups mapped to RBAC roles.",
             "Keep admission and network policies in Git, and move each rule from warn to deny.",
-            "Upgrade control plane and nodes twice a year, staging cluster first."
+            "Upgrade one minor version every four months, as they ship[^aksver], staging cluster first."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Give untrusted tenants their own cluster and each trust level its own namespace[^rbacgp].",
+            "Give each trust level its own namespace[^rbacgp] and untrusted tenants their own cluster.",
             "On self-managed clusters, load must-have admission policies from disk, beta in 1.37[^r137].",
             "Send audit logs and GuardDuty, Defender for Containers or Falco alerts to the SIEM."
           ]
@@ -237,6 +237,13 @@
       "publisher": "Kubernetes",
       "date": "7 Mar 2024",
       "url": "https://kubernetes.io/docs/concepts/security/pod-security-admission/"
+    },
+    {
+      "id": "nslabels",
+      "title": "Enforce Pod Security Standards with Namespace Labels",
+      "publisher": "Kubernetes",
+      "date": "5 Nov 2022",
+      "url": "https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels/"
     },
     {
       "id": "vap",
@@ -289,7 +296,7 @@
     },
     {
       "id": "userns",
-      "title": "Kubernetes v1.36: User Namespaces are finally GA",
+      "title": "Kubernetes v1.36: User Namespaces in Kubernetes are finally GA",
       "publisher": "Kubernetes Blog",
       "date": "23 Apr 2026",
       "url": "https://kubernetes.io/blog/2026/04/23/kubernetes-v1-36-userns-ga/"
@@ -362,7 +369,7 @@
       "title": "Manage local accounts with Microsoft Entra integration",
       "publisher": "Microsoft Learn",
       "date": "20 Apr 2023",
-      "url": "https://learn.microsoft.com/en-us/azure/aks/manage-local-accounts-managed-azure-ad"
+      "url": "https://learn.microsoft.com/en-us/azure/aks/local-accounts"
     },
     {
       "id": "aksmon",
@@ -379,11 +386,11 @@
       "url": "https://learn.microsoft.com/en-us/azure/aks/supported-kubernetes-versions"
     },
     {
-      "id": "akspiu",
-      "title": "Platform-initiated upgrades in AKS",
+      "id": "aksnginx",
+      "title": "AKS managed NGINX ingress with the application routing add-on",
       "publisher": "Microsoft Learn",
-      "date": "17 Sep 2026",
-      "url": "https://learn.microsoft.com/en-us/azure/aks/platform-initiated-upgrades"
+      "date": "26 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/aks/app-routing"
     },
     {
       "id": "gkeharden",
@@ -391,6 +398,13 @@
       "publisher": "Google Cloud",
       "date": "30 Oct 2026",
       "url": "https://docs.cloud.google.com/kubernetes-engine/docs/how-to/hardening-your-cluster"
+    },
+    {
+      "id": "gkeap",
+      "title": "GKE Autopilot security measures",
+      "publisher": "Google Cloud",
+      "date": "30 Oct 2026",
+      "url": "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/autopilot-security"
     }
   ]
 }
