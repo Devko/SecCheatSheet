@@ -1,14 +1,14 @@
 {
   "slug": "ot-security",
   "topic": "OT and industrial systems",
-  "status": "draft",
+  "status": "published",
   "order": 36,
   "capability": "infrastructure/ot",
   "title": "OT and industrial systems: what if you can't patch or reboot?",
   "short": "This month, take every PLC and HMI off the internet, change default passwords and keep offline copies of controller logic.",
-  "answer": "This month, close every path from the internet to your controllers, including port forwards, modems and vendor VPNs, and change every default or shared password. Then route remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse running the plant by hand.",
+  "answer": "This month, close port forwards and modems that reach your controllers from the internet, put vendor access behind your own gateway with MFA, and change every default or shared password. Then route remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse running the plant by hand.",
   "audience": "IT/OT security, engineering and plant operations leads at EU manufacturers, utilities, water and building operators, including KRITIS and NIS2 entities in Germany",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -211,6 +211,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which made restore tests and mode switches safe for running plants and narrowed 14 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
