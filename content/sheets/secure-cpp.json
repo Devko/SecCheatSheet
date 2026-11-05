@@ -76,12 +76,12 @@
       "navTitle": "Traps",
       "span": "full",
       "items": [
-        "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV into a fixed-size stack buffer without checking it fit, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches this only when it knows the buffer size[^openssf].",
+        "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV into a fixed-size stack buffer without a length check, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches it only if it knows the size[^openssf].",
         "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, let crafted patterns run code on GitLab (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow`[^gccovf].",
-        "**Error codes that let a decoder keep going.** Brotli's decoder treated an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat each format error as final, check the bound on every append, and mark error-returning functions `[[nodiscard]]`.",
-        "**Ownership an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. Own with `std::unique_ptr`, never keep a `std::string_view` or `std::span` past its owner, and in C document who frees each argument.",
+        "**Error codes that let a decoder keep going.** Brotli's decoder treated an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat format errors as final, bound every append and mark error returns `[[nodiscard]]`.",
+        "**Ownership an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. Own with `std::unique_ptr`, don't keep a `std::string_view` past its owner, and in C document who frees what.",
         "**Reading a union member as the wrong type.** OpenSSL read an `ASN1_TYPE` union member without checking its type (CVE-2026-22796)[^openssl], and CISA added type confusion bugs in V8 and Windows to its exploited list in 2026[^kev]. Check the tag first; in C++ use `std::variant`.",
-        "**`printf(msg)` and your own logging wrappers.** OpenSSL passed a peer's distinguished name as the format string to `ERR_raise_data()`, so `CN=%s%n` crashed CMP clients (CVE-2026-63073)[^openssl]. Pass data through `\"%s\"` and mark wrappers `format(printf, m, n)` so calls to them get printf's checks[^gccattr]."
+        "**`printf(msg)` and your own logging wrappers.** OpenSSL passed a peer-supplied name as the format string to `ERR_raise_data()`, so `CN=%s%n` crashed CMP clients (CVE-2026-63073)[^openssl]. Pass data through `\"%s\"`, and mark wrappers `format(printf, m, n)` to get printf's checks[^gccattr]."
       ]
     },
     {
