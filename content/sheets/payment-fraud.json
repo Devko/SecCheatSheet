@@ -32,7 +32,7 @@
         },
         {
           "title": "Verify unusual requests outside the channel they came in.",
-          "text": "Fake executives open on email or WhatsApp and follow up on video calls built from public footage[^hkgov][^spf]. Call back on a known number, agree code words for critical transactions[^gdvvoice] and agree that nobody is blamed for making the board wait while they check[^dksec]."
+          "text": "Fake executives start on email or WhatsApp and follow up on video calls built from public footage[^hkgov][^spf]. Call back on a known number, agree code words for critical transactions[^gdvvoice] and agree that nobody is blamed for making the board wait while they check[^dksec]."
         },
         {
           "title": "Prepare the first hour.",
@@ -56,11 +56,11 @@
         },
         {
           "title": "Report it to the police.",
-          "text": "In Germany, use the state police cybercrime contact point (ZAC) listed in the incident-response sheet. For transfers to US banks, also file at ic3.gov with the full transaction details, whatever the amount[^ic3]."
+          "text": "In Germany, use the state police cybercrime contact point (ZAC) listed in the incident response sheet. For transfers to US banks, also file at ic3.gov with the full transaction details, whatever the amount[^ic3]."
         },
         {
           "title": "Keep the evidence.",
-          "text": "Save the emails as files with headers, chat messages, call logs, invoices, VoP results and bank confirmations before anyone deletes or resets anything. If a real mailbox sent the request, follow the incident-response sheet."
+          "text": "Save the emails as files with headers, chat messages, call logs, invoices, VoP results and bank confirmations before anyone deletes or resets anything. If a real mailbox sent the request, follow the incident response sheet."
         },
         {
           "title": "Warn whoever is next.",
@@ -75,8 +75,8 @@
       "navTitle": "The scams",
       "span": "full",
       "items": [
-        "**CEO fraud, now with deepfakes.** A Hong Kong employee paid about HK$200 million into five accounts after a group video call in which a pre-recorded deepfake of the UK head office's CFO gave instructions[^hkgov]. Europol says AI makes BEC and CEO fraud more realistic[^iocta].",
-        "**Fake invoices and changed bank details.** Microsoft counted over 46 million attacks posing as executives, staff, suppliers or partners in a year, and one in four impersonation emails pushes the victim to a phone call[^mddr]. In the EU, payers tricked into paying caused 74% of credit transfer fraud by value in 2024[^ebaecb].",
+        "**CEO fraud, now with deepfakes.** A Hong Kong employee paid about HK$200 million into five accounts after a group video call in which a pre-recorded deepfake of the UK head office's CFO gave instructions[^hkgov]. A voice can be cloned from a few minutes of recordings, often public ones[^gdvvoice], and Europol says AI makes BEC and CEO fraud more realistic[^iocta].",
+        "**Fake invoices and changed bank details.** Microsoft counted over 46 million attacks posing as executives, staff, suppliers or partners in a year, and one in four impersonation emails pushes the victim to a phone call[^mddr].",
         "**Payroll diversion.** Attackers pose as employees and ask HR to change the salary account; 51% of the attempts Microsoft saw landed on a Monday or Tuesday[^mddr]. Others take over the employee's own login: Storm-2657 changed salary bank details in Workday and hid the alert emails with inbox rules[^msp]."
       ]
     },
@@ -170,7 +170,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Enforce bank detail approval in the ERP and HR system, and close import paths that bypass it.",
-            "Switch payment runs to VoP order types and route each no match to a second person.",
+            "Switch payment runs to the order types that run VoP, and route each no match to a second person.",
             "Alert on supplier and payroll bank changes and on new inbox rules in finance and HR mailboxes."
           ]
         },
@@ -189,7 +189,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Regulation (EU) 2024/886, EPC rulebooks, BaFin, Bundesbank and DK guidance, the 2025 IC3 report and the EBA-ECB fraud report. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. Filler text to test room at the end of page two. "
+      "text": "First draft, based on Regulation (EU) 2024/886, EPC rulebooks, BaFin, Bundesbank and DK guidance, the 2025 IC3 report and the EBA-ECB fraud report."
     }
   ],
   "sources": [
