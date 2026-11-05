@@ -1,0 +1,370 @@
+{
+  "slug": "deception",
+  "topic": "Canaries and honeytokens",
+  "status": "draft",
+  "order": 55,
+  "capability": "detect-respond/deception",
+  "title": "Canaries and honeytokens: would you know an intruder is already inside?",
+  "short": "Plant five decoys on the paths intruders take, route every trip to someone on call and test each one quarterly.",
+  "answer": "This month, plant decoys on the paths intruders take first, such as a Kerberoastable honeytoken account, a fake password file on a share and fake cloud keys on admin and developer machines, and route every trip to whoever handles high-severity alerts at night. Treat each trip as an intrusion until you can name the person or tool that caused it.",
+  "audience": "IT and security teams in small and mid-size organizations, especially on Active Directory, Microsoft 365 and AWS",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Put decoys where intruders already look.",
+          "text": "Attackers crack service tickets for accounts with a service principal name (SPN) offline, as FIN7 and Wizard Spider have[^attkerb], and search shares for stored passwords[^attfiles]. A honeytoken account with an SPN and a fake password file catch both."
+        },
+        {
+          "title": "Send every trip to someone who acts at night.",
+          "text": "Route them like the logging sheet's critical alerts, to a named owner and deputy. Ask your MDR provider in writing whether it acts on them: Microsoft's Defender Experts covers only High and Medium incidents, not custom detections[^dexfaq]."
+        },
+        {
+          "title": "Build on tools you already run.",
+          "text": "Defender for Identity, Windows auditing, CloudTrail and Microsoft 365 alert policies keep alert data in systems you control. In a controlled test with over 130 red teamers, everyone facing decoys tripped one before exploiting a real machine[^tularosa]."
+        },
+        {
+          "title": "Trip each canary yourself.",
+          "text": "Test it when placed and every quarter, timing the alert until a person answers. Microsoft 365 alert policies take up to 24 hours to start[^alertpol]; Thinkst's canary AWS keys can take 2 to 30 minutes[^ctaws]."
+        },
+        {
+          "title": "Keep a register and tell almost no one.",
+          "text": "Record each decoy's location, trigger and alert path for the few admins who need it, so nobody uses one by mistake. In the NCSC's trials, 90% of participants said they wouldn't announce using deception[^ncsctrial]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "plant",
+      "title": "Plant your first decoys",
+      "navTitle": "First decoys",
+      "items": [
+        {
+          "title": "A honeytoken account in Active Directory.",
+          "text": "Create an unused user with an attractive name, an SPN, a long random password and no rights. Tag it **Honeytoken** in Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) to alert on its sign-ins, LDAP lookups and changes[^mdialerts]. Without it, alert on event 4769 for the account, which needs **Audit Kerberos Service Ticket Operations** on domain controllers[^ev4769]."
+        },
+        {
+          "title": "A password file on a share.",
+          "text": "List the honeytoken in it and audit reads with **Audit File System** and a SACL: Windows then logs event 4663 with the account and process[^ev4663]. In SharePoint, alert on **Accessed file** for its URL[^alertpol]; `app@sharepoint` hits are often retention policies[^auditact]."
+        },
+        {
+          "title": "Fake cloud keys.",
+          "text": "Create an IAM user without permissions in a separate AWS account; leave its keys on admin and developer machines and in CI. With an active trail, set the EventBridge rule to `ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS`, or it misses read-only calls[^ebct]."
+        },
+        {
+          "title": "A decoy secret and a decoy cloud user.",
+          "text": "Alert on any `SecretGet` for a fake Key Vault secret[^kvlog] and on any sign-in by a decoy Entra ID user, as for emergency access accounts[^breakglass]."
+        },
+        {
+          "title": "Names only a thief would use.",
+          "text": "Put a canary hostname in SSH configs, RDP files and runbooks, and a unique email address as a fake record in customer and HR databases."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Free, self-hosted or paid",
+      "navTitle": "Tools",
+      "items": [
+        "**canarytokens.org is free, without a contract.** Thinkst runs it as a public service for any lawful purpose, promises only to work hard to keep it running and uses third parties such as Mailgun and AWS[^ctaup]. Use it to try token types, not for production.",
+        "**Self-host the open-source server.** Its GPLv3-based license allows internal use; embedding it in proprietary software needs a commercial license[^ctlicense]. Patch it like any internet-facing server.",
+        "**Decoy hosts.** OpenCanary, BSD-licensed, emulates network services on a small VM; Thinkst Canary is its commercial version[^opencanary]. Ask vendors for a data processing agreement."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "germany",
+      "title": "Germany: works council and data protection",
+      "navTitle": "Germany",
+      "items": [
+        "**Involve the works council first.** It co-determines technical systems designed to monitor employees' behavior or performance, and the Federal Labor Court counts any system objectively suitable for that, whatever the employer intends[^bag]. A decoy that logs which account opened it qualifies.",
+        "**Put the rules in a works agreement.** Cover what is logged, who sees alerts, retention and that trips aren't used to judge performance.",
+        "**Mark placements as confidential.** Works council members may not disclose business secrets the employer expressly marks as confidential[^betrvg79].",
+        "**Ask your data protection officer about external services.** Alerts can identify staff, and the GDPR requires a contract with any processor[^gdpr]."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "fires",
+      "title": "When a canary fires",
+      "navTitle": "When one fires",
+      "items": [
+        {
+          "title": "Who or what touched it?",
+          "text": "Check the account, host, IP address and process against the register of backups, scanners and tests."
+        },
+        {
+          "title": "Treat an unexplained trip as an intrusion.",
+          "text": "Follow the incident response sheet: isolate without wiping and export the logs. Leave the decoy in place, or the attacker learns they were seen."
+        },
+        {
+          "title": "Reset what was within reach.",
+          "text": "Reset the account that tripped it and every credential near the decoy. If a canary key was used, treat its machine as compromised."
+        },
+        {
+          "title": "Record the cause.",
+          "text": "If a legitimate tool tripped it, move the decoy rather than exclude the tool everywhere."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**A decoy that unlocks something real.** A honeytoken with a weak password or real rights becomes a way in. Use a long random password and no extra group memberships.",
+        "**Canary keys in public repositories.** GitHub reports partner secrets found in public repositories to the provider, which may revoke them or contact you[^ghpartner]. Keep keys where only an intruder looks.",
+        "**Trusting the Windows folder token.** Thinkst says it doesn't work on Windows 11[^ctfolder]. Audit the folder with a SACL instead.",
+        "**Alerts nobody reads.** Defender for Identity rates honeytoken LDAP lookups as Low[^mdialerts], so a High-and-Medium email rule misses them. Make sure they reach someone."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**The UK tested deception at scale.** In December 2025 the NCSC reported on trials with 121 organizations: participants saw value in detecting new threats, but misconfigured tools can miss threats, give false confidence or create openings for attackers[^ncsctrial].",
+        "**Defender for Identity got easier to switch on.** Since October 2026, its v3.x sensor can run on domain controllers without Defender for Endpoint, and licensed tenants get it by default unless they opt out[^mdinew].",
+        "**Sign-in page canaries are ending.** Since 21 July 2026, Entra ID tenants not already using custom CSS branding can't add it, and Microsoft plans to retire it[^branding]. CSS tokens for cloned sign-in pages will stop working."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Internet-facing honeypots.** They tell you about the internet's scanners, not about your network. Put decoys inside.",
+        "**Fake environments that engage intruders.** Decoy accounts, files and keys are enough to detect an intrusion.",
+        "**Hundreds of decoys before five work.** Deception needs tuning as networks change[^ncsctrial]. Grow only as fast as you test.",
+        "**A deception platform before an on-call rota.** If nobody answers a High alert at night, a canary alert waits too (see the SOC and MDR sheet)."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Put a fake password file in SharePoint with an alert policy on **Accessed file**; E1 or E3 is enough[^alertpol].",
+            "Leave fake cloud keys on the admin laptop if you use AWS.",
+            "Send alerts to two people's phones and trip every decoy each quarter."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Tag a Kerberoastable honeytoken in Defender for Identity, or alert on event 4769 in your SIEM.",
+            "Self-host Canarytokens, or buy a product with a data processing agreement.",
+            "Agree canary handling with your MDR provider and works council."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Place decoys in each tier and network zone, including management, OT and cloud accounts.",
+            "Report trips and time to response with your detection metrics.",
+            "Include decoys in red team scopes and move any that testers walk past."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn pages on Defender for Identity and Windows auditing, AWS documentation, MITRE ATT&CK, the NCSC's deception trials, Thinkst's Canarytokens docs, terms and license, and German labor case law."
+    }
+  ],
+  "sources": [
+    {
+      "id": "attkerb",
+      "title": "Steal or Forge Kerberos Tickets: Kerberoasting (T1558.003)",
+      "publisher": "MITRE ATT&CK",
+      "date": "modified 24 Oct 2025",
+      "url": "https://attack.mitre.org/techniques/T1558/003/"
+    },
+    {
+      "id": "attfiles",
+      "title": "Unsecured Credentials: Credentials In Files (T1552.001)",
+      "publisher": "MITRE ATT&CK",
+      "date": "modified 11 Sep 2026",
+      "url": "https://attack.mitre.org/techniques/T1552/001/"
+    },
+    {
+      "id": "dexfaq",
+      "title": "FAQs related to Microsoft Defender Experts MDR",
+      "publisher": "Microsoft Learn",
+      "date": "28 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/defender-experts/defender-experts-mdr-faq"
+    },
+    {
+      "id": "tularosa",
+      "title": "Examining the Efficacy of Decoy-based and Psychological Cyber Deception",
+      "publisher": "USENIX Security 2021",
+      "date": "Aug 2021",
+      "url": "https://www.usenix.org/conference/usenixsecurity21/presentation/ferguson-walter"
+    },
+    {
+      "id": "alertpol",
+      "title": "Alert policies in the Microsoft Defender portal",
+      "publisher": "Microsoft Learn",
+      "date": "3 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/alert-policies"
+    },
+    {
+      "id": "ctaws",
+      "title": "AWS API Keys Canarytoken",
+      "publisher": "Canarytokens docs (Thinkst)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.canarytokens.org/guide/aws-keys-token.html"
+    },
+    {
+      "id": "ncsctrial",
+      "title": "Cyber deception trials: what we've learned so far",
+      "publisher": "NCSC (UK)",
+      "date": "11 Dec 2025",
+      "url": "https://www.ncsc.gov.uk/blog-post/cyber-deception-trials-what-weve-learned-so-far"
+    },
+    {
+      "id": "mdilic",
+      "title": "Defender for Identity sensor v2.x prerequisites",
+      "publisher": "Microsoft Learn",
+      "date": "8 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/deploy/prerequisites-sensor-version-2"
+    },
+    {
+      "id": "mdialerts",
+      "title": "Defender for Identity classic security alerts",
+      "publisher": "Microsoft Learn",
+      "date": "16 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/alerts-mdi-classic"
+    },
+    {
+      "id": "ev4769",
+      "title": "4769(S, F) A Kerberos service ticket was requested",
+      "publisher": "Microsoft Learn",
+      "date": "7 Sep 2021",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4769"
+    },
+    {
+      "id": "ev4663",
+      "title": "4663(S) An attempt was made to access an object",
+      "publisher": "Microsoft Learn",
+      "date": "7 Sep 2021",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4663"
+    },
+    {
+      "id": "auditact",
+      "title": "Audit log activities",
+      "publisher": "Microsoft Learn",
+      "date": "3 Nov 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/audit-log-activities"
+    },
+    {
+      "id": "ebct",
+      "title": "AWS service events delivered via AWS CloudTrail",
+      "publisher": "Amazon EventBridge docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html"
+    },
+    {
+      "id": "kvlog",
+      "title": "Azure Key Vault logging",
+      "publisher": "Microsoft Learn",
+      "date": "10 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/key-vault/general/logging"
+    },
+    {
+      "id": "breakglass",
+      "title": "Manage emergency access admin accounts",
+      "publisher": "Microsoft Learn",
+      "date": "4 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/security-emergency-access"
+    },
+    {
+      "id": "ctaup",
+      "title": "Canarytokens Acceptable Use Policy",
+      "publisher": "Thinkst",
+      "date": "checked 5 Nov 2026",
+      "url": "https://canarytokens.org/legal"
+    },
+    {
+      "id": "gdpr",
+      "title": "Regulation (EU) 2016/679 (GDPR), Article 28",
+      "publisher": "EUR-Lex",
+      "date": "2016",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+    },
+    {
+      "id": "ctlicense",
+      "title": "Canarytokens LICENSE",
+      "publisher": "Thinkst (GitHub)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://github.com/thinkst/canarytokens/blob/master/LICENSE"
+    },
+    {
+      "id": "opencanary",
+      "title": "OpenCanary README and license",
+      "publisher": "Thinkst (GitHub)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://github.com/thinkst/opencanary"
+    },
+    {
+      "id": "bag",
+      "title": "Decision 1 ABR 16/23, para. 25",
+      "publisher": "Bundesarbeitsgericht",
+      "date": "16 Jul 2024",
+      "url": "https://www.bundesarbeitsgericht.de/entscheidung/1-abr-16-23/"
+    },
+    {
+      "id": "betrvg79",
+      "title": "Betriebsverfassungsgesetz, § 79",
+      "publisher": "gesetze-im-internet.de",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__79.html"
+    },
+    {
+      "id": "ghpartner",
+      "title": "About secret scanning for partners",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning-for-partners"
+    },
+    {
+      "id": "ctfolder",
+      "title": "How to create and troubleshoot the Windows Folder Canarytoken",
+      "publisher": "Thinkst Canary help center",
+      "date": "checked 5 Nov 2026",
+      "url": "https://help.canary.tools/hc/en-gb/articles/360017482297"
+    },
+    {
+      "id": "mdinew",
+      "title": "What's new in Microsoft Defender for Identity",
+      "publisher": "Microsoft Learn",
+      "date": "28 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-for-identity/whats-new"
+    },
+    {
+      "id": "branding",
+      "title": "Add company branding to your organization's sign-in page",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/fundamentals/how-to-customize-branding"
+    }
+  ]
+}

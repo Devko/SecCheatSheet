@@ -1,0 +1,409 @@
+{
+  "slug": "remote-access",
+  "topic": "Remote access",
+  "status": "draft",
+  "order": 54,
+  "capability": "infrastructure/remote-access",
+  "title": "Remote access: which ways into your network should still exist?",
+  "short": "Close every RDP and SSH port on the internet, require phishing-resistant MFA and a compliant device on every way in, and license one support tool.",
+  "answer": "This quarter, close every RDP, SSH and admin port on the internet, require phishing-resistant MFA and a compliant device on every way in, and allow one licensed remote support tool. Then give supplier sessions an approval, an end date and a recording, and replace the VPN with per-app access at its next renewal.",
+  "audience": "IT and security teams in small and mid-size organizations, including those on Microsoft 365 and Azure",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Close RDP, SSH and admin ports on the internet.",
+          "text": "Put them behind a gateway. In the access broker offers Verizon analyzed, remote desktop access such as RDP and VNC came a close second to VPNs[^dbir]."
+        },
+        {
+          "title": "Require phishing-resistant MFA and a compliant device.",
+          "text": "Sign users in through your identity provider so Conditional Access applies, with a method from the passkeys and MFA sheet. The NPS extension can't: it offers only calls, texts, push and codes[^npsext]."
+        },
+        {
+          "title": "License one remote support tool and block the rest.",
+          "text": "Free tiers are for personal use: TeamViewer counts home office use and supporting colleagues as commercial[^teamviewer]; AnyDesk requires a license on clients that start commercial sessions[^anydesk]."
+        },
+        {
+          "title": "Open supplier access per job.",
+          "text": "NIS2 rules for cloud providers and MSPs allow supplier connections only on request and for a set time[^nis2ir]. BSI adds that your staff watch and record them[^ops125]."
+        },
+        {
+          "title": "Alert on remote tools nobody approved.",
+          "text": "Microsoft found an unsanctioned RMM agent to be one of the most reliable signs of a hands-on intruder, usually installed within minutes of the foothold[^mddr]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "vpn",
+      "title": "Decide whether to replace the VPN",
+      "navTitle": "Replace the VPN?",
+      "items": [
+        {
+          "title": "What do people reach through it?",
+          "text": "A compromised account on a VPN can reach every service on the network; ZTNA admits users only to the apps they're authorized for[^modern]. List those apps from the VPN's logs."
+        },
+        {
+          "title": "Is a replacement due anyway?",
+          "text": "It pays off when the appliance nears end of support, keeps needing emergency patches or serves suppliers who need two apps. Entra Private Access needs Entra ID P1 plus the Entra Suite or its own license[^gsaover]."
+        },
+        {
+          "title": "Can you switch the VPN off safely?",
+          "text": "The NCSC advises keeping it until internal traffic is encrypted, devices block inbound connections, legacy systems are protected and DNS is monitored another way[^ncscvpn]."
+        },
+        {
+          "title": "Move broad first, then narrow.",
+          "text": "Entra's Quick Access copies the VPN's access to whole subnets and reports who reaches what. Then move each app into its own segment and policy[^gsavpn]."
+        },
+        {
+          "title": "Close the old path.",
+          "text": "Once apps have moved, delete the VPN accounts, routes and firewall rules they used, so no forgotten way in stays open."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "attacks",
+      "title": "How attackers use legitimate remote access",
+      "navTitle": "Attacks now",
+      "span": "full",
+      "items": [
+        "**Remote tools replace malware.** Verizon saw attackers' use of legitimate RMM software in system intrusion breaches grow 240% in a year[^dbir]. Google found an RMM tool in 24% of 2025 ransomware incidents, down from 28%; AnyDesk led, in 10%[^gtig].",
+        "**Brokers sell the way in.** Of the access offers Intel 471 tracked in the year to June 2026, 37% came through compromised remote access portals such as VPNs[^mddr].",
+        "**The fake help desk asks to share the screen.** After a spam flood, attackers offer help in an external Teams chat and use remote tools the company approved[^dbir]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "admin",
+      "title": "Admin access without open ports",
+      "navTitle": "Admin access",
+      "items": [
+        "**Azure: Bastion.** VMs need no public IP, and Bastion carries RDP and SSH over TLS on port 443. Premium adds session recording; the free Developer SKU serves one test VM at a time[^bastion].",
+        "**On premises: RD Gateway behind an app proxy.** Publishing RD Web and RD Gateway through Entra application proxy adds Conditional Access and needs only outbound connections[^appproxyrdp].",
+        "**Only from admin workstations.** BSI expects jump servers that only trusted systems can reach[^ops125]. PAWs and zones are in the privileged access and network segmentation sheets, OT access in the OT security sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "suppliers",
+      "title": "Contractors and vendors",
+      "navTitle": "Suppliers",
+      "items": [
+        "**Named accounts that expire.** Give contractors guest accounts through Entra access packages with approval, an end date and automatic removal. This needs Entra ID Governance or the Entra Suite[^entitle].",
+        "**Hours, not standing access.** Limit VPN access to the times it's needed and disable unused accounts promptly, as BSI requires[^net33].",
+        "**Recording in Germany.** Involve the works council before recording your own staff: it co-determines systems designed to monitor employees[^betrvg]. Contract terms are in the third-party risk sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "tools",
+      "title": "Remote support and RMM tools",
+      "navTitle": "Support tools",
+      "items": [
+        "**Use what you own.** Intune Remote Help works only inside your tenant and reports each session[^remotehelp]. As an add-on, it costs $3.50 per user per month[^intuneprice].",
+        "**Block the rest centrally.** Defender for Endpoint blocks other tools by signing certificate, but not Microsoft's[^mdecert]. So remove Quick Assist if unused, as Microsoft advises: neither device logs its sessions[^quickassist].",
+        "**Block their traffic.** CISA advises blocking common RMM ports at the perimeter in both directions, except for the approved tool[^rasw]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "logging",
+      "title": "Logs and alerts for remote sessions",
+      "navTitle": "Logging",
+      "items": [
+        "**Collect every way in:** VPN, gateway, ZTNA, Bastion and support-tool logs and Windows remote desktop logons, kept as the logging sheet advises.",
+        "**Alert on unapproved remote tools,** including portable and in-memory copies, and keep log deletion out of any RMM tool's reach[^rasw].",
+        "**Hunt for the vishing pattern:** a Teams call followed within 30 minutes by a remote management process starting[^mddr]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "split",
+      "title": "Split tunneling",
+      "navTitle": "Split tunneling",
+      "items": [
+        "**Tunnel by default.** The NCSC advises an automatic, full-device VPN without split tunneling, to keep data from leaking outside it[^ncscdev].",
+        "**Exempt Microsoft 365 by IP.** Let only its Optimize endpoints bypass the tunnel: about 20 subnets with 70 to 80% of its traffic. Don't use FQDN rules[^splittunnel].",
+        "**Route other web traffic through a cloud web gateway** if it leaves the tunnel[^splittunnel]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Remote support servers were exploited all year.** From February to October, CISA added ten exploited flaws in BeyondTrust, ScreenConnect, N-central and SimpleHelp to KEV[^kev]. Treat them as edge devices.",
+        "**Remote Help came to Microsoft 365 E3 and E5.** Microsoft began adding it in July 2026[^intuneprice]. Retire support tools it replaces.",
+        "**RDP files now trigger a warning.** Since April 2026, Windows turns their redirections off by default and flags unsigned files, so sign yours[^rdpwarn]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Recording every employee's VPN session.** Record admin and supplier sessions; logs are enough for the rest.",
+        "**A ZTNA suite for a few web apps.** Entra application proxy publishes them with Conditional Access on Entra ID P1[^appproxyadd].",
+        "**Moving RDP or SSH to another port.** Scanners find it. Close it."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Excluding RMM install paths from EDR.** CISA notes it's common[^rasw].",
+        "**Sharing Bastion links.** Anyone with one signs in with the VM's own password or key, skipping Entra MFA[^bastionsku].",
+        "**One vendor VPN nobody watches.** Google saw ransomware actors reach an OT system through a vendor's VPN[^gtig]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Ask your IT provider to list every way in, including its own remote tool, and close the rest.",
+            "Check that the support tool is licensed to your company or provider and requires MFA.",
+            "Reach Azure VMs through Bastion instead of public IPs."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Move VPN sign-in to Entra ID with phishing-resistant MFA and compliant devices.",
+            "Start per-app access with contractors, through access packages that expire.",
+            "Allowlist one support tool and alert on any other."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Replace the VPN at its next refresh with per-app ZTNA.",
+            "Record supplier and admin sessions at a gateway, agreed with the works council in Germany.",
+            "Map controls to NIS2 implementing rules point 6.7.2 and BSI OPS.1.2.5 and NET.3.3."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on CISA, NCSC and BSI guidance on remote access, the Microsoft Digital Defense Report 2026, the 2026 DBIR, Google's ransomware review and Microsoft Learn."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "npsext",
+      "title": "Integrate NPS with Microsoft Entra MFA",
+      "publisher": "Microsoft Learn",
+      "date": "1 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-nps-extension"
+    },
+    {
+      "id": "teamviewer",
+      "title": "Commercial use suspected",
+      "publisher": "TeamViewer",
+      "date": "11 May 2026",
+      "url": "https://www.teamviewer.com/en/global/support/knowledge-base/teamviewer-classic/licensing/personal-use/commercial-use-suspected/"
+    },
+    {
+      "id": "anydesk",
+      "title": "AnyDesk licenses",
+      "publisher": "AnyDesk",
+      "date": "30 Oct 2025",
+      "url": "https://support.anydesk.com/docs/anydesk-licenses"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Implementing Regulation (EU) 2024/2690, Annex point 6.7.2",
+      "publisher": "EUR-Lex",
+      "date": "17 Oct 2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "ops125",
+      "title": "IT-Grundschutz OPS.1.2.5 Fernwartung",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/04_OPS_Betrieb/OPS_1_2_5_Fernwartung_Edition_2023.pdf?__blob=publicationFile&v=1"
+    },
+    {
+      "id": "modern",
+      "title": "Modern Approaches to Network Access Security",
+      "publisher": "CISA and partners",
+      "date": "18 Jun 2024",
+      "url": "https://www.ic3.gov/CSA/2024/240618.pdf"
+    },
+    {
+      "id": "gsaover",
+      "title": "What is Global Secure Access?",
+      "publisher": "Microsoft Learn",
+      "date": "15 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/global-secure-access/overview-what-is-global-secure-access"
+    },
+    {
+      "id": "ncscvpn",
+      "title": "Zero trust migration: How will I know if I can remove my VPN?",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 16 Jan 2026",
+      "url": "https://www.ncsc.gov.uk/collection/zero-trust/implementing-zt/zero-trust-migration-how-know-remove-vpn"
+    },
+    {
+      "id": "gsavpn",
+      "title": "Tutorial: VPN replacement with Quick Access",
+      "publisher": "Microsoft Learn",
+      "date": "11 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/global-secure-access/tutorial-private-access-vpn-replacement"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 DBIR",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "gtig",
+      "title": "Ransomware Under Pressure",
+      "publisher": "Google",
+      "date": "16 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape"
+    },
+    {
+      "id": "bastion",
+      "title": "What is Azure Bastion?",
+      "publisher": "Microsoft Learn",
+      "date": "4 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/bastion/bastion-overview"
+    },
+    {
+      "id": "appproxyrdp",
+      "title": "Publish Remote Desktop with application proxy",
+      "publisher": "Microsoft Learn",
+      "date": "25 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/app-proxy/application-proxy-integrate-with-remote-desktop-services"
+    },
+    {
+      "id": "entitle",
+      "title": "What is entitlement management?",
+      "publisher": "Microsoft Learn",
+      "date": "29 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/id-governance/entitlement-management-overview"
+    },
+    {
+      "id": "net33",
+      "title": "IT-Grundschutz NET.3.3 VPN",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_3_3_VPN_Edition_2023.pdf?__blob=publicationFile&v=1"
+    },
+    {
+      "id": "betrvg",
+      "title": "Betriebsverfassungsgesetz § 87(1) no. 6",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
+    },
+    {
+      "id": "remotehelp",
+      "title": "Use Remote Help with Microsoft Intune",
+      "publisher": "Microsoft Learn",
+      "date": "13 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/remote-help"
+    },
+    {
+      "id": "intuneprice",
+      "title": "Microsoft Intune plans and pricing",
+      "publisher": "Microsoft",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.microsoft.com/en-us/security/business/microsoft-intune-pricing"
+    },
+    {
+      "id": "mdecert",
+      "title": "Create indicators based on certificates",
+      "publisher": "Microsoft Learn",
+      "date": "3 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/indicator-certificates"
+    },
+    {
+      "id": "quickassist",
+      "title": "Quick Assist",
+      "publisher": "Microsoft Learn",
+      "date": "18 Aug 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/client-management/client-tools/quick-assist"
+    },
+    {
+      "id": "rasw",
+      "title": "Guide to Securing Remote Access Software",
+      "publisher": "CISA and partners",
+      "date": "6 Jun 2023",
+      "url": "https://www.cisa.gov/resources-tools/resources/guide-securing-remote-access-software"
+    },
+    {
+      "id": "ncscdev",
+      "title": "Virtual private networks",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 13 May 2025",
+      "url": "https://www.ncsc.gov.uk/collection/device-security-guidance/infrastructure/virtual-private-networks"
+    },
+    {
+      "id": "splittunnel",
+      "title": "Overview: VPN split tunneling for Microsoft 365",
+      "publisher": "Microsoft Learn",
+      "date": "26 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-vpn-split-tunnel"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "version 2026.11.04",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "rdpwarn",
+      "title": "Security warnings when opening RDP files",
+      "publisher": "Microsoft Learn",
+      "date": "7 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/understanding-security-warnings"
+    },
+    {
+      "id": "appproxyadd",
+      "title": "Add an on-premises app to application proxy",
+      "publisher": "Microsoft Learn",
+      "date": "10 Mar 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/app-proxy/application-proxy-add-on-premises-application"
+    },
+    {
+      "id": "bastionsku",
+      "title": "About Azure Bastion configuration settings",
+      "publisher": "Microsoft Learn",
+      "date": "12 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/azure/bastion/configuration-settings"
+    }
+  ]
+}

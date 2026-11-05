@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "Build one evidence pack.",
-          "text": "Keep your certificate and its scope, the latest audit report, a pentest summary, key policies, the sub-processor list and a monitored incident contact in one dated folder. NIS2's implementing rules accept either a right to audit or a right to receive audit reports[^nis2ir]."
+          "text": "Keep your certificate and scope, audit report, pentest summary, policies, sub-processor list and incident contact in one dated folder. NIS2's implementing rules let customers take audit reports instead of audit rights[^nis2ir]."
         },
         {
           "title": "Answer from one library in a standard format.",
-          "text": "Fill in the CSA CAIQ v4.1 once and map every customer form to it. ENISA names the CAIQ and the Shared Assessments SIG as evidence customers can weigh when they choose suppliers[^enisatig]."
+          "text": "Fill in the CSA CAIQ v4.1 once and map every customer form to it. ENISA names the CAIQ and the Shared Assessments SIG as supplier evidence[^enisatig]."
         },
         {
           "title": "Answer only what is true today.",
-          "text": "Mark each control as in place, partly in place or planned with a date, and correct a wrong answer as soon as you find it. In the US, MORSECORP paid $4.6 million after reporting a security score of 104 on a scale up to 110, learning it was really -142 and correcting it only after a subpoena[^morse]."
+          "text": "Mark each control in place, partial or planned with a date, and fix wrong answers at once. In the US, MORSECORP agreed to pay $4.6 million after reporting a near-top NIST SP 800-171 score that was really -142 and fixing it only after a subpoena[^morse]."
         },
         {
           "title": "Offer your own security terms first.",
-          "text": "Write a standard security addendum with your incident notice time, audit approach, sub-processor notice and data locations. Send it with the first questionnaire, so negotiation starts from terms you can keep."
+          "text": "Send a standard addendum with your incident notice time, audit approach, sub-processor notice and data locations with the first questionnaire."
         },
         {
           "title": "Let security approve every answer.",
-          "text": "Sales owns the deadline, security owns the content and legal owns anything that becomes a contract term. Send nothing without a named approver and a date."
+          "text": "Sales owns the deadline, security the content and legal the contract terms. Nothing goes out without a named approver and a date."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Which law drives the request?",
-          "text": "NIS2 makes customers weigh their suppliers' product quality and security practices, including secure development[^nis2]. DORA and the CRA add their own duties. The driver decides which clauses you must accept."
+          "text": "NIS2, DORA, the CRA and the GDPR each push different clauses; the EU security laws sheet shows who falls under each. The driver decides what you must accept and what you can negotiate."
         },
         {
           "title": "Does the pack already answer it?",
-          "text": "Send the pack and your CAIQ first and answer only what they leave open. Ask whether the customer accepts them in place of its own form."
+          "text": "Send the pack and your published CAIQ first, ideally within five working days, and answer only what they leave open. The third-party risk sheet shows what buyers check."
         },
         {
           "title": "Which product, entity and sites?",
@@ -60,11 +60,11 @@
         },
         {
           "title": "Does any answer need a decision?",
-          "text": "Send every no, partial or new answer to security, and every promise word, such as all, always or within, to legal."
+          "text": "Send every no, partial or new answer to security, and every promise word, such as all, always or within, to legal. Check promised notice times against your incident response plan."
         },
         {
           "title": "What did you send, and when?",
-          "text": "Keep the form, the answers, the date and the approver. If a fact changes, tell the customer before its next review."
+          "text": "Keep the form, the answers, the date and the approver. Review the library every quarter and after major changes, and tell customers before a change makes an answer untrue."
         }
       ]
     },
@@ -74,12 +74,12 @@
       "title": "What goes in the evidence pack",
       "navTitle": "Evidence pack",
       "items": [
-        "**Certificate and scope.** ISO/IEC 27001, TISAX or C5, with a scope that covers what you sell; see the ISMS sheet. The BSI says no general certificate proves NIS2 compliance[^bsifaq], so expect follow-up questions.",
-        "**A report that tests operation.** A SOC 2 or C5 Type 2 report tests whether controls worked over a period, Type 1 only their design[^c5faq]. DORA customers may rely on reports only if they test key controls in operation[^rtscontract]. Add a SOC 3, which can be freely distributed[^soc3].",
-        "**Pentest summary.** Date, scope, tester and the fix status of critical and high findings, not the full report; see the penetration testing sheet.",
-        "**Product security.** Support period, update policy and a component list. NIS2's implementing rules make cloud and managed service customers ask for lifetime security updates and a description of components[^nis2ir].",
-        "**Sub-processor list.** Name, service, country and a way to subscribe to changes. Processors must announce intended changes and give controllers the chance to object[^gdpr].",
-        "**Contacts and company data.** A monitored security mailbox and phone line, your legal entity, LEI, ultimate parent and the countries you serve from and store data in. DORA registers need each supplier's LEI or EUID, and an LEI for suppliers outside the EU[^roi]."
+        "**Certificate and scope.** ISO/IEC 27001, TISAX or C5, scoped to what you sell; see the ISMS sheet. The BSI says no general certificate proves NIS2 compliance[^bsifaq].",
+        "**A report that tests operation.** SOC 2 or C5 Type 2 tests whether controls worked over a period, Type 1 only their design[^c5faq]. For critical functions, DORA customers may rely only on current reports that test key controls in operation[^rtscontract].",
+        "**Pentest summary.** Date, scope, tester and fix status; see the penetration testing sheet.",
+        "**Product security.** Support period, update policy and component list, which digital providers' purchasing rules must cover under NIS2[^nis2ir]; see the supply chain sheet.",
+        "**Sub-processors.** Name, service, country and a change feed. Processors must announce changes and let controllers object[^gdpr].",
+        "**Company data.** Legal entity, LEI, parent, security contact, service and data countries. DORA registers need each supplier's LEI or EUID, and an LEI outside the EU[^roi]."
       ]
     },
     {
@@ -88,11 +88,34 @@
       "title": "Standard formats and their terms",
       "navTitle": "Formats",
       "items": [
-        "**CSA CAIQ v4.1.** 283 questions on the Cloud Controls Matrix, released in January 2026[^caiqtime]. To publish it in the STAR Registry, use the STAR Level 1 version; the copy in the CCM download can't be submitted[^ccm41].",
-        "**The CAIQ license.** CSA's free versions are for internal reference; changing the CCM, building derivatives or commercial use need a license[^csalic]. Filling in the CAIQ and publishing it in the public STAR Registry is CSA's own route[^star]; don't rebuild it into your own form or product.",
-        "**SIG and SIG Lite.** If a customer sends Shared Assessments' SIG, answer it from the same library and keep a copy of what you sent.",
-        "**Trust page.** Certificates, SOC 3, sub-processors, the security contact and a request form for NDA documents. ENISA points customers to suppliers that publish their security commitments[^enisatig].",
-        "**The customer's own form.** Answer it, but point each answer to your CAIQ or report instead of writing new text."
+        "**CSA CAIQ v4.1.** 283 questions, released in January 2026; STAR accepts v4.0 until December 2027[^caiqtime]. Submit the STAR Level 1 version, not the copy in the CCM download[^ccm41].",
+        "**The CAIQ license.** CSA's free versions are for internal reference; changes, derivatives and commercial use need a license[^csalic]. Answer it as published and submit it to STAR[^ccm41], but don't build it into your own form or product.",
+        "**Trust page.** Certificates, a SOC 3, which can be freely distributed[^soc3], sub-processors, the security contact and an NDA request form. ENISA points customers to suppliers that publish security commitments[^enisatig].",
+        "**AI-CAIQ.** CSA's AI Controls Matrix v1.1 of June 2026 includes one[^aicm]. Use it if you offer AI features, and list which AI services touch customer data.",
+        "**SIG or the customer's own form.** Answer from the same library, point to your CAIQ or report instead of writing new text and keep a copy of what you sent."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "audits",
+      "title": "On-site audits and right-to-audit requests",
+      "navTitle": "Audits",
+      "items": [
+        "**Agree the scope in writing.** Dates, auditors, agenda and evidence. You may suggest an auditor, but under the GDPR the controller decides[^edpb0720].",
+        "**Offer remote first.** The EDPB expects both sides to agree in good faith whether a visit is needed, weighing security; the controller has the final say[^edpb0720].",
+        "**Charge fairly.** The EDPB says contracts shouldn't set audit fees so high that they deter audits[^edpb0720].",
+        "**Protect other customers.** Show evidence on screen, escort visitors and keep other customers' data out of reach. Close findings by a date."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Germany's NIS2 law took effect on 6 December 2025.** About 29,500 companies have new duties[^bsifaq]. The BSI says they must bind suppliers to security requirements and may have to drop those who can't meet them[^bsilk].",
+        "**C5:2026 applies from 1 June 2027.** Until then, reports dated or ending from 28 February 2027 must describe planned changes[^c5faq].",
+        "**CRA duties reach suppliers.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities; from December 2027 they must exercise due diligence on third-party components[^cra]."
       ]
     },
     {
@@ -105,18 +128,18 @@
         {
           "title": "Accept: the law requires them",
           "items": [
-            "**Audits for processors.** You must allow and contribute to audits, including inspections, by the controller or an auditor it mandates[^gdpr].",
-            "**NIS2 flow-down.** Security requirements, incident notice without undue delay, vulnerability handling, audits or audit reports, subcontractor rules and data return at exit[^nis2ir].",
-            "**DORA terms.** Data locations with advance notice of changes, incident help at no extra or a preset cost, cooperation with supervisors and exit support. For critical or important functions, also unrestricted audit and access rights and joining threat-led tests[^dora]."
+            "**Processor audits.** Allow and contribute to audits and inspections by the controller or its auditor[^gdpr].",
+            "**NIS2 flow-down.** Security requirements, incident notice without undue delay, vulnerability handling, audits or reports, subcontractor and exit rules[^nis2ir].",
+            "**DORA terms.** Data locations, incident help at no extra or preset cost, supervisor cooperation and exit support; for critical or important functions, unrestricted audit and access rights and threat-led tests[^dora]."
           ]
         },
         {
           "title": "Negotiate the details",
           "items": [
-            "**Incident notice.** Agree the trigger, such as a confirmed incident affecting the customer, a time, such as 24 hours, and the updates after it. The EU security laws sheet has the customer's own clocks.",
-            "**Audit form.** Offer reports first, then remote or pooled audits. DORA allows pooled audits[^rtscontract] and alternative assurance where other clients' rights are affected[^dora]; GDPR audit fees must not be so high that they deter audits[^edpb0720].",
-            "**Sub-processor changes.** A notice period and a right to object, not approval of each change. DORA requires a reasonable notice period for material changes behind critical functions[^rtssub].",
-            "**Data location.** Commit to countries, including where support staff access data from. DORA registers record both storage and processing countries[^roi]."
+            "**Incident notice.** Agree a trigger, such as a confirmed incident, and a time, such as 24 hours.",
+            "**Audit form.** Reports first, then remote or pooled audits[^rtscontract]; DORA allows alternative assurance if other clients' rights are affected[^dora].",
+            "**Sub-processor changes.** Notice and a right to object, not approval of each one; under DORA, ignoring an objection lets the customer terminate[^rtssub].",
+            "**Data location.** Commit to countries for storage and processing; DORA registers record both[^roi]."
           ]
         },
         {
@@ -124,7 +147,6 @@
           "items": [
             "**Unlimited liability.** Ask legal to cap it and match it to your cover; see the cyber insurance sheet.",
             "**Your policy, as amended.** Accept a dated annex; you can't comply with changes you haven't seen.",
-            "**Notice of every suspected event within an hour.** Offer fast notice of confirmed incidents and an open line while you investigate.",
             "**Tests of your shared systems.** Offer your pentest summary and let the customer test its own tenant under your rules.",
             "**Audits on demand.** Outside DORA, offer one a year with 30 days' notice, plus one after a serious incident or at a regulator's request."
           ]
@@ -133,52 +155,12 @@
     },
     {
       "type": "list",
-      "id": "audits",
-      "title": "On-site audits and right-to-audit requests",
-      "navTitle": "Audits",
-      "items": [
-        "**Agree the scope in writing.** Dates, auditors, agenda, evidence list and confidentiality. Under the GDPR you may suggest an auditor, but the controller decides[^edpb0720].",
-        "**Offer remote first.** The EDPB expects both sides to decide in good faith whether an on-site visit is needed, weighing security concerns, with the final choice left to the controller[^edpb0720].",
-        "**Protect other customers.** Show evidence on screen, escort visitors and keep other customers' data, keys and full pentest reports out of reach.",
-        "**Pool requests.** When several financial customers ask, propose a pooled audit; DORA's rules allow it[^rtscontract].",
-        "**Close findings like your own.** Give each an owner and a date, and send the customer a closure note."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "current",
-      "title": "Keep answers current",
-      "navTitle": "Keep current",
-      "items": [
-        "**Date every answer.** Show when it was last reviewed. Review the library every quarter and after a major change, incident or audit.",
-        "**Track expiry dates.** Certificates, report periods, pentest dates and insurance. DORA customers must check that reports aren't obsolete[^rtscontract].",
-        "**Announce changes before they happen.** A dropped control, a new sub-processor or a new data location. Under DORA, going ahead with a subcontracting change the customer objected to lets it terminate[^rtssub].",
-        "**Keep a commitments register.** List every security promise in signed contracts, with an owner and a due date."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "changed",
-      "title": "What changed in 2026",
-      "navTitle": "What changed",
-      "span": "full",
-      "items": [
-        "**Germany's NIS2 law took effect on 6 December 2025.** About 29,500 companies have new security duties[^bsifaq] and must make their suppliers meet suitable security requirements, though the BSIG doesn't oblige suppliers directly[^bsilk].",
-        "**CAIQ v4.1 replaced v4.0.** STAR accepts both until December 2027[^caiqtime]. Build new answers on v4.1.",
-        "**C5:2026 is final.** Published at the end of March 2026[^c5], it applies to attestations from 1 June 2027, and reports dated or ending from 28 February 2027 must describe planned changes[^c5faq].",
-        "**CRA duties reach suppliers.** Since 11 September 2026, manufacturers must report actively exploited vulnerabilities and inform impacted users, and from December 2027 they must exercise due diligence on components they buy[^cra]. Expect questions on your vulnerability handling; see the supply chain sheet.",
-        "**AI questions arrive.** CSA's AI Controls Matrix v1.1 of June 2026 comes with an AI-CAIQ for STAR for AI[^aicm], and the AICPA's October 2026 proposal adds AI governance and model monitoring to SOC 2[^tsc2027]. List which AI services touch customer data."
-      ]
-    },
-    {
-      "type": "list",
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A new answer set for each customer.** Keep one library and map each form to it.",
-        "**Certificates nobody asks for.** Get the one your key customers name; see the ISMS sheet.",
-        "**Waiting for an EU cyber posture certificate.** The Commission proposed one in January 2026 to show NIS2 compliance[^ecqa], but it isn't law yet.",
-        "**Full pentest reports for every prospect.** A summary answers the question without handing out a map of your weaknesses.",
+        "**A new answer set for each customer.** Map each form to one library.",
+        "**Certificates nobody asks for.** Get the one key customers name.",
+        "**Waiting for an EU cyber posture certificate.** The Commission proposed one in January 2026[^ecqa]; Parliament is still at committee stage[^oeil].",
         "**Questionnaire software before the library.** A dated folder and a spreadsheet of approved answers carry you through the first year."
       ]
     },
@@ -188,10 +170,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Saying yes to close the deal.** In the US, the FTC barred GoDaddy from misrepresenting its security after it advertised award-winning security without standard protections such as MFA[^ftcgd]. In Germany, a customer who signed because of a deliberately false answer can rescind the contract[^bgb].",
-        "**Answering for the wrong scope.** A certificate for headquarters doesn't cover a hosted service run by another entity.",
-        "**Notice times nobody can meet.** A two-hour clock with no one on call breaks the contract on the first weekend.",
-        "**Letting a tool or a template answer.** Generated or copied answers describe controls you don't run. Check each against evidence."
+        "**Saying yes to close the deal.** The US FTC barred GoDaddy from misrepresenting its security after it claimed award-winning security without MFA[^ftcgd]. In Germany, a customer deceived into signing can rescind the contract[^bgb].",
+        "**The wrong scope.** An office certificate doesn't cover a hosted service.",
+        "**Notice times nobody can meet.** A two-hour clock without on-call staff breaks the contract on the first weekend.",
+        "**Answers from a tool or template.** They describe controls you don't run."
       ]
     },
     {
@@ -205,24 +187,21 @@
           "title": "Small team, no security staff",
           "items": [
             "Fill in the CAIQ v4.1 once and keep it with a dated evidence folder.",
-            "Use a CyberRisikoCheck under DIN SPEC 27076 as a starting point, but not as NIS2 proof[^bsilk].",
-            "Name one person who approves answers and one who signs contracts."
+            "Use a CyberRisikoCheck under DIN SPEC 27076 as a start, not as NIS2 proof[^bsilk]."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Publish a trust page with an NDA request form and a sub-processor change feed.",
-            "Agree a standard security addendum and fallback positions with legal.",
-            "Get ISO 27001 or a SOC 2 Type 2 report if key customers ask; see the ISMS sheet."
+            "Publish a trust page with an NDA request form and a sub-processor feed.",
+            "Agree a standard security addendum and fallback positions with legal."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
             "Keep a DORA data sheet with your LEI, parent, countries and subcontractors[^roi].",
-            "Offer pooled audits to financial customers[^rtscontract] and plan your first C5:2026 report[^c5faq].",
-            "Run requests through one queue with an answer library, owners and expiry dates."
+            "Track requests in one queue with an answer library, owners and expiry dates."
           ]
         }
       ]
@@ -232,37 +211,30 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on NIS2 and Implementing Regulation 2024/2690, DORA and its rules on contracts, subcontracting and the register of information, ENISA and BSI supply chain guidance, CSA's CAIQ v4.1 and licensing FAQ, EDPB and AICPA guidance, and US enforcement cases."
+      "text": "First draft, based on Implementing Regulation 2024/2690, DORA's standards and ENISA, BSI, CSA, EDPB and AICPA guidance."
     }
   ],
   "sources": [
     {
       "id": "nis2ir",
-      "title": "Implementing Regulation (EU) 2024/2690, Annex points 5.1.4 and 6.1.2",
+      "title": "Regulation (EU) 2024/2690, Annex",
       "publisher": "EUR-Lex",
-      "date": "17 Oct 2024",
+      "date": "Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
     },
     {
       "id": "enisatig",
-      "title": "NIS2 Technical Implementation Guidance, version 1.0",
+      "title": "NIS2 Technical Implementation Guidance",
       "publisher": "ENISA",
-      "date": "26 Jun 2025",
+      "date": "Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
     },
     {
       "id": "morse",
-      "title": "MORSECORP agrees to pay $4.6 million to settle cybersecurity fraud allegations (US)",
-      "publisher": "US Department of Justice",
+      "title": "MORSECORP to pay $4.6 million (US)",
+      "publisher": "US DOJ",
       "date": "26 Mar 2025",
       "url": "https://www.justice.gov/opa/pr/defense-contractor-morsecorp-inc-agrees-pay-46-million-settle-cybersecurity-fraud"
-    },
-    {
-      "id": "nis2",
-      "title": "Directive (EU) 2022/2555 (NIS2), Article 21",
-      "publisher": "EUR-Lex",
-      "date": "14 Dec 2022",
-      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
     },
     {
       "id": "bsifaq",
@@ -280,80 +252,73 @@
     },
     {
       "id": "rtscontract",
-      "title": "Delegated Regulation (EU) 2024/1773 (DORA contract policy), Articles 6 and 8",
+      "title": "DORA RTS (EU) 2024/1773, Art. 8",
       "publisher": "EUR-Lex",
       "date": "13 Mar 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_del/2024/1773/oj"
     },
     {
       "id": "soc3",
-      "title": "SOC 3: Trust Services Criteria for General Use Report",
+      "title": "SOC 3 reports",
       "publisher": "AICPA & CIMA",
       "date": "checked 5 Nov 2026",
       "url": "https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-3"
     },
     {
       "id": "gdpr",
-      "title": "Regulation (EU) 2016/679 (GDPR), Article 28",
+      "title": "GDPR, Article 28",
       "publisher": "EUR-Lex",
       "date": "27 Apr 2016",
       "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
     },
     {
       "id": "roi",
-      "title": "Implementing Regulation (EU) 2024/2956 (DORA register of information), Article 3 and Annex I",
+      "title": "DORA ITS (EU) 2024/2956, Art. 3, Annex I",
       "publisher": "EUR-Lex",
-      "date": "29 Nov 2024",
+      "date": "Nov 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2956/oj"
     },
     {
       "id": "caiqtime",
       "title": "CCM v4.1 transition timeline",
-      "publisher": "Cloud Security Alliance",
+      "publisher": "CSA",
       "date": "19 Feb 2026",
       "url": "https://cloudsecurityalliance.org/blog/2026/02/19/ccm-v4-1-transition-timeline"
     },
     {
       "id": "ccm41",
       "title": "Cloud Controls Matrix v4.1",
-      "publisher": "Cloud Security Alliance",
+      "publisher": "CSA",
       "date": "27 Jan 2026",
       "url": "https://cloudsecurityalliance.org/artifacts/cloud-controls-matrix-v4-1"
     },
     {
       "id": "csalic",
       "title": "CCM & AICM Licensing FAQ",
-      "publisher": "Cloud Security Alliance",
+      "publisher": "CSA",
       "date": "13 Mar 2026",
       "url": "https://cloudsecurityalliance.org/artifacts/ccm-aicm-licensing-faq"
     },
     {
-      "id": "star",
-      "title": "STAR program",
-      "publisher": "Cloud Security Alliance",
-      "date": "checked 5 Nov 2026",
-      "url": "https://cloudsecurityalliance.org/star"
-    },
-    {
       "id": "dora",
-      "title": "Regulation (EU) 2022/2554 (DORA), Article 30",
+      "title": "DORA, Article 30",
       "publisher": "EUR-Lex",
       "date": "14 Dec 2022",
       "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
     },
     {
-      "id": "edpb0720",
-      "title": "Guidelines 07/2020 on the concepts of controller and processor, version 2.1",
-      "publisher": "EDPB",
-      "date": "20 Sep 2022",
-      "url": "https://www.edpb.europa.eu/system/files/documents/2023-10/EDPB_guidelines_202007_controllerprocessor_final_en.pdf"
-    },
-    {
       "id": "rtssub",
-      "title": "Delegated Regulation (EU) 2025/532 (DORA subcontracting), Articles 5 and 6",
+      "title": "DORA RTS (EU) 2025/532, Art. 6",
       "publisher": "EUR-Lex",
       "date": "24 Mar 2025",
       "url": "https://eur-lex.europa.eu/eli/reg_del/2025/532/oj"
+    },
+    {
+      "id": "edpb0720",
+      "title": "Guidelines 07/2020 on controller and processor",
+      "publisher": "EDPB",
+      "date": "Sep 2022",
+      "url": "https://www.edpb.europa.eu/system/files/documents/2023-10/EDPB_guidelines_202007_controllerprocessor_final_en.pdf"
     },
     {
       "id": "bsilk",
@@ -363,43 +328,36 @@
       "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-Infopakete/NIS-2-Lieferkette/NIS-2-Lieferkette_node.html"
     },
     {
-      "id": "c5",
-      "title": "C5:2026",
-      "publisher": "BSI",
-      "date": "checked 5 Nov 2026",
-      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Empfehlungen-nach-Angriffszielen/Cloud-Computing/Kriterienkatalog-C5/C5_2025/C5_2025_node.html"
-    },
-    {
       "id": "cra",
-      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 13, 14 and 71",
+      "title": "Cyber Resilience Act, Art. 13, 14, 71",
       "publisher": "EUR-Lex",
-      "date": "23 Oct 2024",
+      "date": "Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
     },
     {
       "id": "aicm",
       "title": "AI Controls Matrix v1.1",
-      "publisher": "Cloud Security Alliance",
+      "publisher": "CSA",
       "date": "22 Jun 2026",
       "url": "https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1"
     },
     {
-      "id": "tsc2027",
-      "title": "AICPA proposes update of SOC 2 Trust Services Criteria",
-      "publisher": "AICPA & CIMA",
-      "date": "28 Oct 2026",
-      "url": "https://www.aicpa-cima.com/news/article/aicpa-proposes-update-of-soc-2-r-trust-services-criteria-to-enhance-the-relevance-usability-and-value-of-cpas-reports"
-    },
-    {
       "id": "ecqa",
-      "title": "Cybersecurity Package: Questions and Answers",
-      "publisher": "European Commission",
+      "title": "Cybersecurity Package: Q&A",
+      "publisher": "EU Commission",
       "date": "20 Jan 2026",
       "url": "https://digital-strategy.ec.europa.eu/en/faqs/cybersecurity-package-questions-answers"
     },
     {
+      "id": "oeil",
+      "title": "2026/0011(COD): Cybersecurity Act 2",
+      "publisher": "European Parliament",
+      "date": "checked 5 Nov 2026",
+      "url": "https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2026/0011(COD)"
+    },
+    {
       "id": "ftcgd",
-      "title": "FTC finalizes order with GoDaddy over data security failures (US)",
+      "title": "FTC finalizes order with GoDaddy (US)",
       "publisher": "FTC",
       "date": "21 May 2025",
       "url": "https://www.ftc.gov/news-events/news/press-releases/2025/05/ftc-finalizes-order-godaddy-over-data-security-failures"
@@ -407,7 +365,7 @@
     {
       "id": "bgb",
       "title": "BGB § 123",
-      "publisher": "gesetze-im-internet.de",
+      "publisher": "BMJ",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bgb/__123.html"
     }

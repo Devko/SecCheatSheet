@@ -1,0 +1,420 @@
+{
+  "slug": "macos",
+  "topic": "Macs",
+  "status": "draft",
+  "order": 53,
+  "capability": "infrastructure/macos",
+  "title": "Macs: are they as locked down as your Windows PCs?",
+  "short": "Enroll every Mac through Apple Business so it can't leave management, and enforce each macOS update within 7 days.",
+  "answer": "This quarter, enroll every company Mac through Apple Business with locked enrollment, enforce macOS updates with a 7-day deadline and give users standard accounts with FileVault keys escrowed. Then push your EDR's extensions and permissions so users can't remove them, and judge the rest by whether it would stop a pasted Terminal command.",
+  "audience": "IT and security teams managing company Macs with Intune, Jamf or another MDM",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Enroll every Mac through Apple Business, locked.",
+          "text": "Buy from Apple or an authorized reseller so the serial number lands in Apple Business, free since April 2026[^abnews]. Set **Locked enrollment**[^intuneade]; a registered Mac on macOS 14+ can put off enrollment only once, for 8 hours[^ade]."
+        },
+        {
+          "title": "Enforce updates with a deadline.",
+          "text": "Use declarative update enforcement. In Intune, **Software Update Enforce Latest** with **Delay in Days** at 7[^intuneupd] meets the patching sheet's deadline for exploited flaws on internal systems. macOS 27 ignores the old MDM update commands[^wn27]."
+        },
+        {
+          "title": "Give users standard accounts.",
+          "text": "Let enrollment create a hidden admin and a standard user. Intune's macOS LAPS gives the admin a 15-character password, rotates it every 6 months and audits each view[^laps]."
+        },
+        {
+          "title": "Turn on FileVault in Setup Assistant.",
+          "text": "Set **Force Enable in Setup Assistant** with **Defer** enabled (macOS 14+), so Intune escrows the key before encryption starts[^fv]. The BSI says the key must not be stored online with Apple[^bsi]."
+        },
+        {
+          "title": "Run EDR with permissions users can't undo.",
+          "text": "Preapprove Defender's system extensions and permissions with MDM profiles[^mdemac], and set tamper protection as the endpoints and email sheet says. Set `AllowUserOverrides` to false and list the EDR in `NonRemovableSystemExtensions` (macOS 15+)[^sysext]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "setup",
+      "title": "Set up a new Mac in this order",
+      "navTitle": "Setup order",
+      "items": [
+        {
+          "title": "Is the serial number in Apple Business?",
+          "text": "If not, erase the Mac and add it with Apple Configurator for iPhone. The user can still release it within 30 days of enrollment[^abconfig]."
+        },
+        {
+          "title": "Does setup wait for your policies?",
+          "text": "Turn on **Await final configuration**[^intuneade] and require a minimum macOS version, so Setup Assistant updates the Mac first[^ade]."
+        },
+        {
+          "title": "How do users sign in?",
+          "text": "Use Platform SSO with the Secure Enclave method: Microsoft counts it as phishing-resistant, and every Intune plan includes it[^psso]. Since macOS 26, MDM can enforce it in Setup Assistant[^wn26]. Okta offers it through Okta Device Access[^okta]."
+        },
+        {
+          "title": "Which permissions does each tool need?",
+          "text": "Grant Full Disk Access (**System Policy All Files**) with privacy profiles (PPPC); MDM can only deny camera, microphone and screen recording[^pppc]. macOS 27 lets users revoke Accessibility that MDM granted[^wn27]."
+        },
+        {
+          "title": "Does access depend on compliance?",
+          "text": "Require System Integrity Protection, encryption, Gatekeeper at **Mac App Store and identified developers** and a minimum OS build[^comp]. Then require a compliant device (passkeys and MFA sheet)."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "updates",
+      "title": "Versions and updates in November 2026",
+      "navTitle": "Versions",
+      "items": [
+        "**Three versions still get fixes.** On 26 October 2026, Apple patched macOS 27.2, Tahoe 26.7.2 and Sequoia 15.8.2; Sonoma's last OS fix came on 6 August[^appsec]. Older versions don't get every fix[^aboutsu], so set an end date for Sequoia.",
+        "**Intel Macs can't move to macOS 27.** It runs only on Apple silicon[^appsec]. Budget replacements now: the BSI says Macs without security updates shouldn't be used[^bsi].",
+        "**Keep security data updates on.** Force automatic security updates, which carry XProtect and Gatekeeper data. Background Security Improvements apply only to the latest minor version, so a deferral delays them too[^enforce].",
+        "**Warn users about the deadline.** When it passes, macOS quits open apps, even with unsaved documents, and restarts if needed[^enforce]. Announce the date a week ahead."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "stealers",
+      "title": "How Macs get infected now",
+      "navTitle": "Infostealers",
+      "items": [
+        "**Atomic macOS Stealer leads.** It made up 50% of the top five stealer families Microsoft Defender Experts saw, MacSync 7%. Mac-targeted activity has grown since late 2025[^mddr].",
+        "**Pasted commands skip Gatekeeper.** Fake troubleshooting guides have users paste a Terminal command that fetches a script with curl. Scripts started from Terminal don't get the checks Gatekeeper runs on apps opened in Finder[^msclickfix].",
+        "**Standard accounts don't stop them.** The stealer asks for the user's password, then takes Keychain entries, browser passwords, session cookies and wallets[^msclickfix]. See the browsers sheet on cookie theft.",
+        "**The paste warning is a speed bump.** Since macOS 26.4[^msclickfix], Macs warn users who rarely use Terminal, who can choose Paste Anyway[^paste].",
+        "**Gatekeeper overrides moved.** Since Sequoia, users allow unnotarized apps in Privacy & Security, not with Control-click[^sequoia]. On macOS 15+, Endpoint Security tools can log each bypass[^xprotect]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "lost",
+      "title": "When a Mac is lost or compromised",
+      "navTitle": "Lost or compromised",
+      "items": [
+        "**Lost: lock it.** A remote lock restarts the Mac and asks for a six-digit PIN. Managed Lost Mode, with location, is only for iPhone and iPad[^lock].",
+        "**Compromised: isolate it.** Isolate it in Defender[^mdemac] and follow the incident response sheet. Assume the Keychain, browser passwords and cookies are stolen[^msclickfix], and reset them.",
+        "**Erase and re-enroll.** MDM erase uses Erase All Content and Settings; on Apple silicon it needs a bootstrap token[^erase]. Rotate the FileVault key and admin password once seen[^fv][^laps].",
+        "**Keep Activation Lock in your hands.** Leave it off unless MDM holds the bypass code, via **Activation Lock Allowed While Supervised**[^intuneal]. Apple Business can lift a user's lock on Macs added before it was on[^abal]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Letting the first user be admin.** Without a managed admin account, the Setup Assistant account must be one[^laps].",
+        "**Counting on that admin for FileVault.** Intune's LAPS admin gets no secure token[^laps]; keep the escrowed key.",
+        "**Requiring a password in a compliance policy.** It expires every password on the Mac, LAPS and Platform SSO accounts included[^comp].",
+        "**Exempting developers.** Mac stealer campaigns aim at cloud and developer environments[^mddr].",
+        "**Wiping before copying the bypass code.** Intune deletes it at reset[^intuneal]. Add the step to the laptop return in the joiners and leavers sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "Changed in 2026",
+      "span": "full",
+      "items": [
+        "**Apple Business replaced Apple Business Manager.** Since 14 April 2026, it is free and includes a built-in MDM[^abnews].",
+        "**macOS 27 dropped Intel and legacy update management.** Since 14 September 2026, it runs only on Apple silicon[^appsec] and ignores MDM update commands[^wn27].",
+        "**macOS 27 can block binaries.** Supervised Macs can enforce allow or deny lists through a built-in Endpoint Security client[^allowdeny].",
+        "**Intune retired legacy Setup Assistant enrollment.** Since October 2026, those profiles use modern authentication[^intuneade]; test before new Macs arrive."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A second antivirus beside the EDR.** Defender for Endpoint on Mac includes antivirus[^mdemac], on top of XProtect's signatures[^xprotect].",
+        "**Binding Macs to Active Directory.** Platform SSO can map on-premises Kerberos tickets from Entra ID[^pssoscen].",
+        "**Blocking Terminal for everyone.** Developers and IT need it. EDR and binary control cover the risk better.",
+        "**NVRAM and SMC resets at disposal.** The BSI's 2023 module asks for them[^bsi], but erasing makes the data cryptographically inaccessible[^erase]."
+      ],
+      "span": "full"
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Without Intune or Jamf, start with Apple Business's free built-in MDM[^abnews].",
+            "Run Defender for Business on every Mac, as the endpoints and email sheet says.",
+            "Ask your reseller to register every Mac in Apple Business."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Grant admin rights for minutes, with a reason: Jamf Connect's Self Service+ defaults to 5[^jamfpe]; SAP's Privileges is open source[^privileges].",
+            "Report weekly per Mac: macOS version, escrowed key, EDR health.",
+            "Switch MDM without a wipe: Apple Business migrates macOS 26 Macs[^wn26]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Generate a CIS Level 1 baseline and MDM profiles with NIST's mSCP, updated for each macOS release[^mscp].",
+            "Pilot binary allow lists for admins and finance.",
+            "Map your profiles to BSI SYS.2.4 for audits[^bsi]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Apple Platform Deployment and Apple Business documentation, Microsoft Learn pages on Intune and Defender for Endpoint on Mac, the Microsoft Digital Defense Report 2026, Microsoft's macOS ClickFix research and BSI SYS.2.4."
+    }
+  ],
+  "sources": [
+    {
+      "id": "abnews",
+      "title": "Introducing Apple Business",
+      "publisher": "Apple Newsroom",
+      "date": "24 Mar 2026",
+      "url": "https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/"
+    },
+    {
+      "id": "intuneade",
+      "title": "Set up ADE for macOS",
+      "publisher": "Microsoft Learn",
+      "date": "28 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-macos"
+    },
+    {
+      "id": "ade",
+      "title": "Automated enrollment",
+      "publisher": "Apple Support",
+      "date": "17 Sep 2026",
+      "url": "https://support.apple.com/guide/deployment/dep73069dd57/web"
+    },
+    {
+      "id": "abconfig",
+      "title": "Apple Configurator",
+      "publisher": "Apple Support",
+      "date": "14 Apr 2026",
+      "url": "https://support.apple.com/guide/business/axm200a54d59/web"
+    },
+    {
+      "id": "intuneupd",
+      "title": "Apple update policies",
+      "publisher": "Microsoft Learn",
+      "date": "24 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-updates/apple/"
+    },
+    {
+      "id": "enforce",
+      "title": "Enforce software updates",
+      "publisher": "Apple Support",
+      "date": "24 Sep 2025",
+      "url": "https://support.apple.com/guide/deployment/depd30715cbb/web"
+    },
+    {
+      "id": "wn27",
+      "title": "macOS 27 for enterprise",
+      "publisher": "Apple Support",
+      "date": "26 Oct 2026",
+      "url": "https://support.apple.com/en-us/148830"
+    },
+    {
+      "id": "wn26",
+      "title": "macOS 26 for enterprise",
+      "publisher": "Apple Support",
+      "date": "27 Jul 2026",
+      "url": "https://support.apple.com/en-us/124963"
+    },
+    {
+      "id": "appsec",
+      "title": "Apple security releases",
+      "publisher": "Apple Support",
+      "date": "30 Oct 2026",
+      "url": "https://support.apple.com/en-us/100100"
+    },
+    {
+      "id": "aboutsu",
+      "title": "About software updates",
+      "publisher": "Apple Support",
+      "date": "3 Nov 2026",
+      "url": "https://support.apple.com/guide/deployment/depc4c80847a/web"
+    },
+    {
+      "id": "laps",
+      "title": "macOS LAPS in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "1 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/laps/setup-macos"
+    },
+    {
+      "id": "psso",
+      "title": "Platform SSO setup",
+      "publisher": "Microsoft Learn",
+      "date": "22 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos"
+    },
+    {
+      "id": "pssoscen",
+      "title": "Platform SSO scenarios",
+      "publisher": "Microsoft Learn",
+      "date": "11 May 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos"
+    },
+    {
+      "id": "okta",
+      "title": "Platform SSO for macOS",
+      "publisher": "Okta Help",
+      "date": "checked 5 Nov 2026",
+      "url": "https://help.okta.com/oie/en-us/content/topics/oda/macos-pw-sync/about-psso.htm"
+    },
+    {
+      "id": "fv",
+      "title": "FileVault with Intune",
+      "publisher": "Microsoft Learn",
+      "date": "3 Dec 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/endpoint-security/encrypt-filevault-macos"
+    },
+    {
+      "id": "comp",
+      "title": "macOS compliance",
+      "publisher": "Microsoft Learn",
+      "date": "5 Sep 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-macos-settings"
+    },
+    {
+      "id": "mdemac",
+      "title": "Defender on macOS",
+      "publisher": "Microsoft Learn",
+      "date": "18 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-endpoint-mac"
+    },
+    {
+      "id": "sysext",
+      "title": "SystemExtensions",
+      "publisher": "Apple Developer",
+      "date": "checked 5 Nov 2026",
+      "url": "https://developer.apple.com/documentation/devicemanagement/systemextensions"
+    },
+    {
+      "id": "pppc",
+      "title": "PPPC payload settings",
+      "publisher": "Apple Support",
+      "date": "29 Jul 2024",
+      "url": "https://support.apple.com/guide/deployment/dep38df53c2a/web"
+    },
+    {
+      "id": "allowdeny",
+      "title": "Allow and deny binaries",
+      "publisher": "Apple Support",
+      "date": "17 Sep 2026",
+      "url": "https://support.apple.com/guide/deployment/dep001044b08/web"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "msclickfix",
+      "title": "ClickFix campaign uses fake macOS utilities lures",
+      "publisher": "Microsoft Security Blog",
+      "date": "6 May 2026",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/05/06/clickfix-campaign-uses-fake-macos-utilities-lures-deliver-infostealers/"
+    },
+    {
+      "id": "paste",
+      "title": "Terminal paste blocked",
+      "publisher": "Apple Support",
+      "date": "15 Jun 2026",
+      "url": "https://support.apple.com/en-us/127377"
+    },
+    {
+      "id": "sequoia",
+      "title": "Runtime protection in macOS Sequoia",
+      "publisher": "Apple Developer",
+      "date": "6 Aug 2024",
+      "url": "https://developer.apple.com/news/?id=saqachfa"
+    },
+    {
+      "id": "xprotect",
+      "title": "macOS malware protection",
+      "publisher": "Apple Support",
+      "date": "19 Dec 2024",
+      "url": "https://support.apple.com/guide/security/sec469d47bd8/web"
+    },
+    {
+      "id": "lock",
+      "title": "Lock and locate devices",
+      "publisher": "Apple Support",
+      "date": "27 Oct 2021",
+      "url": "https://support.apple.com/guide/deployment/depb980a0be4/web"
+    },
+    {
+      "id": "erase",
+      "title": "Erase Apple devices",
+      "publisher": "Apple Support",
+      "date": "25 Oct 2023",
+      "url": "https://support.apple.com/guide/deployment/dep0a819891e/web"
+    },
+    {
+      "id": "intuneal",
+      "title": "Disable Activation Lock",
+      "publisher": "Microsoft Learn",
+      "date": "27 Oct 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-management/actions/disable-activation-lock"
+    },
+    {
+      "id": "abal",
+      "title": "Turn off Activation Lock",
+      "publisher": "Apple Support",
+      "date": "14 Apr 2026",
+      "url": "https://support.apple.com/guide/business/axm812df1dd8/web"
+    },
+    {
+      "id": "bsi",
+      "title": "SYS.2.4 Clients unter macOS",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/07_SYS_IT_Systeme/SYS_2_4_Clients_unter_macOS_Edition_2023.pdf?__blob=publicationFile&v=1"
+    },
+    {
+      "id": "mscp",
+      "title": "mSCP introduction",
+      "publisher": "NIST",
+      "date": "checked 5 Nov 2026",
+      "url": "https://pages.nist.gov/macos_security/welcome/introduction/"
+    },
+    {
+      "id": "jamfpe",
+      "title": "Privilege Elevation Settings",
+      "publisher": "Jamf",
+      "date": "checked 5 Nov 2026",
+      "url": "https://learn.jamf.com/r/en-US/jamf-connect-documentation-current/Temporary_User_Permission_Settings"
+    },
+    {
+      "id": "privileges",
+      "title": "Privileges",
+      "publisher": "SAP (GitHub)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://github.com/SAP/macOS-enterprise-privileges"
+    }
+  ]
+}
