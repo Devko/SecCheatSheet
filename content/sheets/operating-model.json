@@ -149,8 +149,8 @@
       "navTitle": "What changed",
       "items": [
         "**The IIA updated its Three Lines Model.** The 2026 Statement of Position adds guidance for organizations without separate assurance functions[^iia3l]. Recheck where you've merged lines.",
-        "**Internal audit now checks cyber roles.** Since 5 February 2026, internal auditors giving cyber assurance must assess roles and escalation[^iiacyber], and since 15 September 2026 who manages suppliers[^iiatp].",
-        "**The BSI drew the line on delegation.** Its October 2026 curriculum on BSIG § 38 lets management delegate work, not oversight, and lists a responsibility matrix as evidence[^bsicurr]."
+        "**Internal audit now checks roles.** Since 5 February 2026, cyber audits must assess roles and escalation[^iiacyber]; since 15 September 2026, supplier audits must assess who selects, manages and monitors suppliers[^iiatp].",
+        "**The BSI drew the line on delegation.** Its October 2026 curriculum on BSIG § 38 lets management delegate work, not responsibility or oversight, and lists a responsibility matrix as evidence[^bsicurr]."
       ]
     },
     {
