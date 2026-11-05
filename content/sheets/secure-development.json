@@ -8,7 +8,7 @@
   "short": "Publish a disclosure policy, block secrets at push and fix reported flaws within 90 days, or 7 if exploited.",
   "answer": "This quarter, publish a vulnerability disclosure policy with a security.txt contact, block secrets at push and make review plus one precise static analysis check required before merge. Judge every other practice by whether it removes a whole class of bug by default or leaves evidence that a customer or regulator can check.",
   "audience": "Engineering leads, product security teams and developers who build and run their own software, from small product teams to regulated enterprises",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Publish a disclosure policy and a contact.",
-          "text": "Authorize good-faith testing, rule out legal action against it, give a reporting channel and allow coordinated publication[^pledge]. Serve `/.well-known/security.txt` with `Contact`, `Policy` and an `Expires` date under a year away[^rfc9116]. The CRA requires both from December 2027[^cra]."
+          "text": "Authorize good-faith testing, rule out legal action against it, give a reporting channel and allow coordinated publication[^pledge]. Serve `/.well-known/security.txt` with `Contact`, `Policy` and an `Expires` date under a year away[^rfc9116]. From December 2027, the CRA requires a disclosure policy and a contact address[^cra]."
         },
         {
           "title": "Make the safe way the default way.",
@@ -172,6 +172,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Clarified that the CRA requires a disclosure policy and a contact address, not security.txt as such."
+    },
     {
       "date": "2026-11-05",
       "version": "1.1",

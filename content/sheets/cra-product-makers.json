@@ -1,14 +1,14 @@
 {
   "slug": "cra-product-makers",
   "topic": "CRA for product makers",
-  "status": "draft",
+  "status": "published",
   "order": 68,
   "capability": "software/cra",
   "title": "Cyber Resilience Act: can you still sell your products in the EU after 11 December 2027?",
   "short": "Report exploited flaws within 24 hours now, and give every product a risk assessment, SBOM, support period and CE marking by 11 December 2027.",
   "answer": "Be ready now to report an actively exploited vulnerability or severe incident in any product on the EU market within 24 hours. Before 11 December 2027, give every product a class, a support period, a risk assessment, an SBOM and technical documentation, so it can carry the CE marking.",
   "audience": "Companies that make, import or distribute hardware or software sold in the EU, and open-source stewards",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -32,11 +32,11 @@
         },
         {
           "title": "Write the risk assessment first.",
-          "text": "It decides which Annex I requirements apply and goes into the technical documentation[^cra]. Cover planned features too, so the updates that add them aren't substantial modifications[^guide]."
+          "text": "It decides how each Annex I requirement applies and goes into the technical documentation[^cra]. Cover planned features too, so the updates that add them aren't substantial modifications[^guide]."
         },
         {
           "title": "Run vulnerability handling as a process.",
-          "text": "An SBOM per release, a disclosure policy and contact, and free security updates[^cra]. The supply chain and secure development sheets show how."
+          "text": "Due diligence on third-party and open-source components, an SBOM per release, a disclosure policy and contact, and free security updates[^cra]. The supply chain and secure development sheets show how."
         }
       ]
     },
@@ -78,7 +78,7 @@
         "**Important, class I.** 19 categories, such as identity and access management, browsers, password managers, antivirus, VPNs, operating systems, routers and smart home security products. Self-assess only by fully applying a cited harmonized standard, common specification or EU certificate at level substantial; otherwise use a notified body[^cra].",
         "**Important, class II.** Hypervisors, container runtimes, firewalls, intrusion detection and prevention systems and tamper-resistant chips. Always third party[^cra].",
         "**Critical.** Hardware security boxes, smart meter gateways and smartcards: EU certification where a delegated act requires it, otherwise as class II[^cra]. The class of the whole product counts, not that of its components[^guide].",
-        "**Check which standards are cited.** Only standards cited in the Official Journal give presumption of conformity[^cra]. ETSI's 17 product-specific drafts were in approval until mid-November 2026[^etsi]."
+        "**Check which standards are cited.** Only standards cited in the Official Journal give presumption of conformity[^cra]. ETSI's approval of its 17 product-specific drafts ends between mid-September and mid-November 2026, by product[^etsi]."
       ]
     },
     {
@@ -89,9 +89,9 @@
       "items": [
         "**No known exploitable flaws at release.** Known means in the EU vulnerability database or another prominent one, or reported to you[^guide].",
         "**Secure defaults.** A secure default configuration with a reset, access control, encryption of stored and transmitted data, minimal data and a way to delete it all[^cra].",
-        "**Automatic security updates on by default.** With an opt-out, notifications and a way to postpone[^cra].",
-        "**An SBOM per release.** Machine-readable, covering at least top-level dependencies[^cra]. BSI TR-03183-2 asks for CycloneDX 1.6 or SPDX 3.0.1 or later, with dependencies resolved through everything you ship[^tr2].",
-        "**One contact point, not just a form.** A single point of contact not limited to automated tools[^cra], plus a disclosure policy and a `security.txt`, as BSI TR-03183-3 requires[^tr3].",
+        "**Automatic security updates on by default, where applicable.** With an opt-out, notifications and a way to postpone. Not required for components or where users don't expect them, as in industrial networks[^cra].",
+        "**An SBOM per release.** Machine-readable, covering at least top-level dependencies, and it needn't be public[^cra]. BSI TR-03183-2 asks for CycloneDX 1.6 or SPDX 3.0.1 or later, with dependencies resolved through everything you ship[^tr2].",
+        "**One contact point, not just a chatbot.** A single point of contact not limited to automated tools, plus a disclosure policy[^cra]. BSI's voluntary TR-03183-3 adds a signed `security.txt`[^tr3].",
         "**Free fixes, kept available.** Keep each security update available for 10 years or the rest of the support period, if longer[^cra]. For software, fixing only the latest version is fine if upgrading costs users nothing extra[^cra].",
         "**Advisories and upstream reports.** Publish fixed flaws, in CSAF as the BSI recommends[^cra][^tr3], and send component flaws to their maintainer[^cra]."
       ]
@@ -123,7 +123,7 @@
         },
         {
           "name": "Severe incident",
-          "scope": "It harms or could harm the product's protection of data or functions, or plant malicious code[^cra]. Ransomware at the maker counts only if it can reach updates, signing keys or the product[^bsisrp].",
+          "scope": "It harms or could harm the product's protection of sensitive or important data or functions, or could plant malicious code in it or users' systems[^cra]. Ransomware at the maker counts only if it could affect the product, its updates or signing keys[^bsisrp].",
           "steps": [
             {
               "at": "24 hours",
@@ -150,7 +150,7 @@
         "**Technical documentation (Annex VII).** Architecture, vulnerability handling with SBOM and disclosure policy, risk assessment, support period reasons, standards, test reports and the declaration. Keep it 10 years or for the support period, if longer[^cra].",
         "**EU declaration of conformity.** Follow Annex V, ship it or a simplified version with its web address, and issue one for all EU acts that need one[^cra].",
         "**CE marking from 11 December 2027.** On the product, or the packaging and declaration; for software, on the declaration or its website[^cra].",
-        "**Fines up to €15 million or 2.5% of worldwide turnover.** For breaching Annex I or Articles 13 and 14; €10 million or 2% for most other duties. Micro and small manufacturers aren't fined for a late 24-hour early warning[^cra]."
+        "**Fines up to €15 million or 2.5% of worldwide turnover.** For breaching Annex I or Articles 13 and 14; €10 million or 2% for most other duties. Micro and small manufacturers aren't fined for a late 24-hour early warning, under Article 64(10) as corrected in July 2025[^cra][^cracorr]."
       ]
     },
     {
@@ -161,7 +161,7 @@
         "**Waiting for harmonized standards.** The risk assessment, SBOM, disclosure policy and update channel don't depend on them.",
         "**Reporting every vulnerable dependency.** Flaws that aren't reachable or exploited in your product aren't reportable; tell the maintainer[^guide].",
         "**Redesigning products that already hold up.** Designs from before the CRA need no change if the risk assessment shows adequate measures[^guide].",
-        "**Registering on ENISA's platform early.** ENISA asks you to register when you first report[^srpfaq]."
+        "**Registering on ENISA's platform early.** ENISA advises registering only when you first need to report[^srpfaq]."
       ]
     },
     {
@@ -185,7 +185,7 @@
       "items": [
         "**Reporting went live on 11 September.** ENISA's platform is English only, has no API yet, and its 72-hour counter can show reports overdue early[^srpfaq].",
         "**Draft Commission guidance, 27 July.** It explains scope, open source, substantial modification and support periods, and isn't binding[^guide].",
-        "**Germany is naming the BSI.** A bill approved in committee on 14 October would make it market surveillance authority[^bthib].",
+        "**Germany is naming the BSI.** A bill the Bundestag passed on 15 October would make it market surveillance authority[^bthib][^brdrs].",
         "**Radio equipment moves to the CRA.** The radio equipment cybersecurity delegated act is repealed from 11 December 2027[^dr339]."
       ]
     },
@@ -208,7 +208,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Name a product security owner and ship an SBOM and advisories with every release.",
-            "Book a notified body now if a product needs one; Member States aim to have enough by 11 December 2026[^cra].",
+            "Plan for a notified body now if a product needs one; Member States aim to have enough by 11 December 2026[^cra].",
             "Document one product end to end, then reuse it for its variants[^guide]."
           ]
         },
@@ -226,6 +226,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which confirmed the small-maker fines exemption in the July 2025 corrigendum, added component due diligence, a non-public SBOM and the Bundestag's 15 October vote, and separated BSI recommendations from CRA duties."
+    },
+    {
+      "date": "2026-11-05",
       "version": "0.1",
       "text": "First draft, based on the CRA, Implementing Regulation (EU) 2025/2392, the Commission's draft guidance of July 2026, ENISA's reporting platform FAQ and the BSI's TR-03183 and reporting pages."
     }
@@ -239,8 +244,15 @@
       "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
     },
     {
+      "id": "cracorr",
+      "title": "Corrigendum to Regulation (EU) 2024/2847, Article 64(10)",
+      "publisher": "EUR-Lex",
+      "date": "2 Jul 2025",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/corrigendum/2025-07-02/oj"
+    },
+    {
       "id": "guide",
-      "title": "Commission guidance on the application of the CRA, draft, C(2026) 5252",
+      "title": "Draft Commission guidance on the application of the CRA, annex to C(2026) 5252",
       "publisher": "European Commission",
       "date": "27 Jul 2026",
       "url": "https://ec.europa.eu/newsroom/dae/redirection/document/131456"
@@ -257,7 +269,7 @@
       "title": "CRA Single Reporting Platform: FAQ",
       "publisher": "ENISA",
       "date": "updated 15 Oct 2026",
-      "url": "https://www.enisa.europa.eu/topics/product-security/single-reporting-platform-srp/frequently-asked-questions"
+      "url": "https://www.enisa.europa.eu/topics/product-security/vulnerability-services/eu-incident-response-and-cyber-crisis-management/single-reporting-platform-srp/frequently-asked-questions"
     },
     {
       "id": "bsisrp",
@@ -278,14 +290,14 @@
       "title": "TR-03183-2: Software Bill of Materials, v2.1.0",
       "publisher": "BSI",
       "date": "20 Aug 2025",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-2_v2_1_0.pdf"
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-2_v2_1_0.pdf?__blob=publicationFile"
     },
     {
       "id": "tr3",
       "title": "TR-03183-3: Vulnerability Reports and Notifications, v1.0.0",
       "publisher": "BSI",
       "date": "20 Aug 2025",
-      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-3_v1_0_0.pdf"
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-3_v1_0_0.pdf?__blob=publicationFile"
     },
     {
       "id": "etsi",
@@ -300,6 +312,13 @@
       "publisher": "Deutscher Bundestag",
       "date": "14 Oct 2026",
       "url": "https://www.bundestag.de/1224738"
+    },
+    {
+      "id": "brdrs",
+      "title": "Gesetzesbeschluss zur Cyberresilienz-Verordnung, Drucksache 621/26",
+      "publisher": "Bundesrat",
+      "date": "30 Oct 2026",
+      "url": "https://dserver.bundestag.de/brd/2026/0621-26.pdf"
     },
     {
       "id": "dr339",
