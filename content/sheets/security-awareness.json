@@ -1,14 +1,14 @@
 {
   "slug": "security-awareness",
   "topic": "Security awareness",
-  "status": "draft",
+  "status": "published",
   "order": 31,
   "capability": "govern/awareness",
   "title": "Security awareness: which behaviors are worth training, and what actually changes them?",
   "short": "Train five behaviors, make reporting one click and blameless, and track time to report instead of click rates.",
   "answer": "This quarter, pick a few behaviors per role, starting with reporting at once and confirming payment and reset requests by call-back, turn on one-click reporting in Outlook and Teams, and book management's NIS2 training if your organization is in scope. Judge every other awareness measure by whether more people report, and sooner, not by click rates.",
   "audience": "Security, IT and HR leads in EU organizations of any size, many in Germany, who run or buy security awareness programs, including management training under NIS2",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -32,7 +32,7 @@
         },
         {
           "title": "Count reports and time to report, not clicks.",
-          "text": "The lure sets the click rate: at UC San Diego Health, bland lures fooled 1-2% of staff and others over 30%[^ucsd]. ETH Zurich estimates that if 100 staff get a phishing email, one likely reports it within 5 minutes[^lain22]."
+          "text": "The lure sets the click rate: at UC San Diego Health, bland lures fooled 1-2% of staff and one over 30%[^ucsd]. ETH Zurich estimates that if 100 staff get a phishing email, one likely reports it within 5 minutes[^lain22]."
         },
         {
           "title": "Train management on decisions, and keep the record.",
@@ -74,9 +74,9 @@
       "title": "What to train, by role",
       "navTitle": "By role",
       "items": [
-        "**Everyone.** Report at once, including your own click. Never grant remote access you didn't ask for: vishing callers use it to take over the computer[^mddr]. If the password manager won't fill, stop: it fills only on the real domain[^ucsd]. Use only the approved AI tool; 67% of users reach AI services with non-corporate accounts on work devices[^dbir].",
+        "**Everyone.** Report at once, including your own click. Never grant remote access you didn't ask for: vishing callers use it to take over the computer[^mddr]. If the password manager won't fill, stop: it fills only on the real domain[^ucsd]. Use only the approved AI tool; 67% of AI users on work devices use non-corporate accounts[^dbir].",
         "**Finance and HR.** Confirm bank detail changes by call-back, as the endpoints and email sheet says. Payroll diversion peaks on Mondays[^mddr].",
-        "**Help desk.** Verify before every reset: call back on the directory number or ask the manager, and for admin accounts check ID in person or on video.",
+        "**Help desk.** Verify before every reset: call back on the directory number or ask the manager, and for admin accounts check ID in person, not over video.",
         "**Admins and developers.** Cover secure configuration, known threats and what to do in a security event[^nis2ir]. Warn developers about fake recruiting and git repositories to troubleshoot, which espionage actors use[^dbir]."
       ]
     },
@@ -86,7 +86,7 @@
       "title": "Voice phishing and the help desk",
       "navTitle": "Voice phishing",
       "items": [
-        "**The usual script.** Attackers flood a user with spam, then message them on Teams as the help desk and ask them to share their desktop[^dbir]. Tell staff that IT never contacts them from outside accounts.",
+        "**A common script.** Attackers flood a user with spam, then message them on Teams as the help desk and ask them to share their desktop[^dbir]. Tell staff that IT never contacts them from outside accounts.",
         "**Email that asks you to call.** One in four impersonation emails pushes the victim to a phone call, outside email defenses[^mddr].",
         "**Callers keep people talking.** 93% of attackers studied kept a target on a Teams call for 20 seconds or more at least once, and most now use names that look like employees'[^mddr].",
         "**Limit who can reach staff.** Teams allows all external domains by default[^teamsext]; choose **Allow only specific external domains**.",
@@ -99,10 +99,10 @@
       "title": "What the evidence says about phishing training",
       "navTitle": "Evidence",
       "items": [
-        "**Annual training didn't predict who clicked** in 10 simulations sent to over 19,500 UC San Diego Health staff[^ucsd].",
-        "**Training after a click barely helps.** It cut failure rates by 1.7 percentage points, and most sessions ended within 10 seconds[^ucsd]. At ETH Zurich it backfired[^lain22].",
+        "**Recent annual training didn't predict who clicked** in 10 simulations sent to over 19,500 UC San Diego Health staff[^ucsd].",
+        "**Training after a click barely helps.** It cut failure rates by 1.7 percentage points, and over half of sessions ended within 10 seconds[^ucsd]. In ETH Zurich's 2022 study, staff shown training clicked more[^lain22].",
         "**Reminders do the work, not content.** Delayed training worked as well, rewards didn't help, and the problem was attention, not knowledge[^lain24].",
-        "**Most people click eventually.** Over 56% of UC San Diego Health staff clicked at least once in 8 months[^ucsd]."
+        "**Most people click eventually.** 56% of UC San Diego Health staff clicked at least once in 8 months[^ucsd]."
       ]
     },
     {
@@ -126,9 +126,9 @@
       "span": "full",
       "items": [
         "**Mandiant said to train beyond the inbox.** It names live voice phishing, messaging app lures and unauthorized MFA reset requests[^mtrends].",
-        "**Staff can report Teams calls as scams.** Since March 2026, with Defender for Office 365 Plan 1[^teamsrep], in Microsoft 365 E3 since July[^mdonew].",
+        "**Staff can report Teams calls as scams.** Since March 2026[^mdonew], with Defender for Office 365 Plan 1[^teamsrep], in Microsoft 365 E3 since July[^mdonew].",
         "**The BSI issued an example management curriculum.** It fills 4 hours, or 3 with a pre-read, and suggests decisions within 2 to 6 weeks[^bsicurr].",
-        "**The DBIR now counts pretexting.** It started 6% of breaches; phone and text simulations had a 40% higher median click rate than email[^dbir]."
+        "**Pretexting is now a DBIR entry vector.** It started 6% of breaches; median clicks were 2% for simulated calls and texts, 1.4% for email[^dbir]."
       ]
     },
     {
@@ -138,7 +138,7 @@
       "items": [
         "**Monthly email simulations and click-rate targets.** Click rates track the lure more than the staff[^ucsd]. Spend the time on call-back rules, as the endpoints and email sheet advises.",
         "**Tips for spotting typos.** AI makes phishing personalized and fluent[^mddr].",
-        "**Prizes for reporting.** Rewards didn't improve behavior[^lain24]; positive feedback did increase reporting[^lain22].",
+        "**Prizes for reporting.** A small prize didn't increase reporting[^lain24]; feedback on each report did[^lain22].",
         "**Exams for management.** Neither the BSIG nor the BSI requires one[^bsihand]."
       ]
     },
@@ -149,7 +149,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Punishing clicks.** The NCSC says it starts to resemble entrapment, and that staff afraid for their jobs won't report mistakes[^ncscphish].",
-        "**Annual videos as the whole program.** They didn't change who clicked[^ucsd].",
+        "**Annual videos as the whole program.** Clicks didn't drop after them[^ucsd].",
         "**Training the help desk but not the process.** The DBIR says pretexting calls for business rules[^dbir]. Give them a script and the right to refuse.",
         "**Sending only the IT lead to management training.** The BSI says it doesn't replace management's own[^bsicurr]."
       ]
@@ -172,23 +172,28 @@
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Turn on Teams call reporting and add short modules for finance, HR, the help desk, admins and developers.",
-            "Report the report rate and median time to first report monthly.",
-            "Have an outsider call the help desk twice a year to test the reset script."
+            "Turn on Teams call reporting; add short modules for finance, HR, help desk, admins and developers.",
+            "Report the rate and speed of reports on real phishing monthly.",
+            "Have an outsider call the help desk twice a year to test the reset script.",
+            "In Germany, agree simulations and report data with the works council first[^betrvg]."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Record effectiveness reviews against Implementing Regulation 2024/2690 or DORA.",
-            "Hold a quarterly risk session with management, as the BSI suggests[^bsihand].",
-            "In Germany, agree simulations and report data with the works council first."
+            "Map training to Regulation 2024/2690 or DORA and record effectiveness reviews.",
+            "Hold a quarterly risk session with management, a format the BSI lists[^bsihand]."
           ]
         }
       ]
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 14 statements, mostly from the field studies, to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -289,7 +294,7 @@
     },
     {
       "id": "lain24",
-      "title": "Content, Nudges and Incentives: embedded phishing training (ACM CCS 2024)",
+      "title": "Content, Nudges and Incentives: A Study on the Effectiveness and Perception of Embedded Phishing Training (ACM CCS 2024)",
       "publisher": "ETH Zurich",
       "date": "2 Sep 2024",
       "url": "https://arxiv.org/abs/2409.01378"
@@ -310,7 +315,7 @@
     },
     {
       "id": "teamsext",
-      "title": "Manage external meetings and chat with other organizations",
+      "title": "Manage external meetings and chat with people and organizations using Microsoft identities",
       "publisher": "Microsoft Learn",
       "date": "19 Nov 2025",
       "url": "https://learn.microsoft.com/en-us/microsoftteams/trusted-organizations-external-meetings-chat"
@@ -321,6 +326,13 @@
       "publisher": "Microsoft Learn",
       "date": "28 Oct 2026",
       "url": "https://learn.microsoft.com/en-us/defender-office-365/defender-for-office-365-whats-new"
+    },
+    {
+      "id": "betrvg",
+      "title": "Betriebsverfassungsgesetz (BetrVG), § 87",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "as amended 19 Jul 2024",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
     }
   ]
 }
