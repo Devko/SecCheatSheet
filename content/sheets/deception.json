@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "Put decoys where intruders already look.",
-          "text": "Attackers crack service tickets for accounts with a service principal name (SPN) offline, as FIN7 and Wizard Spider have[^attkerb], and search shares for stored passwords[^attfiles]. A honeytoken account with an SPN and a fake password file catch both."
+          "text": "Attackers request service tickets for accounts with a service principal name (SPN) and crack them offline[^asdad], and search shares for stored passwords[^attfiles]. A honeytoken account with an SPN and a fake password file catch both."
         },
         {
           "title": "Send every trip to someone who acts at night.",
-          "text": "Route them like the logging sheet's critical alerts, to a named owner and deputy. Ask your MDR provider in writing whether it acts on them: Microsoft's Defender Experts covers only High and Medium incidents, not custom detections[^dexfaq]."
+          "text": "Route them like the logging sheet's alerts, to a named owner and deputy. Ask your MDR provider in writing whether it acts on them: Microsoft's Defender Experts covers only High and Medium incidents, not custom detections[^dexfaq]."
         },
         {
           "title": "Build on tools you already run.",
-          "text": "Defender for Identity, Windows auditing, CloudTrail and Microsoft 365 alert policies keep alert data in systems you control. Decoys work: in a controlled test with over 130 red teamers, everyone facing decoys tripped one before exploiting a real machine[^tularosa]."
+          "text": "Defender for Identity, Windows auditing, CloudTrail and Microsoft 365 alert policies keep alert data in systems you control. Decoys work: in a test with over 130 red teamers, everyone facing decoy hosts set one off before reporting a successful exploit[^tularosa]."
         },
         {
           "title": "Trip each canary yourself.",
-          "text": "Test it when placed and every quarter, timing the alert until a person answers. Microsoft 365 alert policies take up to 24 hours to start[^alertpol]; Thinkst's canary AWS keys can take 2 to 30 minutes[^ctaws]."
+          "text": "Test it when placed and every quarter, timing the alert until a person answers. Microsoft 365 alert policies take up to 24 hours to start[^alertpol], and Key Vault logs up to 10 minutes[^kvlog]."
         },
         {
           "title": "Keep a register and tell almost no one.",
-          "text": "Record each decoy's location, trigger and alert path for the few admins who need it, so nobody uses one by mistake. In the NCSC's trials, 90% of participants said they wouldn't announce using deception[^ncsctrial]."
+          "text": "Record each decoy's location, trigger and alert path for the few admins who need it, so nobody uses or deletes one by mistake. In the NCSC's trials, 90% of participants said they wouldn't publicly announce using deception[^ncsctrial]."
         }
       ]
     },
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "A honeytoken account in Active Directory.",
-          "text": "Create an unused user with an attractive name, an SPN, a long random password and no rights. Tag it **Honeytoken** in Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) to alert on its sign-ins, LDAP lookups and changes[^mdialerts]. Without it, alert on event 4769 for the account, which needs **Audit Kerberos Service Ticket Operations** on domain controllers[^ev4769]."
+          "text": "Create an unused user with an attractive name, an SPN, a long random password and no rights. Tag it **Honeytoken** in Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) to alert on its sign-ins, LDAP lookups and changes[^mdialerts]. Either way, alert on event 4769 for the account, which needs **Audit Kerberos Service Ticket Operations** on domain controllers[^ev4769]."
         },
         {
           "title": "A password file on a share.",
@@ -56,15 +56,15 @@
         },
         {
           "title": "Fake cloud keys.",
-          "text": "Create an IAM user without permissions in a separate AWS account; leave its keys on admin and developer machines and in CI. With an active trail, set the EventBridge rule to `ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS`, or it misses read-only calls[^ebct]."
+          "text": "Create an IAM user without permissions in a separate AWS account; leave its keys on admin and developer machines and in CI. With an active trail, set an EventBridge rule in each Region to `ENABLED_WITH_ALL_CLOUDTRAIL_MANAGEMENT_EVENTS`, or it misses read-only calls[^ebct]."
         },
         {
           "title": "A decoy secret and a decoy cloud user.",
-          "text": "Alert on any `SecretGet` for a fake Key Vault secret[^kvlog] and on any sign-in by a decoy Entra ID user, the way Microsoft shows for emergency access accounts[^breakglass]."
+          "text": "With Key Vault logging on, alert on any `SecretGet` for a fake secret[^kvlog] and on any sign-in by a decoy Entra ID user, the way Microsoft shows for emergency access accounts[^breakglass]."
         },
         {
           "title": "Names only a thief would use.",
-          "text": "Put a canary hostname in SSH configs, RDP files and runbooks, and a unique email address as a fake record in customer and HR databases."
+          "text": "Put a canary hostname in SSH configs, RDP files and runbooks and a unique email address in fake customer and HR records, and alert on lookups and mail."
         }
       ]
     },
@@ -74,7 +74,7 @@
       "title": "Free, self-hosted or paid",
       "navTitle": "Tools",
       "items": [
-        "**canarytokens.org is free, without a contract.** Thinkst runs it as a public service for any lawful purpose, promises only to work hard to keep it running and uses third parties such as Mailgun and AWS[^ctaup]. Use it to try token types, not for production.",
+        "**canarytokens.org is free, with only an acceptable use policy.** Thinkst runs it as a public service for any lawful purpose, promises only to work hard to keep it running and uses third parties such as Mailgun and AWS[^ctaup]. Use it to try token types, not for production.",
         "**Self-host the open-source server.** Its GPLv3-based license allows internal use; embedding it in proprietary software needs a commercial license[^ctlicense]. Patch it like any internet-facing server.",
         "**Decoy hosts.** OpenCanary, BSD-licensed, emulates network services on a small VM; Thinkst Canary is its commercial version[^opencanary]. Ask vendors for a data processing agreement."
       ]
@@ -107,11 +107,11 @@
         },
         {
           "title": "Reset what was within reach.",
-          "text": "Reset the account that tripped it and every credential near the decoy. If a canary key was used, treat its machine as compromised."
+          "text": "Reset the account that tripped it and every credential near the decoy, in one coordinated round if admin rights are at risk. If a canary key was used, treat its machine as compromised."
         },
         {
           "title": "Record the cause.",
-          "text": "If a legitimate tool tripped it, move the decoy rather than exclude the tool everywhere."
+          "text": "If your own tool tripped it, move the decoy instead of excluding the tool."
         }
       ]
     },
@@ -121,7 +121,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**A decoy that unlocks something real.** A honeytoken with a weak password or real rights becomes a way in. Use a long random password and no extra group memberships.",
+        "**A decoy that unlocks something real.** A honeytoken with a weak password or real rights becomes a way in. Use a long random password, no extra groups and a Conditional Access block on Entra ID sign-in.",
         "**Canary keys in public repositories.** GitHub reports partner secrets found in public repositories to the provider, which may revoke them or contact you[^ghpartner]. Keep keys where only an intruder looks.",
         "**Trusting the Windows folder token.** Thinkst says it doesn't work on Windows 11[^ctfolder]. Audit the folder with a SACL instead.",
         "**Alerts nobody reads.** Defender for Identity rates honeytoken LDAP lookups as Low[^mdialerts], so a High-and-Medium email rule misses them. Make sure they reach someone."
@@ -133,9 +133,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The UK tested deception at scale.** In December 2025 the NCSC reported on trials with 121 organizations: participants saw value in detecting new threats, but misconfigured tools can miss threats, give false confidence or create openings for attackers[^ncsctrial].",
-        "**Defender for Identity got easier to switch on.** Since October 2026, its v3.x sensor can run on domain controllers without Defender for Endpoint, and licensed tenants get it by default unless they opt out[^mdinew].",
-        "**Sign-in page canaries are ending.** Since 21 July 2026, Entra ID tenants not already using custom CSS branding can't add it, and Microsoft plans to retire it[^branding]. CSS tokens for cloned sign-in pages will stop working."
+        "**The UK tested deception at scale.** In December 2025 the NCSC reported on an experiment with 121 organizations: most saw potential value in detecting novel threats, but misconfigured tools can miss threats, give false confidence or create openings for attackers[^ncsctrial].",
+        "**Defender for Identity got easier to switch on.** Since October 2026, its v3.x sensor runs on domain controllers without Defender for Endpoint, and turns on by itself where Defender for Endpoint runs, unless you opt out[^mdinew].",
+        "**Sign-in page canaries are ending.** Thinkst's Entra ID token, which flags proxied sign-in pages, needs custom CSS branding[^ctentra]. Tenants without it can't add it after 21 July 2026, and Microsoft will retire it[^branding]."
       ]
     },
     {
@@ -167,7 +167,7 @@
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Tag a Kerberoastable honeytoken in Defender for Identity, or alert on event 4769 in your SIEM.",
+            "Alert on event 4662 for AD canary objects that nobody may read[^asdad]; audit tools trip them too.",
             "Self-host Canarytokens, or buy a product with a data processing agreement.",
             "Agree canary handling with your MDR provider and works council."
           ]
@@ -192,11 +192,11 @@
   ],
   "sources": [
     {
-      "id": "attkerb",
-      "title": "Steal or Forge Kerberos Tickets: Kerberoasting (T1558.003)",
-      "publisher": "MITRE ATT&CK",
-      "date": "modified 24 Oct 2025",
-      "url": "https://attack.mitre.org/techniques/T1558/003/"
+      "id": "asdad",
+      "title": "Detecting and mitigating Active Directory compromises",
+      "publisher": "ASD, CISA, NSA and partners",
+      "date": "Sep 2026",
+      "url": "https://www.ncsc.govt.nz/assets/guidance/Documents/Detecting-and-mitigating-Active-Directory-compromises-September-2026.pdf"
     },
     {
       "id": "attfiles",
@@ -225,13 +225,6 @@
       "publisher": "Microsoft Learn",
       "date": "3 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/defender-xdr/alert-policies"
-    },
-    {
-      "id": "ctaws",
-      "title": "AWS API Keys Canarytoken",
-      "publisher": "Canarytokens docs (Thinkst)",
-      "date": "checked 5 Nov 2026",
-      "url": "https://docs.canarytokens.org/guide/aws-keys-token.html"
     },
     {
       "id": "ncsctrial",
@@ -358,6 +351,13 @@
       "publisher": "Microsoft Learn",
       "date": "28 Oct 2026",
       "url": "https://learn.microsoft.com/en-us/defender-for-identity/whats-new"
+    },
+    {
+      "id": "ctentra",
+      "title": "Azure Entra ID login token",
+      "publisher": "Canarytokens docs (Thinkst)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.canarytokens.org/guide/entraid-token.html"
     },
     {
       "id": "branding",

@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Do you run UK essential services?",
-          "text": "Use the NCSC CAF v4.0: 41 outcomes, each judged achieved, partially achieved or not achieved[^caf], against the cross-sector Core Profile[^cafcore]."
+          "text": "Use the NCSC CAF v4.0: 41 outcomes, judged achieved, partially achieved or not achieved[^caf], against the cross-sector Core Profile[^cafcore]."
         },
         {
           "title": "Do you run energy or OT?",
@@ -56,7 +56,7 @@
         },
         {
           "title": "A German company under 50 staff?",
-          "text": "Book a CyberRisikoCheck (DIN SPEC 27076): an IT service provider checks 27 requirements in a 1 to 2 hour interview and reports a score and ranked recommendations[^crc]."
+          "text": "Book a CyberRisikoCheck (DIN SPEC 27076): an IT service provider checks 27 requirements in a 1 to 2 hour interview and reports a score and ranked recommendations[^crc]. It rests on your answers, so ask for spot checks."
         },
         {
           "title": "Is your ISMS built on IT-Grundschutz?",
@@ -76,7 +76,7 @@
       "items": [
         {
           "title": "Week 1: what's in scope, and who answers?",
-          "text": "List services, sites, tenants, OT and suppliers, in as few separate assessments as still give an accurate picture[^c2m2]. Name one contact per area[^std2002]."
+          "text": "List services, sites, tenants, OT and suppliers, in the fewest assessments that still give an accurate picture[^c2m2]. Name one contact per area[^std2002]."
         },
         {
           "title": "Weeks 2 and 3: interviews and samples.",
@@ -88,7 +88,7 @@
         },
         {
           "title": "Week 5: report and hand over.",
-          "text": "Present gaps and decisions. The security program sheet turns the gaps into a roadmap."
+          "text": "Present gaps and decisions; the security program sheet turns gaps into a roadmap."
         }
       ]
     },
@@ -98,9 +98,9 @@
       "title": "Evidence over self-scoring",
       "navTitle": "Evidence",
       "items": [
-        "**Write the rule before you rate.** In the CAF, one \"not achieved\" indicator normally decides the rating, and \"achieved\" needs all of them[^caf].",
-        "**Sample, don't ask.** Check five leavers' accounts, three servers' patch levels and the last restore record. The BSI verifies interview answers with spot checks of documents, rooms and settings[^std2002].",
-        "**Record the source of each rating.** Grundschutz++ ties evidence to each measure and, for automated checks, records the tool, time and result[^std3001].",
+        "**Write the rule first.** In the CAF, any \"not achieved\" indicator normally decides the rating; \"achieved\" needs all achieved indicators[^caf].",
+        "**Sample, don't ask.** Check five leavers' accounts, three servers' patch levels and the last restore record. The BSI suggests checking interview answers against documents, sites and system settings[^std2002].",
+        "**Record each rating's source.** Grundschutz++ assigns evidence to each measure and, for automated checks, records tool, time and result[^std3001].",
         "**Count coverage where you can.** CIS's Assessment Specification defines measures and metrics per safeguard, such as how many endpoints implement it[^cas]."
       ]
     },
@@ -113,7 +113,7 @@
         "**One row per outcome.** NIST's template has columns for practices, status, rating, priority and goals[^profqs]. Add evidence and an owner.",
         "**Targets per function.** Set Tiers overall or per Function or Category, not per Subcategory[^tiers]. Tiers rate the rigor of risk governance and management[^csf]; per-outcome ratings show whether practices work.",
         "**A floor everywhere.** C2M2 is built so every company can reach MIL1 in all domains[^c2m2]. Go higher where your risks need it.",
-        "**Reassess every 12 months and after big changes,** such as a major incident, acquisition or new platform, as C2M2 advises[^c2m2]. NIS2 entities in Germany must assess whether their measures work (BSIG § 30(2) no. 6)[^bsig]."
+        "**Reassess every 12 months** and after major business, technology or threat changes[^c2m2]. NIS2 entities in Germany need procedures to assess their measures' effectiveness (BSIG § 30(2) no. 6)[^bsig]."
       ]
     },
     {
@@ -124,7 +124,7 @@
       "items": [
         "**No average.** An overall 2.7 hides a zero in Recover. Show current and target side by side for each function.",
         "**Say how you know.** Name the model version, profile and scope, whether it was self-assessed or independently reviewed, and its limits, as the NCSC asks for CAF results[^cafpage].",
-        "**Tie each top gap to a risk.** Give the risk from the risk register, the cost to close it and your recommendation.",
+        "**Tie each top gap to a risk.** Give its entry in the risk register (see the risk register sheet), the cost to close it and your recommendation.",
         "**Ask for a decision.** Fund it, accept it with an end date or defer it. Put progress on the security metrics sheet's quarterly page.",
         "**Show what moved.** Next year, show what changed and why, on the same scale."
       ]
@@ -136,10 +136,9 @@
       "navTitle": "Who assesses",
       "items": [
         "**Run the yearly cycle yourself.** Your people know where the evidence is; C2M2 is built for facilitated self-evaluation[^c2m2].",
-        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years and when customers or regulators rely on the result.",
+        "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years, never from the firm selling the fixes.",
         "**Keep reviewers out of the line.** NIS2 digital providers need reviewers with audit competence outside the reviewed area's line of authority[^nis2ir].",
-        "**Don't let the fixer grade.** An assessor who also sells the fixes has a conflict.",
-        "**Check the license.** CIS's free CSAT covers only your own internal assessment; consultants need a SecureSuite consulting membership[^csat]."
+        "**Check the licenses.** CIS's Controls and Assessment Specification allow non-commercial use within your organization[^casterms]; consultants using CSAT on you need a CIS SecureSuite consulting membership[^csat]."
       ]
     },
     {
@@ -148,7 +147,7 @@
       "title": "What changed in 2026",
       "items": [
         "**The UK set a cross-sector CAF minimum.** The NCSC's Core Profile, published 30 October 2026, sets the expected level for each CAF v4.0 outcome against moderately sophisticated attackers[^cafcore].",
-        "**Grundschutz++ rates without levels.** BSI-Standard 300-1, dated 20 October 2026, marks each requirement met, not met or not applicable[^std3001]. The BSI plans performance indicators for each requirement by 31 March 2027[^gspp]."
+        "**Grundschutz++ drops \"partially\".** BSI-Standard 300-1, dated 20 October 2026, marks each requirement met, not met or not applicable[^std3001]; the IT-Grundschutz-Check also allowed partially[^std2002]. The BSI plans performance indicators for the method's requirements by 31 March 2027[^gspp]."
       ]
     },
     {
@@ -156,7 +155,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A second framework for comparison.** Map once through informative references, which connect CSF outcomes to ISO/IEC 27001 and SP 800-53[^profqs].",
+        "**A second framework for comparison.** Map once through informative references to ISO/IEC 27001 or SP 800-53[^profqs].",
         "**Tiers for every Subcategory.** NIST says Function or Category level gives a better picture[^tiers].",
         "**Peer benchmark scores.** Ratings from different assessors, scopes and scales don't compare. Compare yourself with last year.",
         "**A maturity platform before the first cycle.** NIST's spreadsheet template and your ticket system will do[^profqs]."
@@ -171,7 +170,7 @@
         "**Scoring the paper.** The BSI rates \"yes\" only for measures implemented fully, effectively and appropriately[^std2002], not for a signed policy.",
         "**Chasing level 5 everywhere.** It costs most where risk is lowest; DOE calls the top level in all domains not typically optimal[^c2m2].",
         "**Buying a score.** Tools that turn questionnaires or external scans into a maturity number measure answers or the perimeter, not practice.",
-        "**Taking \"implemented\" for \"works\".** CIS's specification checks only whether a safeguard is implemented[^cas]. Test a restore, an alert, a revoked account.",
+        "**Taking \"implemented\" for \"works\".** CIS's specification checks only whether a safeguard is implemented[^cas]. Test a restore or an alert.",
         "**Changing the yardstick.** A new model, scale or scope each year breaks the trend."
       ]
     },
@@ -195,15 +194,15 @@
           "items": [
             "Build Current and Target Profiles per CSF Function in NIST's template, with CIS IG2 as the checklist.",
             "Have someone outside IT operations, such as internal audit, recheck a sample.",
-            "Bring in an external assessor every 2 to 3 years."
+            "Finish the assessment before budget planning starts."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Use the model your regulator expects: CAF with the Core Profile for UK essential services, C2M2 for energy and OT sites.",
+            "Use the model your regulator expects: the CAF Core Profile for UK essential services, C2M2 for energy and OT.",
             "Assess each subsidiary or business unit with the same scale and evidence rules.",
-            "Report independent review results to management, as Regulation 2024/2690 requires of digital providers[^nis2ir]."
+            "Report independent reviews to management, as Regulation 2024/2690 requires of digital providers[^nis2ir]."
           ]
         }
       ]
@@ -256,7 +255,7 @@
       "id": "caf",
       "title": "Cyber Assessment Framework 4.0",
       "publisher": "NCSC (UK)",
-      "date": "6 Aug 2025",
+      "date": "Aug 2025",
       "url": "https://www.ncsc.gov.uk/sites/default/files/documents/NCSC-Cyber-Assessment-Framework-4.0.pdf"
     },
     {
@@ -293,6 +292,13 @@
       "publisher": "CIS",
       "date": "checked 5 Nov 2026",
       "url": "https://cas.docs.cisecurity.org/en/latest/source/About%20the%20CIS%20Controls%20Assessment%20Specification/"
+    },
+    {
+      "id": "casterms",
+      "title": "Assessment Specification v8.1, Terms of Use",
+      "publisher": "CIS",
+      "date": "checked 5 Nov 2026",
+      "url": "https://cas.docs.cisecurity.org/en/latest/source/terms-of-use/"
     },
     {
       "id": "csat",
