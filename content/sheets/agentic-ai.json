@@ -8,7 +8,7 @@
   "short": "Give each agent its own least-privilege identity and a human gate on anything irreversible.",
   "answer": "Before an agent touches real data or systems, give it its own identity with the least access that works, run it in a sandbox, and make a person approve anything it can't undo. Judge every other tool or permission by two questions: who else can write what the agent reads, and what could it do if they did?",
   "audience": "IT and security teams deploying or allowing AI agents",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -168,6 +168,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Re-checked the joint guidance on agentic AI services against the NCSC-NZ co-author copy, since cyber.gov.au was unreachable, and updated its link."
+    },
+    {
+      "date": "2026-11-05",
       "version": "1.1",
       "text": "Reviewed for company readers: the small-team advice now names business plans and sets approvals in the admin console rather than in each user's prompts."
     },
@@ -202,7 +207,7 @@
       "title": "Careful adoption of agentic AI services",
       "publisher": "ASD's ACSC, CISA, NSA, Canadian Centre for Cyber Security, NCSC-NZ and NCSC-UK",
       "date": "1 May 2026",
-      "url": "https://www.cyber.gov.au/publication/careful-adoption-of-agentic-ai-services"
+      "url": "https://www.ncsc.govt.nz/protect-your-organisation/careful-adoption-of-agentic-ai-services/"
     },
     {
       "id": "openclaw",

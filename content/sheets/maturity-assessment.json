@@ -8,7 +8,7 @@
   "short": "Assess against one model every 12 months, rate only what evidence shows and set a target per function, not one score.",
   "answer": "This quarter, pick one model that fits your company and run a five-week assessment that rates each outcome only on evidence you sampled. Set a target per function from your risks, not the top level everywhere, and show management gaps and decisions, not one maturity number.",
   "audience": "Heads of security, CISOs, IT leads who own security, and the managing directors they report to",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -112,7 +112,7 @@
       "items": [
         "**One row per outcome.** NIST's template has columns for practices, status, rating, priority and goals[^profqs]. Add evidence and an owner.",
         "**Targets per function.** Set Tiers overall or per Function or Category, not per Subcategory[^tiers]. Tiers rate the rigor of risk governance and management[^csf]; per-outcome ratings show whether practices work.",
-        "**A floor everywhere.** C2M2 is built so every company can reach MIL1 in all domains[^c2m2]. Go higher where your risks need it.",
+        "**A floor everywhere.** C2M2 is built so every company can reach MIL1 in all domains[^c2m2]. For US critical infrastructure, CISA's CPG 2.0 sets a foundational level[^cpg]. Go higher where your risks need it.",
         "**Reassess every 12 months** and, as DOE advises, after major business, technology or threat changes[^c2m2]. NIS2 entities in Germany need policies and procedures to assess their measures' effectiveness (BSIG § 30(2) no. 6)[^bsig]."
       ]
     },
@@ -125,7 +125,7 @@
         "**No average.** An overall 2.7 hides a zero in Recover. Show current and target side by side for each function.",
         "**Say how you know.** Name the model version, profile and scope, whether it was self-assessed or independently reviewed, and its limits, as the NCSC asks for CAF results[^cafpage].",
         "**Tie each top gap to a risk.** Give its entry in the risk register (see the risk register sheet), the cost to close it and your recommendation.",
-        "**Ask for a decision.** Fund it, accept it with an end date where the law allows, or defer it. Put progress on the security metrics sheet's quarterly page.",
+        "**Ask for a decision.** Fund it, accept it with an end date where the law allows, or defer it. Track it on the security metrics sheet's quarterly page.",
         "**Show what moved.** Next year, show what changed and why, on the same scale."
       ]
     },
@@ -211,6 +211,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Added CISA's Cybersecurity Performance Goals 2.0 as the foundational level for US critical infrastructure."
+    },
+    {
+      "date": "2026-11-05",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check, which settled from CIS's own FAQ that companies may use the CIS Controls for their own assessments, replaced an invented level 5 with each model's real top level and separated our 12-month cadence from DOE's advice."
     },
@@ -283,6 +288,13 @@
       "publisher": "US DOE",
       "date": "Jun 2022",
       "url": "https://www.energy.gov/sites/default/files/2022-06/C2M2%20Version%202.1%20June%202022.pdf"
+    },
+    {
+      "id": "cpg",
+      "title": "Cybersecurity Performance Goals 2.0",
+      "publisher": "CISA",
+      "date": "Dec 2025",
+      "url": "https://content.govdelivery.com/accounts/USDHSCISA/bulletins/3ff7850"
     },
     {
       "id": "cisig",

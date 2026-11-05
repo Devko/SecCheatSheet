@@ -8,8 +8,8 @@
   "short": "Start with one frequent task you can check quickly, in an approved tool, and keep it read-only.",
   "answer": "Start with one high-volume task whose output an analyst can check in minutes, such as phishing triage, alert summaries or query writing, and run it read-only in a tool approved for that data. Add the next use case only after you have measured accuracy and time saved against your own baseline.",
   "audience": "SOC, security engineering and GRC teams starting to use AI",
-  "version": "1.0",
-  "lastReviewed": "2026-11-02",
+  "version": "1.1",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
@@ -173,6 +173,11 @@
   ],
   "changes": [
     {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Re-checked every claim citing the joint guidance on AI in cyber defence against the NCSC-NZ co-author copy, and corrected its date to 12 August 2026 and its link."
+    },
+    {
       "date": "2026-11-02",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check, which narrowed 5 statements to what the agencies' guidance and Microsoft's studies support."
@@ -188,8 +193,8 @@
       "id": "opp",
       "title": "Opportunities for AI in cyber defence",
       "publisher": "ASD's ACSC, Canadian Centre for Cyber Security, NCSC-NZ and NCSC-UK",
-      "date": "Aug 2026 version, page dated 8 Sep 2026",
-      "url": "https://www.cyber.gov.au/publication/opportunities-for-ai-in-cyber-defence"
+      "date": "12 Aug 2026",
+      "url": "https://www.ncsc.govt.nz/protect-your-organisation/opportunities-for-ai-in-cyber-defence/"
     },
     {
       "id": "msrct",
