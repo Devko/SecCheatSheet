@@ -32,7 +32,7 @@
         },
         {
           "title": "Write down who patches what.",
-          "text": "Name who updates the CMS and plugins, who patches PHP and who restores, and how fast. German law requires commercial online services to protect servers by the state of the art[^tdddg]."
+          "text": "Name who updates the CMS and plugins, who patches PHP and who restores, and how fast. German law requires commercial online services to guard their servers against unauthorized access, in line with the state of the art[^tdddg]."
         },
         {
           "title": "Leave end-of-life versions before December.",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Tell the people who need to know.",
-          "text": "If customer or card data may be affected, follow the incident response sheet and call your payment provider. Once clean, request a review in Google Search Console."
+          "text": "If customer or card data may be affected, follow the incident response sheet and call your payment provider. Once clean, request a review in Google Search Console[^gsc]."
         }
       ]
     },
@@ -75,7 +75,7 @@
       "navTitle": "Updates",
       "items": [
         "**Check WordPress's settings.** Minor releases update automatically, but major ones only on sites installed since 5.6[^wpupgrade]. Enable both under Dashboard > Updates.",
-        "**Buy premium plugins in the company's name.** Plugins installed from a ZIP file update only through the vendor's own updater[^wpplugins]. Never use nulled copies: they come from the untrusted sources WordPress warns against[^wphardening].",
+        "**Buy premium plugins in the company's name.** WordPress shows updates for plugins installed from a ZIP file only if the vendor built in an updater[^wpplugins]. Never use nulled copies: they come from the untrusted sources WordPress warns against[^wphardening].",
         "**Replace abandoned plugins.** Check each plugin's last release once a quarter, and replace any that no longer get updates.",
         "**Patch PHP separately.** CMS updates don't fix flaws in the PHP runtime[^bsiphp]. Agree with the hoster who installs PHP updates, and how fast."
       ]
@@ -89,7 +89,7 @@
         "**One account per person.** No shared agency logins. Keep admin rights to a few named people and give content staff an editor role.",
         "**Prefer company SSO.** Sign admins in through your identity provider with SAML or OpenID Connect, so leavers lose access with their company account.",
         "**Restrict the admin path.** Allow the backend only from VPN or office IPs, with TYPO3's `IPmaskList`[^typo3be] or web server rules, and limit failed logins[^bsiapp31].",
-        "**Own every account.** Keep hosting, CDN, code repositories and licenses in the company's name. When an agency leaves, remove its accounts and rotate SFTP, database and API credentials. Contracts are in the supplier risk sheet."
+        "**Own every account.** Keep the domain, hosting, CDN, repositories and licenses in the company's name; registrar locks are in the DNS and domains sheet. When an agency leaves, remove its accounts and rotate SFTP, database and API credentials. Contracts are in the supplier risk sheet."
       ]
     },
     {
@@ -98,9 +98,9 @@
       "title": "Online shops: scripts on the payment page",
       "navTitle": "Shops",
       "items": [
-        "**Know your setup.** PCI DSS requirements 6.4.3 and 11.6.1 cover scripts on your pages, including one that embeds the provider's iframe or starts a redirect. SAQ A drops both, but iframe merchants must confirm their site resists script attacks[^pcisupp].",
+        "**Know your setup.** PCI DSS 6.4.3 and 11.6.1 cover scripts on your pages, including one that embeds the provider's iframe or starts a redirect. SAQ A drops both but makes merchants confirm their site resists script attacks[^pcisupp].",
         "**Authorize every script (6.4.3).** Confirm each payment page script is authorized, assure its integrity and list it with a reason[^pcisupp].",
-        "**Detect changes (11.6.1).** Alert on unauthorized changes to security-impacting headers and scripts as the browser gets them, at least weekly[^pcisupp].",
+        "**Detect changes (11.6.1).** Alert on unauthorized script and security header changes as browsers see them, weekly or per risk analysis[^pcisupp].",
         "**Cut scripts from checkout.** Keep tag managers, chat widgets and pixels off payment pages, and limit sources with a Content Security Policy[^pcisupp]."
       ]
     },
@@ -110,10 +110,10 @@
       "title": "Hosting, backups, WAF and forms",
       "navTitle": "Hosting and WAF",
       "items": [
-        "**Keep a copy outside the hosting account.** Keep dated snapshots, so you have copies from before a compromise[^wphardening]. Restore tests are in the backups sheet.",
+        "**Back up outside the hosting account.** Keep dated snapshots from before any compromise[^wphardening]. Restore tests are in the backups sheet.",
         "**Treat a WAF as time, not a fix.** For PHP's October flaws, the BSI said only patching or going offline protects fully[^bsiphp]. Wordfence's free plan gets new firewall rules 30 days late[^wordfence].",
         "**Lock the origin behind your CDN.** Accept only CDN traffic, through an IP allowlist, authenticated origin pulls or a tunnel[^cforigin].",
-        "**Restrict uploads and forms.** Fix allowed file types, sizes and storage places, with no execute rights, and block automated abuse without locking out real users[^bsiapp31]."
+        "**Restrict uploads and forms.** Fix allowed file types, sizes and folders, with no execute rights, and block bots without locking out real users[^bsiapp31]."
       ]
     },
     {
@@ -138,7 +138,7 @@
       "items": [
         "**PHP needed an emergency patch.** On 21 Oct 2026, PHP fixed two critical unauthenticated code execution flaws with no complete mitigation[^phpsa]. Both are exploited[^kev]. Check each site's PHP version[^bsiphp].",
         "**WordPress core entered CISA's KEV catalog.** Four core flaws were added from July to November 2026[^kev].",
-        "**Hosting panels were exploited.** CISA lists a cPanel login bypass used by ransomware groups, and a flaw in LiteSpeed's cPanel plugin that let any cPanel user run scripts as root[^kev].",
+        "**Hosting panels were exploited.** CISA lists a cPanel login bypass used by ransomware groups, and a LiteSpeed plugin flaw that gave cPanel users root[^kev].",
         "**Drupal and Joomla too.** CISA added a Drupal core flaw in May and two Joomla extension flaws in June and July[^kev]."
       ]
     },
@@ -149,7 +149,8 @@
       "items": [
         "**Hiding the CMS version or renaming the admin URL.** Neither stops an exploit. Spend the time on updates and MFA.",
         "**A second or third security plugin.** Each one is more code to patch. One WAF layer is enough.",
-        "**Staging every security release.** WordPress strongly discourages turning off minor auto-updates[^wpupgrade]. Stage major upgrades only."
+        "**Staging every security release.** WordPress strongly discourages turning off minor auto-updates[^wpupgrade]. Stage major upgrades only.",
+        "**Perfect scores on header and TLS scanners.** Apply the encryption sheet's TLS baseline and a CSP on checkout, then get back to updates."
       ]
     },
     {
@@ -160,8 +161,8 @@
       "items": [
         "**Restoring a backup and calling it fixed.** Backdoors survive, such as a harmless-looking admin account or hidden PHP file[^typo3hack].",
         "**Deleting only the obvious malware.** Attackers inject code into legitimate files[^patchstack]. Replace core directories with clean copies[^wphacked].",
-        "**Assuming someone else patches.** Contracts often cover hosting but not plugins, or the CMS but not PHP.",
-        "**Forgetting old sites.** Microsites and staging copies run old plugins. See the attack surface sheet."
+        "**Assuming someone else patches.** Check that the contract covers plugins and PHP, not just hosting or the CMS.",
+        "**Forgetting old sites and APIs.** Microsites, staging copies and shop APIs need care too. See the attack surface and API security sheets."
       ]
     },
     {
@@ -190,7 +191,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Feed CMS, plugin and PHP advisories into vulnerability management.",
+            "Track CMS, plugin and PHP advisories against the patching sheet's deadlines.",
             "Keep a checkout script inventory and change detection, with evidence for the assessor[^pcisupp].",
             "Send web server and CMS logs to the SIEM[^bsiapp32] and test shops after major releases."
           ]
@@ -202,7 +203,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on the PHP and BSI advisories on the October 2026 PHP flaws, CISA's KEV catalog, PCI SSC guidance on requirements 6.4.3 and 11.6.1, BSI IT-Grundschutz modules APP.3.1 and APP.3.2, and WordPress, TYPO3, Drupal, Joomla and Shopware documentation."
+      "text": "First draft, based on PHP and BSI advisories, CISA's KEV catalog, PCI SSC guidance, BSI IT-Grundschutz APP.3.1 and APP.3.2, and CMS vendor documentation."
     }
   ],
   "sources": [
@@ -282,6 +283,13 @@
       "publisher": "WordPress.org",
       "date": "updated 26 Jul 2026",
       "url": "https://wordpress.org/documentation/article/faq-my-site-was-hacked/"
+    },
+    {
+      "id": "gsc",
+      "title": "Security issues report",
+      "publisher": "Google",
+      "date": "checked 5 Nov 2026",
+      "url": "https://support.google.com/webmasters/answer/9044101"
     },
     {
       "id": "wpupgrade",

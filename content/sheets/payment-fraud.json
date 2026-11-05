@@ -86,8 +86,8 @@
       "title": "What Verification of Payee does and doesn't do",
       "navTitle": "Verification of Payee",
       "items": [
-        "**It checks name against IBAN.** The payee's bank reports a match, a close match with the registered name, no match or no check possible[^vop]. Euro-area banks must offer it free since 9 October 2025, other EU banks from 9 July 2027[^reg886].",
-        "**It never blocks.** You can pay after a warning, and the bank then isn't liable[^reg886].",
+        "**It checks name against IBAN.** The payee's bank reports a match, a close match with the registered name, no match or no check possible[^vop]. Banks in the euro area must offer it free since 9 October 2025, the rest of the EU from 9 July 2027[^reg886].",
+        "**It never blocks.** You can pay after a warning; the bank then isn't liable[^reg886].",
         "**Opted-out files lose it.** Non-consumers may opt out for payment packages[^reg886]; BaFin even tolerates it for EBICS files with one payment[^bafinfaq].",
         "**A match is not proof.** It can't detect a fraudulent payee or request[^bbkfaq].",
         "**Register your trading names.** Banks may store commercial names as extra payee names[^bafinfaq], so your customers see a match, not a warning."
@@ -99,7 +99,7 @@
       "title": "Set up the bank side",
       "navTitle": "Bank setup",
       "items": [
-        "**Map signing rights to the process.** EBICS has single (E), first (A), second (B) and transport-only (T) signatures[^bbkebics]. Give no one E rights for large payments.",
+        "**Keep single signatures rare.** EBICS has single (E), first (A), second (B) and transport-only (T) signatures[^bbkebics]; give E to as few people as possible.",
         "**Use chip cards, not key files.** Malware can copy key files with their passwords[^dksec].",
         "**Set limits that take time to raise.** A limit on online transfers may have a waiting period for increases; one on instant transfers alone must be changeable at any time[^bafinfaq].",
         "**Review signing rights against HR.** Remove leavers and changed roles at the bank too[^dksec]."
@@ -114,7 +114,7 @@
         "**Finance owns the process.** The CFO or head of accounting owns the bank detail rule, signing rights, limits, VoP settings and exceptions.",
         "**HR owns payroll changes.** Only in the HR system, after an identity check, confirmed outside the employee's mailbox.",
         "**IT protects the accounts.** Phishing-resistant sign-in for finance, HR and executives (passkeys and MFA sheet) and alerts on new inbox rules[^msp].",
-        "**Management backs the no.** Executives never ask for exceptions by phone or chat."
+        "**Management backs the no.** No exceptions requested by phone or chat."
       ]
     },
     {
@@ -136,7 +136,7 @@
         "**Deepfake detection software.** The BSI notes detectors generalize poorly: the best in a 2020 challenge was 65.18% accurate, guessing 50%[^bsideep].",
         "**Teaching staff to hear fake voices.** The GDV calls such cues unreliable[^gdvvoice]. Teach the call back instead.",
         "**Call backs on every routine payment.** Spend them on new payees, changed details and unusual requests.",
-        "**Paid name checks for euro payments.** Banks must provide Verification of Payee free[^reg886]."
+        "**Paid name checks for euro payments.** Verification of Payee is free[^reg886]."
       ]
     },
     {
@@ -145,7 +145,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Calling the number in the request.** It belongs to the fraudster. Call one you already knew[^gdvvoice].",
+        "**Calling the number in the request.** Call one you already knew[^gdvvoice].",
         "**Paying through a no match.** After a warning the loss is usually yours[^reg886][^ebaecb]. Stop until the call back.",
         "**Letting secrecy beat the process.** The Singapore fraud used a fake lawyer, a confidential restructuring and a nondisclosure agreement[^spf].",
         "**Confirming changes to the same mailbox.** Attackers who control it delete the confirmation[^msp]. Use phone or letter."
