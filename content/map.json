@@ -19,7 +19,8 @@
         { "id": "patching", "name": "Patching" },
         { "id": "attack-surface", "name": "Attack surface management" },
         { "id": "hardening", "name": "Secure configuration" },
-        { "id": "pentest", "name": "Penetration testing" }
+        { "id": "pentest", "name": "Penetration testing" },
+        { "id": "dns", "name": "DNS and domains" }
       ]
     },
     {
@@ -37,7 +38,8 @@
       "capabilities": [
         { "id": "dlp", "name": "DLP and sensitivity labels" },
         { "id": "retention", "name": "Retention and deletion" },
-        { "id": "encryption", "name": "Encryption and key management" }
+        { "id": "encryption", "name": "Encryption and key management" },
+        { "id": "sharing", "name": "External sharing and collaboration" }
       ]
     },
     {
@@ -71,7 +73,8 @@
         { "id": "python", "name": "Python" },
         { "id": "csharp", "name": "C# and .NET" },
         { "id": "java", "name": "Java" },
-        { "id": "go", "name": "Go" }
+        { "id": "go", "name": "Go" },
+        { "id": "cpp", "name": "C and C++" }
       ]
     },
     {
@@ -81,7 +84,8 @@
         { "id": "agents", "name": "AI agents" },
         { "id": "llm-apps", "name": "LLM applications" },
         { "id": "security-ops", "name": "AI for security operations" },
-        { "id": "governance", "name": "AI governance and the AI Act" }
+        { "id": "governance", "name": "AI governance and the AI Act" },
+        { "id": "coding-assistants", "name": "AI coding assistants" }
       ]
     },
     {
@@ -90,7 +94,8 @@
       "capabilities": [
         { "id": "logging", "name": "Logging and monitoring" },
         { "id": "incident-response", "name": "Incident response" },
-        { "id": "threat-intel", "name": "Threat intelligence" }
+        { "id": "threat-intel", "name": "Threat intelligence" },
+        { "id": "mdr", "name": "SOC and MDR services" }
       ]
     },
     {
