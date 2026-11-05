@@ -8,7 +8,7 @@
   "short": "Give every service account, app secret and API key an owner and a rotation date, and cap Entra app secrets at 180 days.",
   "answer": "Within 90 days, list every service account, app registration, API key and token with an owner and a rotation date, and block or cap new secrets in policy. Then replace each static secret with a managed identity or federation wherever the platform supports it, and rotate the rest on a schedule your policies enforce.",
   "audience": "IT, cloud and security teams on Microsoft 365, Azure, AWS or Google Cloud, with or without on-premises Active Directory",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -185,6 +185,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Noted that Microsoft's pages disagree on licensing for app management policies; the sheet now attributes 'free' to Microsoft's FAQ."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

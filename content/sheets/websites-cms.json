@@ -8,7 +8,7 @@
   "short": "Turn on automatic updates and admin MFA, and leave PHP 8.2 and Drupal 10 before support ends in December 2026.",
   "answer": "This week, get every site's PHP patched for October's exploited flaws. This month, turn on automatic updates for core, plugins and themes, require MFA for every admin, plan the move off PHP 8.2 and Drupal 10, which lose support in December, and write down who patches and who restores the site when it is hacked.",
   "audience": "Marketing, IT and security teams that run company websites and online shops, alone or with an agency or hoster",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -200,6 +200,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Merchants using a payment redirect now confirm the PCI script scope with their acquirer or QSA, since the PCI SSC supplement contradicts itself."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

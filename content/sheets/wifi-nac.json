@@ -8,7 +8,7 @@
   "short": "Move staff Wi-Fi to device certificates (EAP-TLS) within 6 months; since October 2026 Windows blocks automatic MS-CHAPv2 sign-in.",
   "answer": "Move staff Wi-Fi to EAP-TLS with a certificate on every managed device within six months, and give guests and devices that can't do 802.1X their own SSIDs and VLANs now. Judge every other measure by whether a stolen password, a copied MAC address or a laptop plugged into a meeting-room port still reaches more than the internet.",
   "audience": "IT and network teams running office, warehouse and plant networks, especially with Microsoft Intune and Entra ID",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -186,6 +186,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Added that Intune's Windows Wi-Fi template has no WPA3 setting, so WPA3-Enterprise needs an imported XML profile."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

@@ -8,7 +8,7 @@
   "short": "Use company accounts, require the sandbox with bypass modes off, and have a second person approve every agent pull request.",
   "answer": "This month, move every developer to a company account, require the tool's sandbox with bypass modes switched off in managed settings, and keep production credentials away from agents. Judge every new tool, MCP server or automation by what outsiders can write into what it reads, and what it could run, reach or merge if that text took over.",
   "audience": "Engineering leads, platform and security teams whose developers use AI coding assistants and agents",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -164,6 +164,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Added that the Copilot cloud agent's firewall covers only processes its Bash tool starts, not MCP servers, and can be bypassed."
+    },
     {
       "date": "2026-11-05",
       "version": "1.1",

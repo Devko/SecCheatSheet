@@ -8,7 +8,7 @@
   "short": "Put phishing-resistant MFA on every registrar and DNS account this month, registry-lock the domains you sign in and mail with, and send all user DNS through a resolver you control.",
   "answer": "This month, put phishing-resistant MFA on every registrar and DNS provider account, registry-lock the few domains that sign-in, email and your website depend on, and publish CAA records on every domain. Then send all user DNS through a validating, filtering resolver you control, and sign zones with DNSSEC only where your provider automates the keys.",
   "audience": "IT and security teams in organizations of any size that own domains, run public DNS and resolve DNS for their users",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -185,6 +185,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Noted that CISA retired ED 19-01 in January 2026, added that German companies agree per-user DNS logs with the works council, and confirmed the transfer dispute rules still stand after ICANN's June 2026 policy decision."
+    },
     {
       "date": "2026-11-05",
       "version": "1.1",
