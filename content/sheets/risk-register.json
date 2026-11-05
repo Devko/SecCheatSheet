@@ -82,7 +82,7 @@
         "**Use four levels, defined in numbers.** The BSI's likelihood bands: at most once in five years, up to once a year, up to once a month, several times a month[^std2003]. Our impact bands at €50 million revenue: under €50,000, up to €500,000, up to €5 million, above.",
         "**Leave out the middle.** The BSI advises at most five levels, and says two staff rating one risk should get the same result[^std2003]. Four levels force a choice; test them on three sample risks.",
         "**Quantify the close calls.** When a decision hinges on whether a €300,000 measure pays off, estimate the yearly loss as a range. NIST describes three-point estimates, calibration and Monte Carlo simulation[^ir8286a].",
-        "**Use FAIR where euros decide.** The Open Group's FAIR standards are O-RA 2.1 and O-RT 3.1 (May 2025)[^ora]. FAIR estimates how often losses occur; agencies told NIST calibrated ranges improve the yearly loss estimate[^ir8286a]."
+        "**Use FAIR where euros decide.** The Open Group's FAIR standards are O-RA 2.1 and O-RT 3.1 (May 2025)[^ora]. FAIR estimates how often losses occur; agencies told NIST calibrated ranges can improve the yearly loss estimate[^ir8286a]."
       ]
     },
     {

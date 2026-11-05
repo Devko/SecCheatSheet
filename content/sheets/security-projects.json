@@ -20,14 +20,14 @@
       "items": [
         {
           "title": "Define done in numbers before you start.",
-          "text": "Count the scope from the inventory and set a target, such as 98% of in-scope devices in block mode by 31 March, an exception cap and an owner for afterwards. Count enforced, not deployed."
+          "text": "Count the scope from the inventory and set a target, such as 98% of in-scope devices in block mode by 31 March, with an exception cap. Count enforced, not deployed."
         },
         {
           "title": "Watch before you enforce.",
           "text": "Keep a new Conditional Access policy in report-only mode for at least a week[^caplan]; it logs and blocks nothing[^careport]. Audit ASR rules first, except the standard protection rules[^asrplan]."
         },
         {
-          "title": "Roll out in rings your help desk can absorb.",
+          "title": "Roll out in rings sized for your help desk.",
           "text": "Pilot with IT and a champion per business unit, then a representative ring, then everyone, in waves within your support capacity[^mfaplan]."
         },
         {
@@ -36,7 +36,7 @@
         },
         {
           "title": "Ask security at kickoff, not before go-live.",
-          "text": "The BSI requires involving the ISB early in larger projects and new applications and IT systems[^isms1]. Grundschutz++ lets you define when[^std3001]."
+          "text": "The BSI requires the ISB's early involvement in larger projects and new applications and IT systems[^isms1]; Grundschutz++ lets you define when[^std3001]."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Who and what is in scope?",
-          "text": "Count from the inventory, not the new tool; Defender's device discovery lists devices not yet onboarded[^discovery]. What to roll out first is the security program sheet's job."
+          "text": "Count from the inventory, not the new tool; Defender's device discovery lists devices not yet onboarded[^discovery]. The security program sheet decides what goes first."
         },
         {
           "title": "What would break?",
-          "text": "Run report-only or audit mode for one to four weeks and review the results with app owners. For segmentation, allow and log first; see the network segmentation sheet."
+          "text": "Run report-only or audit mode for one to four weeks and review the results with app owners. For segmentation, allow and log first, as in the network segmentation sheet."
         },
         {
           "title": "Who pilots it?",
@@ -64,7 +64,7 @@
         },
         {
           "title": "When is it done?",
-          "text": "When the tail is closed by name, the old path is gone, such as SMS codes or the old agent, and an owner gets a monthly coverage report."
+          "text": "When the tail is closed by name, the old path is gone, such as SMS codes, and an owner gets a monthly coverage report."
         }
       ]
     },
@@ -74,11 +74,11 @@
       "title": "Users, help desk and rollback",
       "navTitle": "Help desk and rollback",
       "items": [
-        "**Tell users what changes, when, and how to get help**[^caplan], a week before their ring and on the day. Microsoft publishes MFA templates[^mfaplan].",
+        "**Tell users what changes, when, and how to get help**[^caplan], a week before their ring and on the day.",
         "**Brief the help desk before each ring:** the script, known errors and what to collect, including the correlation ID from **More details**[^caplan].",
         "**Write the rollback first.** Name the trigger and the switch: disable the policy or exclude a group in Conditional Access[^caplan], add an ASR exclusion rather than return to audit[^asrtest], pause the Intune deployment[^intune].",
         "**Exclude Mac, iOS and Android from report-only compliance policies,** or their users may get certificate prompts[^careport].",
-        "**In Germany, ask the works council early** about EDR, DLP and logging. It co-determines systems designed to monitor behavior or performance[^betrvg]."
+        "**In Germany, ask the works council early** about EDR, DLP and logging; it co-determines systems designed to monitor behavior or performance[^betrvg]."
       ]
     },
     {
@@ -87,9 +87,9 @@
       "title": "Exceptions that end",
       "navTitle": "Exceptions",
       "items": [
-        "**Exclude groups, not people.** One assigned Entra group per policy shows who is excluded; the policy doesn't protect them[^caexcl].",
-        "**Record why, what instead and until when.** Each member gets a reason, a compensating control, an owner and an end date. Approval levels and terms are in the risk register sheet.",
-        "**Let reviews remove people.** Entra access reviews can ask members weekly whether they still need it and remove those who don't answer. They need Entra ID P2 or ID Governance[^caexcl].",
+        "**Exclude groups, not people.** One assigned Entra group per policy shows who is excluded[^caexcl].",
+        "**Record why, what instead and until when:** a reason, a compensating control, an owner and an end date per member. Approval levels are in the risk register sheet.",
+        "**Let reviews remove people.** Entra access reviews can ask members weekly and remove those who don't answer; they need Entra ID P2 or ID Governance[^caexcl].",
         "**Cap them.** Our rule: at most 2% of the scope at go-live, none by the done date. Report the count and the oldest monthly."
       ]
     },
@@ -99,10 +99,10 @@
       "title": "Measure adoption against the inventory",
       "navTitle": "Adoption",
       "items": [
-        "**Coverage is enforced over in scope.** Count both from the inventory weekly, by ring and business unit, and name the systems in the tail.",
-        "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** shows who is MFA or passwordless capable and how many sign-ins were single-factor (P1 or P2)[^authact].",
+        "**Coverage is enforced over in scope,** both counted from the inventory weekly, by ring and business unit, with the tail named.",
+        "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** shows who is MFA or passwordless capable, and single-factor sign-ins (P1 or P2)[^authact].",
         "**Conditional Access.** The gap analyzer workbook lists sign-ins no policy applied to (P1 and Log Analytics)[^gap].",
-        "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business; otherwise collect event 1122[^asrtest]."
+        "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business; otherwise use event 1122[^asrtest]."
       ]
     },
     {
@@ -111,8 +111,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Stopping at 80%.** The tail holds the old devices, service accounts, shared mailboxes and executives. Plan it as its own phase, with an owner per system.",
-        "**No owner after go-live.** Conditional Access policies have no owner field, so Microsoft suggests naming the owner in the policy name and keeping a register[^caplan]. Do that for every control.",
+        "**Stopping at 80%.** The tail holds old devices, service accounts, shared mailboxes and executives. Plan it as its own phase, with an owner per system.",
+        "**No owner after go-live.** Conditional Access policies have no owner field; Microsoft suggests naming the owner in the policy name and keeping a register[^caplan]. Do it for every control.",
         "**Piloting only in IT.** IT and lab devices often lack the business apps and drivers that break[^rings].",
         "**Reporting deployed as done.** A policy left in audit mode looks finished on the status page and blocks nothing."
       ]
@@ -123,10 +123,10 @@
       "title": "Security gates in IT and business projects",
       "navTitle": "Project gates",
       "items": [
-        "**At kickoff, ask six questions:** what data, who signs in and how, whether it faces the internet, which supplier, who gets admin rights, and the go-live date.",
-        "**Rate the need: normal or high.** Grundschutz++ has just these two, and only high needs an explicit risk analysis[^std3001]. Rate it with the business owner in 30 minutes.",
-        "**Write requirements into the plan.** Normal gets the standard set: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High adds a design review. For software you build, see the secure development sheet.",
-        "**Pentest before go-live** if it faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration; for SaaS, test your tenant. See the penetration testing sheet.",
+        "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
+        "**Rate the need: normal or high.** Grundschutz++ has just these two; only high needs an explicit risk analysis[^std3001]. It takes 30 minutes with the business owner.",
+        "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
+        "**Pentest before go-live** if it faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
         "**Sign off and hand over.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]. Name the operations owner."
       ]
     },
@@ -148,9 +148,9 @@
       "title": "Don't become the bottleneck",
       "navTitle": "Bottleneck",
       "items": [
-        "**Publish when security joins.** Grundschutz++ doesn't need the ISB active in every security-relevant project[^std3001]. Join high-need ones; normal ones use the checklist.",
+        "**Publish when security joins.** Grundschutz++ doesn't need the ISB active in every security-relevant project[^std3001]. Join the high-need ones.",
         "**Promise a turnaround,** such as the operating model sheet's 5 working days. If you miss it, the project proceeds and records the open items.",
-        "**Pre-approve patterns:** a standard SaaS requirement set, a contract annex and a reference design.",
+        "**Pre-approve patterns:** a SaaS requirement set, a contract annex, a reference design.",
         "**Put a champion in the PMO** to ask the kickoff questions and call you in for high-need projects."
       ]
     },
@@ -160,7 +160,7 @@
       "title": "What you can skip",
       "items": [
         "**A risk analysis for every project.** Grundschutz++ needs none for normal protection need, because its requirements already build one in[^std3001].",
-        "**A pentest before every go-live.** A standard SaaS app behind SSO needs a configuration check.",
+        "**A pentest before every go-live.** A standard SaaS app behind SSO needs a check of your tenant's configuration.",
         "**Auditing the standard ASR rules.** Microsoft says they can go to block or warn without testing[^asrplan].",
         "**Months in report-only.** A week to a month of real sign-ins shows the impact. Enforce, then fix the tail."
       ]
@@ -172,9 +172,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Intune stages policy rollouts.** Deployment plans, in public preview since September 2026[^intunenew], push endpoint security and settings catalog policies to Windows ring by ring and can be paused or canceled[^intune].",
-        "**Conditional Access can stage itself with Microsoft 365 E5.** E5 now includes Security Copilot[^sccinc], whose Optimization Agent enforces a report-only policy in five phases and pauses if more than 10% of sign-ins are blocked[^caagent].",
-        "**Grundschutz++ asks you to write the project rule.** BSI-Standard 300-1 of 20 October 2026 requires a security role in security-relevant projects and a rule for when it takes part[^std3001]."
+        "**Intune stages policy rollouts.** Deployment plans, in public preview since September 2026[^intunenew], push Windows security policies ring by ring and can be paused[^intune].",
+        "**E5 can stage Conditional Access.** Microsoft 365 E5 now includes Security Copilot[^sccinc], whose agent enforces a report-only policy in five phases and pauses if over 10% of sign-ins are blocked[^caagent].",
+        "**Grundschutz++ wants a written project rule.** BSI-Standard 300-1 (20 October 2026) requires a security role in security-relevant projects and a rule for when it joins[^std3001]."
       ]
     },
     {
@@ -215,7 +215,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Microsoft Learn deployment guidance for Conditional Access, ASR rules and Intune, BSI ISMS.1 and BSI-Standard 300-1 (Grundschutz++), ENISA's NIS2 implementation guidance and the Commission's CRA guidance."
+      "text": "First draft, based on Microsoft Learn rollout guidance, BSI ISMS.1 and Grundschutz++, and ENISA and Commission guidance on NIS2 and the CRA."
     }
   ],
   "sources": [
