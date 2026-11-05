@@ -101,8 +101,8 @@
       "title": "Security monitoring and staff",
       "navTitle": "Employees",
       "items": [
-        "**Don't rely on § 26 BDSG alone.** The CJEU found a Hessian clause worded like § 26(1) appears merely to restate the GDPR; clauses that fail Article 88(2) must be disregarded[^c34]. Document an Article 6 basis per tool.",
-        "**Agree each tool with the works council.** It co-determines systems that record individualizable behavior or performance data, with no threshold for minor tools[^bag]. Courts fully review whether a works agreement's processing is necessary[^c65].",
+        "**Don't rely on § 26 BDSG alone.** The CJEU found a Hessian clause worded like § 26(1) appears merely to restate the GDPR; clauses that fail Article 88(2) must be disregarded[^c34]. Document an Article 6 basis per tool.",
+        "**Agree each tool with the works council.** Under § 87(1) no. 6 BetrVG it co-determines systems that record individualizable behavior or performance data, with no threshold for minor tools[^bag]. Courts fully review whether a works agreement's processing is necessary[^c65].",
         "**Write a logging concept.** Per processing activity, state what is logged, where, why, who may read it and when it is deleted[^b43]; the CNIL suggests six months to a year for access logs[^cnilbdd]. Logs kept to check admin work must not be used to rate their speed[^b43]."
       ]
     },
@@ -124,9 +124,8 @@
       "navTitle": "What changed",
       "items": [
         "**The SDM logging module was rewritten.** Building block 43 v2.0, valid since 1 June 2026, asks for an organization-wide logging concept[^b43].",
-        "**Fixed procedures for cross-border cases.** From 2 April 2027, lead authorities must send preliminary findings and allow three to six weeks to reply[^proc].",
-        "**Fewer firms may need records.** The agreed Omnibus IV text exempts companies under 1,000 staff except for high-risk processing[^st10482]; Parliament's vote is scheduled for 23 November 2026[^oeil130].",
-        "**The Digital Omnibus is pending.** Its GDPR changes await a committee decision in Parliament[^oeil360]."
+        "**Fixed steps for cross-border cases.** From 2 April 2027, lead authorities must send preliminary findings and allow three to six weeks to reply[^proc].",
+        "**Fewer firms may need records.** The agreed Omnibus IV text exempts companies under 1,000 staff except for high-risk processing[^st10482]; Parliament is due to vote on 23 November 2026[^oeil130]. The Digital Omnibus still awaits a committee decision[^oeil360]."
       ]
     },
     {
@@ -148,7 +147,7 @@
       "items": [
         "**Naming measures and not building them.** The CNIL held it against France Travail that its DPIAs listed most of the missing measures[^cnilft].",
         "**Leaving processors out of scope.** A significant share of the large breaches the CNIL saw in 2024 involved a processor with weak security[^cnilbdd].",
-        "**Sharing by default.** The BGH found a default letting anyone find profiles by phone number likely breached data minimization, and accepted about €100 per person for the loss of control alone[^bgh].",
+        "**Sharing by default.** The BGH found that open-by-default phone number search likely breached data minimization, and accepted about €100 per person for lost control[^bgh].",
         "**Dropping records under Omnibus IV.** High-risk processing would still need them[^st10482], and without them you can't scope a breach."
       ]
     },
