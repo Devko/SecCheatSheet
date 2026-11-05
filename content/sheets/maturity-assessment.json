@@ -1,14 +1,14 @@
 {
   "slug": "maturity-assessment",
   "topic": "Maturity assessments",
-  "status": "draft",
+  "status": "published",
   "order": 61,
   "capability": "leadership/maturity",
   "title": "Maturity assessments: where does your security really stand, and where should it be?",
   "short": "Assess against one model every 12 months, rate only what evidence shows and set a target per function, not one score.",
   "answer": "This quarter, pick one model that fits your company and run a five-week assessment that rates each outcome only on evidence you sampled. Set a target per function from your risks, not the top level everywhere, and show management gaps and decisions, not one maturity number.",
   "audience": "Heads of security, CISOs, IT leads who own security, and the managing directors they report to",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -52,7 +52,7 @@
         },
         {
           "title": "Do you run energy or OT?",
-          "text": "Use C2M2 v2.1: 356 practices in 10 domains, for IT and OT. DOE's self-evaluation tools are free to any organization; one function takes about a day[^c2m2]."
+          "text": "Use C2M2 v2.1: 356 practices in 10 domains, for IT and OT. DOE's tools are free to any organization, and its self-evaluation is designed to cover one function in a day[^c2m2]."
         },
         {
           "title": "A German company under 50 staff?",
@@ -98,7 +98,7 @@
       "title": "Evidence over self-scoring",
       "navTitle": "Evidence",
       "items": [
-        "**Write the rule first.** In the CAF, any \"not achieved\" indicator normally decides the rating; \"achieved\" needs all achieved indicators[^caf].",
+        "**Write the rule first.** In the CAF, one \"not achieved\" indicator normally decides the rating; \"achieved\" normally needs every achieved indicator[^caf].",
         "**Sample, don't ask.** Check five leavers' accounts, three servers' patch levels and the last restore record. The BSI suggests checking interview answers against documents, sites and system settings[^std2002].",
         "**Record each rating's source.** Grundschutz++ assigns evidence to each measure and, for automated checks, records tool, time and result[^std3001].",
         "**Count coverage where you can.** CIS's Assessment Specification defines measures and metrics per safeguard, such as how many endpoints implement it[^cas]."
@@ -113,7 +113,7 @@
         "**One row per outcome.** NIST's template has columns for practices, status, rating, priority and goals[^profqs]. Add evidence and an owner.",
         "**Targets per function.** Set Tiers overall or per Function or Category, not per Subcategory[^tiers]. Tiers rate the rigor of risk governance and management[^csf]; per-outcome ratings show whether practices work.",
         "**A floor everywhere.** C2M2 is built so every company can reach MIL1 in all domains[^c2m2]. Go higher where your risks need it.",
-        "**Reassess every 12 months** and after major business, technology or threat changes[^c2m2]. NIS2 entities in Germany need procedures to assess their measures' effectiveness (BSIG § 30(2) no. 6)[^bsig]."
+        "**Reassess every 12 months** and, as DOE advises, after major business, technology or threat changes[^c2m2]. NIS2 entities in Germany need policies and procedures to assess their measures' effectiveness (BSIG § 30(2) no. 6)[^bsig]."
       ]
     },
     {
@@ -125,7 +125,7 @@
         "**No average.** An overall 2.7 hides a zero in Recover. Show current and target side by side for each function.",
         "**Say how you know.** Name the model version, profile and scope, whether it was self-assessed or independently reviewed, and its limits, as the NCSC asks for CAF results[^cafpage].",
         "**Tie each top gap to a risk.** Give its entry in the risk register (see the risk register sheet), the cost to close it and your recommendation.",
-        "**Ask for a decision.** Fund it, accept it with an end date or defer it. Put progress on the security metrics sheet's quarterly page.",
+        "**Ask for a decision.** Fund it, accept it with an end date where the law allows, or defer it. Put progress on the security metrics sheet's quarterly page.",
         "**Show what moved.** Next year, show what changed and why, on the same scale."
       ]
     },
@@ -137,8 +137,8 @@
       "items": [
         "**Run the yearly cycle yourself.** Your people know where the evidence is; C2M2 is built for facilitated self-evaluation[^c2m2].",
         "**Buy independence where it counts.** Independent audit or testing generally gives more confidence, the NCSC says[^cafpage]. Use it every 2 to 3 years and when customers or regulators rely on the result, never from the firm selling the fixes.",
-        "**Keep reviewers out of the line.** NIS2 digital providers need reviewers with audit competence outside the reviewed area's line of authority[^nis2ir].",
-        "**Check the licenses.** CIS's Controls and Assessment Specification allow non-commercial use within your organization[^casterms]; consultants using CSAT on you need a CIS SecureSuite consulting membership[^csat]."
+        "**Keep reviewers out of the line.** Under 2024/2690, digital providers need reviewers with audit competence; staff reviewers must sit outside the reviewed area's line of authority[^nis2ir]. Others can copy the rule.",
+        "**Check the licenses.** The CIS Controls are free for any company improving its own security; a consultant who assesses you with them or CSAT needs a CIS commercial license, such as SecureSuite membership[^cisfaq][^csat]."
       ]
     },
     {
@@ -168,7 +168,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Scoring the paper.** The BSI rates \"yes\" only for measures implemented fully, effectively and appropriately[^std2002], not for a signed policy.",
-        "**Chasing level 5 everywhere.** It costs most where risk is lowest; DOE calls the top level in all domains not typically optimal[^c2m2].",
+        "**Chasing the top level everywhere.** MIL3 or Tier 4 costs most where risk is lowest; DOE calls the top MIL in all domains not typically optimal[^c2m2].",
         "**Buying a score.** Tools that turn questionnaires or external scans into a maturity number measure answers or the perimeter, not practice.",
         "**Taking \"implemented\" for \"works\".** CIS's specification checks only whether a safeguard is implemented[^cas]. Test a restore or an alert.",
         "**Changing the yardstick.** A new model, scale or scope breaks the trend."
@@ -200,7 +200,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Use the model your regulator expects: the CAF Core Profile for UK essential services, C2M2 for energy and OT.",
+            "Use the model your regulator expects, such as the CAF Core Profile for UK essential services. In energy and OT, use C2M2.",
             "Assess each subsidiary or business unit with the same scale and evidence rules.",
             "Report independent reviews to management, as 2024/2690 requires of digital providers[^nis2ir]."
           ]
@@ -209,6 +209,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which settled from CIS's own FAQ that companies may use the CIS Controls for their own assessments, replaced an invented level 5 with each model's real top level and separated our 12-month cadence from DOE's advice."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -294,11 +299,11 @@
       "url": "https://cas.docs.cisecurity.org/en/latest/source/About%20the%20CIS%20Controls%20Assessment%20Specification/"
     },
     {
-      "id": "casterms",
-      "title": "Assessment Specification v8.1, Terms of Use",
+      "id": "cisfaq",
+      "title": "CIS Critical Security Controls FAQ",
       "publisher": "CIS",
       "date": "checked 5 Nov 2026",
-      "url": "https://cas.docs.cisecurity.org/en/latest/source/terms-of-use/"
+      "url": "https://www.cisecurity.org/controls/cis-controls-faq"
     },
     {
       "id": "csat",
