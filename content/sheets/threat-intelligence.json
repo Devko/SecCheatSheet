@@ -1,14 +1,14 @@
 {
   "slug": "threat-intelligence",
   "topic": "Threat intelligence",
-  "status": "draft",
+  "status": "published",
   "order": 32,
   "capability": "detect-respond/threat-intel",
   "title": "Threat intelligence: which warnings deserve your time, and what do you do with them?",
-  "short": "Subscribe to CERT-Bund, the KEV catalogs and your vendors' advisories, and give every warning that matches your inventory an owner and a decision within one working day.",
-  "answer": "This month, write down the products, suppliers and sector you need warnings about, and subscribe to the free sources that cover them: CERT-Bund's WID, CISA's and ENISA's catalogs of exploited vulnerabilities and your vendors' advisories. Give every warning that matches your inventory an owner and a decision (patch, block, hunt or detect) within one working day, and judge your intelligence by the actions it produced, not by what you read.",
+  "short": "Subscribe to CERT-Bund, the KEV catalogs and your vendors' advisories, and give every warning that matches your inventory an owner and a decision within one working day, the same day if it is exploited and exposed.",
+  "answer": "This month, write down the products, suppliers and sector you need warnings about, and subscribe to the free sources that cover them: CERT-Bund's WID, CISA's and ENISA's catalogs of exploited vulnerabilities and your vendors' advisories. Give every warning that matches your inventory an owner and a decision (patch, block, hunt or detect) within one working day, or the same day if it is exploited and exposed, and judge your intelligence by the actions it produced, not by what you read.",
   "audience": "IT and security teams in EU organizations of any size, many in Germany, from teams without analysts to those with a small SOC",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -32,7 +32,7 @@
         },
         {
           "title": "Detect techniques, not just indicators.",
-          "text": "The NCSC warns that indicators from attackers' covert networks \"disappear as quickly as they are discovered\"[^ncsccovert]. Build lasting detections on the behavior an advisory describes[^mtrends]."
+          "text": "The NCSC warns that indicators from China-linked covert networks \"disappear as quickly as they are discovered\"[^ncsccovert]. Build lasting detections on the behavior an advisory describes[^mtrends]."
         },
         {
           "title": "Join one sharing community.",
@@ -52,7 +52,7 @@
         },
         {
           "title": "Is it being exploited?",
-          "text": "Check KEV, EU KEV and the advisory. Verizon found the chance of renewed exploitation roughly halves 30 days after the last observed activity[^dbir], so weigh recent activity over an old listing."
+          "text": "Check KEV, EU KEV and the advisory. Verizon found the chance of renewed exploitation roughly halves 30 days after the last observed activity[^dbir], so when you must choose, put recent activity first."
         },
         {
           "title": "Which action fits?",
@@ -70,8 +70,8 @@
       "title": "Decide what you need to know",
       "navTitle": "Requirements",
       "items": [
-        "**Your technology.** Edge devices, identity, remote access and what suppliers run for you. Where ENISA knew the vector of an unauthorized access incident in the EU in 2025, 60.4% used a vulnerability[^etl].",
-        "**Your sector and region.** Public administration, business services, transport, manufacturing and finance were the most targeted EU sectors in 2025, and ideology-driven operations made up 57.3% of incidents[^etl].",
+        "**Your technology.** Edge devices, identity, remote access and what suppliers run for you. ENISA knew the vector of only 5.2% of unauthorized access incidents in the EU in 2025; 60.4% of those used a vulnerability[^etl].",
+        "**Your sector and region.** Public administration, business services, transport, manufacturing and finance were the most affected EU sectors in 2025, and ideology-driven operations made up 57.3% of incidents[^etl].",
         "**Your suppliers and your own alerts.** Add your MSP and cloud suppliers, and feed phishing reports and blocked sign-ins back in.",
         "**Strategic reports, once a year.** Read your sector's part of the ENISA Threat Landscape[^etl], the BSI's Lagebericht[^bsilage] and M-Trends or the DBIR. Take one or two changes in priority from each."
       ]
@@ -86,7 +86,7 @@
         "**CISA KEV and ENISA's EU KEV.** KEV lists 1,768 exploited vulnerabilities[^kev], EU KEV those confirmed exploited against EU entities[^enisavs].",
         "**Vendor advisories** for every product on your list. NIS2's rules for digital providers name suppliers as a channel to monitor[^nis2ir].",
         "**The BSI-Portal and the ACS.** Participants get BSI security notices (BITS), warnings and daily and monthly situation reports[^acsportal].",
-        "**Microsoft Defender threat analytics.** Reports show exposed devices and recommended actions; Defender for Endpoint P1 alone lacks it[^msta].",
+        "**Microsoft Defender threat analytics.** Reports show exposed devices and recommended actions, with any Defender license except Endpoint P1[^msta].",
         "**Exposure alerts** about your own addresses: see the attack surface sheet."
       ]
     },
@@ -108,10 +108,10 @@
       "title": "Share what you see",
       "navTitle": "Sharing",
       "items": [
-        "**The law expects it.** NIS2 Article 29 has member states let entities share indicators, TTPs and alerts in sharing arrangements, including with suppliers[^nis2]. DORA Article 45 covers financial entities[^dora].",
+        "**EU law encourages it.** NIS2 Article 29 has member states let entities share indicators, TTPs and alerts voluntarily in sharing arrangements, including with suppliers[^nis2]. DORA Article 45 covers financial entities[^dora].",
         "**Personal data needs a basis.** NIS2 recital 121 says legitimate interest under GDPR Article 6(1)(f) could cover sharing IP addresses and URLs[^nis2].",
-        "**Tell the authority when you join.** DORA requires it[^dora], and NIS2 asks member states to require it[^nis2]. Under BSIG § 30(7), sharing on the BSI's platform adds no obligations[^bsig].",
-        "**Label with TLP 2.0.** CLEAR is public, GREEN stays in the community, AMBER in your organization and its clients, AMBER+STRICT in your organization, RED with named recipients[^tlp]."
+        "**Check whether to tell the authority.** DORA requires it[^dora], and NIS2 asks member states to require it[^nis2]. Under BSIG § 30(7), sharing on the BSI's platform adds no obligations[^bsig].",
+        "**Label with TLP 2.0.** CLEAR is public, GREEN stays in the community, AMBER in your organization and its clients, AMBER+STRICT in your organization, RED only with the individual recipients[^tlp]."
       ]
     },
     {
@@ -120,8 +120,8 @@
       "title": "Is it changing anything?",
       "navTitle": "Measure",
       "items": [
-        "**Actions per month.** Patches, blocks, hunts and detections that started from a warning. Drop any source that produced none for two quarters.",
-        "**Time from advisory to decision.** For warnings that match your list. Aim for one working day.",
+        "**Actions per month.** Patches, blocks, hunts and detections that started from a warning. Review any source that produced none for two quarters.",
+        "**Time from advisory to decision.** For warnings that match your list. Aim for one working day, the same day if exploited and exposed.",
         "**Learned too late.** Exploited flaws in your products you first heard about from a customer, supplier or the news."
       ]
     },
@@ -131,8 +131,8 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The ACS moved into the BSI-Portal in January 2026.** Existing participants must re-register there by 31 January 2027 or lose their participation[^acsportal].",
-        "**ATT&CK split Defense Evasion** into Stealth and Defense Impairment in v19, April 2026[^attack19]. Re-tag rules mapped to the old tactic.",
+        "**The ACS moved into the BSI-Portal in January 2026.** Existing participants must re-register there, with an ELSTER company login, by 31 January 2027 or lose their participation[^acsportal].",
+        "**ATT&CK v19 split Defense Evasion** into Stealth and Defense Impairment in April[^attack19]. Re-tag your rules. v20 added AI techniques in October[^attack20].",
         "**EU KEV will add manufacturers' reports.** The CRA has required them since 11 September 2026[^enisavs]."
       ]
     },
@@ -196,6 +196,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which recomputed every count and narrowed 12 statements to what the sources say."
+    },
+    {
+      "date": "2026-11-05",
       "version": "0.1",
       "text": "First draft, based on NIS2, DORA, the BSIG, TLP 2.0, the CERT-Bund, CISA and ENISA feeds, ATT&CK and the 2026 reports from ENISA, Mandiant and Verizon."
     }
@@ -210,10 +215,10 @@
     },
     {
       "id": "widcsaf",
-      "title": "WID CSAF feed",
+      "title": "WID CSAF feeds",
       "publisher": "CERT-Bund",
       "date": "counted 5 Nov 2026",
-      "url": "https://wid.cert-bund.de/.well-known/csaf/white/bsi-wid-white.json"
+      "url": "https://wid.cert-bund.de/.well-known/csaf/provider-metadata.json"
     },
     {
       "id": "csw",
@@ -328,10 +333,17 @@
       "url": "https://attack.mitre.org/resources/updates/updates-april-2026/"
     },
     {
+      "id": "attack20",
+      "title": "ATT&CK v20 release notes",
+      "publisher": "MITRE",
+      "date": "13 Oct 2026",
+      "url": "https://attack.mitre.org/resources/updates/updates-october-2026/"
+    },
+    {
       "id": "pop",
       "title": "The Pyramid of Pain",
       "publisher": "David Bianco",
-      "date": "1 Mar 2013",
+      "date": "1 Mar 2013, updated Jan 2014",
       "url": "https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html"
     },
     {
