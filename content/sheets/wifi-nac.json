@@ -1,14 +1,14 @@
 {
   "slug": "wifi-nac",
   "topic": "Wi-Fi and network access control",
-  "status": "draft",
+  "status": "published",
   "order": 49,
   "capability": "infrastructure/wireless",
   "title": "Wi-Fi and network access: can anyone with a password get onto your network?",
-  "short": "Move staff Wi-Fi to device certificates (EAP-TLS) within 6 months; since October 2026 Windows blocks saved MS-CHAPv2 sign-ins.",
+  "short": "Move staff Wi-Fi to device certificates (EAP-TLS) within 6 months; since October 2026 Windows blocks automatic MS-CHAPv2 sign-in.",
   "answer": "Move staff Wi-Fi to EAP-TLS with a certificate on every managed device within six months, and give guests and devices that can't do 802.1X their own SSIDs and VLANs now. Judge every other measure by whether a stolen password, a copied MAC address or a laptop plugged into a meeting-room port still reaches more than the internet.",
   "audience": "IT and network teams running office, warehouse and plant networks, especially with Microsoft Intune and Entra ID",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,11 +24,11 @@
         },
         {
           "title": "Retire PEAP-MSCHAPv2.",
-          "text": "A fake access point can capture the exchange and recover the password[^msadv]. Windows stopped using it automatically under Credential Guard[^credguard] and, in October 2026, by default[^ntlmv1]."
+          "text": "A fake access point can capture the exchange and recover the password[^msadv]. Credential Guard[^credguard] and, since October 2026, Windows 11 24H2 and later[^ntlmv1] block its automatic sign-in."
         },
         {
           "title": "Make every client check the RADIUS server.",
-          "text": "Set the trusted root and server names in each Wi-Fi profile, so users never get asked to trust a certificate[^intunewifi]. Under WPA3-Enterprise, Windows 11 stops if validation fails[^eapwin11]."
+          "text": "Set the trusted root and server names in each Wi-Fi profile, so users aren't asked to trust a certificate[^intunewifi]. Under WPA3-Enterprise, Windows 11 stops if validation fails[^eapwin11]."
         },
         {
           "title": "Segment guests and devices without 802.1X.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Lock down wired ports in public areas.",
-          "text": "Run 802.1X with MAC fallback on ports in meeting rooms and reception, and switch off unused ones. In multi-host mode, one authorized client opens the port for all[^ciscohost], so a hub lets others in[^ncscshadow]."
+          "text": "Run 802.1X with MAC fallback on ports in meeting rooms and reception, and switch off unused ones. Avoid multi-host mode: one authorized client opens the port for all[^ciscohost], so a hub lets others in[^ncscshadow]."
         }
       ]
     },
@@ -56,7 +56,7 @@
         },
         {
           "title": "Issue device certificates.",
-          "text": "Deploy a trusted root profile and a SCEP profile, with key storage set to **Enroll to Trusted Platform Module (TPM) KSP, otherwise fail**[^scep]. Cloud PKI needs a license on top of Intune Plan 1 or 2[^cloudpki]; the encryption sheet covers private CAs."
+          "text": "Deploy a trusted root profile and a SCEP profile, with key storage set to **Enroll to Trusted Platform Module (TPM) KSP, otherwise fail**. Hybrid-joined devices checked against AD need their SID in the SAN[^scep]. Cloud PKI needs a license on top of Intune Plan 1 or 2[^cloudpki]; the encryption sheet covers private CAs."
         },
         {
           "title": "Deploy the Wi-Fi profile.",
@@ -75,8 +75,8 @@
       "navTitle": "RADIUS",
       "items": [
         "**Place it in the management zone.** Accept requests only from access points, controllers and switches, and alert when RADIUS is down or request counts jump[^bsinac].",
-        "**Harden RADIUS over UDP.** CVE-2024-3596 lets an attacker on the RADIUS network forge packets. On NPS, require Message-Authenticator and turn on `requireMsgAuth`; both are off by default[^blastradius].",
-        "**Plan for RADIUS being down.** Keep existing sessions and reject new ones, or assign a fixed restricted VLAN. Depending on the switch, an outage can otherwise open ports completely[^bsinac]."
+        "**Harden RADIUS over UDP.** CVE-2024-3596 lets an attacker on the RADIUS network forge packets. On NPS, require Message-Authenticator from RADIUS clients once every switch and AP sends it; it's off by default[^blastradius].",
+        "**Plan for RADIUS being down.** Keep existing sessions and reject new ones, or assign a fixed restricted VLAN. Depending on the switch, an outage otherwise blocks every port or opens them all[^bsinac]."
       ]
     },
     {
@@ -86,7 +86,7 @@
       "navTitle": "Devices",
       "items": [
         "**Use certificates where the device can.** Intune SCEP profiles support Wi-Fi on Android Enterprise dedicated devices, such as scanners[^scep].",
-        "**Otherwise give each device its own key.** BSI allows shared identities only as justified exceptions[^bsinac]. Meraki's identity PSK, for example, gives each key its own policy, though not with WPA3[^ipsk]. Use 20 or more characters[^bsiwlan].",
+        "**Otherwise give each device its own key.** BSI allows shared identities only as justified exceptions[^bsinac]. Meraki's identity PSK without RADIUS gives each key its own policy, but no WPA3[^ipsk]. Use 20 or more characters[^bsiwlan].",
         "**Treat MAC authentication as a label.** It makes spoofing easy, so BSI wants such devices restricted to the minimum and profiled[^bsinac].",
         "**One SSID or VLAN per device class,** reaching only its server; see the network segmentation sheet."
       ]
@@ -99,8 +99,8 @@
       "items": [
         "**Use your access points as sensors.** NIST recommends continuous monitoring for rogue APs, unauthorized clients and impersonation[^nist153].",
         "**Scan where sensors don't reach** at least quarterly, NIST suggests, and assess the whole WLAN yearly[^nist153].",
-        "**Ban private access points.** BSI requires the ban in the usage policy[^bsiuse].",
-        "**Block bridging on laptops,** as NIST advises[^nist153]. APT28 used hacked dual-homed computers nearby to join a target's Wi-Fi that asked for no MFA[^volexity]."
+        "**Ban unapproved access points.** BSI requires the ban in the usage policy[^bsiuse].",
+        "**Block bridging and unapproved dual connections,** as NIST advises[^nist153]. APT28 used wired PCs in neighboring firms to join a target's Wi-Fi, which asked only for a password[^volexity]."
       ]
     },
     {
@@ -122,9 +122,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Windows ended automatic MS-CHAPv2 sign-in.** Since 13 October 2026, Windows 11 24H2 and later block single sign-on with NTLMv1-derived credentials, so PEAP-MSCHAPv2 no longer connects on its own. Setting `BlockNtlmv1SSO` to 0 is a temporary exception[^ntlmv1].",
-        "**Cloud PKI came to Microsoft 365 E5** from July 2026. Otherwise it's an add-on at $2 per user per month, paid yearly[^intuneprice].",
-        "**Client isolation proved leaky.** In February 2026, researchers bypassed it under WPA2 and WPA3, in home and enterprise networks; a separate guest VLAN stopped the attacks[^airsnitch].",
+        "**Windows ended automatic MS-CHAPv2 sign-in.** Updates from 13 October 2026 make Windows 11 24H2 and later block single sign-on with NTLMv1-derived credentials, so PEAP-MSCHAPv2 users must type their password. Setting `BlockNtlmv1SSO` to 0 is a temporary exception[^ntlmv1].",
+        "**Cloud PKI is rolling into Microsoft 365 E5** from July 2026. Otherwise it's a US$2 per user per month add-on, paid yearly[^intuneprice].",
+        "**Client isolation proved leaky.** In February 2026, researchers bypassed it under WPA2 and WPA3, in home and enterprise networks; a separate guest VLAN blocked the attacks in their test[^airsnitch].",
         "**Network access systems were exploited.** CISA listed UniFi OS flaws in June 2026 and a Cisco ISE flaw in September 2026 as exploited[^kev]."
       ]
     },
@@ -133,10 +133,10 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Hidden SSIDs.** Clients announce the name anyway, and Microsoft advises against hiding it[^nonbroadcast].",
+        "**Hidden SSIDs.** Apple says hiding the name neither conceals nor secures the network, and devices that search for it can give it away[^applewifi].",
         "**MAC allow-lists as access control.** BSI doesn't treat devices identified by MAC address as trusted[^bsinac].",
         "**A VPN over your own Wi-Fi.** BSI lists it only for high protection needs[^bsiwlan].",
-        "**NAC posture checks before the basics.** BSI files them under high protection[^bsinac]. Check compliance at app sign-in with Conditional Access."
+        "**NAC posture checks before the basics.** BSI files compliance checks under high protection[^bsinac]. Check compliance in Conditional Access instead."
       ]
     },
     {
@@ -145,7 +145,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Letting users accept unknown servers.** With PEAP, that hands a fake AP a crackable response[^msadv]. Turn on **Perform server validation**[^intunewifi].",
+        "**Letting users accept unknown servers.** With PEAP, that hands a fake AP a crackable response[^msadv]. Validate the server and disable user prompts[^intunewifi].",
         "**Deleting a leaver before retiring the device.** Intune SCEP and PKCS certificates stay valid; retire or wipe the device first[^intunerevoke].",
         "**Leaving `BlockNtlmv1SSO` at 0.** It reduces protection[^ntlmv1]; set an end date.",
         "**One network for staff, guests and devices.** BSI forbids WLANs that couple security zones[^bsiwlan]."
@@ -186,6 +186,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed the October 2026 Windows change to automatic sign-in on Windows 11 24H2 and later, made the Message-Authenticator step safe to roll out and replaced a vendor blog with Microsoft Learn."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -261,7 +266,7 @@
       "title": "AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks",
       "publisher": "NDSS 2026",
       "date": "Feb 2026",
-      "url": "https://www.cs.ucr.edu/~zhiyunq/pub/ndss26_airsnitch.pdf"
+      "url": "https://www.ndss-symposium.org/ndss-paper/airsnitch-demystifying-and-breaking-client-isolation-in-wi-fi-networks/"
     },
     {
       "id": "ciscohost",
@@ -296,21 +301,21 @@
       "title": "Microsoft Intune plans and pricing",
       "publisher": "Microsoft",
       "date": "checked 5 Nov 2026",
-      "url": "https://www.microsoft.com/en-us/security/business/microsoft-intune-pricing"
+      "url": "https://www.microsoft.com/en-us/security/microsoft-intune-pricing"
     },
     {
       "id": "wfa",
       "title": "WPA3 deployment options",
       "publisher": "Wi-Fi Alliance",
-      "date": "2025",
+      "date": "Feb 2026",
       "url": "https://www.wi-fi.org/system/files/WPA3_Deployment_Options_Highlights_202602.pdf"
     },
     {
       "id": "wifi7",
-      "title": "Introducing Wi-Fi 7 for enterprise connectivity",
-      "publisher": "Windows IT Pro Blog",
-      "date": "29 Sep 2025",
-      "url": "https://techcommunity.microsoft.com/blog/windows-itpro-blog/introducing-wi-fi-7-for-enterprise-connectivity/4456751"
+      "title": "Windows 11 security book: Network security",
+      "publisher": "Microsoft Learn",
+      "date": "13 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/windows/security/book/operating-system-security-network-security"
     },
     {
       "id": "blastradius",
@@ -362,11 +367,11 @@
       "url": "https://learn.microsoft.com/en-us/intune/device-configuration/certificates/remove-profiles"
     },
     {
-      "id": "nonbroadcast",
-      "title": "Non-broadcast wireless networks with Windows",
-      "publisher": "Microsoft (archived)",
-      "date": "updated 19 Apr 2007",
-      "url": "https://learn.microsoft.com/en-us/previous-versions/tn-archive/bb726942(v=technet.10)"
+      "id": "applewifi",
+      "title": "Recommended settings for Wi-Fi routers and access points",
+      "publisher": "Apple Support",
+      "date": "14 Jul 2026",
+      "url": "https://support.apple.com/en-us/102766"
     }
   ]
 }
