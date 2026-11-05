@@ -1,14 +1,14 @@
 {
   "slug": "secure-java",
   "topic": "Secure Java",
-  "status": "draft",
+  "status": "published",
   "order": 38,
   "capability": "coding/java",
   "title": "Java: which APIs and framework defaults turn into vulnerabilities?",
   "short": "Never let outside data name the class it becomes, keep input out of queries and expressions, and move off Spring Boot 3.5, whose free fixes ended in June 2026.",
   "answer": "Before your next release, move to JDK 25 or 21 and Spring Boot 4.1[^sbsupport], stop deserializing outside data into classes it names, and require Find Security Bugs or CodeQL in CI. Judge everything else by whether outside data can pick a class, become SQL, an expression or a command, reach an XML parser, a path or a URL, or slip past an authorization rule.",
   "audience": "Developers and tech leads writing production Java, including Spring Boot services, and the security people who review it",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -56,7 +56,7 @@
         },
         {
           "title": "Can data choose a class or code?",
-          "text": "Search for `ObjectInputStream`, `XMLDecoder`, `activateDefaultTyping`, `Id.CLASS`, `Class.forName`, `parseExpression` and `lookup(`."
+          "text": "Search for `ObjectInputStream`, `XMLDecoder`, `enableDefaultTyping`, `activateDefaultTyping`, `Id.CLASS`, `Class.forName`, `parseExpression` and `lookup(`."
         },
         {
           "title": "Does it reach SQL, a process, XML, a path or a URL?",
@@ -76,13 +76,13 @@
       "span": "full",
       "items": [
         "**`ObjectInputStream.readObject()` and `XMLDecoder`.** The stream picks the classes, and gadgets on the classpath turn that into code execution[^serfilter]; OWASP lists `XMLDecoder` as unsafe for untrusted input[^owaspdeser]. If you must read Java serialization, set `jdk.serialFilter` to an allowlist ending in `!*`, with `maxbytes` and `maxdepth` limits[^serpattern].",
-        "**`activateDefaultTyping()` and `@JsonTypeInfo(use = Id.CLASS)`.** The JSON then names the class, and Jackson calls the validator you pass critical for security[^jackson]. Use `Id.NAME` with listed subtypes[^fsb]. XStream with a relaxed allowlist, SnakeYAML without `SafeConstructor` and fastjson without safe mode share the problem[^owaspdeser].",
+        "**`activateDefaultTyping()` and `@JsonTypeInfo(use = Id.CLASS)`.** The JSON then names the class, and Jackson calls the validator you pass critical for security[^jackson]. Use `Id.NAME` with listed subtypes[^fsb]. XStream with a relaxed allowlist, SnakeYAML before 2.0 without `SafeConstructor` and fastjson without safe mode share the problem[^owaspdeser].",
         "**`DocumentBuilderFactory.newInstance()` defaults.** JDK parsers fetch external DTDs and entities unless you set secure processing explicitly[^jaxp], and GeoServer's XXE (CVE-2025-58360) is exploited[^kev]. Set `jdk.xml.dtd.support=deny` on JDK 22 and later, or `disallow-doctype-decl` for DOM and SAX and `SUPPORT_DTD` false for StAX[^jaxp].",
         "**`\"WHERE id = \" + id` in JDBC, JPQL or a native `@Query`.** Hibernate queries are injectable when you concatenate[^owaspsqli]. Bind `?` or `:name` parameters, and map sort columns and directions from a fixed list: parameters can't stand for column names[^owaspsqli].",
         "**SpEL, OGNL, `Class.forName()` or JNDI `lookup()` fed from input.** Spring says `StandardEvaluationContext` must never evaluate untrusted SpEL and `SimpleEvaluationContext` is only best-effort[^spel]. Spring Cloud Function (SpEL), Confluence (OGNL) and PaperCut (reflection) flaws are exploited[^kev]; Log4Shell ran LDAP code named in a log message[^log4j]. Keep input in variables; map names from a fixed list.",
         "**`Runtime.exec(String)` and `sh -c`.** `exec(String)` splits on whitespace and is deprecated since JDK 18[^runtime]. Give `ProcessBuilder` a fixed program and one element per argument, put `--` before input that may start with a dash, and never hand input to `sh -c` or `cmd /c`.",
         "**`base.resolve(name)`.** An absolute `name` replaces `base`, and `normalize()` ignores symlinks[^path]. Require `startsWith(base)` on the normalized path, which compares whole name elements, and on `toRealPath()` where links matter[^path]. Check `ZipEntry` names too.",
-        "**`URL.openStream()` and HTTP clients given URLs from input.** URL connections also open `file:` URLs[^fsb]; server-side request forgery ranks 22nd in the CWE Top 25[^cwe]. Allowlist hosts, check resolved addresses and refuse redirects, as the JDK `HttpClient` does by default[^httpclient]. Boot's clients follow them unless `spring.http.clients.redirects` is `dont-follow`[^sbsettings]."
+        "**`URL.openStream()` and HTTP clients given URLs from input.** URL connections also open `file:` URLs[^fsb]; server-side request forgery ranks 22nd in the CWE Top 25[^cwe]. Allowlist hosts, check resolved addresses and refuse redirects, the JDK `HttpClient` default[^httpclient]. Boot's clients follow them unless `spring.http.clients.redirects` is `dont-follow`[^sbsettings][^sbclient]."
       ]
     },
     {
@@ -114,11 +114,11 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Oracle JDK 21 updates are no longer no-fee.** Releases since 20 October 2026 use the OTN license; Oracle JDK 25 updates stay no-fee through September 2028[^oracle]. Temurin supports 21 until at least December 2029[^temurin].",
-        "**Compromised eMudhra CA keys need another JDK update.** Install a runtime that fixes JDK-8395690 (CVE-2026-114820) in every image, even after the 20 and 21 October releases[^ojvuln]. Debian and Ubuntu OpenJDK packages also need the Java keystore deleted and rebuilt[^ojemudhra].",
-        "**Spring Boot 4.0.0 to 4.0.5 could leave every endpoint open** in servlet apps that rely on Boot's default web security and use actuator without `spring-boot-health` (CVE-2026-40976, critical). 4.0.6 fixes it[^sp40976].",
+        "**Oracle JDK 21 updates are no longer no-fee.** Releases since 20 October use the OTN license; Oracle JDK 25 updates stay no-fee through September 2028[^oracle]. Temurin supports 21 until at least December 2029[^temurin].",
+        "**Compromised eMudhra CA keys need another JDK update.** Install a runtime that fixes JDK-8395690 (CVE-2026-114820) in every image, even if you updated in October; on Debian and Ubuntu, also rebuild the Java keystore[^ojemudhra].",
+        "**Spring Boot 4.0.0 to 4.0.5 could open every endpoint** in some apps on Boot's default web security (CVE-2026-40976, critical). 4.0.6 fixes it[^sp40976].",
         "**Free Spring fixes now skip Spring Security 6.5.** August's critical fix for its embedded LDAP server (CVE-2026-59270) shipped free only for 7.0 and 7.1[^sp59270].",
-        "**Spring Boot 4.1 added SSRF protection.** An `InetAddressFilter` bean limits which addresses auto-configured HTTP clients may call, though not through a proxy[^sbclient]."
+        "**Spring Boot 4.1 added SSRF protection.** An `InetAddressFilter` bean limits the addresses its HTTP clients may call, except through a proxy[^sbclient]."
       ],
       "span": "full"
     },
@@ -157,6 +157,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which corrected the Spring Boot redirect default and narrowed 7 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -293,7 +298,7 @@
     {
       "id": "sbsettings",
       "title": "HttpClientSettings",
-      "publisher": "Spring Boot 4.1 API",
+      "publisher": "Spring Boot API",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.spring.io/spring-boot/api/java/org/springframework/boot/http/client/HttpClientSettings.html"
     },
