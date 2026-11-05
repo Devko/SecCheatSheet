@@ -1,14 +1,14 @@
 {
   "slug": "customer-assurance",
   "topic": "Customer security reviews",
-  "status": "draft",
+  "status": "published",
   "order": 56,
   "capability": "govern/assurance",
   "title": "Customer security reviews: can you answer fast without promising more than you do?",
   "short": "Answer every questionnaire from one dated evidence pack within five working days, and mark planned controls as planned.",
   "answer": "This quarter, build one dated evidence pack and one answer library in a standard format such as the CSA CAIQ, and let nothing go out without security's approval. Answer only what is true today, mark planned controls with a date, and accept the clauses NIS2, DORA and the GDPR require while you negotiate how they work.",
   "audience": "Sales, security, legal and IT leads at companies that sell to other businesses, especially to EU customers under NIS2 or DORA",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -89,7 +89,7 @@
       "navTitle": "Formats",
       "items": [
         "**CSA CAIQ v4.1.** 283 questions, released in January 2026; STAR accepts v4.0 until December 2027[^caiqtime]. Submit the STAR Level 1 version, not the reference copy in the CCM workbook[^ccm41].",
-        "**The CAIQ license.** CSA's free files are for internal reference and may not be changed or redistributed; commercial use needs a license[^ccm41][^csalic]. Share your CAIQ through STAR, and ask CSA before emailing the file or building it into a product.",
+        "**The CAIQ license.** CSA's free files are for internal reference and may not be changed or redistributed; commercial use needs a license[^ccm41][^csalic]. Cloud providers share it through STAR; ask CSA before emailing the file or building it into a product.",
         "**Trust page.** Certificates, a SOC 3, which can be freely distributed[^soc3], sub-processors, the security contact and an NDA request form. ENISA points customers to suppliers that publish security commitments[^enisatig].",
         "**AI-CAIQ.** CSA's AI Controls Matrix v1.1 of June 2026 includes one[^aicm]. Use it if you offer AI features, and list which AI services touch customer data.",
         "**SIG or the customer's own form.** You can answer a customer's SIG, but a SIG of your own needs a Shared Assessments membership or subscription[^sig]. Answer from the same library, point to your STAR entry or report and keep a copy of what you sent."
@@ -208,6 +208,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which limited NIS2 supplier clauses to customers that are digital providers, applied CSA's and Shared Assessments' license terms to sharing questionnaires and scoped the DORA clauses to critical functions."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
