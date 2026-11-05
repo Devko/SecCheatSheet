@@ -1,14 +1,14 @@
 {
   "slug": "risk-register",
   "topic": "Risk register and exceptions",
-  "status": "draft",
+  "status": "published",
   "order": 64,
   "capability": "leadership/risk",
   "title": "Risk register: who may accept which risk, and for how long?",
   "short": "Keep 20 to 50 risks with business owners, and let no accepted risk or exception run past 12 months.",
   "answer": "This quarter, build a register of 20 to 50 risks, each tied to a service on your asset list and owned by a business owner, and have management approve who may accept which risk and for how long. Review the top ten with management every quarter, and give every accepted risk and policy exception an end date no more than 12 months out.",
   "audience": "Heads of security, CISOs and IT leads who keep the risk register, and the managing directors and business owners who accept risks, especially in EU organizations with NIS2, BSIG or DORA duties",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -91,10 +91,10 @@
       "title": "Who may accept which risk",
       "navTitle": "Acceptance",
       "items": [
-        "**Acceptance is the exception.** NIS2 requires measures appropriate to the risks[^nis2], and 2024/2690's recitals keep acceptance for exceptional cases[^nis2ir]. The BSI rules out blanket acceptance under the BSIG, though risks that don't matter for the regulated services may be accepted[^bsiiso].",
-        "**Set authority by impact.** Our ladder: low risks the risk owner, medium a managing director, high and very high the management body. For digital providers, 2024/2690 allows delegation if management gets adequate reports[^nis2ir]. Grundschutz++ has management authorize all residual risks[^std3001], so have it sign off delegated acceptances each quarter.",
+        "**Acceptance is the exception.** NIS2 requires measures appropriate to the risks[^nis2]; 2024/2690's recitals keep acceptance for exceptional cases[^nis2ir]. The BSI rules out blanket acceptance under the BSIG, but risks irrelevant to the regulated services may be accepted[^bsiiso].",
+        "**Set authority by impact.** Our ladder: low risks the risk owner, medium a managing director, high and very high the management body. 2024/2690 lets digital providers delegate if management gets adequate reports[^nis2ir]. Grundschutz++ has management authorize all residual risks[^std3001], so add delegated ones to its quarterly sign-off.",
         "**Get it in writing, with reasons.** Digital providers must document the reasons[^nis2ir]; ENISA adds a loss estimate and a contingency plan[^enisatig].",
-        "**Give it an end date,** 12 months at most. DORA's standards have financial entities outside the simplified framework list accepted residual risks with reasons and recheck them at least yearly[^rts1774].",
+        "**Give it an end date,** 12 months at most. DORA's full framework has accepted residual risks listed with reasons and reviewed at least yearly[^rts1774].",
         "**Don't accept critical flaws.** ENISA advises against it where possible[^enisatig]. Without a patch, digital providers must add measures and accept the residual risk[^nis2ir]."
       ]
     },
@@ -107,7 +107,7 @@
         "**Treat an exception as a small acceptance,** with the same authority levels. Record clause, systems, reason, compensating controls, end date and approver in one ticket form linked to the register row. ENISA lists request and approval records with compensating controls as evidence[^enisatig].",
         "**Demand controls that serve the rule's purpose.** ENISA's example is a system that can't support MFA, excepted while alternative measures go in[^enisatig]. Our choice: a jump host with MFA, a fixed source network and alerts.",
         "**End it, or approve it again one level up.** Grant up to 6 months, 12 at most. A renewal needs fresh approval and proof the compensating controls run.",
-        "**Fix rules that collect exceptions.** Change the standard instead; see the policies sheet. Grundschutz++ allows no exception to a MUSS requirement, and many permanently unmet SOLLTE ones can mean missing the state of the art[^std3001]."
+        "**Fix rules that collect exceptions.** Change the standard; see the policies sheet. Grundschutz++ allows no exception to a MUSS requirement; many permanently unmet SOLLTE ones can mean missing the state of the art[^std3001]."
       ]
     },
     {
@@ -130,7 +130,7 @@
       "span": "full",
       "items": [
         "**Grundschutz++ set minimum register fields.** BSI-Standard 300-1 (20 October 2026) requires ID, object, description, protection goals, risk level and owner per risk, priority, treatment and linked measures where treated, and a time limit on temporary acceptance[^std3001].",
-        "**The BSI listed management's decisions.** Its non-binding curriculum suggests settling accepted risks, escalation thresholds and residual-risk rules, ideally within 2 to 6 weeks of the first training[^bsicurr].",
+        "**The BSI listed management's decisions.** Its non-binding curriculum suggests settling accepted risks, escalation thresholds and acceptance rules, ideally 2 to 6 weeks after the first training[^bsicurr].",
         "**NIST revised its register series.** IR 8286, 8286A and 8286C Rev. 1 came out in December 2025[^ir8286a][^ir8286c]. IR 8286 encourages stating risk in money wherever feasible[^ir8286]."
       ]
     },
@@ -152,7 +152,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**A register nobody reads.** Two hundred rows only the auditor sees decide nothing. Take the top ten to management and ask for a decision on each.",
-        "**Every risk rated medium.** Scores bunch up; the BSI notes most users tend to use just two levels in practice[^std2003]. Define four in numbers and have someone outside the team challenge ratings.",
+        "**Every risk rated medium.** Scores bunch up; the BSI notes most users tend to use just two levels[^std2003]. Define four in numbers; let an outsider challenge ratings.",
         "**IT owning business risks.** IT then accepts outages it can't weigh against revenue. Make the process owner the risk owner and IT the action owner.",
         "**Accepting by silence.** A risk nobody decides on is accepted by default. Put every undecided row on the next management agenda.",
         "**Exceptions without end dates.** They quietly become the policy. Alert 30 days before expiry and treat an expired exception as a finding."
@@ -168,7 +168,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Keep 15 to 25 rows in a spreadsheet; the IT provider drafts scenarios, department heads own them.",
+            "Keep 15 to 25 rows in a spreadsheet; the IT provider drafts, department heads own.",
             "A managing director accepts anything above low, in writing.",
             "Review it with the managing directors for 30 minutes a quarter.",
             "Track exceptions on a second tab with end dates."
@@ -196,6 +196,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which stated each acceptance rule with its exact scope (2024/2690 for digital providers, Grundschutz++ sign-off by management, DORA's full framework), added the BSI's limits on accepting risks and exceptions and narrowed the FAIR and BSI 200-3 claims."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
