@@ -1,14 +1,14 @@
 {
   "slug": "security-program",
   "topic": "Security program and roadmap",
-  "status": "draft",
+  "status": "published",
   "order": 62,
   "capability": "leadership/program",
   "title": "Security program: what do you fund first, and how do you keep it on track?",
   "short": "Fund 8 to 12 initiatives on one 18-month roadmap, ranked by risk reduction per euro, and steer it monthly and quarterly.",
   "answer": "This quarter, turn strategy bets and assessment gaps into 8 to 12 initiatives with an owner, outcome, cost and quarter each, rank them by risk reduction per euro after fixed deadlines, and get the roadmap and budget approved. Steer it monthly with the owners and quarterly with management, and change it only there.",
   "audience": "Heads of security, CISOs and IT leads who own security, and the managing directors who fund the program",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,7 +24,7 @@
         },
         {
           "title": "Rank by risk reduction per euro.",
-          "text": "Weigh each one's cost against the risk it removes, as 2024/2690 requires of digital providers[^nis2ir]. Count three years of cost, then fund down the list until the money runs out[^ir8286b]."
+          "text": "Weigh each one's cost against the risk it removes, as 2024/2690 requires of digital providers[^nis2ir]. Count three years of cost. Then fund down the list until the money runs out, one of NIST's methods[^ir8286b]."
         },
         {
           "title": "Schedule fixed deadlines first.",
@@ -71,7 +71,7 @@
       "navTitle": "Budget",
       "items": [
         "**Benchmark, don't target.** In ENISA's survey of 1,080 mostly large EU organizations, security took a median 9% of the IT budget and 10.6% of IT staff[^nisinv]. Sector medians ran from 6% in energy to 13.3% in ICT service management[^niscomp].",
-        "**German firms report more.** Bitkom's 2026 survey of firms with 10 or more staff found an average 18%, as in 2025; 45% spent 20% or more[^bitkom].",
+        "**A German survey finds more.** Bitkom's 2026 survey of firms with 10 or more staff found a mean of 18%, as in 2025; 45% spent 20% or more[^bitkom].",
         "**Count like ENISA.** Include capital and operating spend on hardware, software, staff, contractors and outsourcing[^nisinv].",
         "**Split run, change and reserve.** Run: staff, licenses, MDR, recurring tests. Change: initiatives with an end date. Reserve: about 10% of the money for incidents and findings."
       ]
@@ -107,16 +107,16 @@
         {
           "title": "Months 7 to 12",
           "items": [
-            "**EDR on every server.** IT operations. Done: coverage counted against the asset list.",
+            "**EDR on every server.** IT operations. Done: every listed server reports in or has a dated exception.",
             "**MDR with planted tests.** Security. Done: a planted test is caught and escalated in time.",
-            "**Critical supplier clauses.** Procurement. Done: the top-tier contracts carry them."
+            "**CRA readiness, for product makers.** Product security. Done: vulnerability handling and SBOMs by 11 December 2027[^cra]."
           ]
         },
         {
           "title": "Months 13 to 18",
           "items": [
             "**Management and backup zones.** Network team. Done: admin interfaces answer only from the admin subnet.",
-            "**CRA readiness, for product makers.** Product security. Done: vulnerability handling and SBOMs by 11 December 2027[^cra].",
+            "**Critical supplier clauses.** Procurement. Done: the top-tier contracts carry them.",
             "**Reassess and replan.** Head of security. Done: the next roadmap is approved."
           ]
         }
@@ -141,7 +141,7 @@
       "navTitle": "Unplanned work",
       "items": [
         "**Plan 70 to 80% of capacity.** Keep the rest for incidents, audits and customer questionnaires, and log the hours.",
-        "**One intake for new work.** Small requests go to the working group; anything that moves a committed date goes to the quarterly review, and something else moves out. ENISA advises managing exceptions to the plan[^enisatig].",
+        "**One intake for new work.** Small requests go to the working group; anything that moves a committed date waits for the quarterly review or a written management decision, and something else moves out. ENISA advises managing exceptions to the plan[^enisatig].",
         "**After an incident, replan.** Digital providers must feed post-incident reviews into risk treatment[^nis2ir]. Re-rank at the next monthly meeting.",
         "**Give audit findings a date.** The BSI can make critical facility operators submit a plan to fix deficiencies their audits found[^bsig].",
         "**Split off phase two.** Extra scope competes for funding as a new initiative."
@@ -192,7 +192,7 @@
       "items": [
         "**ENISA's newest data.** Its December 2025 report found spend steady at a median 9% of IT budgets but moving to tools and outsourcing, as security's share of IT staff hit a new low[^nisinv]. Budget operators too.",
         "**Grundschutz++ formalizes the plan.** BSI-Standard 300-1 (October 2026) wants a prioritized implementation plan with owners, deadlines and tracking, approved by management, which carries the risk of open items[^std3001].",
-        "**German critical facilities got resilience duties.** The KRITIS umbrella act took effect on 17 March 2026; its duties start 9 to 10 months after registration[^kritis]. Plan them on this roadmap."
+        "**German critical facilities got resilience duties.** The KRITIS umbrella act took effect on 17 March 2026; its duties start 9 to 10 months after registration[^kritis], which waits for a scope ordinance still in draft[^bbkfaq]. Plan them on this roadmap."
       ]
     },
     {
@@ -232,6 +232,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which presented NIST's funding method as one of several, separated Bitkom's survey mean from ENISA's median, moved CRA readiness ahead of its December 2027 date and noted that KRITIS registration waits for its ordinance."
+    },
+    {
+      "date": "2026-11-05",
       "version": "0.1",
       "text": "First draft, based on ENISA's NIS Investments 2025, Bitkom's 2026 survey, BSI-Standards 200-2 and 300-1, NIST IR 8286B, NIS2, Regulation 2024/2690, DORA, the CRA, the BSIG and the UK Cyber Governance Code."
     }
@@ -239,7 +244,7 @@
   "sources": [
     {
       "id": "std3001",
-      "title": "BSI-Standard 300-1, chapters 4.3 to 4.5",
+      "title": "BSI-Standard 300-1, chapter 4",
       "publisher": "BSI",
       "date": "20 Oct 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/BSI_Standards/standard_300-1.pdf?__blob=publicationFile&v=3"
@@ -288,7 +293,7 @@
     },
     {
       "id": "niscomp",
-      "title": "NIS Investments 2025, data companion",
+      "title": "NIS Investments 2025, survey data",
       "publisher": "ENISA",
       "date": "Dec 2025",
       "url": "https://www.enisa.europa.eu/sites/default/files/2025-12/NIS%20Investments%202025%20-%20Survey%20data%20companion%20document_0.pdf"
@@ -334,6 +339,13 @@
       "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/kritisdachg/BJNR0420B0026.html"
+    },
+    {
+      "id": "bbkfaq",
+      "title": "FAQ zum KRITIS-Dachgesetz",
+      "publisher": "BBK",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bbk.bund.de/DE/Themen/Kritische-Infrastrukturen/Strategien-und-rechtlicher-Rahmen/KRITISDachG/FAQ/faq_node.html"
     },
     {
       "id": "dora",
