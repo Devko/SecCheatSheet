@@ -1,14 +1,14 @@
 {
   "slug": "secure-cpp",
   "topic": "Secure C and C++",
-  "status": "draft",
+  "status": "published",
   "order": 47,
   "capability": "coding/cpp",
   "title": "C and C++: how safe can you get without a rewrite?",
   "short": "Ship every build with the OpenSSF hardening flags and a bounds-checked standard library (0.3% overhead at Google), fuzz parsers under ASan and write new components in a memory-safe language.",
   "answer": "Before your next release, build with the OpenSSF hardening flags and a bounds-checked standard library, and run tests and fuzzers under ASan and UBSan in CI. Write new components in a memory-safe language, and judge each change by whether it checks the size, owner and lifetime of memory that outside data reaches.",
   "audience": "Developers and tech leads maintaining production C and C++, and the security people who review it",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -103,7 +103,7 @@
       "items": [
         "**GCC 16 (30 April) zero-initializes locals under `-std=c++26`** and now defaults to `-std=gnu++20`[^gcc16][^gccopt].",
         "**Clang 23 added `-Wlifetime-safety`,** which detects use after free within a function. Add it to CI[^clang23].",
-        "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl]. 3.0 reached end of life on 7 September; 3.5 is supported until April 2030[^openssleol].",
+        "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl]. 3.0 and 3.6 are now out of support; 3.5 is supported until April 2030, 4.0 until May 2027[^opensslrel].",
         "**CISA added an exploited Brotli overflow on 27 October.** Update every copy, vendored ones too, to 1.0.10, 1.1.1 or 1.2.1[^cvebrotli][^kev]."
       ]
     },
@@ -112,7 +112,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Waiting for C++26.** It isn't final after the October 2026 ballot[^p4433], its library hardening standardizes checks the three major libraries already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
+        "**Waiting for C++26.** It isn't final yet[^p4433], its library hardening standardizes checks the three major libraries already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
         "**Rewriting stable code at once.** Vulnerabilities decay as code ages[^gsource]: harden old code and rewrite the parsers that take outside data.",
         "**Valgrind in CI.** Sanitizers find similar bugs at a 2x to 4x slowdown, against up to 20x to 50x[^openssf]."
       ]
@@ -162,6 +162,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which limited Google's overhead figure to hardened libc++, warned that zero-initialization masks MemorySanitizer findings, added the open C++26 ballot and updated OpenSSL's supported versions."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -359,11 +364,11 @@
       "url": "https://releases.llvm.org/23.1.0/tools/clang/docs/ReleaseNotes.html"
     },
     {
-      "id": "openssleol",
-      "title": "OpenSSL 3.0 End of Life",
+      "id": "opensslrel",
+      "title": "Release strategy",
       "publisher": "OpenSSL",
-      "date": "16 Sep 2026",
-      "url": "https://openssl-library.org/post/2026-09-16-eol30/"
+      "date": "updated 7 May 2026",
+      "url": "https://openssl-library.org/policies/releasestrat/"
     },
     {
       "id": "cvebrotli",
