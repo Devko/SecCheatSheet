@@ -9,7 +9,7 @@
   "answer": "If a vulnerability is being exploited and the system is reachable from the internet, contain it within 24 hours and patch within 72. Schedule everything else by exploitation and exposure, not by CVSS score alone.",
   "audience": "IT and security teams of any size",
   "version": "1.1",
-  "lastReviewed": "2026-11-02",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

@@ -9,7 +9,7 @@
   "answer": "This month, build your external inventory from registrar accounts, DNS zones, certificate transparency logs, cloud accounts and IP allocations, and get free exposure alerts from Shadowserver and your national CERT. Then compare it with an outside scan every week, and give each exposed service an owner and a reason to be public, or take it off the internet.",
   "audience": "IT and security teams in organizations of any size that need to know what they expose to the internet",
   "version": "1.2",
-  "lastReviewed": "2026-11-04",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

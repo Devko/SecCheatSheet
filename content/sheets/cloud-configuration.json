@@ -9,7 +9,7 @@
   "answer": "This month, run CISA's ScubaGear against Microsoft 365 and a free posture check against each cloud, and fix public storage, long-lived access keys, open app consent and open external access first. Then lock those settings with organization-level guardrails and re-run the same checks every week, so a changed setting shows up as a diff rather than as an incident.",
   "audience": "IT, platform and security teams running Microsoft 365 with workloads in Azure, AWS or Google Cloud, in organizations of any size",
   "version": "1.1",
-  "lastReviewed": "2026-11-04",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

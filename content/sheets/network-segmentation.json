@@ -9,7 +9,7 @@
   "answer": "This quarter, move hypervisor, backup and device management into a zone reachable only from admin workstations, and block SMB, RDP and WinRM between workstations with the host firewall. Then put a default-deny firewall between users and servers one zone at a time, and count a rule as working only once you have tested it from a user's laptop.",
   "audience": "IT and network teams with flat or lightly segmented office networks, on-premises servers, some cloud and, in some cases, OT or building systems",
   "version": "1.1",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

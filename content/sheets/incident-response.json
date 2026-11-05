@@ -9,7 +9,7 @@
   "answer": "This month, confirm that Microsoft 365 auditing is on, keep sign-in logs for at least a year and agree who leads, who decides and whom you call. When something looks wrong, isolate accounts and devices without wiping them, export the logs in the first hours and, if the GDPR requires it, notify within 72 hours[^edpb].",
   "audience": "IT and security teams in small and mid-size organizations without a 24/7 SOC, many on Microsoft 365 and Entra ID",
   "version": "1.1",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

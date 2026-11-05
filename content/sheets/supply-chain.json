@@ -9,7 +9,7 @@
   "answer": "This month, make new package versions wait three days before they install, lock every GitHub Action to a commit and replace long-lived publishing and cloud tokens with trusted publishing and OIDC. Judge every other control by whether it keeps credentials away from code you didn't write, or tells you within an hour where a bad version ran.",
   "audience": "Development, platform and DevOps teams that build and ship software, including small teams on GitHub",
   "version": "1.2",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

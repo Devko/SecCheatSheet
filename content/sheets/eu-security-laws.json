@@ -9,7 +9,7 @@
   "answer": "Check which of your legal entities fall under NIS2 or DORA and which products under the CRA, since all three require a first report within 24 hours[^nis2][^dorarts][^cra]. Then resolve overlaps by role: DORA replaces NIS2's risk and reporting rules for financial entities[^nis2] and the CRA adds product duties, so one group can face all three.",
   "audience": "IT, security and compliance leads in EU organizations, especially in Germany",
   "version": "1.1",
-  "lastReviewed": "2026-11-02",
+  "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
     {

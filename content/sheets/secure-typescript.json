@@ -9,7 +9,7 @@
   "answer": "Before your next release, parse every untrusted input with a runtime schema, make typescript-eslint's type-aware `no-unsafe-*` rules errors and check authorization in each handler, not only in middleware. Judge everything else by whether outside data can reach a shell, a query, a file path, a URL, an object merge, `eval` or raw HTML unchecked.",
   "audience": "Developers and tech leads writing production TypeScript for Node.js servers and React front ends, and the security people who review it",
   "version": "1.1",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

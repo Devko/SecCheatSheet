@@ -18,6 +18,14 @@ export async function loadSheets(dir) {
     if (isWritten(sheet) && !/^\d{4}-\d{2}-\d{2}$/.test(sheet.lastReviewed)) {
       throw new Error(`${file}: lastReviewed must be YYYY-MM-DD`);
     }
+    // Every review bumps version, updates lastReviewed and adds a changes entry, newest first (README).
+    const latest = isWritten(sheet) ? sheet.changes[0] : null;
+    if (latest && latest.version !== sheet.version) {
+      throw new Error(`${file}: version ${sheet.version} doesn't match the latest changes entry (${latest.version})`);
+    }
+    if (latest && latest.date > sheet.lastReviewed) {
+      throw new Error(`${file}: the latest change (${latest.date}) is newer than lastReviewed (${sheet.lastReviewed})`);
+    }
     sheets.push(sheet);
   }
   return sheets.sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.topic.localeCompare(b.topic));

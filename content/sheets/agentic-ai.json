@@ -9,7 +9,7 @@
   "answer": "Before an agent touches real data or systems, give it its own identity with the least access that works, run it in a sandbox, and make a person approve anything it can't undo. Judge every other tool or permission by two questions: who else can write what the agent reads, and what could it do if they did?",
   "audience": "IT and security teams deploying or allowing AI agents",
   "version": "1.1",
-  "lastReviewed": "2026-11-02",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

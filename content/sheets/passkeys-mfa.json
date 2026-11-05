@@ -9,7 +9,7 @@
   "answer": "Require phishing-resistant sign-in (security keys, passkeys, Windows Hello for Business or certificates) for every admin first, and secure account recovery before you enforce it. Then move each remaining group to the strongest method its devices support, and give SMS, voice and email codes an end date.",
   "audience": "IT and security teams, especially on Microsoft 365 and Microsoft Entra ID",
   "version": "1.1",
-  "lastReviewed": "2026-11-02",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

@@ -9,7 +9,7 @@
   "answer": "This quarter, pick one published baseline per server platform, remove default and shared credentials and switch off the legacy protocols that relay attacks need, auditing each change before you enforce it. Then apply the baseline from code to every new and existing server and compare live settings with it every week, so drift becomes a finding with an owner.",
   "audience": "IT and platform teams running Windows and Linux servers, hypervisors, databases and other server software, on premises or on IaaS",
   "version": "1.1",
-  "lastReviewed": "2026-11-04",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

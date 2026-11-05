@@ -5,7 +5,7 @@
   "order": 63,
   "capability": "leadership/projects",
   "title": "Security projects: how do you get a control to everyone, and into IT projects before go-live?",
-  "short": "Set a coverage target such as 98% and dated exceptions before the pilot, run report-only for a week first, and check IT projects at kickoff and before go-live.",
+  "short": "Set a coverage target such as 98% and dated exceptions before the pilot, run report-only for at least a week, and check IT projects at kickoff and before go-live.",
   "answer": "Before your next security rollout starts, write down its scope, a coverage target such as 98% of in-scope accounts enforced, and an end date for every exception, then run it in report-only or audit mode, a pilot and two or three rings. In the company's other IT projects, ask the security questions at kickoff and sign off before go-live, and scale the effort by protection need so only high-need projects wait for a full review.",
   "audience": "Heads of security, IT leads who own security, and project managers in small and mid-size companies",
   "version": "0.1",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Ask security at kickoff, not at go-live.",
-          "text": "The BSI requires involving the ISB early in larger projects and new IT systems[^isms1]; Grundschutz++ lets you define when[^std3001]."
+          "text": "The BSI requires involving the ISB early in larger projects and new IT systems[^isms1]; Grundschutz++ requires a rule for when[^std3001]."
         }
       ]
     },
@@ -60,7 +60,7 @@
         },
         {
           "title": "When does the next ring start?",
-          "text": "After a week with no open tickets. Reuse your Windows update rings if you have them."
+          "text": "After a week with no open blocking tickets. Reuse your Windows update rings if you have them."
         },
         {
           "title": "When is it done?",
@@ -76,8 +76,8 @@
       "items": [
         "**Tell users what changes, when, and how to get help**[^caplan], a week before their ring and on the day.",
         "**Brief the help desk before each ring:** the script, known errors and what to collect, including the correlation ID from **More details**[^caplan].",
-        "**Write the rollback first:** the trigger and the switch. Disable the policy or exclude a group in Conditional Access[^caplan], add an ASR exclusion rather than return to audit[^asrtest], pause the Intune deployment[^intune].",
-        "**Exclude Mac, iOS and Android from report-only compliance policies,** or their users may get certificate prompts[^careport].",
+        "**Write the rollback first:** the trigger and the switch. Disable the CA policy or exclude a group, keeping break-glass accounts excluded[^caplan]. Exclude the app from ASR or return the rule to audit[^asrtest]. Pausing Intune deployments stops only later rings; revert the policy[^intune].",
+        "**Exclude Mac, iOS and Android from report-only compliance policies,** or their users may get certificate prompts[^careport]. Test them in an enforced pilot.",
         "**In Germany, ask the works council early** about EDR, DLP and logging; it co-determines systems designed to monitor behavior or performance[^betrvg]."
       ]
     },
@@ -90,7 +90,7 @@
         "**Exclude groups, not people.** One assigned Entra group per policy shows who is excluded[^caexcl].",
         "**Record why, what instead and until when:** a reason, a compensating control, an owner and an end date per member. Approval levels are in the risk register sheet.",
         "**Let reviews remove people.** Entra access reviews can ask members weekly and remove those who don't answer (Entra ID P2 or ID Governance)[^caexcl].",
-        "**Cap them.** Our rule: at most 2% of the scope at go-live, none by the done date. Report the count and the oldest monthly."
+        "**Cap them.** Our rule: at most 2% of the scope at go-live; any still open at the done date is renewed one level up, as in the risk register sheet. Report the count and the oldest monthly."
       ]
     },
     {
@@ -102,7 +102,7 @@
         "**Coverage is enforced over in scope,** counted weekly from the inventory by ring and business unit, with the tail named.",
         "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** lists who is MFA or passwordless capable and counts single-factor sign-ins[^authact].",
         "**Conditional Access.** The gap analyzer workbook lists sign-ins no policy applied to (P1 and Log Analytics)[^gap].",
-        "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business; otherwise collect audit event 1122[^asrtest]."
+        "**EDR and ASR.** Compare onboarded with discovered devices[^discovery]; the ASR rules report needs Plan 2 or Defender for Business, else forward event 1122[^asrtest]."
       ]
     },
     {
@@ -124,9 +124,9 @@
       "navTitle": "Project gates",
       "items": [
         "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
-        "**Rate the need: normal or high.** Grundschutz++ has just these two; normal needs no risk analysis of its own, high does[^std3001].",
+        "**Rate the processes it serves: normal or high.** Grundschutz++ sets these two; on its catalog, high need adds a risk analysis[^std3001].",
         "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
-        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
+        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA advises testing at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
         "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]."
       ]
     },
@@ -136,8 +136,8 @@
       "title": "Security in tenders and contracts",
       "navTitle": "Tenders",
       "items": [
-        "**Use the six NIS2 purchasing points:** security requirements, updates for the whole lifetime or replacement after support ends, component information, security functions and secure configuration, assurance, and how you validate it[^enisatig]. They bind digital providers; in Germany, BSIG § 30 requires security in acquisition of all NIS2 entities[^bsig30].",
-        "**Ask when support ends.** From 11 December 2027, the CRA requires manufacturers to state the month and year at the time of purchase[^craguide].",
+        "**Use the six NIS2 purchasing points:** security requirements, updates for the whole lifetime or replacement after support ends, component information, security functions and secure configuration, assurance, and how you validate it[^enisatig]. They bind digital providers; in Germany, BSIG § 30(2) no. 5 requires security in acquisition of all NIS2 entities[^bsig30].",
+        "**Ask when support ends.** From 11 December 2027, the CRA requires makers of new products to state the month and year at purchase[^craguide].",
         "**Require free, prompt fixes,** tested and delivered as soon as an issue is known, as ENISA advises[^enisatig].",
         "**Tie acceptance to evidence.** Make acceptance and the final payment depend on SSO and MFA working, logs flowing and critical pentest findings fixed. Add the third-party risk sheet's clauses."
       ]
@@ -149,7 +149,7 @@
       "navTitle": "Bottleneck",
       "items": [
         "**Publish when security joins.** Grundschutz++ doesn't need the ISB active in every security-relevant project[^std3001]. Join the high-need ones.",
-        "**Promise a turnaround,** such as the operating model sheet's 5 working days. If you miss it, the project proceeds and records the open items.",
+        "**Promise a turnaround,** such as the operating model sheet's 5 working days. If you miss it, normal-need projects go ahead and log open items.",
         "**Pre-approve patterns:** a SaaS requirement set, a contract annex, a reference design.",
         "**Put a champion in the PMO** to ask the kickoff questions and call you in for high-need projects."
       ]
@@ -159,9 +159,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A risk analysis for every project.** Grundschutz++ needs none for normal protection need, because its requirements already build one in[^std3001].",
+        "**A risk analysis for every project.** With the Grundschutz++ catalog, normal need requires none unless a requirement stays unmet[^std3001].",
         "**A pentest before every go-live.** A standard SaaS app behind SSO needs a check of your tenant's configuration.",
-        "**Auditing the standard ASR rules.** Microsoft says they can go to block or warn without testing[^asrtest].",
+        "**Auditing the standard ASR rules.** Microsoft says they can typically go to block or warn without testing[^asrtest].",
         "**Months in report-only.** A week to a month of real sign-ins shows the impact. Enforce, then fix the tail."
       ]
     },
@@ -172,9 +172,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Intune stages policy rollouts.** Deployment plans, in preview since September 2026[^intunenew], push Windows policies ring by ring and can be paused[^intune].",
+        "**Intune stages policy rollouts.** Deployment plans, in preview since September 2026[^intunenew], push Windows policies and apps ring by ring and can be paused[^intune].",
         "**Grundschutz++ wants a project rule.** BSI-Standard 300-1 (20 October 2026) requires a security role in relevant projects and a rule for when[^std3001].",
-        "**CRA support periods got clearer.** The Commission's CRA guidance of 27 July 2026 says five years is a floor, not a default[^craguide]."
+        "**CRA support periods got clearer.** The Commission's draft CRA guidance of 27 July 2026 says the five-year minimum isn't a default[^craguide]."
       ]
     },
     {
@@ -256,10 +256,10 @@
     },
     {
       "id": "intune",
-      "title": "Intune deployment plans and deployments",
+      "title": "Create and manage an Intune deployment",
       "publisher": "Microsoft Learn",
       "date": "26 Aug 2026",
-      "url": "https://learn.microsoft.com/en-us/intune/device-management/deployments/overview"
+      "url": "https://learn.microsoft.com/en-us/intune/device-management/deployments/create-deployment"
     },
     {
       "id": "intunenew",

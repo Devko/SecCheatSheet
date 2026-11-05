@@ -9,7 +9,7 @@
   "answer": "Before your next release, move off Python 3.10 and older[^versions], keep pickle-based loaders away from outside data, and run Ruff's `S` rules and `pip-audit` in CI. Judge everything else by whether input stays data: never code, a shell command, SQL text, a template or a path outside the directory you meant.",
   "audience": "Developers and tech leads writing production Python, and the security people who review it",
   "version": "1.1",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {

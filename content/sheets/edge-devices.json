@@ -9,7 +9,7 @@
   "answer": "This month, take every edge device's management interface off the internet and send its logs to a system the device can't erase, and replace anything past end of support within 12 months. When a flaw in one is exploited, assume the device is compromised: collect evidence, reset or rebuild it and rotate every credential it held, because a patch doesn't remove an attacker who is already in.",
   "audience": "IT and network teams running firewalls, VPN gateways, routers, load balancers, file-transfer appliances and other internet-facing devices, in organizations of any size",
   "version": "1.1",
-  "lastReviewed": "2026-11-03",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
