@@ -1,6 +1,6 @@
 # Security advisor evals, 5 November 2026
 
-Three rounds of the [advisor eval](../../README.md), run while the plugin was built. Each folder has:
+Four rounds of the [advisor eval](../../README.md), run while the plugin was built. Each folder has:
 - `report.md`: the judge's scores and notes;
 - `report.json`: every judgment;
 - `answers.json`: every final answer, with model, cost, time and the tools used.
@@ -68,6 +68,38 @@ lost to Opus with the library 8–27.
   from 59% (`report-before-review-fix.md`) to 78%. Plain Haiku found every planted bug, so this is a
   procedure problem, not a capability problem.
 
+## Round 4: does the plugin need its MCP server? (`4-mcp-vs-skill-only`, Haiku, 3 runs per case)
+
+This round compares plugin 1.1.1 as published (skills plus the MCP server) with a skill-only variant
+(`skill-only-variant.patch`). The variant has the same skills and rules, but no MCP server. Its skills
+run the same library code as a command-line script through Bash, pre-approved by the skills'
+`allowed-tools`. For reviews, the skill exports the sheets to files, and the read-only reviewer
+searches them with Read and Grep. Plain Haiku and plain Opus answers were reused from round 3 as
+references.
+
+| | Opus | Haiku | Haiku + MCP plugin | Haiku + skill-only |
+| --- | --- | --- | --- | --- |
+| Library actually used | – | – | 34 of 36 | 25 of 36 |
+| Questions: checks met | 89% | 83% | 91% | 92% |
+| CVE triage: checks met | 97% | 78% | 97% | 88% |
+| Code reviews: checks met | 93% | 100% | 42% | 42% |
+| Factual errors | 17 | 46 | 13 | 21 |
+
+The MCP plugin won head to head 20–16. Against plain Opus, MCP went 13–23 and skill-only 15–21; both
+counts include the failed reviews.
+
+- **Discovery is the difference.** MCP tools and their instructions are always visible, so Haiku used
+  the sheets in 34 of 36 runs, including 13 question and triage runs where it never invoked a skill.
+  With skill-only, the library exists only once a skill is invoked. Haiku skipped that in 10 of 27
+  question and triage runs and answered from memory.
+- **That shows in the results.** MCP had fewer factual errors (13 against 21) and better triage (97%
+  against 88%). On plain questions, both were equal whenever the skill ran.
+- **Transport doesn't fix reviews.** Both variants scored 42%. Haiku started the reviewer in the
+  foreground in only 1 or 2 of 7 to 8 runs, and its main session read the code in 8 of 9 runs in
+  both variants (`usage.txt`). In round 3, the same plugin 1.1.1 scored 78% on reviews; the
+  difference between rounds is how often Haiku happened to wait for the reviewer.
+- **Conclusion:** keep the MCP server. It is what makes a smaller model use the library at all.
+
 ## The judge's knowledge goes out of date
 
 Several "errors" the judge counted were correct facts newer than its training. Check a claimed error
@@ -82,7 +114,8 @@ The same answers graded twice can also differ: plain Opus scored 14 and then 19 
 ## Open next step: make reviews independent of the model
 
 The review currently depends on the model following steps: save the diff without reading it, hand it
-to the `security-reviewer` agent, wait, then show the report. Opus does this; Haiku often doesn't.
+to the `security-reviewer` agent, wait, then show the report. Opus does this; Haiku often doesn't,
+and round 4 shows that moving the sheets out of MCP doesn't change that.
 A sturdier design runs the review skill inside the read-only agent (`context: fork` with
 `agent: security-advisor:security-reviewer`), with the diff inserted by Claude Code before the model
 sees anything (`` !`git diff …` `` in the skill). Then no model has to orchestrate the review, and the

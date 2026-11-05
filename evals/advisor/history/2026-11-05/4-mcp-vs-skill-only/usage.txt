@@ -1,0 +1,7 @@
+Questions and triage:
+haiku-mcp    runs 27: library used 25, skill invoked 14, library calls 61, web calls 12, tool errors 0, words 462/run, cost $0.0106/run
+haiku-skill  runs 27: library used 17, skill invoked 17, library calls 37, web calls 11, tool errors 2, words 478/run, cost $0.0074/run
+
+Code reviews:
+haiku-mcp    runs 9: library used 9, skill invoked 7, library calls 57, web calls 0, tool errors 28, words 344/run, cost $0.0151/run; reviewer used 7 (foreground 1), main session read code in 8
+haiku-skill  runs 9: library used 8, skill invoked 8, library calls 10, web calls 0, tool errors 42, words 369/run, cost $0.0170/run; reviewer used 8 (foreground 2), main session read code in 8
