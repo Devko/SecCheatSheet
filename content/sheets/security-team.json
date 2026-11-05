@@ -1,14 +1,14 @@
 {
   "slug": "security-team",
   "topic": "Security team structure",
-  "status": "draft",
+  "status": "published",
   "order": 60,
   "capability": "leadership/team",
   "title": "Security team: who leads it, and whom do you hire next?",
   "short": "Within 30 days, name a head of security with a deputy and a direct line to management, outside IT operations.",
   "answer": "Within 30 days, have management appoint a head of security or information security officer (ISB) in writing, with a deputy and a direct line to the managing directors, outside IT operations. Then hire in the order your risks need, describe roles with ECSF profiles, and buy work that can't keep a person busy.",
   "audience": "Managing directors, heads of security and IT leads who also own security, in small and mid-size companies and regulated organizations",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -197,6 +197,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which labeled ENISA's guidance and Regulation 2024/2690 as applying to digital providers, confirmed ENISA's staffing medians and reporting-line data and narrowed the CJEU and BDSG points to what they say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
