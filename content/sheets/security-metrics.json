@@ -1,14 +1,14 @@
 {
   "slug": "security-metrics",
   "topic": "Security metrics and reporting",
-  "status": "draft",
+  "status": "published",
   "order": 42,
   "capability": "govern/metrics",
   "title": "Security metrics: which few numbers show the board whether you're getting safer?",
   "short": "Report about seven outcome measures on one page each quarter, each with its coverage, target and the decision you need.",
   "answer": "This quarter, pick about seven measures tied to how attacks start, count each one against your full inventory and have management agree a target and tolerance for each. Then report them on one page every quarter with trend, target and the decision you need, and drop any measure that hasn't changed a decision in a year.",
   "audience": "CISOs and security and IT leads in EU organizations who report to management and boards, including management bodies with NIS2 or DORA duties",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -78,9 +78,9 @@
       "items": [
         "**Internet exposure.** High-risk services open to the internet without an expiring exception, and assets others found first, from the attack surface sheet.",
         "**Age of exploited vulnerabilities.** Days the oldest known-exploited flaw has been open, and first-tier deadlines met, from the patching sheet. Only 26% of KEV flaws in Verizon's data were fully fixed in 2025, and full fixes took a median of 43 days[^dbir].",
-        "**Phishing-resistant MFA coverage.** Accounts, admins first, that Conditional Access holds to phishing-resistant methods. Entra's passwordless count includes phone sign-in[^entraact], which isn't phishing-resistant[^authstr].",
+        "**Phishing-resistant MFA coverage.** Accounts, admins first, that Conditional Access holds to the passkeys sheet's phishing-resistant methods. Entra's passwordless count includes phone sign-in[^entraact], which isn't phishing-resistant[^authstr].",
         "**Standing privileged accounts.** Tier 0 rights held permanently, not on activation, against the privileged access sheet's limits. Microsoft ranks tiered administration among the best safeguards[^mddr].",
-        "**EDR coverage.** Devices and servers with EDR and tamper protection, out of all discovered; Defender's inventory lists devices not onboarded[^mdedisc]. Count hypervisors apart: virtualization has traditionally sat outside EDR's scope[^mtrends].",
+        "**EDR coverage.** Devices and servers with EDR and tamper protection, as the endpoints sheet sets them up, out of all discovered; Defender's inventory lists devices not onboarded[^mdedisc]. Count hypervisors apart: virtualization has traditionally sat outside EDR's scope[^mtrends].",
         "**Measured restore time.** Hours to restore each critical service in its last test, against its target, from the backups sheet. A target not met in a test is unmet.",
         "**Time to detect and contain.** In real incidents and planted tests, with alerts proved monthly from the logging sheet and staff report speed from the awareness sheet. Mandiant's median dwell time rose to 14 days in 2025, from 11[^mtrends]."
       ]
@@ -189,6 +189,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 12 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
