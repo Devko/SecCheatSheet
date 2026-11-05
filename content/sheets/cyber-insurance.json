@@ -151,7 +151,7 @@
         "**The war clause.** Since 31 March 2023, Lloyd's has required its standalone cyber policies to exclude state-backed attacks that significantly impair a state[^y5381]. LMA5564A excludes every state cyber operation[^lma5564]; LMA5567A keeps cover for systems outside the impacted state[^lma5567].",
         "**Limits.** Sublimits count toward the main limit, which is also the annual maximum, and related incidents from one cause count as one[^avb].",
         "**Unpatched flaws.** The GDV model bars running systems with known flaws without extra safeguards[^avb]. Chubb allows 45 days after a CVE is published, then shifts more of the loss to you at 46, 90, 180 and 365 days[^chubb].",
-        "**Widespread events and failures.** Some insurers set separate limits for supply chain exploits, zero-days and cloud outages[^chubb]. Test them against a case like the July 2024 CrowdStrike update, which cost Fortune 500 companies an estimated $5.4 billion[^fsi], and ask about system failure: one loss event in four in Munich Re's claims is non-malicious[^munichre]."
+        "**Widespread events and failures.** Chubb, for one, sets separate limits for supply chain exploits, zero-days and cloud outages[^chubb]. Test them against a case like the July 2024 CrowdStrike update, which cost Fortune 500 companies an estimated $5.4 billion[^fsi], and ask about system failure: one loss event in four in Munich Re's claims is non-malicious[^munichre]."
       ]
     },
     {
@@ -194,7 +194,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Give each answer an owner and evidence.",
-            "List the providers whose outage would stop you, and check how the policy treats them.",
+            "List the providers whose outage would stop you, as in the third-party risk sheet, and check how the policy treats them.",
             "Rehearse a tabletop with the insurer's panel firm."
           ]
         },
@@ -218,13 +218,6 @@
   ],
   "sources": [
     {
-      "id": "avb",
-      "title": "AVB Cyber: model terms for cyber risk insurance",
-      "publisher": "GDV",
-      "date": "Feb 2024",
-      "url": "https://www.gdv.de/resource/blob/6100/a0fed56c4947751cdc20b5206c171d98/01-allgemeine-versicherungsbedingungen-fuer-die-cyberrisiko-versicherung-avb-cyber--data.pdf"
-    },
-    {
       "id": "vvg",
       "title": "VVG, §§ 19 and 21",
       "publisher": "BMJV (Germany)",
@@ -232,11 +225,11 @@
       "url": "https://www.gesetze-im-internet.de/vvg_2008/BJNR263110007.html"
     },
     {
-      "id": "fsi",
-      "title": "Cyber insurance unpacked: the corporate digital safety net",
-      "publisher": "BIS FSI and IAIS",
-      "date": "17 Jun 2026",
-      "url": "https://www.bis.org/publications/fsi-insight-75-cyber-insurance-unpacked-corporate-digital-safety-net"
+      "id": "avb",
+      "title": "AVB Cyber: model terms for cyber risk insurance",
+      "publisher": "GDV",
+      "date": "Feb 2024",
+      "url": "https://www.gdv.de/resource/blob/6100/a0fed56c4947751cdc20b5206c171d98/01-allgemeine-versicherungsbedingungen-fuer-die-cyberrisiko-versicherung-avb-cyber--data.pdf"
     },
     {
       "id": "ncscpay",
@@ -246,11 +239,11 @@
       "url": "https://www.ncsc.gov.uk/guidance/organisations-considering-payment-in-ransomware-incidents"
     },
     {
-      "id": "ncscins",
-      "title": "Cyber insurance guidance",
-      "publisher": "NCSC (UK)",
-      "date": "6 Aug 2020",
-      "url": "https://www.ncsc.gov.uk/guidance/cyber-insurance-guidance"
+      "id": "fsi",
+      "title": "Cyber insurance unpacked: the corporate digital safety net",
+      "publisher": "BIS FSI and IAIS",
+      "date": "17 Jun 2026",
+      "url": "https://www.bis.org/publications/fsi-insight-75-cyber-insurance-unpacked-corporate-digital-safety-net"
     },
     {
       "id": "markel",
@@ -267,32 +260,11 @@
       "url": "https://help.corvusinsurance.com/hubfs/Corvus%20Smart%20Cyber%20Application.pdf"
     },
     {
-      "id": "y5381",
-      "title": "Market Bulletin Y5381: state backed cyber-attack exclusions",
-      "publisher": "Lloyd's",
-      "date": "17 Aug 2022",
-      "url": "https://assets.lloyds.com/media/e9a4058c-4c25-48d6-99d3-0c466987e099/Y5381%20Market%20Bulletin%20-%20Cyber-attack%20exclusions.pdf"
-    },
-    {
-      "id": "lma5564",
-      "title": "LMA5564A War and Cyber Operation Exclusion No. 1",
-      "publisher": "LMA",
-      "date": "18 Jan 2023",
-      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5564A-1-1.pdf"
-    },
-    {
-      "id": "lma5567",
-      "title": "LMA5567A War and Cyber Operation Exclusion No. 4",
-      "publisher": "LMA",
-      "date": "18 Jan 2023",
-      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5567A-1.pdf"
-    },
-    {
-      "id": "chubb",
-      "title": "Cyber endorsements (product factsheet)",
-      "publisher": "Chubb (Germany)",
-      "date": "Nov 2021",
-      "url": "https://www.chubb.com/content/dam/chubb-sites/chubb-com/de-de/dokumente/cyber/Chubb_DE0422_Cyber_Endorsement_Factsheet_202111%20(1).pdf"
+      "id": "ncscins",
+      "title": "Cyber insurance guidance",
+      "publisher": "NCSC (UK)",
+      "date": "6 Aug 2020",
+      "url": "https://www.ncsc.gov.uk/guidance/cyber-insurance-guidance"
     },
     {
       "id": "bafinrs",
@@ -321,6 +293,34 @@
       "publisher": "ESAs",
       "date": "23 Sep 2026",
       "url": "https://www.eiopa.europa.eu/document/download/fe387fa7-bbe3-4cb3-9b02-df5bd2ee3127_en?filename=Joint+Committee+Update+on+risks+and+vulnerabilities+in+the+EU+financial+system+-+Autumn+2026.pdf"
+    },
+    {
+      "id": "y5381",
+      "title": "Market Bulletin Y5381: state backed cyber-attack exclusions",
+      "publisher": "Lloyd's",
+      "date": "17 Aug 2022",
+      "url": "https://assets.lloyds.com/media/e9a4058c-4c25-48d6-99d3-0c466987e099/Y5381%20Market%20Bulletin%20-%20Cyber-attack%20exclusions.pdf"
+    },
+    {
+      "id": "lma5564",
+      "title": "LMA5564A War and Cyber Operation Exclusion No. 1",
+      "publisher": "LMA",
+      "date": "18 Jan 2023",
+      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5564A-1-1.pdf"
+    },
+    {
+      "id": "lma5567",
+      "title": "LMA5567A War and Cyber Operation Exclusion No. 4",
+      "publisher": "LMA",
+      "date": "18 Jan 2023",
+      "url": "https://lmalloyds.com/wp-content/uploads/2025/09/LMA5567A-1.pdf"
+    },
+    {
+      "id": "chubb",
+      "title": "Cyber endorsements (product factsheet)",
+      "publisher": "Chubb (Germany)",
+      "date": "Nov 2021",
+      "url": "https://www.chubb.com/content/dam/chubb-sites/chubb-com/de-de/dokumente/cyber/Chubb_DE0422_Cyber_Endorsement_Factsheet_202111%20(1).pdf"
     },
     {
       "id": "munichre",

@@ -24,7 +24,7 @@
         },
         {
           "title": "Block OS versions the maker no longer patches.",
-          "text": "Allow the current and previous iOS major release, as Microsoft's apps do[^ioscomp], and Android 14 or later, the oldest in Google's November 2026 bulletin[^asb]."
+          "text": "Allow the current and previous iOS major release[^ioscomp], and Android 14 or later, the oldest Google's November 2026 bulletin still fixed[^asb]."
         },
         {
           "title": "Keep work data in managed apps.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Harden high-risk users' phones.",
-          "text": "Enroll the phone, then turn on Lockdown Mode or Advanced Protection. MDM can't turn Lockdown Mode on, and a phone in it can't enroll[^lockdown]."
+          "text": "Enroll first, then turn on Lockdown Mode or Advanced Protection: a phone in Lockdown Mode can't enroll, and MDM can't turn it on[^lockdown]."
         },
         {
           "title": "Require two admins to wipe phones.",
-          "text": "With Multi Admin Approval, a second admin approves every wipe, retire and delete[^maa], so one stolen admin account can't erase the fleet."
+          "text": "Multi Admin Approval makes a second admin approve each wipe, retire and delete[^maa], so one stolen admin account can't wipe the fleet."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Does the company own it?",
-          "text": "Enroll it supervised or fully managed through Apple Business Manager or Android zero-touch. Only supervised iPhones take restrictions such as blocking marketplaces[^restr]."
+          "text": "Enroll it supervised or fully managed via Apple Business Manager or Android zero-touch. Only supervised iPhones can block marketplaces[^restr]."
         },
         {
           "title": "Personal, with only Microsoft 365 apps?",
-          "text": "Use app protection without enrollment. IT manages, and can wipe, only the work data in those apps[^appprot]."
+          "text": "Use app protection without enrollment. IT manages, and can wipe, only the work data in those apps[^appprot]; the joiners and leavers sheet covers offboarding."
         },
         {
           "title": "Personal, but needs Wi-Fi, VPN or certificates?",
@@ -74,10 +74,10 @@
       "title": "Versions, patches and end of support",
       "navTitle": "Updates",
       "items": [
-        "**Enforce iPhone updates with declarative management:** Intune's **Software Update Enforce Latest**, with a delay in days. It needs device or automated enrollment[^ddm]; elsewhere, block access.",
+        "**Enforce iPhone updates with declarative management.** Use Intune's **Software Update Enforce Latest** with a delay in days. It needs device or automated enrollment[^ddm]; elsewhere, block access.",
         "**Treat iOS 18 as unsupported.** Apple's October 2026 iOS 18 update covered only the iPhone XS, XS Max, XR and iPad 7th generation[^appsec].",
-        "**Set an Android patch floor you can keep.** Check that your devices get updates first[^byodand]; start at 6 months and tighten.",
-        "**Buy for the support period, retire on time.** EU makers that update phones sold since 20 June 2025 must do so for 5 years after the last unit is placed on the market[^eco]. The BSI requires replacing unpatched devices[^bsi]."
+        "**Set an Android patch floor you can keep.** Check that your devices get updates first[^byodand], then block patches older than 6 months and tighten.",
+        "**Buy for the support period, retire on time.** For phones placed on the EU market since 20 June 2025, makers that ship OS updates must do so for at least 5 years after the last unit[^eco]. The BSI requires replacing unpatched devices[^bsi]."
       ]
     },
     {
@@ -86,9 +86,9 @@
       "title": "High-risk users and mercenary spyware",
       "navTitle": "High-risk users",
       "items": [
-        "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and new configuration profiles[^lockdown]. Mobile zero-days rose to 15 in 2025, from 9[^gtig].",
-        "**Advanced Protection** blocks sideloading and USB access while locked and reboots phones locked for 72 hours. Turn on its Intrusion Logging too[^aap].",
-        "**Threat notifications.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov]."
+        "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and new configuration profiles[^lockdown].",
+        "**Advanced Protection** blocks sideloading and unauthorized USB access while locked, and reboots phones locked for 72 hours. Turn on its Intrusion Logging too[^aap].",
+        "**Treat threat notifications as incidents.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov]."
       ]
     },
     {
@@ -99,7 +99,7 @@
       "items": [
         "**EU app marketplaces.** Notarization is only a baseline check, and Apple can't help with scams in those apps[^altdist]. Block them on supervised iPhones with the `allowMarketplaceAppInstallation` and `allowWebDistributionAppInstallation` restrictions[^restr]; on personal ones, rely on app protection.",
         "**Android sideloading.** Block unknown sources, even in the personal profile, as Microsoft's Level 2 examples do[^byodand].",
-        "**One work messenger.** Without guidance, staff turn to channels such as SMS, and chats in apps without enterprise audit may break regulatory duties[^ncscim]."
+        "**Name one work messenger.** Without guidance, staff turn to insecure channels such as SMS[^ncscim]. The security awareness sheet covers smishing and fake calls."
       ]
     },
     {
@@ -108,7 +108,7 @@
       "title": "Lost phones, SIM swaps and eSIMs",
       "navTitle": "Lost and SIM",
       "items": [
-        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Mark it lost on iCloud.com[^sdp] or lock it at android.com/lock[^theft], then delete its passkeys and authenticator from the account.",
+        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Mark it lost on iCloud.com[^sdp] or lock it at android.com/lock[^theft], then remove its passkeys, as the passkeys and MFA sheet's backup method allows.",
         "**Turn on theft protection beforehand.** Away from familiar places, Stolen Device Protection needs Face ID or Touch ID to use saved passwords, erase the phone or move its eSIM[^sdp]. On Android, use Theft Detection Lock[^theft].",
         "**Make SIM swaps harder.** Carriers mostly verify requests with personal details such as date of birth[^enisa]. Set a password on the business account and block eSIM changes on supervised iPhones[^restr]. If the signal vanishes, call the carrier at once[^enisa]."
       ]
@@ -121,9 +121,9 @@
       "span": "full",
       "items": [
         "**iOS 27 dropped the old MDM update restrictions.** Since 14 September 2026[^appsec], update deferrals work only through declarative device management[^restr].",
-        "**The approved client app grant is retiring.** Microsoft set March 2026 and says new policies should require app protection instead[^grant].",
-        "**Spyware vendors led zero-day exploitation.** For 2025, Google attributed more zero-days to them than to state espionage groups, a first[^gtig].",
-        "**EU iPhones forward notifications to third-party watches** since iOS 26.5[^accnotif] in May 2026[^appsec]. Set **Org data notifications** to Block Org Data, which covers wearables[^appios]."
+        "**The approved client app grant is retiring.** Microsoft set the retirement for March 2026; new policies should use Require app protection policy[^grant].",
+        "**Spyware vendors led zero-day exploitation.** For 2025, Google attributed more zero-days to them than to state espionage groups, a first, and counted 15 mobile zero-days, up from 9[^gtig].",
+        "**EU iPhones can forward notifications to third-party watches.** Companion apps get them since iOS 26.5 in May 2026[^accnotif][^appsec]; set **Org data notifications** to Block Org Data, which covers wearables[^appios]."
       ]
     },
     {
@@ -143,10 +143,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Exempting executives.** They are the likeliest targets; give them the strictest policies.",
+        "**Exempting executives.** Their phones hold the most valuable data; give them the strictest policies, not exceptions.",
         "**Accepting rooted or uncertified Android phones.** Require Play Integrity's device integrity check, and strong integrity where supported[^byodand].",
-        "**Message previews on the lock screen.** The BSI requires hiding confidential information there[^bsi].",
-        "**Android web enrollment in a passkey-only tenant.** Users can't complete it yet, and the setting can't be reversed[^workprofile]."
+        "**Showing message previews on the lock screen.** The BSI requires hiding confidential information there[^bsi].",
+        "**Turning on Android web enrollment in a passkey-only tenant.** Users can't complete it yet, and the setting can't be reversed[^workprofile]."
       ]
     },
     {
