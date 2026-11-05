@@ -35,8 +35,9 @@ Scope: $ARGUMENTS (if empty, assume the whole organization and confirm it in the
      This is often the most useful part for a small team.
    - **Unknowns**: the questions to answer next, and who in the organization could answer them.
    - **Legal clocks**: any reporting or compliance deadlines from the sheets that apply.
-   - **Sheet freshness**: name any draft or overdue sheet you relied on.
-   Mark anything not taken from a sheet as your own judgment.
+   - **Sources**: one line naming the sheets used with their versions, flagging any draft or overdue
+     sheet, and noting that the order across topics is your judgment.
+   Write about the organization and its gaps. Don't describe the sheets or how the library works.
 
 Offer to save the report as a Markdown file for sharing. Don't change any systems or settings: this
 is an assessment, not a remediation.
