@@ -1,14 +1,14 @@
 {
   "slug": "macos",
   "topic": "Macs",
-  "status": "draft",
+  "status": "published",
   "order": 53,
   "capability": "infrastructure/macos",
   "title": "Macs: are they as locked down as your Windows PCs?",
-  "short": "Enroll every Mac through Apple Business so it can't leave management, and enforce each macOS update within 7 days.",
+  "short": "Enroll every Mac through Apple Business so it can't leave management, and enforce macOS updates within 7 days, or 72 hours when exploited.",
   "answer": "This quarter, enroll every company Mac through Apple Business with locked enrollment, enforce macOS updates with a 7-day deadline and give users standard accounts with FileVault keys escrowed. Then push your EDR's extensions and permissions so users can't remove them, and judge the rest by whether it would stop a pasted Terminal command.",
   "audience": "IT and security teams managing company Macs with Intune, Jamf or another MDM",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,7 +24,7 @@
         },
         {
           "title": "Enforce updates with a deadline.",
-          "text": "Use declarative update enforcement: in Intune, **Software Update Enforce Latest** with **Delay in Days** at 7[^intuneupd]. When Apple says a flaw may have been exploited, enforce that version within 72 hours, as the browsers sheet does for browsers."
+          "text": "Use declarative update enforcement: in Intune, **Software Update Enforce Latest** with **Delay in Days** at 7[^intuneupd]. When Apple says a flaw may have been exploited, enforce that version within 72 hours, as the browsers sheet does. Pilot major upgrades first."
         },
         {
           "title": "Give users standard accounts.",
@@ -178,6 +178,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which aligned the update deadline for exploited flaws with the browsers sheet, scoped Microsoft's stealer figures and the paste warning to what the sources say and narrowed the Intune enrollment change to authentication."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
