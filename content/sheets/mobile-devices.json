@@ -4,7 +4,7 @@
   "status": "draft",
   "order": 40,
   "capability": "infrastructure/mobile",
-  "title": "Mobile devices: what to control on company and personal phones?",
+  "title": "Mobile devices: what to control on work and personal phones?",
   "short": "Gate every phone in Conditional Access this month; block iOS more than one major release behind and Android older than 14.",
   "answer": "This month, require a compliant device or Intune app protection for every phone that reaches work data, and block iOS older than the previous major release and Android older than 14. Then manage company phones fully, protect only the work apps on personal ones, and harden the phones of high-risk users.",
   "audience": "IT teams of any size in the EU and Germany managing company phones and work data on personal ones, mostly with Intune, some with Jamf or Google",
@@ -86,10 +86,9 @@
       "title": "High-risk users and mercenary spyware",
       "navTitle": "High-risk users",
       "items": [
-        "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and new configuration profiles[^lockdown].",
+        "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and new configuration profiles[^lockdown]. Mobile zero-days rose to 15 in 2025, from 9[^gtig].",
         "**Advanced Protection** blocks sideloading and USB access while locked and reboots phones locked for 72 hours. Turn on its Intrusion Logging too[^aap].",
-        "**Threat notifications.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov].",
-        "**Habits.** Patch at once and reboot regularly. Mobile zero-days rose to 15 in 2025, from 9[^gtig]."
+        "**Threat notifications.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov]."
       ]
     },
     {
@@ -124,7 +123,7 @@
         "**iOS 27 dropped the old MDM update restrictions.** Since 14 September 2026[^appsec], update deferrals work only through declarative device management[^restr].",
         "**The approved client app grant is retiring.** Microsoft set March 2026 and says new policies should require app protection instead[^grant].",
         "**Spyware vendors led zero-day exploitation.** For 2025, Google attributed more zero-days to them than to state espionage groups, a first[^gtig].",
-        "**EU iPhones forward notifications to other watches.** Since iOS 26.5 in May 2026[^appsec], companion apps can receive them[^accnotif]. Set **Org data notifications** to Block Org Data, which covers wearables[^appios]."
+        "**EU iPhones forward notifications to third-party watches** since iOS 26.5[^accnotif] in May 2026[^appsec]. Set **Org data notifications** to Block Org Data, which covers wearables[^appios]."
       ]
     },
     {
@@ -132,7 +131,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Mobile antivirus for everyone.** The NCSC says iOS and Android don't need it in their default configuration[^ncscav]. Keep mobile threat defense for Level 3 users[^ioscomp].",
+        "**Mobile antivirus for everyone.** The NCSC says iOS and Android don't need it by default[^ncscav]; keep threat defense for Level 3 users[^ioscomp].",
         "**Full enrollment of personal phones.** A work profile or app protection covers most needs.",
         "**Lockdown Mode for all staff.** Apple built it for the very few people personally targeted[^lockdown].",
         "**Passcode expiry and long passcodes.** Microsoft's Level 2 examples use 6 digits and no expiry[^ioscomp][^byodand]."
@@ -188,7 +187,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Microsoft Learn pages on Intune and Conditional Access, Apple and Google support and developer documentation, Google's 2025 zero-day review, the EU ecodesign rules for phones, BSI IT-Grundschutz and NCSC device guidance."
+      "text": "First draft, based on Microsoft Learn, Apple and Google documentation, Google's 2025 zero-day review, BSI and NCSC guidance."
     }
   ],
   "sources": [
@@ -215,7 +214,7 @@
     },
     {
       "id": "byodand",
-      "title": "Android Enterprise configurations for personally owned work profiles",
+      "title": "Security configurations for personally owned work profiles",
       "publisher": "Microsoft Learn",
       "date": "26 Mar 2025",
       "url": "https://learn.microsoft.com/en-us/intune/device-security/security-configurations/android-personally-owned"
@@ -236,7 +235,7 @@
     },
     {
       "id": "workprofile",
-      "title": "Enroll personal devices with Android Enterprise work profiles",
+      "title": "Enroll personal devices with Android work profiles",
       "publisher": "Microsoft Learn",
       "date": "18 Jun 2026",
       "url": "https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile"
@@ -278,7 +277,7 @@
     },
     {
       "id": "atn",
-      "title": "About Apple threat notifications and protecting against mercenary spyware",
+      "title": "About Apple threat notifications",
       "publisher": "Apple Support",
       "date": "13 Aug 2026",
       "url": "https://support.apple.com/en-us/102174"
@@ -320,7 +319,7 @@
     },
     {
       "id": "aap",
-      "title": "Improve device security with Advanced Protection for Android",
+      "title": "Advanced Protection for Android",
       "publisher": "Android Help",
       "date": "checked 5 Nov 2026",
       "url": "https://support.google.com/android/answer/16339980"
@@ -355,14 +354,14 @@
     },
     {
       "id": "eco",
-      "title": "Regulation (EU) 2023/1670, ecodesign for smartphones and tablets",
+      "title": "Regulation (EU) 2023/1670 (ecodesign for phones)",
       "publisher": "EUR-Lex",
       "date": "16 Jun 2023",
       "url": "https://eur-lex.europa.eu/eli/reg/2023/1670/oj/eng"
     },
     {
       "id": "bsi",
-      "title": "IT-Grundschutz SYS.3.2.1 Allgemeine Smartphones und Tablets",
+      "title": "SYS.3.2.1 Allgemeine Smartphones und Tablets",
       "publisher": "BSI",
       "date": "Edition 2023",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/07_SYS_IT_Systeme/SYS_3_2_1_Allgemeine_Smartphones_und_Tablets_Edition_2023.pdf?__blob=publicationFile&v=3"

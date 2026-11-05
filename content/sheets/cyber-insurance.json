@@ -151,7 +151,7 @@
         "**The war clause.** Since 31 March 2023, Lloyd's has required its standalone cyber policies to exclude state-backed attacks that significantly impair a state[^y5381]. LMA5564A excludes every state cyber operation[^lma5564]; LMA5567A keeps cover for systems outside the impacted state[^lma5567].",
         "**Limits.** Sublimits count toward the main limit, which is also the annual maximum, and related incidents from one cause count as one[^avb].",
         "**Unpatched flaws.** The GDV model bars running systems with known flaws without extra safeguards[^avb]. Chubb allows 45 days after a CVE is published, then shifts more of the loss to you at 46, 90, 180 and 365 days[^chubb].",
-        "**Widespread events.** Some insurers set separate limits for supply chain exploits, zero-days and cloud outages[^chubb]. Test them against an event like the July 2024 CrowdStrike update, which cost Fortune 500 companies an estimated $5.4 billion[^fsi]."
+        "**Widespread events and failures.** Some insurers set separate limits for supply chain exploits, zero-days and cloud outages[^chubb]. Test them against a case like the July 2024 CrowdStrike update, which cost Fortune 500 companies an estimated $5.4 billion[^fsi], and ask about system failure: one loss event in four in Munich Re's claims is non-malicious[^munichre]."
       ]
     },
     {
@@ -321,6 +321,13 @@
       "publisher": "ESAs",
       "date": "23 Sep 2026",
       "url": "https://www.eiopa.europa.eu/document/download/fe387fa7-bbe3-4cb3-9b02-df5bd2ee3127_en?filename=Joint+Committee+Update+on+risks+and+vulnerabilities+in+the+EU+financial+system+-+Autumn+2026.pdf"
+    },
+    {
+      "id": "munichre",
+      "title": "Cyber insurance: risks and trends 2026 (insurer report)",
+      "publisher": "Munich Re",
+      "date": "25 Mar 2026",
+      "url": "https://www.munichre.com/en/insights/cyber/cyber-insurance-risks-and-trends-2026.html"
     }
   ]
 }
