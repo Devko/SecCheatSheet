@@ -1,14 +1,14 @@
 {
   "slug": "operating-model",
   "topic": "Operating model",
-  "status": "draft",
+  "status": "published",
   "order": 59,
   "capability": "leadership/operating-model",
   "title": "Operating model: who decides, who does it, who checks?",
   "short": "Name one accountable person for each of six core security processes and fit the whole operating model on two pages.",
   "answer": "This quarter, write down on two pages who decides, who does the work and who checks it for six core processes, from patching to exceptions, and have management approve it. Buy the work wherever that is cheaper, but keep decisions, risk acceptance and supplier oversight with your own named people.",
   "audience": "Heads of security and CISOs, IT leads who own security, and the managing directors they report to",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -79,7 +79,7 @@
         "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets deadlines from the patching sheet, and system owners for maintenance windows. I: management, about exploited flaws past deadline.",
         "**Vulnerability management.** A: head of security. R: security scans, rates and tracks; system owners fix. C: IT operations. I: management, monthly. Digital providers must document why a finding needs no fix[^ir2690].",
         "**Access reviews.** A: each application's business owner. R: the owner's team leads, with lists from IT. C: security, for admin rights. I: internal audit. Digital providers must document results and changes[^ir2690].",
-        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management, insurer, authorities. Stopping business processes is for the crisis team.",
+        "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management and insurer; a named owner files reports to authorities (EU security laws sheet). Stopping business processes is for the crisis team.",
         "**Supplier onboarding.** A: the business owner who wants the supplier. R: procurement, with a contract manager per contract[^iiatp]. C: security, for tier and clauses. I: IT, to grant and later remove access.",
         "**Exceptions.** A: the risk owner, at the level set in the risk register sheet. R: the requester, with the case, a compensating measure and an end date. C: security. I: management, via the open exceptions list."
       ]
@@ -104,7 +104,7 @@
       "items": [
         "**Central.** One team sets the rules and runs security for everyone. Choose it when one IT team runs everything.",
         "**Hybrid.** Central security owns the standards, risk register, MDR and scanning; units patch, review access and name champions. Choose it for most growing companies.",
-        "**Federated.** Each unit has its own security officer, as the BSI describes for large organizations[^std2002]. Choose it for subsidiaries with their own IT and their own duties under the BSIG[^bsig], and keep one shared risk register."
+        "**Federated.** Each unit has its own security officer, as the BSI describes for large organizations[^std2002]. Choose it for subsidiaries with their own IT and, where in scope, their own duties under the BSIG[^bsig], and keep one shared risk register."
       ]
     },
     {
@@ -209,6 +209,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which labeled every Regulation 2024/2690 rule as applying to digital providers, quoted the IIA's July 2026 position on the three lines exactly and narrowed the NCSC sourcing advice to SOCs."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
