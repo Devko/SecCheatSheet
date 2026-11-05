@@ -1,14 +1,14 @@
 {
   "slug": "penetration-testing",
   "topic": "Penetration testing",
-  "status": "draft",
+  "status": "published",
   "order": 34,
   "capability": "exposure/pentest",
   "title": "Penetration testing: are you testing what attackers target, and fixing what testers find?",
   "short": "Scope tests around identity, internet-facing systems and critical apps, and fix and retest critical and high findings within 30 days, or 14 if internet-facing.",
   "answer": "Before the next test, write down the question it must answer and scope it around identity, internet-facing systems and critical apps, not an IP list. Judge each test by how many findings were fixed and retested on time.",
   "audience": "IT, security and engineering leads in EU organizations, many in Germany, who commission penetration tests or red team exercises, or must under DORA or PCI DSS",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -28,7 +28,7 @@
         },
         {
           "title": "Give testers the inside view.",
-          "text": "The BSI recommends white-box tests, since black-box tests miss more and risk more damage[^bsipt]. Hand over network plans[^bsipt], test accounts, your latest vulnerability assessment[^ncscpt] and app source code."
+          "text": "The BSI recommends white-box tests, since black-box tests miss more and risk more damage[^bsipt]. Hand over network plans, test accounts, source code and your latest vulnerability assessment[^bsipt][^ncscpt]."
         },
         {
           "title": "Get written authorization from every owner.",
@@ -51,12 +51,12 @@
           "text": "Involve risk owners, technical staff and the testers, and agree boundaries, test types, effort in days and reporting[^ncscpt]."
         },
         {
-          "title": "Get the owners' consent.",
-          "text": "From the system owner and any hoster or SaaS provider. If staff or personal data are affected, involve the data protection officer and works council first[^bsipt]."
+          "title": "Get everyone on board.",
+          "text": "The system owner, any hoster or SaaS provider and, if staff or personal data are affected, the data protection officer and works council[^bsipt]."
         },
         {
           "title": "Set the rules of engagement.",
-          "text": "Agree the window, exclusions and depth[^bsipt], a stop rule and a contact on call[^ncscpt]. Freeze changes in scope; if a flaw can't wait, pause the test[^bsipt]."
+          "text": "Agree the window, exclusions, depth and a stop rule[^bsipt], and a contact on call[^ncscpt]. Freeze changes; if a flaw can't wait, pause the test[^bsipt]."
         },
         {
           "title": "Read the report critically.",
@@ -93,7 +93,7 @@
         "**The help desk.** A call asking for an MFA reset, under rules agreed with the works council and run by specialists[^bsipt].",
         "**The internet edge and critical apps.** Everything in the attack surface sheet's inventory, and apps tested as the API security sheet describes.",
         "**Backups, hypervisors and tenants.** Ransomware groups target backups and virtualization management[^mtrends]; Microsoft encourages tenant tests[^azpt].",
-        "**How often.** Test high-risk areas yearly and after major changes. The BSI suggests repeating tests every two to three years[^bsipt]."
+        "**How often.** Test high-risk areas yearly and after major changes, as PCI DSS requires for card data[^pci]. For the rest, the BSI suggests every two to three years[^bsipt]."
       ]
     },
     {
@@ -115,7 +115,7 @@
       "navTitle": "Legal and safe",
       "items": [
         "**Authorization.** In Germany, getting past access protection without permission carries up to three years in prison or a fine[^stgb].",
-        "**Cloud.** Azure and Google Cloud need no notice for tests of your own resources, AWS none for its listed services[^azpt][^gcp][^aws]. Azure and AWS ban DoS tests; AWS must approve covert red teaming and phishing, asked two weeks ahead[^aws].",
+        "**Cloud.** Azure and Google Cloud need no notice to test your own resources, AWS none for its listed services[^azpt][^gcp][^aws]. Azure and AWS ban DoS; AWS must approve covert red teaming and phishing, asked two weeks ahead[^aws].",
         "**Production and OT.** No test rules out side effects[^ncscpt]: keep a stop rule. In OT, use testers with OT experience[^ncsccni] and test in outages or on a replica."
       ]
     },
@@ -216,7 +216,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Test your cloud tenant and internet edge yearly.",
-            "Fix and retest critical and high findings in 30 days, 14 if exposed.",
+            "Fix critical and high flaws in 30 days, 14 if exposed.",
             "Shortlist from the BSI list or CREST."
           ]
         },
@@ -240,6 +240,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which aligned fix deadlines with the patching sheet and narrowed 12 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
