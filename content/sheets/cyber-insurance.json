@@ -1,14 +1,14 @@
 {
   "slug": "cyber-insurance",
   "topic": "Cyber insurance",
-  "status": "draft",
+  "status": "published",
   "order": 41,
   "capability": "govern/insurance",
   "title": "Cyber insurance: would your policy pay after an attack?",
   "short": "Back each questionnaire answer with evidence, call the insurer before any responder and read five clauses before renewal.",
   "answer": "Before your next renewal, check every questionnaire answer against your systems and keep the evidence, because a wrong answer can cost you the cover. Then read the wording on war, provider outages, ransom, payment fraud and fines, and set the limits and the indemnity period from your measured recovery time.",
   "audience": "IT, security, finance and risk leads in EU organizations buying, renewing or claiming on cyber insurance, especially in Germany",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,7 +24,7 @@
         },
         {
           "title": "Keep the policy's security duties all year.",
-          "text": "The GDV model terms turn controls into duties, from separate admin accounts and timely patches to weekly backups and restore tests. Intentional breaches void the payout; grossly negligent ones reduce it[^avb]."
+          "text": "The GDV model terms turn controls into duties, from separate admin accounts and timely patches to weekly backups and restore tests. Intentional breaches void the payout and grossly negligent ones cut it, unless you show the breach played no part[^avb]."
         },
         {
           "title": "Call the insurer before you hire anyone.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Who answers?",
-          "text": "IT or security answers the technical questions, finance the revenue and payment ones. If an agent concludes the contract for you, their knowledge counts as well as yours[^avb]."
+          "text": "IT or security answers the technical questions, finance the revenue and payment ones. If a representative concludes the contract for you, their knowledge counts as well as yours[^avb]."
         },
         {
           "title": "What exactly is asked?",
@@ -85,7 +85,7 @@
           "title": "Only if you buy it, often sublimited",
           "items": [
             "**Ransom.** Excluded in the GDV model[^avb]; BaFin lets insurers bundle it with cyber cover[^bafinrs].",
-            "**Supplier outages.** Dependent business interruption isn't standard and is often limited to named providers[^fsi].",
+            "**Supplier outages.** Dependent business interruption isn't in every policy and is often limited to named providers[^fsi].",
             "**Payment fraud.** Few cyber insurers cover it directly, mostly with sublimits[^fsi]; the GDV points to fidelity insurance (Vertrauensschadenversicherung)[^gdvvoice].",
             "**Non-malicious failures**, such as a faulty update. The GDV model's triggers are attacks, unauthorized access, interference, malware and data protection breaches[^avb]."
           ]
@@ -109,7 +109,7 @@
       "items": [
         "**BaFin restated its ransom insurance rules.** The 1 April 2026 circular keeps the conditions: cover bundled only with cyber insurance, for a year at most, with duties to keep it secret and report to the police[^bafinrs].",
         "**Fines in Germany: assume no cover.** Aon and A&O Shearman advise this until the law is clarified; defense costs can be covered[^aon].",
-        "**Tighter underwriting ahead.** EU supervisors warn of stricter terms and more exclusions[^esas]; firms that can't fix flaws may become less insurable[^fsi]."
+        "**Cover may tighten.** EU supervisors warn of stricter underwriting and more exclusions[^esas]; firms that can't fix flaws may become less insurable[^fsi]."
       ],
       "span": "full"
     },
@@ -120,12 +120,12 @@
       "navTitle": "Claim",
       "items": [
         {
-          "title": "Call the insurer's hotline first.",
-          "text": "Use the policy's crisis line and providers, and follow the insurer's reasonable instructions. Get written agreement before hiring your own responder or PR adviser[^avb]."
+          "title": "Call the insurer's hotline at once.",
+          "text": "Use the policy's crisis line and providers, and follow the insurer's reasonable instructions. Agree with the insurer before hiring your own responder or PR adviser[^avb], and get that in writing."
         },
         {
           "title": "Contain, but leave the damage in place.",
-          "text": "Keep the damage picture unchanged until the insurer agrees, and document changes you can't avoid[^avb]. Isolate rather than wipe, as in the incident response sheet."
+          "text": "Leave the damage scene unchanged until the insurer agrees, and document changes you can't avoid[^avb]. Isolate rather than wipe, as in the incident response sheet."
         },
         {
           "title": "Don't admit liability or settle.",
@@ -137,7 +137,7 @@
         },
         {
           "title": "Ask the insurer before paying a ransom.",
-          "text": "The GDV model pays nothing where sanctions stand in the way[^avb]. The ransomware sheet covers screening and the decision."
+          "text": "The GDV model excludes ransoms and pays nothing where sanctions stand in the way[^avb]. The ransomware sheet covers screening and the decision."
         }
       ]
     },
@@ -159,7 +159,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Polishing an external security rating.** Underwriters also use outside ratings[^fsi], but a claim turns on what you answered and kept up.",
+        "**Chasing a perfect external security rating.** Underwriters also use outside ratings[^fsi], so fix what they flag, but a claim turns on what you answered and kept up.",
         "**The highest limit on offer.** Small sublimits for ransom, outages and fraud make a large limit pay less than it looks.",
         "**Every service the insurer bundles in.** Many insurers offer consulting and risk management support[^ncscins]. Use what closes a gap in your controls."
       ]
@@ -172,7 +172,7 @@
       "items": [
         "**Answering yes for all when one system is missing.** One VPN, admin or service account without MFA makes all untrue. If you claim measures that aren't in place, the insurer may not have to pay any claims[^ncscins].",
         "**Starting the renewal too late.** The GDV model renews for a year unless cancelled at least three months before expiry[^avb]. Start four months ahead.",
-        "**Assuming other policies cover cyber.** Property and liability policies may give some cyber cover or exclude it[^ncscins]."
+        "**Assuming other policies cover cyber.** Property and business interruption policies may give some cyber cover or exclude it[^ncscins]."
       ]
     },
     {
@@ -210,6 +210,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which narrowed 8 statements to what the GDV model terms and other sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
