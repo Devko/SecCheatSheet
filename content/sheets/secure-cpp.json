@@ -17,11 +17,11 @@
       "id": "first",
       "title": "If you only do five things",
       "navTitle": "Five things",
-      "intro": "Seven of the 2025 CWE Top 25 are memory-safety weaknesses[^cwe25]. Android cut memory-safety bugs from 76% of its vulnerabilities in 2019 to under 20% in 2025 by writing new code in memory-safe languages[^gsource][^android].",
+      "intro": "Seven of the 2025 CWE Top 25 are memory-safety weaknesses[^cwe25]. Writing new code in memory-safe languages cut them from 76% of Android's vulnerabilities in 2019 to under 20% in 2025[^gsource][^android].",
       "items": [
         {
           "title": "Build every release with the OpenSSF hardening flags.",
-          "text": "For GCC and Clang these include `-D_FORTIFY_SOURCE=3`, `-fstack-protector-strong`, `-fstack-clash-protection`, `-ftrivial-auto-var-init=zero`, PIE and full RELRO[^openssf]; on GNU/Linux, GCC's `-fhardened` sets them all at once[^gccinst]. On MSVC, add `/guard:cf`[^mscfg]."
+          "text": "For GCC and Clang these include `-D_FORTIFY_SOURCE=3`, `-fstack-protector-strong`, `-fstack-clash-protection`, `-ftrivial-auto-var-init=zero`, PIE and full RELRO[^openssf]; GCC's `-fhardened` sets them all on GNU/Linux[^gccinst]. On MSVC, add `/guard:cf`[^mscfg]."
         },
         {
           "title": "Bounds-check the standard library in production.",
@@ -37,7 +37,7 @@
         },
         {
           "title": "Write new components in a memory-safe language.",
-          "text": "New code holds most bugs: five-year-old code has 3.4 to 7.4 times lower vulnerability density[^gsource]. CISA and the FBI asked makers of C and C++ products for critical infrastructure to publish a memory-safety roadmap by the end of 2025[^cisabad]."
+          "text": "New code holds most bugs: five-year-old code has 3.4 to 7.4 times lower vulnerability density[^gsource]. For critical-infrastructure products, CISA and the FBI wanted a published memory-safety roadmap by the end of 2025[^cisabad]."
         }
       ]
     },
@@ -77,7 +77,7 @@
       "span": "full",
       "items": [
         "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV into a fixed-size stack buffer without checking it fit, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches this only when it knows the buffer size[^openssf].",
-        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, let crafted patterns run code on GitLab servers (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow` and `__builtin_add_overflow`[^gccovf].",
+        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, let crafted patterns run code on GitLab (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow`[^gccovf].",
         "**Error codes that let a decoder keep going.** Brotli's decoder treated an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat each format error as final, check the bound on every append, and mark error-returning functions `[[nodiscard]]`.",
         "**Ownership an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. Own with `std::unique_ptr`, never keep a `std::string_view` or `std::span` past its owner, and in C document who frees each argument.",
         "**Reading a union member as the wrong type.** OpenSSL read an `ASN1_TYPE` union member without checking its type (CVE-2026-22796)[^openssl], and CISA added type confusion bugs in V8 and Windows to its exploited list in 2026[^kev]. Check the tag first; in C++ use `std::variant`.",
