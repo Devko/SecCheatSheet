@@ -1,0 +1,372 @@
+{
+  "slug": "wifi-nac",
+  "topic": "Wi-Fi and network access control",
+  "status": "draft",
+  "order": 49,
+  "capability": "infrastructure/wireless",
+  "title": "Wi-Fi and network access: can anyone with a password get onto your network?",
+  "short": "Move staff Wi-Fi to device certificates (EAP-TLS) within 6 months; since October 2026 Windows blocks saved MS-CHAPv2 sign-ins.",
+  "answer": "Move staff Wi-Fi to EAP-TLS with a certificate on every managed device within six months, and give guests and devices that can't do 802.1X their own SSIDs and VLANs now. Judge every other measure by whether a stolen password, a copied MAC address or a laptop plugged into a meeting-room port still reaches more than the internet.",
+  "audience": "IT and network teams running office, warehouse and plant networks, especially with Microsoft Intune and Entra ID",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Give every device its own certificate.",
+          "text": "Use EAP-TLS with device certificates from Intune, issued by Microsoft Cloud PKI or your own CA. The NCSC calls this the most effective way to control which devices join[^ncscshadow]."
+        },
+        {
+          "title": "Retire PEAP-MSCHAPv2.",
+          "text": "A fake access point can capture the exchange and recover the password[^msadv]. Windows stopped using it automatically under Credential Guard[^credguard] and, in October 2026, by default[^ntlmv1]."
+        },
+        {
+          "title": "Make every client check the RADIUS server.",
+          "text": "Set the trusted root and server names in each Wi-Fi profile, so users never get asked to trust a certificate[^intunewifi]. Under WPA3-Enterprise, Windows 11 stops if validation fails[^eapwin11]."
+        },
+        {
+          "title": "Segment guests and devices without 802.1X.",
+          "text": "Put guest Wi-Fi in its own VLAN with internet only: in 2026, researchers broke client isolation on every network they tested[^airsnitch]. Limit devices known only by MAC address to what they need[^bsinac]."
+        },
+        {
+          "title": "Lock down wired ports in public areas.",
+          "text": "Run 802.1X with MAC fallback on ports in meeting rooms and reception, and switch off unused ones. In multi-host mode, one authorized client opens the port for all[^ciscohost], so a hub lets others in[^ncscshadow]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "rollout",
+      "title": "Move staff Wi-Fi to certificates",
+      "navTitle": "Rollout",
+      "items": [
+        {
+          "title": "List what connects where.",
+          "text": "For each SSID and switch, note the device types and whether they support 802.1X. BSI bases NAC planning on a complete asset inventory[^bsinac]."
+        },
+        {
+          "title": "Choose the RADIUS server.",
+          "text": "NPS accepts only certificates from an enterprise CA or mapped to an AD account[^npscert] and lacks TLS 1.3[^eapwin11], which hides device identities[^rfc9190]. For devices joined only to Entra ID, use a cloud RADIUS service that trusts your Intune CA."
+        },
+        {
+          "title": "Issue device certificates.",
+          "text": "Deploy a trusted root profile and a SCEP profile, with key storage set to **Enroll to Trusted Platform Module (TPM) KSP, otherwise fail**[^scep]. Cloud PKI needs a license on top of Intune Plan 1 or 2[^cloudpki]; the encryption sheet covers private CAs."
+        },
+        {
+          "title": "Deploy the Wi-Fi profile.",
+          "text": "Choose EAP-TLS, the SCEP certificate and **Machine** authentication[^intunewifi]; the mobile devices sheet covers phones. Turn on WPA3 where APs and clients support it: 6 GHz requires it[^wfa], as does enterprise Wi-Fi 7 on Windows 11[^wifi7]."
+        },
+        {
+          "title": "Run both, then remove the old network.",
+          "text": "Move groups over while watching RADIUS logs. Then delete the PSK or PEAP network and its profiles."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "radius",
+      "title": "Run the RADIUS server as infrastructure",
+      "navTitle": "RADIUS",
+      "items": [
+        "**Place it in the management zone.** Accept requests only from access points, controllers and switches, and alert when RADIUS is down or request counts jump[^bsinac].",
+        "**Harden RADIUS over UDP.** CVE-2024-3596 lets an attacker on the RADIUS network forge packets. On NPS, require Message-Authenticator and turn on `requireMsgAuth`; both are off by default[^blastradius].",
+        "**Plan for RADIUS being down.** Keep existing sessions and reject new ones, or assign a fixed restricted VLAN. Depending on the switch, an outage can otherwise open ports completely[^bsinac]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "devices",
+      "title": "Printers, cameras, scanners and IoT",
+      "navTitle": "Devices",
+      "items": [
+        "**Use certificates where the device can.** Intune SCEP profiles support Wi-Fi on Android Enterprise dedicated devices, such as scanners[^scep].",
+        "**Otherwise give each device its own key.** BSI allows shared identities only as justified exceptions[^bsinac]. Meraki's identity PSK, for example, gives each key its own policy, though not with WPA3[^ipsk]. Use 20 or more characters[^bsiwlan].",
+        "**Treat MAC authentication as a label.** It makes spoofing easy, so BSI wants such devices restricted to the minimum and profiled[^bsinac].",
+        "**One SSID or VLAN per device class,** reaching only its server; see the network segmentation sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "rogue",
+      "title": "Rogue access points and evil twins",
+      "navTitle": "Rogue APs",
+      "items": [
+        "**Use your access points as sensors.** NIST recommends continuous monitoring for rogue APs, unauthorized clients and impersonation[^nist153].",
+        "**Scan where sensors don't reach** at least quarterly, NIST suggests, and assess the whole WLAN yearly[^nist153].",
+        "**Ban private access points.** BSI requires the ban in the usage policy[^bsiuse].",
+        "**Block bridging on laptops,** as NIST advises[^nist153]. APT28 used hacked dual-homed computers nearby to join a target's Wi-Fi that asked for no MFA[^volexity]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "controllers",
+      "title": "Controllers and cloud dashboards",
+      "navTitle": "Controllers",
+      "items": [
+        "**Sign in through your identity provider,** with phishing-resistant MFA, and keep one emergency local account. The edge devices sheet covers management interfaces.",
+        "**Patch within the patching sheet's deadlines** and change the defaults: BSI requires new SSIDs, passwords and keys before use, and encrypted admin access only[^bsiwlan].",
+        "**Log every change** centrally[^bsinac]; alert on new SSIDs, keys and RADIUS servers.",
+        "**Mount access points out of reach.** A stolen AP can reveal the RADIUS secret or the network key[^bsiwlan]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Windows ended automatic MS-CHAPv2 sign-in.** Since 13 October 2026, Windows 11 24H2 and later block single sign-on with NTLMv1-derived credentials, so PEAP-MSCHAPv2 no longer connects on its own. Setting `BlockNtlmv1SSO` to 0 is a temporary exception[^ntlmv1].",
+        "**Cloud PKI came to Microsoft 365 E5** from July 2026. Otherwise it's an add-on at $2 per user per month, paid yearly[^intuneprice].",
+        "**Client isolation proved leaky.** In February 2026, researchers bypassed it under WPA2 and WPA3, in home and enterprise networks; a separate guest VLAN stopped the attacks[^airsnitch].",
+        "**Network access systems were exploited.** CISA listed UniFi OS flaws in June 2026 and a Cisco ISE flaw in September 2026 as exploited[^kev]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Hidden SSIDs.** Clients announce the name anyway, and Microsoft advises against hiding it[^nonbroadcast].",
+        "**MAC allow-lists as access control.** BSI doesn't treat devices identified by MAC address as trusted[^bsinac].",
+        "**A VPN over your own Wi-Fi.** BSI lists it only for high protection needs[^bsiwlan].",
+        "**NAC posture checks before the basics.** BSI files them under high protection[^bsinac]. Check compliance at app sign-in with Conditional Access."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Letting users accept unknown servers.** With PEAP, that hands a fake AP a crackable response[^msadv]. Turn on **Perform server validation**[^intunewifi].",
+        "**Deleting a leaver before retiring the device.** Intune SCEP and PKCS certificates stay valid; retire or wipe the device first[^intunerevoke].",
+        "**Leaving `BlockNtlmv1SSO` at 0.** It reduces protection[^ntlmv1]; set an end date.",
+        "**One network for staff, guests and devices.** BSI forbids WLANs that couple security zones[^bsiwlan]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Ask your IT provider for EAP-TLS with Cloud PKI and cloud RADIUS instead of a staff password.",
+            "Put guests on their own SSID and VLAN with internet only, and printers and cameras on another.",
+            "Switch off network ports in meeting rooms and reception that nobody uses."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Put all managed devices on EAP-TLS; allow PEAP-MSCHAPv2 only as a named exception with an end date.",
+            "Enable 802.1X with MAC fallback on access switches, public areas first.",
+            "Turn on rogue AP detection and send RADIUS and controller logs to the SIEM."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run redundant RADIUS servers in the management zone, separate for office and production[^bsinac].",
+            "Consider MACsec on ports in public areas[^bsinac].",
+            "In Germany, map controls to BSI NET.2.1, NET.2.2 and NET.3.4."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on BSI IT-Grundschutz NET.2.1, NET.2.2 and NET.3.4, NIST SP 800-153, NCSC guidance, Microsoft Learn pages on Intune, Cloud PKI, NPS and Credential Guard, and Microsoft's October 2026 MS-CHAPv2 change."
+    }
+  ],
+  "sources": [
+    {
+      "id": "ncscshadow",
+      "title": "Shadow IT",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 14 Aug 2026",
+      "url": "https://www.ncsc.gov.uk/guidance/shadow-it"
+    },
+    {
+      "id": "bsinac",
+      "title": "NET.3.4 Network Access Control",
+      "publisher": "BSI IT-Grundschutz",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_3_4_Network_Access_Control_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "bsiwlan",
+      "title": "NET.2.1 WLAN-Betrieb",
+      "publisher": "BSI IT-Grundschutz",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_2_1_WLAN_Betrieb_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "bsiuse",
+      "title": "NET.2.2 WLAN-Nutzung",
+      "publisher": "BSI IT-Grundschutz",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_2_2_WLAN_Nutzung_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "msadv",
+      "title": "Security Advisory 2876146 (PEAP-MS-CHAPv2)",
+      "publisher": "Microsoft",
+      "date": "4 Aug 2013",
+      "url": "https://learn.microsoft.com/en-us/security-updates/securityadvisories/2013/2876146"
+    },
+    {
+      "id": "credguard",
+      "title": "Credential Guard: considerations and known issues",
+      "publisher": "Microsoft Learn",
+      "date": "23 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/windows/security/identity-protection/credential-guard/considerations-known-issues"
+    },
+    {
+      "id": "ntlmv1",
+      "title": "KB5066470: Manage NTLMv1 changes in Windows",
+      "publisher": "Microsoft Support",
+      "date": "updated 19 Oct 2026",
+      "url": "https://support.microsoft.com/kb/5066470"
+    },
+    {
+      "id": "intunewifi",
+      "title": "Wi-Fi settings for Windows devices in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "15 May 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wifi-settings-windows"
+    },
+    {
+      "id": "eapwin11",
+      "title": "EAP: What's changed in Windows 11",
+      "publisher": "Microsoft Learn",
+      "date": "27 Jun 2024",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/extensible-authentication-protocol/windows-11-changes"
+    },
+    {
+      "id": "airsnitch",
+      "title": "AirSnitch: Demystifying and Breaking Client Isolation in Wi-Fi Networks",
+      "publisher": "NDSS 2026",
+      "date": "Feb 2026",
+      "url": "https://www.cs.ucr.edu/~zhiyunq/pub/ndss26_airsnitch.pdf"
+    },
+    {
+      "id": "ciscohost",
+      "title": "Configuring IEEE 802.1x Port-Based Authentication",
+      "publisher": "Cisco",
+      "date": "29 Sep 2022",
+      "url": "https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst2960cx_3650cx/software/release/15-2_7_e/configuration_guide/b_1527e_consolidated_3560cx_2960cx_cg/m_sec_8021x_cg.html"
+    },
+    {
+      "id": "npscert",
+      "title": "Certificate templates for PEAP and EAP",
+      "publisher": "Microsoft Learn",
+      "date": "16 Jan 2025",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/nps/nps-manage-cert-requirements"
+    },
+    {
+      "id": "scep",
+      "title": "SCEP certificate profiles in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "26 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/certificates/scep-profiles"
+    },
+    {
+      "id": "cloudpki",
+      "title": "Microsoft Cloud PKI for Intune",
+      "publisher": "Microsoft Learn",
+      "date": "8 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/cloud-pki/"
+    },
+    {
+      "id": "intuneprice",
+      "title": "Microsoft Intune plans and pricing",
+      "publisher": "Microsoft",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.microsoft.com/en-us/security/business/microsoft-intune-pricing"
+    },
+    {
+      "id": "wfa",
+      "title": "WPA3 deployment options",
+      "publisher": "Wi-Fi Alliance",
+      "date": "2025",
+      "url": "https://www.wi-fi.org/system/files/WPA3_Deployment_Options_Highlights_202602.pdf"
+    },
+    {
+      "id": "wifi7",
+      "title": "Introducing Wi-Fi 7 for enterprise connectivity",
+      "publisher": "Windows IT Pro Blog",
+      "date": "29 Sep 2025",
+      "url": "https://techcommunity.microsoft.com/blog/windows-itpro-blog/introducing-wi-fi-7-for-enterprise-connectivity/4456751"
+    },
+    {
+      "id": "blastradius",
+      "title": "KB5040268: Access-Request packets attack (CVE-2024-3596)",
+      "publisher": "Microsoft Support",
+      "date": "updated 6 Aug 2024",
+      "url": "https://support.microsoft.com/topic/a0e2f0b1-f200-4a7b-844f-48d1d5ab9e66"
+    },
+    {
+      "id": "rfc9190",
+      "title": "RFC 9190: EAP-TLS 1.3",
+      "publisher": "IETF",
+      "date": "Feb 2022",
+      "url": "https://www.rfc-editor.org/rfc/rfc9190.html"
+    },
+    {
+      "id": "ipsk",
+      "title": "IPSK Authentication without RADIUS",
+      "publisher": "Cisco Meraki Documentation",
+      "date": "checked 5 Nov 2026",
+      "url": "https://documentation.meraki.com/Wireless/Design_and_Configure/Configuration_Guides/Encryption_and_Authentication/IPSK_Authentication_without_RADIUS"
+    },
+    {
+      "id": "nist153",
+      "title": "SP 800-153, Guidelines for Securing WLANs",
+      "publisher": "NIST",
+      "date": "Feb 2012",
+      "url": "https://csrc.nist.gov/pubs/sp/800/153/final"
+    },
+    {
+      "id": "volexity",
+      "title": "The Nearest Neighbor Attack",
+      "publisher": "Volexity (threat research)",
+      "date": "22 Nov 2024",
+      "url": "https://www.volexity.com/blog/2024/11/22/the-nearest-neighbor-attack-how-a-russian-apt-weaponized-nearby-wi-fi-networks-for-covert-access/"
+    },
+    {
+      "id": "kev",
+      "title": "Known Exploited Vulnerabilities Catalog",
+      "publisher": "CISA",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog"
+    },
+    {
+      "id": "intunerevoke",
+      "title": "Remove SCEP or PKCS certificates in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "8 Apr 2024",
+      "url": "https://learn.microsoft.com/en-us/intune/device-configuration/certificates/remove-profiles"
+    },
+    {
+      "id": "nonbroadcast",
+      "title": "Non-broadcast wireless networks with Windows",
+      "publisher": "Microsoft (archived)",
+      "date": "updated 19 Apr 2007",
+      "url": "https://learn.microsoft.com/en-us/previous-versions/tn-archive/bb726942(v=technet.10)"
+    }
+  ]
+}

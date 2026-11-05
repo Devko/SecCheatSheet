@@ -1,0 +1,344 @@
+{
+  "slug": "browsers",
+  "topic": "Browsers",
+  "status": "draft",
+  "order": 50,
+  "capability": "infrastructure/browsers",
+  "title": "Browsers: which settings do you need to enforce?",
+  "short": "Manage Edge and Chrome centrally, force every update to apply within 72 hours and allow sign-in only with work accounts.",
+  "answer": "This month, put Edge and Chrome under central management, force every update to apply within 72 hours and allow browser sign-in only with work accounts. Judge every other browser setting by whether it keeps stolen sessions, unmanaged devices or unapproved AI tools away from company data.",
+  "audience": "IT and security teams managing Windows and Mac computers, especially on Microsoft 365 or Google Workspace",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Manage Edge and Chrome from one place.",
+          "text": "Use Intune, Group Policy or the Edge management service in the Microsoft 365 admin center for Edge[^edgemgmt], and Chrome Enterprise Core, at no additional cost, or Group Policy for Chrome[^cecore]. Block other browsers with application control, as the endpoints and email sheet describes."
+        },
+        {
+          "title": "Force updates to apply within 72 hours.",
+          "text": "Updates apply only after a relaunch. Set RelaunchNotification to Required and RelaunchNotificationPeriod to 259200000 ms, the patching sheet's 72 hours. With RelaunchFastIfOutdated at 7, a browser more than a week out of date gets 2 hours[^chromepol]."
+        },
+        {
+          "title": "Allow sign-in only with work accounts.",
+          "text": "Set RestrictSigninToPattern to your domains in Edge and Chrome. Without Google Workspace, set Chrome's BrowserSignin to Disable, which also blocks Chrome Sync[^chromepol]. The NCSC flags the risk of work data syncing to personal accounts[^ncscbrowser]."
+        },
+        {
+          "title": "Make malware and phishing warnings final.",
+          "text": "In Edge, set SmartScreenEnabled, PreventSmartScreenPromptOverride and its ForFiles twin; they need domain-joined or MDM-enrolled devices[^edgesmart]. In Chrome, enforce SafeBrowsingProtectionLevel and DisableSafeBrowsingProceedAnyway. In both, set DownloadRestrictions to 4 to block known malicious files[^chromepol]."
+        },
+        {
+          "title": "Let only managed devices reach company data.",
+          "text": "Require a compliant device in Conditional Access. On personal Windows PCs, require an app protection policy instead: it admits Edge with Intune app protection and blocks other browsers from Microsoft 365[^mamwin]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "baseline",
+      "title": "Set up the browser baseline in this order",
+      "navTitle": "Baseline",
+      "items": [
+        {
+          "title": "Find every browser and extension.",
+          "text": "Chrome Enterprise Core reports each browser's version, extensions and policies[^cecore]. Find other browsers, including AI browsers, in your device inventory."
+        },
+        {
+          "title": "Start from Microsoft's baseline.",
+          "text": "Assign Intune's Edge security baseline, version 139 from April 2026[^intunebase], and match it in Chrome. Use Extended Stable, which moves every 8 weeks, only where testing needs it[^edgerelease]."
+        },
+        {
+          "title": "Connect Chrome to Entra ID.",
+          "text": "On Windows, set CloudAPAuthEnabled to 1. Chrome then signs users in with their work account and can pass device checks in Conditional Access[^cacond]."
+        },
+        {
+          "title": "Turn off developer tools for most staff.",
+          "text": "Set DeveloperToolsAvailability to 2; the NCSC notes the console can aid social engineering[^ncscbrowser]. Exempt developers by group, or allow internal sites with DeveloperToolsAvailabilityAllowlist[^chromepol]."
+        },
+        {
+          "title": "Then allowlist extensions.",
+          "text": "Follow the endpoints and email sheet. Review AI extensions first: one malicious campaign Microsoft found had over 900,000 installs across Chromium browsers[^mddr]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "sessions",
+      "title": "Stolen session cookies: what each defense covers",
+      "navTitle": "Stolen sessions",
+      "items": [
+        "**Software alone can't stop cookie theft.** Google says no software-only method reliably prevents it[^gdbsc], and infostealers increasingly take session tokens[^mddr].",
+        "**App-bound encryption (Windows, version 127+).** Malware must gain system rights or inject into the browser, so it works best where users can't run downloads as admin[^abe]. Leave ApplicationBoundEncryptionEnabled on[^edgeabe].",
+        "**Remote debugging.** Attackers turned to it to pull cookies, so Chrome 136 blocked it for the default profile[^remotedebug]. Set RemoteDebuggingAllowed to false where nobody needs it[^chromepol].",
+        "**Device Bound Session Credentials (Chrome).** On by default for Google Workspace accounts in Chrome 146+ on Windows with a TPM, for new sessions; require it per app with context-aware access[^dbscws]. Other sites must adopt it; macOS is to follow[^gdbsc].",
+        "**Entra token protection in browsers.** Beyond the native apps in the passkeys and MFA sheet, a preview covers the Azure portal and the Entra and Intune admin centers in Edge or Chrome with Microsoft's Single Sign On extension. It blocks other web apps that use Azure Resource Manager[^tpweb]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "profiles",
+      "title": "Profiles, sync and passwords",
+      "navTitle": "Profiles and passwords",
+      "items": [
+        "**Separate work and personal.** Edge for Business gives each its own window, cache and storage and shares no passwords between them; the personal window still gets your security and update policies[^efb]. On Google Workspace, set Chrome's ProfileSeparationSettings to Enforced[^chromepol].",
+        "**Limit what syncs.** Exclude types such as passwords with SyncTypesListDisabled[^chromepol]. The BSI's federal standard requires turning off cloud sync of credentials, cookies and history[^bsimst].",
+        "**Keep passwords in one place.** The BSI advises external password managers because built-in ones usually fall short[^bsimst]; the NCSC accepts built-in ones[^ncscbrowser]. For shared and admin credentials, use a business password manager with SSO and offboarding. Then set PasswordManagerEnabled to false; saved passwords keep working[^chromepol], so have staff move them."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "ai",
+      "title": "AI features and AI browsers",
+      "navTitle": "AI in the browser",
+      "items": [
+        "**Assume they are in use.** Microsoft saw AI browsers in daily use at over 40% of organizations in its data, and as the entry point in incidents with 57 malware families[^mddr].",
+        "**Copilot in Edge.** EdgeEntraCopilotPageContext controls whether Copilot reads page content and history in work profiles; it is off by default in the EU and never reads DLP-protected pages[^edgecopilot]. Its agent, browsing with Copilot, works only on allowlisted sites and is a preview closed to EEA tenants[^bwc].",
+        "**Gemini in Chrome.** Turn it off with GeminiSettings. Its auto browse agent is off by default for managed users and follows GeminiActOnWebSettings. Gemini in Chrome isn't offered in the EU yet[^gic].",
+        "**Other AI browsers.** Block them with application control until you know which of your policies they honor. For the rest, see the agentic AI, AI input security and DLP sheets."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Major releases every two weeks.** Edge 152 on 27 August and Chrome 153 on 8 September moved Stable to a two-week cycle; Extended Stable keeps eight weeks[^edgerelease][^chrome2w].",
+        "**Session binding shipped.** DBSC became publicly available in Chrome 146 on Windows in April[^gdbsc]. Entra token protection added a browser preview in August[^tpweb].",
+        "**Browser agents came switched off.** Chrome's auto browse and Edge's browsing with Copilot stay off until an admin allows them[^gic][^bwc]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A separate enterprise browser before you use what you have.** Edge management and Chrome Enterprise Core already cover policies, extensions and reporting[^edgemgmt][^cecore]. Pay for Chrome Enterprise Premium or similar only for a gap such as DLP, deep scanning or context-aware access to other SaaS[^cepricing].",
+        "**Disabling JavaScript or password autofill.** The NCSC says using the web reliably and securely is very difficult without them[^ncscbrowser].",
+        "**Copying the BSI's federal standard line by line.** Written for networks with a central blocklist, it says to turn off protection that calls external services[^bsimst]. Without such a blocklist, you'd lose SmartScreen and Safe Browsing."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Counting a downloaded update as installed.** Without RelaunchNotification, Chrome only changes its menu subtly and nothing forces the relaunch[^chromepol].",
+        "**Turning off app-bound encryption for roaming profiles.** It doesn't work where profiles roam[^abe], but disabling it lets other apps retrieve the browser's keys[^edgeabe]. Fix the roaming setup instead.",
+        "**Letting personal accounts into work browsers.** Work data then syncs to accounts you don't control[^ncscbrowser] and leaves with the person.",
+        "**Resetting only the password after an infostealer.** Invalidate sessions in every SaaS the browser was signed in to and check what the attacker reached, as Microsoft advises[^mddr]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Standardize on Edge, manage it in Intune and assign the Edge security baseline.",
+            "Set the relaunch deadline, sign-in restriction and SmartScreen overrides from the five things.",
+            "Block unmanaged devices, or give them SharePoint's limited web-only access."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Enroll Chrome in Chrome Enterprise Core with the same settings.",
+            "Require Intune app protection for Edge on personal Windows PCs.",
+            "Pilot token protection in the Azure portal for admins."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Enforce token protection for all admins; on Google Workspace, require DBSC with context-aware access.",
+            "Add browser DLP for unmanaged devices and AI sites, as the DLP sheet describes.",
+            "Report weekly on browsers past the 72-hour deadline and extensions off the allowlist."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn and Chrome Enterprise policy documentation, Google's and Microsoft's 2026 posts on session binding, the BSI minimum standard for web browsers, NCSC browser guidance and the Microsoft Digital Defense Report 2026."
+    }
+  ],
+  "sources": [
+    {
+      "id": "edgemgmt",
+      "title": "Get started with configuration policies (Edge management service)",
+      "publisher": "Microsoft Learn",
+      "date": "updated 6 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-management-service"
+    },
+    {
+      "id": "cecore",
+      "title": "Chrome Enterprise Core",
+      "publisher": "Chrome Enterprise Help",
+      "date": "2026",
+      "url": "https://support.google.com/chrome/a/answer/9116814"
+    },
+    {
+      "id": "cepricing",
+      "title": "Chrome Enterprise pricing",
+      "publisher": "Google",
+      "date": "2026",
+      "url": "https://chromeenterprise.google/pricing/"
+    },
+    {
+      "id": "chromepol",
+      "title": "Chrome Enterprise policy list",
+      "publisher": "Google",
+      "date": "2026",
+      "url": "https://chromeenterprise.google/policies/"
+    },
+    {
+      "id": "edgesmart",
+      "title": "Edge policy: PreventSmartScreenPromptOverrideForFiles",
+      "publisher": "Microsoft Learn",
+      "date": "22 May 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/preventsmartscreenpromptoverrideforfiles"
+    },
+    {
+      "id": "ncscbrowser",
+      "title": "Managing web browser security",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 13 May 2025",
+      "url": "https://www.ncsc.gov.uk/collection/device-security-guidance/policies-and-settings/managing-web-browser-security"
+    },
+    {
+      "id": "bsimst",
+      "title": "Mindeststandard des BSI für Webbrowser, Version 3.0",
+      "publisher": "BSI",
+      "date": "19 Feb 2024",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Mindeststandards/Mindeststandard_Webbrowser_V3_0.pdf"
+    },
+    {
+      "id": "mamwin",
+      "title": "Data protection for Windows MAM",
+      "publisher": "Microsoft Learn",
+      "date": "14 Apr 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/intune-service/apps/protect-mam-windows"
+    },
+    {
+      "id": "cacond",
+      "title": "Conditional Access: conditions (supported browsers)",
+      "publisher": "Microsoft Learn",
+      "date": "3 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-conditions"
+    },
+    {
+      "id": "intunebase",
+      "title": "Use security baselines to configure Windows devices in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "30 Sep 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/intune-service/protect/security-baselines"
+    },
+    {
+      "id": "edgerelease",
+      "title": "Microsoft Edge release schedule",
+      "publisher": "Microsoft Learn",
+      "date": "6 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-release-schedule"
+    },
+    {
+      "id": "chrome2w",
+      "title": "Fresher features, faster fixes: The two-week release cycle is here",
+      "publisher": "Chrome for Developers",
+      "date": "8 Sep 2026",
+      "url": "https://developer.chrome.com/blog/chrome-two-week-start"
+    },
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "gdbsc",
+      "title": "Protecting cookies with Device Bound Session Credentials",
+      "publisher": "Google",
+      "date": "9 Apr 2026",
+      "url": "https://blog.google/security/protecting-cookies-with-device-bound-session-credentials/"
+    },
+    {
+      "id": "dbscws",
+      "title": "Prevent cookie theft with session binding",
+      "publisher": "Google Workspace Admin Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://knowledge.workspace.google.com/admin/security/prevent-cookie-theft-with-session-binding"
+    },
+    {
+      "id": "tpweb",
+      "title": "Token Protection deployment guide: web apps (preview)",
+      "publisher": "Microsoft Learn",
+      "date": "6 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/deployment-guide-token-protection-web-apps"
+    },
+    {
+      "id": "abe",
+      "title": "Improving the security of Chrome cookies on Windows",
+      "publisher": "Google Security Blog",
+      "date": "30 Jul 2024",
+      "url": "https://security.googleblog.com/2024/07/improving-security-of-chrome-cookies-on.html"
+    },
+    {
+      "id": "edgeabe",
+      "title": "Edge policy: ApplicationBoundEncryptionEnabled",
+      "publisher": "Microsoft Learn",
+      "date": "22 May 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/applicationboundencryptionenabled"
+    },
+    {
+      "id": "remotedebug",
+      "title": "Changes to remote debugging switches to improve security",
+      "publisher": "Chrome for Developers",
+      "date": "17 Mar 2025",
+      "url": "https://developer.chrome.com/blog/remote-debugging-port"
+    },
+    {
+      "id": "efb",
+      "title": "Microsoft Edge for Business",
+      "publisher": "Microsoft Learn",
+      "date": "updated 15 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-for-business"
+    },
+    {
+      "id": "edgecopilot",
+      "title": "Edge policy: EdgeEntraCopilotPageContext",
+      "publisher": "Microsoft Learn",
+      "date": "20 Aug 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies/edgeentracopilotpagecontext"
+    },
+    {
+      "id": "bwc",
+      "title": "Configure browsing with Copilot",
+      "publisher": "Microsoft Learn",
+      "date": "1 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-management-browsing-with-copilot"
+    },
+    {
+      "id": "gic",
+      "title": "Gemini in Chrome",
+      "publisher": "Chrome Enterprise Help",
+      "date": "2026",
+      "url": "https://support.google.com/chrome/a/answer/16291696"
+    }
+  ]
+}
