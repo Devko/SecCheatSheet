@@ -8,7 +8,7 @@
   "short": "Check Microsoft 365 and every cloud account against one free baseline this month, block public storage and long-lived keys at the top, and diff the results every week.",
   "answer": "This month, run CISA's ScubaGear against Microsoft 365 and a free posture check against each cloud, and fix public storage, long-lived access keys, open app consent and open external access first. Then lock those settings with organization-level guardrails and re-run the same checks every week, so a changed setting shows up as a diff rather than as an incident.",
   "audience": "IT, platform and security teams running Microsoft 365 with workloads in Azure, AWS or Google Cloud, in organizations of any size",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-04",
   "reviewEveryDays": 30,
   "blocks": [
@@ -79,7 +79,7 @@
         "**Access keys and shared keys.** Attackers reach Azure Blob Storage with exposed credentials, shared keys and SAS tokens[^mddr]; accounts accept keys until `AllowSharedKeyAccess` is false[^azshared]. Google Cloud blocks service account keys in organizations created since May 2024[^gcpbase] and disables exposed ones[^th].",
         "**Instance metadata.** Require IMDSv2, which uses token-backed sessions, by account default or declarative policy. Track the `ImdsV1Enabled` and `MetadataNoToken` metrics to zero, then add `ec2:RoleDelivery` to an SCP so IMDSv1 credentials stop working[^imds].",
         "**Broad roles for workloads.** Remove wildcard actions (Security Hub controls IAM.1 and IAM.21)[^fsbp] and pin GitHub OIDC trust to one repository and branch or environment[^ghoidc]. An over-broad deploy role took UNC6426 from a stolen GitHub token to AWS administrator in under 72 hours[^th].",
-        "**Guests and external access.** Let only admins and Guest Inviters invite guests, and only from approved domains[^scuba]. Allow Teams external domains one by one and block chats from unmanaged accounts. Google Cloud's `iam.allowedPolicyMemberDomains` does the same for IAM grants[^gcpbase]. SharePoint links: see the DLP sheet.",
+        "**Guests and external access.** Let only admins and Guest Inviters invite guests, and only from approved domains[^scuba]; the external sharing sheet explains how this now also limits SharePoint sharing. Allow Teams external domains one by one and block chats from unmanaged accounts. Google Cloud's `iam.allowedPolicyMemberDomains` does the same for IAM grants[^gcpbase]. SharePoint links: see the DLP sheet.",
         "**OAuth app consent.** Microsoft's managed default for new tenants still lets users consent to permissions outside a list of mail, file, calendar and chat scopes[^consentpol]. Changes keep existing grants[^consent], so review those too. Stolen Salesloft Drift tokens let attackers bulk-export Salesforce data[^th]."
       ]
     },
@@ -152,6 +152,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Noted that, since Entra B2B integration became permanent for SharePoint in July 2026, limiting guest invitations also limits SharePoint and OneDrive sharing with new outsiders; the external sharing sheet has the details."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",

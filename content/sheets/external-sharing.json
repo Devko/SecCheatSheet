@@ -1,14 +1,14 @@
 {
   "slug": "external-sharing",
   "topic": "External sharing and collaboration",
-  "status": "draft",
+  "status": "published",
   "order": 44,
   "capability": "data/sharing",
   "title": "External sharing: who outside your organization can open your files today?",
   "short": "Make Specific people the default link, limit Anyone links to view-only and 30 days or turn them off, and check what's already shared every quarter.",
   "answer": "This month, make Specific people the default sharing link, turn Anyone links off or limit them to view-only links that expire within 30 days, and allow external sharing only on the sites, teams and shared drives set up for it. Then run the oversharing reports every quarter and fix the broadest exposure first: Anyone links, sites open to everyone in the organization, and guests nobody owns.",
   "audience": "IT, security and data protection leads in EU organizations on Microsoft 365 or Google Workspace who work with customers, partners and freelancers",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -24,15 +24,15 @@
         },
         {
           "title": "Turn Anyone links off, or fence them in.",
-          "text": "Anyone links need no sign-in, so nobody can tell who opened the file[^links]. If you keep them, make them view-only, expire them within 30 days[^scubasp] and allow them only on sites that need them. In Google, turn off \"anyone with the link\" for units that share externally[^scubagws]."
+          "text": "Anyone links need no sign-in, so nobody can tell who opened the file[^links]. If you keep them, make them view-only, expire them within 30 days[^scubasp] and allow them only on sites that need them. Turning them off or shortening the expiry also affects existing links[^spshare][^spsite], so warn owners first. In Google, turn off \"anyone with the link\" for units that share externally[^scubagws]."
         },
         {
           "title": "Share outside only from places built for it.",
-          "text": "Keep sensitive sites internal and give each partner or project its own site or team; only SharePoint admins can change a site's sharing setting[^spsite]. In Google, allow external sharing only for one organizational unit that owns a shared drive for external work[^gext]."
+          "text": "Keep sensitive sites internal and give each partner or project its own site or team; only SharePoint admins can change a site's sharing setting[^spsite]. In Google, allow external sharing only in an empty organizational unit that holds a shared drive for external work[^gext]."
         },
         {
           "title": "Limit sharing to approved people and domains.",
-          "text": "Let only a security group share externally, and only with partner domains[^spshare]. The domain list skips people who already have a guest account[^scubasp], so remove guests from domains you no longer work with and set the same list in Entra."
+          "text": "Let only a security group share externally, and only with partner domains[^spshare]. The domain list skips people who already have a guest account[^scubasp], so remove guests from domains you no longer work with. Set the same list in Entra, which also covers Teams[^b2b]."
         },
         {
           "title": "Find what's overshared before Copilot or Gemini does.",
@@ -48,7 +48,7 @@
       "items": [
         {
           "title": "Set the organization level.",
-          "text": "In the SharePoint admin center under **Policies** > **Sharing**, choose New and existing guests, or Anyone only if you need it; OneDrive can only be the same or stricter[^spshare]. Turn on guest access expiration (30 to 730 days) and cap People in your organization links (7 to 720 days)[^spotenant]."
+          "text": "In the SharePoint admin center under **Policies** > **Sharing**, choose New and existing guests, or Anyone only if you need it; OneDrive can only be the same or stricter[^spshare]. Turn on guest access expiration (30 to 730 days) and cap People in your organization links (7 to 720 days)[^spotenant]; links already older than the cap stop working[^links]."
         },
         {
           "title": "Set each site.",
@@ -56,7 +56,7 @@
         },
         {
           "title": "Lock the most sensitive sites.",
-          "text": "Restricted access control limits a site to up to 10 groups. Nobody outside them can open it, even with a link, or find it through search and Copilot. Set it separately on channel sites[^rac]. It needs SharePoint Advanced Management (SAM), which comes with one Copilot license on an E plan, or as an add-on[^samprereq]."
+          "text": "Restricted access control limits a site to up to 10 groups. Nobody outside them can open it, even with a link, or find it through search and Copilot. Set it separately on channel sites; it doesn't cover external participants in shared channels[^rac]. It needs SharePoint Advanced Management (SAM), which comes with one Copilot license on an E plan, or as an add-on[^samprereq]."
         },
         {
           "title": "Act on the reports.",
@@ -82,7 +82,7 @@
       "title": "If you run Google Workspace",
       "navTitle": "Google Workspace",
       "items": [
-        "**Allowlist partner domains.** CISA's baseline restricts sharing to allowlisted domains, warns before sharing elsewhere and blocks moving files to other organizations' shared drives[^scubagws].",
+        "**Allowlist partner domains.** CISA's baseline restricts sharing to allowlisted domains, warns before sharing elsewhere and blocks moving files to other organizations' shared drives[^scubagws]. An allowlist also blocks personal Google accounts, such as freelancers' Gmail[^gguest].",
         "**Allow visitors only from trusted domains.** Visitor sharing, for people without Google accounts, can be open to anyone or limited to trusted domains[^gext].",
         "**Restrict Chat too.** Check **Only allow this for allowlisted domains**. Turning external chat off later doesn't remove outsiders from existing chats and spaces[^gchat]."
       ]
@@ -93,7 +93,7 @@
       "title": "What you can skip",
       "items": [
         "**Restricted SharePoint Search.** It isn't a security boundary, holds at most 100 sites and can't be newly turned on since 31 July 2026[^rss]. Use restricted access control, or Restricted Content Discovery from the DLP sheet.",
-        "**A sharing audit tool before the built-in reports.** SAM comes with a Copilot license, and E5 alone gets the activity reports[^samprereq][^dag].",
+        "**A sharing audit tool before the built-in reports.** SAM comes with a Copilot license on E plans, and E5 alone gets the activity reports[^samprereq][^dag].",
         "**Turning external sharing off everywhere.** Partners still need the files. A partner site can be audited and revoked; an email attachment can't."
       ]
     },
@@ -103,8 +103,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Using the site sharing report to find Anyone links.** It leaves them out[^sharerep]. Search the audit log for `AnonymousLinkCreated`[^audit].",
-        "**Expecting guest expiration to cover old guests.** It applies only to guests who join after you turn it on[^spotenant]. Review the rest as the joiners and leavers sheet describes.",
+        "**Using the site sharing report to find Anyone links.** It leaves them out[^sharerep]. Search the audit log for `AnonymousLinkCreated`[^audit], which keeps only 180 days of records without E5[^auditret].",
+        "**Expecting guest expiration to cover old guests.** It skips guests added before you turned it on[^spotenant]; review those per the joiners and leavers sheet.",
         "**Removing a partner from the channel but not the files.** Access granted to a file through SharePoint sharing stays after the person leaves[^shch]."
       ]
     },
@@ -114,9 +114,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**Every named external share creates a guest.** Between May and July 2026 Microsoft made Entra B2B integration permanent for SharePoint and OneDrive in commercial tenants, so Entra guest settings apply[^b2b].",
+        "**Every named external share creates a guest.** Since July 2026, Entra B2B integration is permanent for SharePoint and OneDrive in commercial tenants[^b2b]. If only admins and Guest Inviters may invite, as the cloud configuration sheet advises, others can share only with existing guests[^spshare].",
         "**SharePoint one-time passcodes are retiring.** From October 2026, outsiders without a matching guest account lose access to Specific people links. Create the guest or reshare one item to restore access[^b2b].",
-        "**Google Workspace has guest accounts.** Since April 2026, inviting an outsider to Chat creates one, and inviting is on for everyone who can chat externally. The Workspace Guests unit gets its own default security settings, not your root ones, so apply 2-Step Verification there[^gguest]."
+        "**Google Workspace has guest accounts.** Since April 2026, inviting someone not on Workspace to Chat creates one, and by default everyone who can chat externally can invite. The Workspace Guests unit has its own security defaults, not your root ones, so apply 2-Step Verification there[^gguest]."
       ],
       "span": "full"
     },
@@ -147,14 +147,19 @@
           "title": "Enterprise or regulated",
           "items": [
             "Set sharing per sensitivity level with container labels, and alert when a site's label is lowered.",
-            "Enforce tenant restrictions v2 on managed Windows devices.",
-            "Record each partner's setup and owner in the supplier register (see the third-party risk sheet)."
+            "Enforce tenant restrictions v2, and pilot its Windows option (in preview).",
+            "Record each partner's setup and owner in the supplier list (see the third-party risk sheet)."
           ]
         }
       ]
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which added warnings where a setting breaks existing links or guests and narrowed 8 statements to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -208,7 +213,7 @@
       "id": "scubagws",
       "title": "CISA Google Workspace Baseline for Google Drive and Docs",
       "publisher": "CISA (ScubaGoggles)",
-      "date": "policies updated Aug 2025",
+      "date": "ScubaGoggles v1.1.0, Oct 2026",
       "url": "https://github.com/cisagov/ScubaGoggles/blob/main/scubagoggles/baselines/drive.md"
     },
     {
@@ -245,6 +250,13 @@
       "publisher": "Microsoft Learn",
       "date": "19 Jun 2026",
       "url": "https://learn.microsoft.com/en-us/purview/audit-log-sharing"
+    },
+    {
+      "id": "auditret",
+      "title": "Manage audit log retention policies",
+      "publisher": "Microsoft Learn",
+      "date": "19 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/purview/audit-log-retention-policies"
     },
     {
       "id": "sharerep",
