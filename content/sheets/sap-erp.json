@@ -131,8 +131,7 @@
       "items": [
         "**Know what RISE leaves you.** Without Cloud Application Services, you find and request notes; testing and the application's security concept stay yours[^rr].",
         "**Own the SIEM rules.** LogServ is optional, and SAP doesn't confirm receipt, write correlation rules or watch alerts[^rr].",
-        "**Write it into the contract.** Monthly patch status, deadlines for exploited and Critical notes, personal accounts; see the third-party-risk sheet.",
-        "**Check partner admins in Business Central.** Delegated admins appear as users, and their actions are logged[^bcperm]."
+        "**Write it into the contract.** Monthly patch status, deadlines for exploited and Critical notes, personal accounts; see the third-party-risk sheet."
       ]
     },
     {
@@ -178,7 +177,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Get a monthly note status per system from your ERP partner, and proof that no ERP login is public.",
-            "In Business Central, limit SUPER[^bcperm] and get an email when an IBAN changes[^bcaudit]."
+            "In Business Central, limit SUPER and review delegated partner admins[^bcperm]; get an email when an IBAN changes[^bcaudit]."
           ]
         },
         {
@@ -209,14 +208,14 @@
     {
       "id": "sapnotes",
       "title": "SAP Security Notes & News",
-      "publisher": "SAP Support",
+      "publisher": "SAP",
       "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/my-support/knowledge-base/security-notes-news.html"
     },
     {
       "id": "sysrec",
       "title": "System Recommendations",
-      "publisher": "SAP Support",
+      "publisher": "SAP",
       "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/alm/solution-manager/integrated-tools/system-recommendations.html"
     },
@@ -299,8 +298,8 @@
     },
     {
       "id": "dsag",
-      "title": "SAP S/4HANA Leitfaden (audit guide, user association)",
-      "publisher": "DSAG",
+      "title": "SAP S/4HANA Leitfaden (audit guide)",
+      "publisher": "DSAG (user association)",
       "date": "Dec 2022",
       "url": "https://impulsant.dsag.de/formate/textbeitrag/sap-s-4hana-leitfaden/"
     },
@@ -313,7 +312,7 @@
     },
     {
       "id": "gwsec",
-      "title": "Securing Gateway Connections to External Programs",
+      "title": "Configuring the Gateway Securely",
       "publisher": "SAP Help",
       "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/48/b2096b7895307be10000000a42189b/content.htm"
@@ -362,7 +361,7 @@
     },
     {
       "id": "sentinel",
-      "title": "Sentinel solution for SAP applications",
+      "title": "Sentinel for SAP applications",
       "publisher": "Microsoft Learn",
       "date": "13 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/azure/sentinel/sap/sap-applications-overview"
@@ -377,7 +376,7 @@
     {
       "id": "bs7",
       "title": "Clarity and Choice on SAP Business Suite 7",
-      "publisher": "SAP Support",
+      "publisher": "SAP",
       "date": "checked 5 Nov 2026",
       "url": "https://support.sap.com/en/release-upgrade-maintenance/maintenance-information/maintenance-strategy/s4hana-business-suite7.html"
     },
