@@ -6,8 +6,8 @@
   "capability": "leadership/policies",
   "title": "Policies and standards: which few do you need, and does anyone follow them?",
   "short": "Keep one signed security policy, an acceptable use page and six topic policies of testable rules, each backed by a setting, and review them yearly.",
-  "answer": "This quarter, cut your security documents to one management-approved information security policy, an acceptable use page and about six topic policies whose rules are short, testable \"must\" sentences, each with an owner and, wherever possible, a setting that enforces it. Review them at least once a year and after significant incidents or changes by checking each rule against the live settings, and keep one mapping table so the same set answers ISO 27001, Grundschutz++ and NIS2 audits.",
-  "audience": "Heads of security, CISOs and IT leads who write and maintain security policies, and the managing directors who approve them, especially in EU organizations with NIS2 or BSIG duties",
+  "answer": "This quarter, cut your security documents to one management-approved information security policy, an acceptable use page and about six topic policies of short, testable \"must\" rules, each with an owner and, wherever possible, a setting that enforces it. Review them at least yearly and after significant incidents or changes by checking each rule against the live settings, and keep one mapping table so the same set serves ISO 27001, Grundschutz++ and NIS2 audits.",
+  "audience": "Heads of security, CISOs and IT leads who write security policies, and the managing directors who approve them, especially under NIS2 or the BSIG",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "Keep one short, signed policy on top.",
-          "text": "Write the information security policy in two to five pages: scope, objectives, roles, the list of topic policies and the approval date. The BSI found that more than 20 pages doesn't work in practice[^std2002]."
+          "text": "Two to five pages: scope, objectives, roles, topic policies, approval date. The BSI found more than 20 pages doesn't work[^std2002]."
         },
         {
           "title": "Cut the rest to about six topic policies.",
-          "text": "ENISA counts ten topic policies that Regulation 2024/2690 requires of digital providers, and lets you combine them into one document[^enisatig]. Group rules by who must follow them, not by framework control."
+          "text": "ENISA counts ten that 2024/2690 requires of digital providers and accepts one combined document[^enisatig]."
         },
         {
           "title": "Write rules you can test.",
-          "text": "One sentence per rule, saying who must do what, and one named owner per document. The NCSC wants people to see which rules must be followed and which guidelines only advise[^ncscp6]."
+          "text": "One sentence per rule, saying who must do what, and one owner per document. Mark advice as advice, as the NCSC asks[^ncscp6]."
         },
         {
           "title": "Put a setting behind each rule.",
-          "text": "Where Intune, Conditional Access or Group Policy can enforce a rule, enforce it and name the setting next to the rule. The NCSC's CAF rates security that relies entirely on users applying manual processes as not achieved[^caf]."
+          "text": "Enforce it in Intune, Group Policy or Conditional Access (Entra ID P1)[^ca]. The CAF rates reliance on users' manual care as not achieved[^caf]."
         },
         {
           "title": "Review against the settings, not the calendar.",
-          "text": "Each year, compare every rule with a settings export, the open exceptions and the incidents since the last version, and record what changed and why. ENISA lists change logs and documented reviews as evidence[^enisatig]."
+          "text": "Each year, compare every rule with a settings export, open exceptions and recent incidents, and log what changed."
         }
       ]
     },
@@ -48,19 +48,19 @@
       "items": [
         {
           "title": "Policy: what and why?",
-          "text": "Management's intentions and direction on security or one topic, as ISO/IEC 27002 defines a topic-specific policy[^enisatig]. The management body approves the top policy; topic policies need an appropriate level of management[^nis2ir], such as the managing director in charge of IT."
+          "text": "Management's intentions and direction, as ISO/IEC 27002 defines a topic-specific policy[^enisatig]. The management body approves the top policy, an appropriate level of management the topic policies[^nis2ir]."
         },
         {
           "title": "Standard: which settings, exactly?",
-          "text": "Mandatory technical requirements, such as allowed MFA methods, patch deadlines and baselines. NIST calls standards normally compulsory[^sp80012]. Our rule: the head of security approves them with the head of IT."
+          "text": "Mandatory settings, such as MFA methods, patch deadlines and baselines; NIST calls standards normally compulsory[^sp80012]. Our rule: the heads of security and IT approve them."
         },
         {
           "title": "Procedure: which steps?",
-          "text": "Detailed steps for one task, such as creating an admin account[^sp80012]. The owner of the process approves them; the BSI's term is Arbeitsanweisung[^std2002]."
+          "text": "Steps for one task, such as creating an admin account[^sp80012]. The process owner approves them; the BSI calls them Arbeitsanweisungen[^std2002]."
         },
         {
           "title": "Guideline: what do we advise?",
-          "text": "Help that can be followed in more than one way[^sp80012]. The author publishes it without formal approval, clearly marked as advice."
+          "text": "Advice that can be followed in more than one way[^sp80012], published by its author without formal approval."
         }
       ]
     },
@@ -70,13 +70,13 @@
       "title": "The documents you actually need",
       "navTitle": "The short list",
       "items": [
-        "**Information security policy.** Approach, objectives, resources, roles, topic policies, documents kept and for how long, indicators and the approval date, as 2024/2690 lists for digital providers[^nis2ir]. NIS2 calls for policies on risk analysis and information system security[^nis2].",
-        "**Acceptable use.** One or two pages for all staff on devices, accounts, data, approved AI tools and reporting, with the consequences of breaking the rules, which the BSI requires staff to know[^isms1]. CIS encourages enterprises to use its template in whole or in part[^cisaup].",
-        "**Access control.** Accounts, MFA, admin accounts, joiners and leavers. 2024/2690 requires access control policies that cover privileged accounts[^nis2ir].",
-        "**Incidents, continuity and backup.** Roles, reporting and recovery, as NIS2 lists[^nis2]; content from the incident response, backups and business continuity sheets.",
-        "**Suppliers.** Selection criteria and contract clauses[^nis2ir]; see the third-party risk sheet.",
-        "**Information handling and cryptography.** Classification, removable media, disposal, encryption and keys, which 2024/2690 names as policies[^nis2ir].",
-        "**Development, change and testing,** if you build or run software. Add risk method and effectiveness checks to the top policy or as an annex."
+        "**Information security policy.** Approach, objectives, resources, roles, topic policies, records, indicators and approval date, as 2024/2690 lists[^nis2ir].",
+        "**Acceptable use.** One or two pages for all staff: devices, accounts, data, approved AI tools, reporting and what a breach costs them[^isms1].",
+        "**Access control.** Accounts, MFA, admin accounts, joiners and leavers[^nis2ir].",
+        "**Incidents, continuity and backup**[^nis2], from the incident response, backups and business continuity sheets.",
+        "**Suppliers.** Criteria and contract clauses[^nis2ir]; see the third-party risk sheet.",
+        "**Information handling and cryptography.** Classification, removable media, disposal, encryption and keys[^nis2ir].",
+        "**Development, change and testing,** if you build or run software."
       ]
     },
     {
@@ -85,83 +85,11 @@
       "title": "Write rules people follow",
       "navTitle": "Writing rules",
       "items": [
-        "**One rule, one sentence, one \"must\".** \"Admins must sign in with a security key\" can be tested; \"appropriate authentication\" can't. Write advice as \"should\", so the difference shows[^ncscp6].",
-        "**Name the owner, the setting and the evidence.** The BSI makes each document's owner responsible for keeping it current[^std2002]. Next to each rule, name the setting that enforces it and the report that proves it.",
-        "**Write for the reader.** One page for all staff, standards for admins. The CAF rates rules too detailed to remember or too hard to understand as not achieved[^caf]; the BSI finds checklists often enough[^std2002].",
-        "**Ask the people who do the work.** The NCSC advises involving each area in writing rules and testing that every rule is usable[^ncscp6].",
-        "**Assume someone will break it.** The CAF expects systems to stay secure even when users don't always follow the rules[^caf]. Conditional Access needs Entra ID P1 or Microsoft 365 Business Premium[^ca].",
-        "**In Germany, agree staff rules with the works council.** It co-determines rules on employee conduct and technical systems designed to monitor staff (BetrVG § 87(1) nos. 1 and 6)[^betrvg]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "approve",
-      "title": "Approval and review",
-      "navTitle": "Approval and review",
-      "items": [
-        "**NIS2 puts it on management.** Management bodies approve the risk management measures, oversee them and can be held liable[^nis2]. Digital providers must show the approval date in the policy[^nis2ir].",
-        "**Germany: minute it.** Under BSIG § 38, management implements and oversees the § 30 measures, and § 30 requires documenting compliance[^bsig]. The BSI lists the security policy among the typical evidence for management[^bsicurr].",
-        "**Delegate topic policies by role.** Name in the top policy who approves which topic policy and standard. Grundschutz++ leaves the release of the top policy with management[^std3001].",
-        "**Review yearly and on triggers.** Digital providers' management reviews the top policy at least annually and after significant incidents or changes to operations or risks, and documents the result[^nis2ir]. Also review after new laws, audit findings, new technology such as AI or an acquisition[^csfie].",
-        "**Spread the topic reviews.** The BSI found a yearly review works for most documents[^std2002]. Review two or three per quarter, so each gets attention."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "publish",
-      "title": "Versions, publishing and sign-off",
-      "navTitle": "Publish and sign",
-      "items": [
-        "**Head every document the same way.** Title, owner, version, last and next review, approved on and by, classification and audience, the BSI's minimum[^std2002]. Add one change log line per version.",
-        "**Edit in one place, publish in one place.** Keep the source in a versioned library or Git and publish one intranet page with PDFs. Keep the current version at hand and archive old ones centrally, as the BSI advises[^isms1].",
-        "**Acknowledge at hire, yearly and on change.** NIST's example cadence[^csfie]. 2024/2690 requires acknowledgment of the top policy[^nis2ir]; ENISA accepts a signed or digital one, a contract clause or a role extract[^enisatig].",
-        "**Collect it at sign-in.** Entra terms of use, with Entra ID P1, shows a PDF before access, can require reacceptance of a new version and keeps acceptances for the terms' lifetime. Deleting the terms deletes the records[^entratou]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "exceptions",
-      "title": "Exceptions",
-      "items": [
-        "**Write the exception route into the top policy.** ENISA expects the policy to cover how exceptions are handled, with request, approval and compensating controls on record[^enisatig]. Who may approve, and for how long, is in the risk register sheet.",
-        "**Count exceptions per rule at each review.** A rule that collects exceptions is wrong for your environment. Change the standard or fund the fix.",
-        "**Report open exceptions to management.** ENISA includes them in the compliance status reported to management bodies at least annually[^enisatig]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "mapping",
-      "title": "One set for several audits",
-      "navTitle": "Mapping",
-      "items": [
-        "**Keep one table, one row per rule.** Columns: rule, owner, setting, evidence, ISO 27001 Annex A control, Grundschutz++ or IT-Grundschutz requirement, NIS2 Article 21(2) point and BSIG § 30(2) number.",
-        "**Start from the official tables.** ENISA maps each 2024/2690 requirement to ISO/IEC 27001:2022 and CSF 2.0, the top policy to clause 5.2 and A.5.1[^enisamap]; the BSI maps each § 30 BSIG measure to ISO 27001[^bsiiso]. ENISA warns its mapping doesn't mean equivalence[^enisatig].",
-        "**Link to Grundschutz++ as data.** The BSI publishes its catalogs as machine-readable OSCAL under CC BY-SA 4.0[^sdt], so you can cite requirement IDs instead of copying text."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "mistakes",
-      "title": "Mistakes that cost the most",
-      "navTitle": "Mistakes",
-      "items": [
-        "**A copied template nobody adapted.** Rules for tools you don't run teach staff that the policy is fiction. Check the license too: SANS's terms allow downloads only for personal, non-commercial use without modification[^sansterms], and CRF, its template partner, bars derivative works[^crfterms].",
-        "**Policies that contradict the settings.** A template demands password changes every 90 days; NIST says not to require periodic changes[^sp80063b], and your tenant doesn't. The auditor finds one of the two false.",
-        "**Reviews that only change the date.** Version 4.0 with no change log means the incidents, findings and new tools since 3.0 went unread.",
-        "**Treating a signed policy as the result.** The BSI tells management to ask for evidence of effectiveness, not just policy compliance[^bsicurr].",
-        "**Ignoring workarounds.** The CAF rates routine circumvention to get work done as not achieved[^caf]. Find out why, then fix the rule or the tool."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "skip",
-      "title": "What you can skip",
-      "items": [
-        "**A 40-document policy library.** Six topic policies cover the NIS2 list, and ENISA accepts a single document[^enisatig].",
-        "**Signatures on every standard.** Staff acknowledge the top policy and the acceptable use page; admins follow standards as part of the job.",
-        "**A policy tool before the first review cycle.** A versioned library, one intranet page and sign-in acknowledgment carry a mid-size company.",
-        "**One policy set per framework or customer.** Add a mapping column instead.",
-        "**Legal prose.** Defined terms and cross-references slow readers down; short sentences hold up in audits."
+        "**One rule, one sentence, one \"must\".** \"Admins must sign in with a security key\" can be tested; \"appropriate authentication\" can't. Write advice as \"should\"[^ncscp6].",
+        "**Name the owner, setting and evidence.** The owner keeps the document current[^std2002]; each rule names its setting and the report that proves it.",
+        "**Write for the reader.** One page for staff, standards for admins. The CAF rates rules too detailed to remember as not achieved[^caf].",
+        "**Ask the people who do the work** whether each rule is usable[^ncscp6].",
+        "**In Germany, involve the works council.** It co-determines rules on staff conduct and technical monitoring (BetrVG § 87(1) nos. 1 and 6)[^betrvg]."
       ]
     },
     {
@@ -171,9 +99,76 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**German duties apply.** The NIS2 implementation act took effect on 6 December 2025 with no general transition period, and the BSI expects processes, responsibilities and measures to be in writing and reviewed regularly[^bsifaq].",
-        "**Grundschutz++ arrived.** BSI-Standard 300-1 of 20 October 2026 has management release the information security policy, requires communicating it to all staff and a document control procedure for ISMS documents[^std3001]. Certification on its basis opens on 1 January 2027; classic IT-Grundschutz stays certifiable until 30 November 2031[^gspp].",
-        "**The BSI named the policy as management evidence.** Its October 2026 curriculum for management training lists the security policy among the typical evidence and asks for proof of effectiveness, not only policy compliance[^bsicurr]."
+        "**German duties apply.** Since 6 December 2025, with no general transition period, the BSI expects processes, responsibilities and measures in writing and reviewed regularly[^bsifaq].",
+        "**Grundschutz++ arrived.** BSI-Standard 300-1 (20 October 2026) has management release the policy and requires document control[^std3001]. Certification opens on 1 January 2027; classic IT-Grundschutz ends on 30 November 2031[^gspp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "approve",
+      "title": "Approval and review",
+      "navTitle": "Approval and review",
+      "items": [
+        "**NIS2.** Management bodies approve the measures, oversee them and can be held liable[^nis2]; digital providers date the approval in the policy[^nis2ir].",
+        "**Germany.** BSIG § 38 has management implement and oversee the § 30 measures, whose compliance must be documented[^bsig]. Minute the approval.",
+        "**Topic policies one level down,** by the role the top policy names.",
+        "**Yearly and on triggers.** At least annually and after significant incidents or changes[^nis2ir], new laws, audit findings, new technology or an acquisition[^csfie].",
+        "**Stagger the rest.** A yearly review suits most documents, the BSI found[^std2002]; do two or three a quarter."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "publish",
+      "title": "Versions, publishing and sign-off",
+      "navTitle": "Publish and sign",
+      "items": [
+        "**Same header everywhere.** Title, owner, version, last and next review, approval, classification and audience[^std2002], plus a change log.",
+        "**One source, one place to read.** A versioned library or Git, one intranet page and old versions archived centrally[^isms1].",
+        "**Acknowledge at hire, yearly and on change**[^csfie]. 2024/2690 requires it for the top policy[^nis2ir]; ENISA accepts a digital one or a contract clause[^enisatig].",
+        "**Collect it at sign-in.** Entra terms of use (Entra ID P1) shows a PDF before access and can require reacceptance. Deleting the terms deletes the acceptances[^entratou]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "exceptions",
+      "title": "Exceptions",
+      "items": [
+        "**Write the route into the top policy.** ENISA expects one, with requests, approvals and compensating controls on record and open exceptions reported to management[^enisatig]. Approval levels: the risk register sheet.",
+        "**Count them per rule at each review.** A rule that collects exceptions needs rewriting or funding."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mapping",
+      "title": "One set for several audits",
+      "navTitle": "Mapping",
+      "items": [
+        "**One table, one row per rule:** owner, setting, evidence, ISO 27001 Annex A control, Grundschutz++ requirement, NIS2 Article 21(2) point, BSIG § 30(2) number.",
+        "**Start from official tables.** ENISA maps 2024/2690 to ISO/IEC 27001:2022 and CSF 2.0[^enisamap], the BSI § 30 BSIG to ISO 27001[^bsiiso]. A mapping isn't equivalence, ENISA warns[^enisatig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**A template nobody adapted.** Rules for tools you don't run read as fiction. SANS's terms allow only personal, non-commercial use without changes[^sansterms]; CRF, its template partner, bars derivative works[^crfterms].",
+        "**Policies that contradict the settings.** The template demands 90-day password changes, NIST says not to require them[^sp80063b] and your tenant doesn't.",
+        "**Reviews that only change the date.** No change log means nobody read the incidents and findings.",
+        "**A signed policy as the goal.** The BSI tells management to ask for proof of effectiveness instead[^bsicurr]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**A 40-document library.** Six topic policies cover the NIS2 list, and ENISA accepts one document[^enisatig].",
+        "**Signatures on every standard.** Staff acknowledge the top policy and the acceptable use page.",
+        "**A policy tool before the first review.** A versioned library and one intranet page will do.",
+        "**One set per framework or customer.** Add a mapping column instead.",
+        "**Legal prose.** Short sentences hold up better in audits."
       ]
     },
     {
@@ -186,25 +181,25 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Write the top policy and the acceptable use page in one day with your IT provider; the managing director signs both.",
-            "Put the topic rules into one annex with a section per NIS2 area, if you're in scope.",
-            "Collect acknowledgment in the onboarding checklist and once a year."
+            "Write the top policy and acceptable use page with your IT provider; the managing director signs.",
+            "Adapt CIS's acceptable use template, which CIS invites enterprises to use[^cisaup].",
+            "Collect acknowledgment at onboarding and yearly."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Keep a top policy, an acceptable use page and six topic policies, each with an owner, and standards per platform below them.",
-            "Collect acknowledgment with Entra terms of use at sign-in.",
-            "Review two or three documents per quarter against a settings export."
+            "A top policy, acceptable use and six topic policies with owners; standards below them.",
+            "Acknowledgment through Entra terms of use.",
+            "Two or three reviews a quarter against settings exports."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Approve one group policy at group level, and have each regulated entity's management adopt it with local annexes.",
-            "Keep the mapping table in the GRC tool, linked to automated configuration checks.",
-            "Have internal audit sample rules against live settings every year."
+            "One group policy, adopted by each regulated entity's management with local annexes.",
+            "The mapping table in the GRC tool, linked to configuration checks.",
+            "Internal audit samples rules against live settings yearly."
           ]
         }
       ]
@@ -214,13 +209,13 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on NIS2, Regulation 2024/2690 and ENISA's implementation guidance, BSIG §§ 30 and 38, BSI ISMS.1, BSI-Standards 200-2 and 300-1, NIST CSF 2.0 and SP 800-12, the NCSC's CAF and culture principles, and the terms of free policy templates."
+      "text": "First draft, based on NIS2, Regulation 2024/2690, ENISA's guidance, BSIG §§ 30 and 38, BSI ISMS.1, 200-2 and 300-1, NIST CSF 2.0 and SP 800-12, the NCSC's CAF and culture principles, and template terms."
     }
   ],
   "sources": [
     {
       "id": "nis2",
-      "title": "Directive (EU) 2022/2555 (NIS2), Articles 20 and 21",
+      "title": "NIS2 Directive, Articles 20 and 21",
       "publisher": "EUR-Lex",
       "date": "2022",
       "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
@@ -234,7 +229,7 @@
     },
     {
       "id": "enisatig",
-      "title": "NIS2 Technical Implementation Guidance, v1.0",
+      "title": "NIS2 Implementation Guidance, v1.0",
       "publisher": "ENISA",
       "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"
@@ -248,8 +243,8 @@
     },
     {
       "id": "bsig",
-      "title": "BSI-Gesetz (BSIG), §§ 30 and 38",
-      "publisher": "BMJV (Germany)",
+      "title": "BSIG §§ 30 and 38",
+      "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bsig_2025/"
     },
@@ -269,7 +264,7 @@
     },
     {
       "id": "isms1",
-      "title": "IT-Grundschutz ISMS.1 Sicherheitsmanagement, Edition 2023",
+      "title": "ISMS.1 Sicherheitsmanagement, Edition 2023",
       "publisher": "BSI",
       "date": "2023",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/01_ISMS_Sicherheitsmanagement/ISMS_1_Sicherheitsmanagement_Edition_2023.pdf?__blob=publicationFile&v=3"
@@ -296,13 +291,6 @@
       "url": "https://www.bsi.bund.de/dok/grundschutz-plus-plus"
     },
     {
-      "id": "sdt",
-      "title": "Stand der Technik Bibliothek",
-      "publisher": "BSI on GitHub",
-      "date": "checked 5 Nov 2026",
-      "url": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek"
-    },
-    {
       "id": "bsiiso",
       "title": "#nis2know: ISO/IEC 27001",
       "publisher": "BSI",
@@ -325,21 +313,21 @@
     },
     {
       "id": "ncscp6",
-      "title": "Cyber security culture principles: Principle 6",
+      "title": "Cyber security culture principle 6",
       "publisher": "NCSC (UK)",
       "date": "4 Jun 2025",
       "url": "https://www.ncsc.gov.uk/collection/cyber-security-culture-principles/principle-6"
     },
     {
       "id": "caf",
-      "title": "Cyber Assessment Framework 4.0, principle B1",
+      "title": "CAF 4.0, principle B1",
       "publisher": "NCSC (UK)",
       "date": "2025",
       "url": "https://www.ncsc.gov.uk/sites/default/files/documents/NCSC-Cyber-Assessment-Framework-4.0.pdf"
     },
     {
       "id": "ca",
-      "title": "What is Conditional Access?",
+      "title": "Conditional Access overview",
       "publisher": "Microsoft Learn",
       "date": "27 Apr 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview"
@@ -353,7 +341,7 @@
     },
     {
       "id": "cisaup",
-      "title": "CIS Controls v8.1 Acceptable Use Policy Template",
+      "title": "CIS v8.1 Acceptable Use Policy Template",
       "publisher": "CIS",
       "date": "29 Oct 2025",
       "url": "https://www.cisecurity.org/insights/white-papers/controls-v8-1-acceptable-use-policy-template"
@@ -381,8 +369,8 @@
     },
     {
       "id": "betrvg",
-      "title": "Betriebsverfassungsgesetz (BetrVG), § 87",
-      "publisher": "BMJV (Germany)",
+      "title": "BetrVG § 87",
+      "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
     }

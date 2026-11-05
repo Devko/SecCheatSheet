@@ -5,7 +5,7 @@
   "order": 63,
   "capability": "leadership/projects",
   "title": "Security projects: how do you get a control to everyone, and into IT projects before go-live?",
-  "short": "Set a coverage target and dated exceptions before the pilot, run report-only first, and check every IT project at kickoff and before go-live.",
+  "short": "Set a coverage target such as 98% and dated exceptions before the pilot, run report-only for a week first, and check IT projects at kickoff and before go-live.",
   "answer": "Before your next security rollout starts, write down its scope, a coverage target such as 98% of in-scope accounts enforced, and an end date for every exception, then run it in report-only or audit mode, a pilot and two or three rings. In the company's other IT projects, ask the security questions at kickoff and sign off before go-live, and scale the effort by protection need so only high-need projects wait for a full review.",
   "audience": "Heads of security, IT leads who own security, and project managers in small and mid-size companies",
   "version": "0.1",
@@ -28,7 +28,7 @@
         },
         {
           "title": "Roll out in rings sized for your help desk.",
-          "text": "Pilot with IT and a champion per business unit, then a representative ring, then everyone, in waves within your support capacity[^mfaplan]."
+          "text": "Pilot with IT and a champion per business unit, then a representative ring, then everyone, in waves within support capacity[^mfaplan]."
         },
         {
           "title": "Give every exception an end date.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Ask security at kickoff, not before go-live.",
-          "text": "The BSI requires involving the ISB early in larger projects and new applications and IT systems[^isms1]; Grundschutz++ lets you define when[^std3001]."
+          "text": "The BSI requires involving the ISB early in larger projects and new IT systems[^isms1]; Grundschutz++ lets you define when[^std3001]."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Who and what is in scope?",
-          "text": "Count from the inventory, not the new tool; Defender's device discovery lists devices not yet onboarded[^discovery]. The security program sheet decides what goes first."
+          "text": "Count from the inventory, not the new tool; Defender's device discovery finds devices not yet onboarded[^discovery]. The security program sheet decides what goes first."
         },
         {
           "title": "What would break?",
-          "text": "Run report-only or audit mode for one to four weeks and review the results with app owners. For segmentation, allow and log first, as in the network segmentation sheet."
+          "text": "Run report-only or audit mode for one to four weeks and review the results with app owners. For segmentation, allow and log first, as the network segmentation sheet describes."
         },
         {
           "title": "Who pilots it?",
@@ -102,7 +102,7 @@
         "**Coverage is enforced over in scope,** counted weekly from the inventory by ring and business unit, with the tail named.",
         "**MFA and passkeys.** Entra's **Authentication methods** > **Activity** shows who is MFA or passwordless capable and single-factor sign-ins (P1 or P2)[^authact].",
         "**Conditional Access.** The gap analyzer workbook lists sign-ins no policy applied to (P1 and Log Analytics)[^gap].",
-        "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business, or use event 1122[^asrtest]."
+        "**EDR and ASR.** Compare onboarded with discovered devices in Defender[^discovery]. The ASR rules report needs Plan 2 or Defender for Business; otherwise collect audit event 1122[^asrtest]."
       ]
     },
     {
@@ -111,10 +111,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Stopping at 80%.** The tail holds old devices, service accounts, shared mailboxes and executives. Plan it as its own phase, with an owner per system.",
-        "**No owner after go-live.** Conditional Access policies have no owner field; Microsoft suggests naming the owner in the policy name and keeping a register[^caplan]. Do it for every control.",
-        "**Piloting only in IT.** IT and lab devices often lack the business apps and drivers that break[^rings].",
-        "**Reporting deployed as done.** A policy left in audit mode looks finished on the status page and blocks nothing."
+        "**Stopping at 80%.** The tail holds the old devices, service accounts and executives. Give it its own phase and owners.",
+        "**Exceptions that become permanent.** Exclusions without an end date outlive their reason. Let them expire unless someone renews them.",
+        "**No owner after go-live.** Conditional Access policies have no owner field, so Microsoft suggests putting it in the name and keeping a register[^caplan].",
+        "**Piloting only in IT.** IT and lab devices usually lack a representative mix of apps and drivers[^rings]."
       ]
     },
     {
@@ -124,10 +124,10 @@
       "navTitle": "Project gates",
       "items": [
         "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
-        "**Rate the need: normal or high.** Grundschutz++ has just these two; only high needs an explicit risk analysis[^std3001]. Take 30 minutes with the business owner.",
+        "**Rate the need: normal or high.** Grundschutz++ has just these two; normal needs no risk analysis of its own, high does[^std3001].",
         "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
         "**Pentest before go-live** if it faces the internet, has high need, is custom-built or changes sign-in; ENISA expects tests at set-up[^enisatig]. Otherwise scan and check the configuration. See the penetration testing sheet.",
-        "**Sign off and hand over.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]. Name the operations owner."
+        "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones[^std3001]."
       ]
     },
     {
@@ -172,9 +172,9 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Intune stages policy rollouts.** Deployment plans, in public preview since September 2026[^intunenew], push Windows policies ring by ring and can be paused[^intune].",
-        "**Grundschutz++ wants a written project rule.** BSI-Standard 300-1 (20 October 2026) requires a security role in security-relevant projects and a rule for when[^std3001].",
-        "**The Commission clarified CRA support periods.** Its guidance of 27 July 2026 says five years is a floor, not a default[^craguide]. Ask for the end date in tenders now."
+        "**Intune stages policy rollouts.** Deployment plans, in preview since September 2026[^intunenew], push Windows policies ring by ring and can be paused[^intune].",
+        "**Grundschutz++ wants a project rule.** BSI-Standard 300-1 (20 October 2026) requires a security role in relevant projects and a rule for when[^std3001].",
+        "**CRA support periods got clearer.** The Commission's CRA guidance of 27 July 2026 says five years is a floor, not a default[^craguide]."
       ]
     },
     {
@@ -196,7 +196,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Write one page per rollout: scope, target, rings, rollback, exceptions, owner.",
-            "Report coverage weekly to the steering meeting.",
+            "Report coverage at the program's monthly meeting.",
             "Ask the kickoff questions in every IT project."
           ]
         },
@@ -215,7 +215,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on Microsoft Learn rollout guides, BSI ISMS.1 and Grundschutz++, and ENISA and Commission guidance."
+      "text": "First draft, based on Microsoft Learn rollout guides, BSI ISMS.1 and 300-1, ENISA's NIS2 guidance and the CRA guidance."
     }
   ],
   "sources": [
@@ -228,7 +228,7 @@
     },
     {
       "id": "careport",
-      "title": "Report-only mode",
+      "title": "Conditional Access policy insights",
       "publisher": "Microsoft Learn",
       "date": "1 Jun 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-report-only"
@@ -242,35 +242,35 @@
     },
     {
       "id": "rings",
-      "title": "Windows: Create a deployment plan",
+      "title": "Create a deployment plan (Windows)",
       "publisher": "Microsoft Learn",
       "date": "31 Dec 2017",
       "url": "https://learn.microsoft.com/en-us/windows/deployment/update/create-deployment-plan"
     },
     {
       "id": "mfaplan",
-      "title": "Plan an Entra MFA deployment",
+      "title": "Deployment considerations for Entra MFA",
       "publisher": "Microsoft Learn",
       "date": "2 Nov 2025",
       "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/howto-mfa-getstarted"
     },
     {
       "id": "intune",
-      "title": "Intune deployment plans",
+      "title": "Intune deployment plans and deployments",
       "publisher": "Microsoft Learn",
       "date": "26 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/intune/device-management/deployments/overview"
     },
     {
       "id": "intunenew",
-      "title": "What's new in Intune",
+      "title": "What's new in Microsoft Intune",
       "publisher": "Microsoft Learn",
       "date": "2 Nov 2026",
       "url": "https://learn.microsoft.com/en-us/intune/whats-new/"
     },
     {
       "id": "discovery",
-      "title": "Defender device discovery",
+      "title": "Defender device discovery overview",
       "publisher": "Microsoft Learn",
       "date": "8 May 2025",
       "url": "https://learn.microsoft.com/en-us/defender-endpoint/device-discovery"
@@ -284,14 +284,14 @@
     },
     {
       "id": "gap",
-      "title": "CA gap analyzer workbook",
+      "title": "Conditional Access gap analyzer workbook",
       "publisher": "Microsoft Learn",
       "date": "4 Nov 2024",
       "url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/workbook-conditional-access-gap-analyzer"
     },
     {
       "id": "caexcl",
-      "title": "Users excluded from CA policies",
+      "title": "Manage users excluded from CA policies",
       "publisher": "Microsoft Learn",
       "date": "18 Jun 2025",
       "url": "https://learn.microsoft.com/en-us/entra/id-governance/conditional-access-exclusion"
