@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Write down how bank details change, and let the system enforce it.",
-          "text": "Accept new or changed bank details for suppliers and staff only after a call back to a number you held before the request, approval by a second person and at least two business days before the first payment. In Dynamics 365 Finance, turn on the vendor bank account change proposal workflow; the import option **Allow changes without approval** lets updates skip it[^d365]."
+          "text": "Accept new or changed bank details for suppliers and staff only after a call back to a number you held before the request and approval by a second person, then wait two business days before the first payment. In Dynamics 365 Finance, turn on the vendor bank account change proposal workflow and don't let imports use **Allow changes without approval**, which skips it[^d365]."
         },
         {
           "title": "Require two people for large payments, at the bank too.",
@@ -28,7 +28,7 @@
         },
         {
           "title": "Run Verification of Payee on payment files.",
-          "text": "Companies may skip the name check for files with several payments[^reg886]. In German EBICS, the old order types CCT and CIP skip it, while CTV and CIV run it[^dkvop]. Move supplier and payroll runs to the checking types, at least for payees whose details changed."
+          "text": "Companies may skip the name check for files with several payments[^reg886]. In German EBICS, the existing order types CCT and CIP skip it, while CTV and CIV run it[^dkvop]. Move supplier and payroll runs to the checking types, at least for payees whose details changed."
         },
         {
           "title": "Verify unusual requests outside the channel they came in.",
@@ -52,7 +52,7 @@
         },
         {
           "title": "Stop the follow-ups.",
-          "text": "In a Singapore case the fraudsters came back for another US$1.4 million; the bank's quick alert let police hold the US$494,000 already moved to Hong Kong[^spf]. Block the receiving IBAN, hold open payment runs and have the bank block EBICS users whose keys may be exposed[^dksec]."
+          "text": "In a Singapore case the fraudsters came back for another US$1.4 million; the bank's quick alert let police hold the US$494,000 already moved to Hong Kong[^spf]. Block the receiving IBAN, hold open payment runs, block EBICS users whose keys may be exposed and tell the bank[^dksec]."
         },
         {
           "title": "Report it to the police.",
@@ -86,9 +86,9 @@
       "title": "What Verification of Payee does and doesn't do",
       "navTitle": "Verification of Payee",
       "items": [
-        "**It checks name against IBAN.** The payee's bank reports a match, a close match with the registered name, no match or no check possible[^vop]. Banks in the euro area must offer it free since 9 October 2025, the rest of the EU from 9 July 2027[^reg886].",
-        "**It never blocks.** You can pay after a warning; the bank then isn't liable[^reg886].",
-        "**Opted-out files lose it.** Non-consumers may opt out for payment packages[^reg886]; BaFin even tolerates it for EBICS files with one payment[^bafinfaq].",
+        "**It checks name against IBAN.** The payee's bank reports a match, a close match with the registered name, no match or no check possible[^vop]. Euro area banks had to offer it free by 9 October 2025 (later joiners within a year), the rest of the EU by 9 July 2027[^reg886].",
+        "**It never blocks.** You can pay after a warning, and a bank that ran the check correctly isn't liable[^reg886].",
+        "**Opted-out files lose it.** Non-consumers may opt out for payment packages[^reg886]; BaFin tolerates it, for now, even for EBICS files with one payment[^bafinfaq].",
         "**A match is not proof.** It can't detect a fraudulent payee or request[^bbkfaq].",
         "**Register your trading names.** Ask your bank to store them as extra payee names, which BaFin allows[^bafinfaq], so customers see a match, not a warning."
       ]
@@ -101,7 +101,7 @@
       "items": [
         "**Keep single signatures rare.** EBICS has single (E), first (A), second (B) and transport-only (T) signatures[^bbkebics]; give E to as few people as possible.",
         "**Use chip cards, not key files.** Malware can copy key files with their passwords[^dksec].",
-        "**Set limits that take time to raise.** A limit on online transfers may have a waiting period for increases; one on instant transfers alone must be changeable at any time[^bafinfaq].",
+        "**Set limits that take time to raise.** A limit on all online transfers may have a waiting period for increases; one on instant transfers alone must be changeable at any time[^bafinfaq].",
         "**Review signing rights against HR.** Remove leavers and changed roles at the bank too[^dksec]."
       ]
     },
@@ -112,8 +112,8 @@
       "navTitle": "Owners",
       "items": [
         "**Finance owns the process, not IT.** The CFO or head of accounting owns the bank detail rule, signing rights, limits, VoP settings and exceptions.",
-        "**HR owns payroll changes.** In the HR system only, confirmed by phone.",
-        "**IT protects the accounts.** Passkeys for finance, HR and executives (passkeys and MFA sheet), DMARC and BEC detection (endpoints and email sheet), alerts on new inbox rules[^msp].",
+        "**HR owns payroll changes.** Confirm each by phone, including self-service changes in the HR system.",
+        "**IT protects the accounts.** Passkeys, starting with finance, HR and executives (passkeys and MFA sheet), DMARC and BEC detection (endpoints and email sheet), alerts on new inbox rules[^msp].",
         "**Management backs the no.** No exceptions requested by phone or chat."
       ]
     },
@@ -123,9 +123,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**BEC losses keep rising.** The FBI counted $3.05 billion in 2025, up from $2.77 billion, including over $30 million in BEC involving AI[^ic3].",
+        "**BEC losses rose again.** Victims reported $3.05 billion to the FBI in 2025, up from $2.77 billion, including over $30 million in BEC involving AI[^ic3].",
         "**Microsoft now tracks business contact impersonation.** It saw a 121% surge in April 2026; most first messages were bland small talk[^mddr].",
-        "**EU data shows who pays.** Tricked payers caused 74% of credit transfer fraud by value in 2024, up from 65%, and customers bore about 85% of losses[^ebaecb]."
+        "**EU data shows who pays.** Tricked payers caused 74% of credit transfer fraud by value in 2024, up from 65%, and customers bore about 85% of credit transfer losses[^ebaecb]."
       ]
     },
     {
@@ -133,8 +133,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Deepfake detection before the call back.** In a 2020 challenge the best detector was 65.18% accurate, against 50% for guessing[^bsideep].",
-        "**Teaching staff to hear fake voices.** The GDV calls such cues unreliable[^gdvvoice]. Teach the call back instead (security awareness sheet).",
+        "**Spotting deepfakes, by tool or by ear.** The GDV calls the cues unreliable and says checking the request itself holds up better than judging picture or sound[^gdvvoice]. Teach the call back instead (security awareness sheet).",
         "**Call backs on every routine payment.** Spend them on new payees, changed details and unusual requests.",
         "**Paid name checks for euro payments.** Verification of Payee is free[^reg886]."
       ]
@@ -178,7 +177,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Run treasury payments through EBICS with chip cards, A and B signatures and T-only server users.",
-            "With the CEO's consent, have someone pose as them on video and see whether finance pays.",
+            "With the CEO's consent, have someone pose as them on video and check that finance calls back before paying.",
             "Report attempts and losses to the audit committee."
           ]
         }
@@ -304,13 +303,6 @@
       "publisher": "Singapore Police",
       "date": "7 Apr 2025",
       "url": "https://www.police.gov.sg/media-hub/news/2025/04/20250407_singapore_and_hong_kong_police_force_recover_over_%24670000_in_a_scam"
-    },
-    {
-      "id": "bsideep",
-      "title": "Deep Fakes: Threats and Countermeasures",
-      "publisher": "BSI",
-      "date": "Aug 2022",
-      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Kuenstliche-Intelligenz/Deepfakes/deepfakes_node.html"
     },
     {
       "id": "gdvvoice",

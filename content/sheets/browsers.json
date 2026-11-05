@@ -24,11 +24,11 @@
         },
         {
           "title": "Force updates to apply within 72 hours.",
-          "text": "Updates apply only after a relaunch. Set RelaunchNotification to Required and RelaunchNotificationPeriod to 259200000 ms: 72 hours from download, the patching sheet's deadline for exploited flaws. With RelaunchFastIfOutdated at 7, a browser more than a week out of date gets 2 hours[^chromepol]."
+          "text": "Updates apply only after a relaunch. Set RelaunchNotification to Required and RelaunchNotificationPeriod to 259200000 ms, the patching sheet's 72 hours for exploited flaws. RelaunchFastIfOutdated at 7 gives browsers over a week out of date 2 hours[^chromepol]."
         },
         {
           "title": "Allow sign-in only with work accounts.",
-          "text": "Set RestrictSigninToPattern to your domains in Edge and Chrome to keep work data out of personal sync accounts, as the NCSC suggests[^ncscbrowser]. Without Google Workspace, set Chrome's BrowserSignin to Disable[^chromepol]; test that first if you create managed Chrome profiles from Entra ID or Okta[^ceidp]."
+          "text": "Set RestrictSigninToPattern to your domains in Edge and Chrome, as the NCSC suggests, to keep work data out of personal sync[^ncscbrowser]. Without Google Workspace, set Chrome's BrowserSignin to Disable[^chromepol]; test it with any managed Chrome profiles from Entra ID[^ceidp]."
         },
         {
           "title": "Make malware and phishing warnings final.",
@@ -78,7 +78,7 @@
         "**App-bound encryption (Windows, version 127+).** It forces malware to gain system rights or inject into the browser, so it helps most where users can't run downloads as admin[^abe]. Keep ApplicationBoundEncryptionEnabled on[^edgeabe].",
         "**Remote debugging.** Attackers turned to it to pull cookies, so Chrome 136 blocked it on the default data directory[^remotedebug]. Set RemoteDebuggingAllowed to false outside developer groups[^chromepol].",
         "**Device Bound Session Credentials.** On by default for Google Workspace accounts in Chrome 146+ on Windows with a TPM; require it per app with context-aware access[^dbscws]. Other sites must adopt it themselves[^gdbsc].",
-        "**Entra token protection in browsers.** A preview covers the Azure portal and Entra and Intune admin centers in Edge or Chrome on Windows 11 or managed Macs, with Microsoft's Single Sign On extension; it blocks other web apps that use Azure Resource Manager[^tpweb]. Native apps: see the passkeys and MFA sheet."
+        "**Entra token protection in browsers.** A preview covers the Azure portal and Entra and Intune admin centers in Edge or Chrome on Windows 11 or managed Macs, with Microsoft's Single Sign On extension; it blocks other web apps that use Azure Resource Manager[^tpweb]."
       ]
     },
     {
