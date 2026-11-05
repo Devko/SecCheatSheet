@@ -32,7 +32,7 @@
         },
         {
           "title": "Set the machine account quota to 0.",
-          "text": "By default any user can add ten computers to the domain[^asdad]. BSI requires limiting this to admin accounts[^bsiapp22]."
+          "text": "By default any user can add ten computers to the domain[^asdad]. BSI requires limiting this to admin accounts[^bsiapp22]. First delegate join rights on computer OUs to the accounts that join PCs."
         },
         {
           "title": "Rotate krbtgt twice a year.",
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "What do you already own?",
-          "text": "Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) shows findings in Secure Score. Its CA checks need a sensor on each CA[^mdicert]."
+          "text": "Defender for Identity (Microsoft 365 E5, E5 Security, EMS E5 or standalone[^mdilic]) shows findings in Secure Score. Its CA checks need a sensor on the CA servers[^mdicert]."
         },
         {
           "title": "What does a free scan find?",
-          "text": "PingCastle Community is free for internal use, also by your IT provider[^pingcastle]. Purple Knight is free, needs no admin rights[^pkfaq] and has its license in the app[^pkdocs]."
+          "text": "PingCastle's open source edition is free for internal use, also by your IT provider, but not to sell as a service[^pingcastle]. Purple Knight is free and needs no admin rights[^pkfaq], but can't be used in or for China, Russia and other listed countries[^pkterms]. Ask Semperis for its EULA before a provider runs it."
         },
         {
           "title": "Who can reach Tier 0?",
@@ -75,7 +75,7 @@
       "navTitle": "AD CS",
       "items": [
         "**Templates (ESC1 to ESC4, named by SpecterOps[^certified]).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
-        "**CA flags (ESC6, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
+        "**CA settings (ESC6, ESC7, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, take CA rights from broad groups, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
         "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove it if unused[^certipy].",
         "**Log it.** Turn on CA auditing, off by default, and alert on events 4886, 4887, 4899 and 4900[^asdad]."
       ]
@@ -86,9 +86,9 @@
       "title": "Kerberos, delegation and krbtgt",
       "navTitle": "Kerberos",
       "items": [
-        "**Find what still uses RC4.** Watch KDCSVC events 201 to 209[^rc4kb], run `Get-KerbEncryptionUsage.ps1 -Encryption RC4` and reset accounts without AES keys. Server 2025 DCs issue no RC4 TGTs[^rc4detect].",
-        "**Check all delegation.** Defender for Identity flags unconstrained, constrained and resource-based delegation that exposes sensitive accounts[^mdiacct]. Protected Users can't be delegated[^asdad], and BSI requires privileged accounts there[^bsiapp22].",
-        "**Rotate krbtgt in two steps.** Wait at least 10 hours, the default ticket lifetime, between resets. RODCs have their own `krbtgt_` accounts[^krbtgt]. Move SPN accounts to gMSAs, as the non-human identities sheet describes."
+        "**Find what still uses RC4.** KDCSVC errors 203, 204, 208 and 209 show requests DCs now block; keytab devices can fail with no event[^rc4kb]. Run `Get-KerbEncryptionUsage.ps1 -Encryption RC4` and reset accounts without AES keys[^rc4detect].",
+        "**Check all delegation.** Defender for Identity flags any delegation that exposes sensitive accounts[^mdiacct]. Protected Users can't be delegated[^asdad], and BSI requires privileged accounts there[^bsiapp22].",
+        "**Rotate krbtgt in two steps.** Let the first reset replicate to every DC[^asdad] and wait at least 10 hours, the default ticket lifetime. RODCs have their own `krbtgt_` accounts[^krbtgt]. Move SPN accounts to gMSAs, as the non-human identities sheet describes."
       ]
     },
     {
@@ -98,9 +98,9 @@
       "navTitle": "NTLM and LDAP",
       "items": [
         "**Log NTLM for the whole domain.** Check that **Log Enhanced Domain-wide NTLM Logs** is on for DCs. Events 4030 to 4033 show NTLM and NTLMv1 use; Server 2019 and 2022 got them in October 2026[^ntlmaudit].",
-        "**Restrict it in stages.** Audit, add server exceptions, then deny with **Restrict NTLM: NTLM authentication in this domain**. Start with CA, Entra Connect and Cloud Sync servers, where Microsoft says to block it[^kb5005413][^connectprereq][^cloudsync].",
-        "**Get ready for NTLM off by default** in the next major Windows Server release[^ntlmoff]. The secure-configuration sheet covers the rest.",
-        "**Sign LDAP and bind it to TLS,** as BSI expects[^bsiapp22]. Defender for Identity lists clients that bind in clear text[^mdiacct]."
+        "**Restrict it in stages.** After the audit, deny incoming NTLM on CA, Entra Connect and Cloud Sync servers first, as Microsoft advises[^kb5005413][^connectprereq][^cloudsync]. Then add server exceptions and deny with **Restrict NTLM: NTLM authentication in this domain**.",
+        "**Get ready for NTLM off by default** in the next major Windows Server release[^ntlmoff].",
+        "**Require LDAP signing and channel binding** once their audit events stop, as BSI expects[^bsiapp22] and the secure-configuration sheet describes. Defender for Identity lists clients that bind in clear text[^mdiacct]."
       ]
     },
     {
@@ -113,7 +113,7 @@
         "**Check who can change the admins.** Remove non-admin rights on AdminSDHolder and sensitive groups[^mdiacct]. Give Domain Computers no write rights anywhere[^asdad].",
         "**Clear risky attributes.** Remove passwords from descriptions, **Password not required** and **Do not require Kerberos preauthentication**[^mdiacct].",
         "**Disable accounts idle for 90 days** and delete them weeks later[^mdiacct], within your retention rules[^bsiapp22].",
-        "**Guard DC backups like DCs.** They contain every password hash[^asdad]. The ransomware sheet covers forest recovery."
+        "**Guard DC and CA backups like the servers.** They hold every password hash and the CA key[^asdad]. The ransomware sheet covers forest recovery."
       ]
     },
     {
@@ -122,10 +122,10 @@
       "title": "Entra Connect, Cloud Sync and Seamless SSO",
       "navTitle": "Hybrid sync",
       "items": [
-        "**Switch Connect Sync to application-based authentication,** keep its certificate key in a TPM and delete the old `Sync_` account. Application Administrators can act as the app: treat them as sync admins[^appauth].",
-        "**Rotate the `MSOL_` account** every 90 days, never as a Domain Admin, and remove its replication rights if you don't use password hash sync[^mdihybrid].",
-        "**Roll the Seamless SSO key every 30 days.** Whoever holds it can impersonate any synced user[^mdihybrid]. Run `Update-AzureADSSOForest` once per forest[^ssofaq].",
-        "**Harden Cloud Sync the same way.** Its agent runs as a gMSA on a Tier 0 server with NTLM disabled[^cloudsync]."
+        "**Move Connect Sync to application-based authentication** on version 2.6.84.0 or later by 7 April 2027, or sync stops[^connectprereq]. Keep its key in a TPM, delete the old `Sync_` account and treat Application Administrators, who can act as the app, as sync admins[^appauth].",
+        "**Rotate the `MSOL_` account's password** every 90 days, keep it out of Domain Admins and remove its replication rights if you don't use password hash sync[^mdihybrid].",
+        "**Roll the Seamless SSO key at least every 30 days** with `Update-AzureADSSOForest`, once per forest[^ssofaq]. Whoever holds it can impersonate any synced user[^mdihybrid].",
+        "**Harden Cloud Sync the same way,** with its gMSA agent on a Tier 0 server and NTLM denied[^cloudsync]. For both, turn off soft matching and hard match takeover[^connectprereq]."
       ]
     },
     {
@@ -134,10 +134,10 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**DCs stopped defaulting to RC4** in April 2026, with no rollback since July. KDCSVC event 205 flags a domain-wide override[^rc4kb].",
+        "**DCs assume AES for accounts without set encryption types** since April 2026, with no rollback since July. A DC with its own `DefaultDomainSupportedEncTypes` keeps it and logs event 205 if it allows RC4[^rc4kb].",
         "**Connect Sync tenants are moving to Cloud Sync.** Microsoft notifies each tenant of its window from July 2026, simple setups first[^entranew].",
         "**Synced users can become cloud users.** Since January 2026 you can move a user's source of authority to Entra ID[^entranew].",
-        "**Defender for Identity reached CA and Entra Connect servers,** with v3 sensor support since September 2026 and ESC1, ESC8 and ESC11 alerts since October[^mdinew]."
+        "**Defender for Identity's v3 sensor reached CA and Entra Connect servers** in September 2026, as a preview. October brought ESC1, ESC8 and ESC11 alerts[^mdinew]."
       ]
     },
     {
@@ -145,7 +145,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Paid AD audit suites first.** The free tools find the paths that matter most. Buy continuous monitoring once the first findings are fixed.",
+        "**Paid AD audit suites first.** Fix what the free tools find, then buy continuous monitoring.",
         "**Studying all 17 ESC classes.** Let a scanner find them. Some need parts you may not run, like web enrollment (ESC8) or a YubiHSM (ESC12)[^certipy].",
         "**Monthly krbtgt rotation.** ASD asks for every six months and after a suspected compromise[^asdad]. Spend the time removing DCSync rights."
       ]
@@ -158,7 +158,7 @@
       "items": [
         "**Re-enabling RC4 domain-wide.** A `DefaultDomainSupportedEncTypes` of 0x24 leaves every account vulnerable; allow RC4 per service[^rc4kb].",
         "**Fixing a template, keeping its certificates.** They stay valid until they expire or are revoked[^asdad]; revoke those issued to someone else.",
-        "**Running the Seamless SSO rollover twice.** A second run in one forest breaks Seamless SSO until users' tickets expire[^ssofaq]."
+        "**Running the Seamless SSO rollover twice in a row.** A second run on one forest breaks Seamless SSO until users' Kerberos tickets expire[^ssofaq]."
       ]
     },
     {
@@ -173,7 +173,7 @@
           "items": [
             "Have your IT provider run PingCastle or Purple Knight quarterly and fix what any user can exploit.",
             "Set the machine account quota to 0 and remove unconstrained delegation outside DCs.",
-            "If all PCs are Entra or hybrid joined, you may not need Seamless SSO[^ssofaq]."
+            "If all PCs are Entra or hybrid joined, you may not need Seamless SSO[^ssohow]."
           ]
         },
         {
@@ -187,7 +187,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Put Defender for Identity sensors on every DC, CA and Entra Connect server.",
+            "Put Defender for Identity sensors on every DC, online CA and Entra Connect server[^mdilic].",
             "Map BSI APP.2.2 into your baseline, such as Protected Users, gMSAs and AES-only Kerberos[^bsiapp22].",
             "Rehearse a forest recovery in isolation every year, as the ransomware sheet describes."
           ]
@@ -222,7 +222,7 @@
       "title": "Certified Pre-Owned (vendor research)",
       "publisher": "SpecterOps",
       "date": "17 Jun 2021",
-      "url": "https://specterops.io/research/certified-pre-owned/"
+      "url": "https://specterops.io/blog/2021/06/17/certified-pre-owned/"
     },
     {
       "id": "certipy",
@@ -247,7 +247,7 @@
     },
     {
       "id": "rc4kb",
-      "title": "KB5073381: Kerberos RC4 changes (CVE-2026-20833)",
+      "title": "KB5073381: Managing Kerberos KDC usage of RC4 (CVE-2026-20833)",
       "publisher": "Microsoft Support",
       "date": "updated 14 Apr 2026",
       "url": "https://support.microsoft.com/en-us/kb/5073381"
@@ -310,7 +310,7 @@
     },
     {
       "id": "connectprereq",
-      "title": "Entra Connect prerequisites",
+      "title": "Microsoft Entra Connect: Prerequisites and hardware",
       "publisher": "Microsoft Learn",
       "date": "16 Jan 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-install-prerequisites"
@@ -330,6 +330,13 @@
       "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/authenticate-application-id"
     },
     {
+      "id": "ssohow",
+      "title": "Microsoft Entra Connect: Seamless single sign-on",
+      "publisher": "Microsoft Learn",
+      "date": "9 Apr 2025",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-sso"
+    },
+    {
       "id": "ssofaq",
       "title": "Microsoft Entra Seamless SSO: Frequently asked questions",
       "publisher": "Microsoft Learn",
@@ -345,7 +352,7 @@
     },
     {
       "id": "pingcastle",
-      "title": "PingCastle license",
+      "title": "PingCastle README: License",
       "publisher": "Netwrix on GitHub",
       "date": "checked 5 Nov 2026",
       "url": "https://github.com/netwrix/pingcastle"
@@ -358,11 +365,11 @@
       "url": "https://www.semperis.com/purple-knight/faq/"
     },
     {
-      "id": "pkdocs",
-      "title": "Purple Knight docs",
+      "id": "pkterms",
+      "title": "Deployment Restrictions for Semperis Software",
       "publisher": "Semperis",
-      "date": "checked 5 Nov 2026",
-      "url": "https://docs.purple-knight.com/community/welcome.htm"
+      "date": "Nov 2025",
+      "url": "https://www.semperis.com/docs/Semperis_Product%20Documentation_Deployment%20Restrictions.pdf"
     },
     {
       "id": "bhce",

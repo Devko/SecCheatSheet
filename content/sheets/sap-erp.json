@@ -5,7 +5,7 @@
   "order": 66,
   "capability": "infrastructure/erp",
   "title": "SAP and ERP: is the system that moves your money patched, closed and watched?",
-  "short": "Apply SAP and Oracle security patches every month, exploited ones within 72 hours, and keep SAP support packages under 24 months old.",
+  "short": "Patch SAP and Oracle every month, exploited flaws on exposed systems within 72 hours, and keep SAP support packages under 24 months old.",
   "answer": "This month, take every ERP web component that doesn't need to be public off the internet, and apply each month's SAP Security Notes and Oracle patches within the patching sheet's deadlines. Then close the paths inside (RFC gateway, trusted connections, standard users, SAP_ALL in production) and keep the Security Audit Log on and in your SIEM, so someone reviews every emergency and admin session.",
   "audience": "SAP Basis, security and IT teams running SAP ECC, S/4HANA, RISE or BTP, and teams running Oracle or Microsoft ERP systems",
   "version": "0.1",
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Take ERP web components off the internet.",
-          "text": "Publish only the HTTP paths partners need, through a reverse proxy in front of SAP Web Dispatcher[^app42], and never the gateway, message server or start service ports[^ports]. Extortion groups stole data through Oracle E-Business Suite and PeopleSoft zero-days in 2025 and 2026[^gtigebs][^gtigps]."
+          "text": "Publish only the HTTP paths partners need, through a reverse proxy in front of SAP Web Dispatcher[^app42], and never the gateway, message server or start service ports[^ports]."
         },
         {
           "title": "Patch every month, by exploitation and exposure.",
@@ -32,11 +32,11 @@
         },
         {
           "title": "Lock down the RFC gateway.",
-          "text": "Use SAP's restrictive secinfo and reginfo files[^gwsec], delete unused RFC connections and store no passwords in connections from development to production[^app42]."
+          "text": "Use SAP's restrictive secinfo and reginfo files[^gwsec], and store no passwords in RFC connections from development to production[^app42]."
         },
         {
           "title": "Take SAP_ALL out of production.",
-          "text": "BSI allows SAP_ALL, SAP_NEW and S_DEVELOP change rights in production only for emergency users, whose actions are logged[^app42]. Turn on the Security Audit Log in all clients[^sentprep]."
+          "text": "BSI allows SAP_ALL, SAP_NEW and S_DEVELOP change rights there only for logged emergency users[^app42]. Turn on the Security Audit Log in all clients[^sentprep]."
         }
       ]
     },
@@ -60,8 +60,21 @@
         },
         {
           "title": "Is the server still talking to the internet?",
-          "text": "Block outbound traffic from ERP servers, as Google advises for EBS[^gtigebs]; it can stop an attack after a break-in."
+          "text": "Block outbound traffic from ERP servers, as Google advises for EBS; it can disrupt an attack even after a break-in[^gtigebs]."
         }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "exploited",
+      "title": "Exploited ERP flaws since 2025",
+      "navTitle": "Exploited flaws",
+      "span": "full",
+      "items": [
+        "**SAP NetWeaver Visual Composer, CVE-2025-31324.** Unauthenticated file upload; in KEV since 29 April 2025, with ransomware use[^kev].",
+        "**Oracle EBS, CVE-2025-61882.** A zero-day from 9 August 2025; Cl0p-branded extortionists stole data[^gtigebs]. In KEV since 6 October[^kev].",
+        "**Oracle PeopleSoft, CVE-2026-35273.** ShinyHunters exploited it from 27 May 2026, before Oracle's 10 June alert[^gtigps]; in KEV since 12 June[^kev].",
+        "**Oracle Payments in EBS, CVE-2026-46817.** An unauthenticated takeover rated 9.8, fixed on 28 May 2026[^oracspu]; in KEV since 15 July[^kev]."
       ]
     },
     {
@@ -84,7 +97,7 @@
       "items": [
         "**Remove debug and replace.** S_DEVELOP with object type DEBUG and change rights lets users alter accounting data in memory without a trace[^dsag].",
         "**Remove all-table access.** No production user should display every table through SE16 with S_TABU_DIS for all groups[^dsag].",
-        "**Review every firefighter session.** Unlock emergency users per ticket and log everything[^app42]. SAP Access Control's Emergency Access Management sends each session's log to a reviewer, if the system records it[^eam].",
+        "**Review every firefighter session.** Unlock emergency users per ticket and log everything[^app42]. SAP Access Control sends each session's logs to a reviewer, if the system records them[^eam].",
         "**Protect vendor bank details.** Mark bank fields as sensitive, so a second user must confirm changes before the automatic payment run; manual payments aren't blocked[^dualctl]."
       ]
     },
@@ -94,9 +107,8 @@
       "title": "Logs, transports and custom code",
       "navTitle": "Logs and code",
       "items": [
-        "**Get the audit log to your SIEM.** Log all message types; Microsoft calls the cost difference minimal[^sentprep]. Microsoft Sentinel's SAP solution charges hourly per production system and needs SAP Integration Suite[^sentinel][^sentprep].",
-        "**Make production unchangeable.** Build roles and code only in development and move them by transport[^app42].",
-        "**Check code at transport release** with the ABAP Test Cockpit[^atc]. Its security checks, Code Vulnerability Analyzer, need a separate license on premises, or SAP BTP ABAP Environment[^cva].",
+        "**Get the audit log to your SIEM.** Log all message types[^sentprep]. Microsoft Sentinel's SAP solution charges hourly per production system and needs SAP Integration Suite[^sentinel][^sentprep].",
+        "**Gate every transport.** Build roles and code only in development[^app42]; the ABAP Test Cockpit checks them at release[^atc]. Its security checks, Code Vulnerability Analyzer, need a license on premises or SAP BTP[^cva].",
         "**Follow APP.4.6 in custom ABAP.** Check AUTHORITY-CHECK results; avoid dynamic Open SQL, ADBC and INSERT REPORT[^app46]."
       ]
     },
@@ -107,9 +119,8 @@
       "navTitle": "End of maintenance",
       "items": [
         "**End of 2027.** Mainstream maintenance ends for SAP ERP 6.0, EHP 6 to 8[^bs7], and SAP Solution Manager[^sysrec].",
-        "**2028 to 2030.** Optional extended maintenance costs 2 percentage points more[^bs7]. Then, in customer-specific maintenance, SAP considers new high and critical notes for 12 months only[^sapnotes].",
-        "**RISE transition option.** Security patches from 2031 to 2033 for systems moved to SAP ERP, private edition on HANA by the end of 2030[^transopt].",
-        "**Dynamics GP.** Support ends on 31 December 2029, security patches on 30 April 2031[^gp]."
+        "**2028 to 2030.** Optional extended maintenance, at 2 percentage points more[^bs7]. Then customer-specific maintenance: new high and critical notes for 12 months only[^sapnotes].",
+        "**RISE transition option.** Security patches from 2031 to 2033 for systems moved to SAP ERP, private edition on HANA by the end of 2030[^transopt]."
       ]
     },
     {
@@ -118,9 +129,9 @@
       "title": "What to demand from RISE and partners",
       "navTitle": "RISE and partners",
       "items": [
-        "**Know what RISE leaves to you.** Finding relevant notes and implementing application notes need Cloud Application Services packages; testing and the application security concept stay yours[^rr].",
-        "**Own the SIEM rules.** SAP's LogServ is optional, and SAP doesn't confirm receipt, write correlation rules or watch alerts[^rr].",
-        "**Write it into the contract.** Monthly patch status per system, fixed times for exploited and Critical notes, personal partner accounts. See the third-party-risk sheet."
+        "**Know what RISE leaves to you.** Without Cloud Application Services packages, you find and request notes; testing and the application security concept stay yours[^rr].",
+        "**Own the SIEM rules.** LogServ is optional, and SAP doesn't confirm receipt, write correlation rules or watch alerts[^rr].",
+        "**Write it into the contract.** Monthly patch status, deadlines for exploited and Critical notes, personal accounts; see the third-party-risk sheet."
       ]
     },
     {
@@ -129,9 +140,8 @@
       "title": "What changed in 2026",
       "navTitle": "Changed in 2026",
       "items": [
-        "**Oracle patches monthly.** Critical Security Patch Updates, first on 28 May, fill the months between quarterly Critical Patch Updates[^oraalerts].",
-        "**PeopleSoft zero-day.** ShinyHunters exploited CVE-2026-35273 from 27 May, before Oracle's 10 June alert[^gtigps].",
-        "**Oracle Payments exploited.** KEV listed CVE-2026-46817, an unauthenticated takeover of Oracle Payments, on 15 July[^kev].",
+        "**Oracle patches monthly.** Critical Security Patch Updates, first on 28 May, now fill the months between quarterly updates[^oraalerts].",
+        "**Oracle ERP web tiers kept being hit.** PeopleSoft and Oracle Payments flaws entered KEV in June and July[^kev]. Patch them like edge devices.",
         "**ECC on RISE until 2035.** Since 13 October, transition option subscriptions may run to the end of 2035[^transopt]."
       ]
     },
@@ -140,9 +150,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Buying threat detection first.** Sentinel for SAP or SAP Enterprise Threat Detection sees little while the audit log is off and notes are months behind.",
+        "**Buying threat detection first.** Sentinel for SAP or SAP Enterprise Threat Detection sees little while the audit log is off and notes lag.",
         "**Applying every note on Patch Day.** Support Package Security Notes can wait for the next support package[^sapnotes].",
-        "**A complete SoD rule set before cleanup.** Removing SAP_ALL, debug and replace and all-table access cuts more risk than months of tuning rules."
+        "**A full SoD rule set first.** Removing SAP_ALL, debug and replace and all-table access cuts more risk."
       ]
     },
     {
@@ -151,9 +161,9 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Leaving unused components installed.** Visual Composer was exploited in 2025, with known ransomware use[^kev], and got another 9.9 note in October 2026[^sapoct26].",
+        "**Leaving unused components installed.** Visual Composer, exploited in 2025, got another 9.9 note in October 2026[^sapoct26].",
         "**Falling behind on cumulative patches.** Oracle's fix for CVE-2025-61882 needed the October 2023 Critical Patch Update first[^oraebsalert].",
-        "**Assuming RISE applies every note.** Without the packages, you find and request them yourself[^rr]."
+        "**Trusting a WAF instead.** Google warns that WAF body-inspection rules alone can be bypassed[^gtigps]."
       ]
     },
     {
@@ -166,8 +176,8 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Ask your ERP partner for a monthly list of applied notes and proof that no ERP login is public.",
-            "In Business Central, limit SUPER, which reaches everything the license allows[^bcperm], and get an email when an IBAN changes[^bcaudit]."
+            "Get a monthly note status per system from your ERP partner, and proof that no ERP login is public.",
+            "In Business Central, limit SUPER[^bcperm] and get an email when an IBAN changes[^bcaudit]."
           ]
         },
         {
@@ -180,8 +190,8 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Use SAP Access Control for firefighter IDs and BSI APP.4.2 or the DSAG guide as audit baseline[^app42][^dsag].",
-            "Decide by mid-2027 between extended maintenance, the transition option and finishing S/4HANA."
+            "Use SAP Access Control for firefighter IDs, and APP.4.2 or the DSAG guide for audits[^app42][^dsag].",
+            "Decide by mid-2027 between extended maintenance, the transition option and S/4HANA."
           ]
         }
       ]
@@ -211,7 +221,7 @@
     },
     {
       "id": "sapoct26",
-      "title": "SAP Security Patch Day, October 2026",
+      "title": "SAP Patch Day, October 2026",
       "publisher": "SAP Support",
       "date": "13 Oct 2026",
       "url": "https://support.sap.com/en/my-support/knowledge-base/security-notes-news/october-2026.html"
@@ -226,85 +236,92 @@
     {
       "id": "mddr",
       "title": "Microsoft Digital Defense Report 2026",
-      "publisher": "Microsoft Threat Intelligence",
+      "publisher": "Microsoft",
       "date": "Oct 2026",
       "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
     },
     {
       "id": "gtigebs",
-      "title": "Oracle E-Business Suite Zero-Day Exploited in Widespread Extortion Campaign",
-      "publisher": "Google Threat Intelligence",
+      "title": "Oracle E-Business Suite Zero-Day Exploited in Extortion Campaign",
+      "publisher": "Google Cloud",
       "date": "9 Oct 2025",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/oracle-ebusiness-suite-zero-day-exploitation"
     },
     {
       "id": "gtigps",
       "title": "ShinyHunters Targets Education Sector with Oracle PeopleSoft Exploit",
-      "publisher": "Google Threat Intelligence",
+      "publisher": "Google Cloud",
       "date": "11 Jun 2026",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/shinyhunters-targets-education-sector-oracle-exploit"
     },
     {
       "id": "oraalerts",
-      "title": "Critical Patch Updates, Security Alerts and Bulletins",
+      "title": "Critical Patch Updates and Security Alerts",
       "publisher": "Oracle",
-      "date": "updated Oct 2026",
+      "date": "Oct 2026",
       "url": "https://www.oracle.com/security-alerts/"
     },
     {
       "id": "oraebsalert",
-      "title": "Security Alert Advisory CVE-2025-61882",
+      "title": "Security Alert CVE-2025-61882",
       "publisher": "Oracle",
-      "date": "rev. 6 Oct 2025",
+      "date": "6 Oct 2025",
       "url": "https://www.oracle.com/security-alerts/alert-cve-2025-61882.html"
     },
     {
+      "id": "oracspu",
+      "title": "Critical Security Patch Update, May 2026",
+      "publisher": "Oracle",
+      "date": "28 May 2026",
+      "url": "https://www.oracle.com/security-alerts/cspumay2026.html"
+    },
+    {
       "id": "app42",
-      "title": "IT-Grundschutz-Kompendium, APP.4.2 SAP-ERP-System",
+      "title": "APP.4.2 SAP-ERP-System",
       "publisher": "BSI",
       "date": "Edition 2023",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/06_APP_Anwendungen/APP_4_2_SAP_ERP_System_Edition_2023.pdf?__blob=publicationFile"
     },
     {
       "id": "app46",
-      "title": "IT-Grundschutz-Kompendium, APP.4.6 SAP ABAP-Programmierung",
+      "title": "APP.4.6 SAP ABAP-Programmierung",
       "publisher": "BSI",
       "date": "Edition 2023",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/06_APP_Anwendungen/APP_4_6_SAP_ABAP_Programmierung_Edition_2023.pdf?__blob=publicationFile"
     },
     {
       "id": "dsag",
-      "title": "SAP S/4HANA Leitfaden (audit guide of the SAP user association)",
+      "title": "SAP S/4HANA Leitfaden (audit guide, user association)",
       "publisher": "DSAG",
       "date": "Dec 2022",
       "url": "https://impulsant.dsag.de/formate/textbeitrag/sap-s-4hana-leitfaden/"
     },
     {
       "id": "ports",
-      "title": "Ports of SAP NetWeaver Application Server for ABAP",
+      "title": "Ports of SAP NetWeaver AS for ABAP",
       "publisher": "SAP Help",
-      "date": "NetWeaver 7.5",
+      "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4e/c26cdc58e968b9e10000000a42189e/content.htm"
     },
     {
       "id": "gwsec",
-      "title": "Configuring Connections between Gateway and External Programs Securely",
+      "title": "Securing Gateway Connections to External Programs",
       "publisher": "SAP Help",
-      "date": "NetWeaver 7.5",
+      "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/48/b2096b7895307be10000000a42189b/content.htm"
     },
     {
       "id": "ucon",
-      "title": "Using Phase Administration Tools (Unified Connectivity)",
+      "title": "Using Phase Administration Tools (UCON)",
       "publisher": "SAP Help",
-      "date": "NetWeaver 7.5",
+      "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/a9/77dde57de44ebca862911f8778c382/content.htm"
     },
     {
       "id": "stdusers",
       "title": "Protecting Special Users",
       "publisher": "SAP Help",
-      "date": "NetWeaver 7.5",
+      "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4f/40d6d6ed6a2eb3e10000000a42189c/content.htm"
     },
     {
@@ -316,16 +333,16 @@
     },
     {
       "id": "dualctl",
-      "title": "KBA 3557252: Dual Control Sensitive Fields for Supplier/Customer Master",
+      "title": "KBA 3557252: Dual Control Sensitive Fields",
       "publisher": "SAP Support",
       "date": "Sep 2025",
       "url": "https://userapps.support.sap.com/sap/support/knowledge/en/3557252"
     },
     {
       "id": "atc",
-      "title": "Setting Up the ABAP Test Cockpit in Your Development Landscape",
+      "title": "Setting Up the ABAP Test Cockpit",
       "publisher": "SAP Help",
-      "date": "NetWeaver 7.5",
+      "date": "NW 7.5",
       "url": "https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/73/473fd593fc417ba7a6367423f1e535/content.htm"
     },
     {
@@ -337,14 +354,14 @@
     },
     {
       "id": "sentinel",
-      "title": "Microsoft Sentinel solution for SAP applications overview",
+      "title": "Sentinel solution for SAP applications",
       "publisher": "Microsoft Learn",
       "date": "13 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/azure/sentinel/sap/sap-applications-overview"
     },
     {
       "id": "sentprep",
-      "title": "Configure your SAP system for the Microsoft Sentinel solution",
+      "title": "Configure SAP for Microsoft Sentinel",
       "publisher": "Microsoft Learn",
       "date": "4 Aug 2026",
       "url": "https://learn.microsoft.com/en-us/azure/sentinel/sap/preparing-sap"
@@ -360,33 +377,26 @@
       "id": "transopt",
       "title": "Updates for SAP ERP, Private Edition, Transition Option",
       "publisher": "SAP News",
-      "date": "4 Aug 2025, updated 13 Oct 2026",
+      "date": "updated 13 Oct 2026",
       "url": "https://news.sap.com/2025/08/rise-with-sap-journey-sap-erp-private-edition-transition-option-updates/"
     },
     {
       "id": "rr",
-      "title": "Private edition and SAP ERP, tailored option: Roles and Responsibilities",
+      "title": "RISE Roles and Responsibilities, tailored option",
       "publisher": "SAP",
       "date": "Mar 2026",
       "url": "https://www.sap.com/docs/download/agreements/product-policy/hec/roles-responsibilities/sap-s4hana-cloud-private-edition-and-sap-erp-tailored-option-roles-and-responsibilities-english-v3-2026.pdf"
     },
     {
-      "id": "gp",
-      "title": "Announcing End of Support for Dynamics GP",
-      "publisher": "Microsoft Dynamics 365 Blog",
-      "date": "updated 15 Jan 2025",
-      "url": "https://www.microsoft.com/en-us/dynamics-365/blog/it-professional/2024/09/25/announcing-end-of-support-for-dynamics-gp/"
-    },
-    {
       "id": "bcperm",
-      "title": "Define granular permissions (Business Central)",
+      "title": "Business Central: granular permissions",
       "publisher": "Microsoft Learn",
       "date": "3 Mar 2026",
       "url": "https://learn.microsoft.com/en-us/dynamics365/business-central/ui-define-granular-permissions"
     },
     {
       "id": "bcaudit",
-      "title": "Auditing changes (Business Central)",
+      "title": "Business Central: auditing changes",
       "publisher": "Microsoft Learn",
       "date": "17 Jun 2026",
       "url": "https://learn.microsoft.com/en-us/dynamics365/business-central/across-log-changes"
