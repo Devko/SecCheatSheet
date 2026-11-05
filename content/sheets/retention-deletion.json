@@ -8,8 +8,8 @@
   "short": "Give every record type a period (in Germany 10 years for books, 8 for vouchers, 6 for letters) and delete whatever has expired each January.",
   "answer": "By January 2027, write a retention schedule that gives every record type a reason, a period and a start event, and set Microsoft 365, Google Workspace and your business systems to delete automatically when the period ends. Keep data past its period only under a documented hold, and make sure backups and other hidden copies run out on the same schedule.",
   "audience": "IT, security, data protection and compliance leads in EU organizations, especially in Germany, on Microsoft 365 or Google Workspace",
-  "version": "1.0",
-  "lastReviewed": "2026-11-04",
+  "version": "1.1",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
@@ -126,7 +126,7 @@
         "**SharePoint and OneDrive.** Under a retain policy, edited and deleted files go to the hidden Preservation Hold library, using site storage[^retention].",
         "**Leavers' mailboxes.** Under a retention policy they become inactive mailboxes, which aren't deleted automatically when retention ends[^exret].",
         "**Teams call logs.** They're kept indefinitely by default[^teamsret]. Since April 2026, only a call logs policy set in PowerShell deletes new ones[^whatsnew].",
-        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default and up to 10[^m365backup]. See the backups sheet.",
+        "**Microsoft 365 Backup.** Purview deletion doesn't reach its restore points, kept 1 year by default, up to 10 (2 for Exchange)[^m365backup]. See the backups sheet.",
         "**Google Vault.** Expired mail and chats stay in Vault about 30 more days[^vault].",
         "**Processors.** They must delete or return your data at contract end[^gdpr]; see the third-party risk sheet."
       ]
@@ -213,6 +213,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Added that Microsoft 365 Backup keeps Exchange restore points for at most 2 years."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",

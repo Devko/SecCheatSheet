@@ -8,8 +8,8 @@
   "short": "Keep one backup copy attackers can't delete and time a full restore at least once a year.",
   "answer": "Keep at least one backup copy that your everyday admin accounts can't delete, and restore your most critical systems from it in a timed test this quarter. Judge every other ransomware measure by whether it keeps attackers away from your backups, identity systems and hypervisors or shortens that measured restore time.",
   "audience": "IT and security teams in small and mid-size organizations, including those on Microsoft 365",
-  "version": "1.0",
-  "lastReviewed": "2026-11-02",
+  "version": "1.1",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
@@ -141,7 +141,7 @@
       "title": "What you can skip",
       "items": [
         "**Buying another detection product before a tested restore.** If no one has timed a full restore, spend the money and time there first.",
-        "**Counting sync as a backup.** Cloud services often sync encrypted files over the good copies immediately, and NCSC advises against relying on several copies in one cloud service[^ncscmit]. Even Microsoft 365 Backup's append-only restore points can be deleted by a Backup admin after a 90-day grace period[^m365backup]; only cutting it to 7 days needs a second approver[^m365off].",
+        "**Counting sync as a backup.** Cloud services often sync encrypted files over the good copies immediately, and NCSC advises against relying on several copies in one cloud service[^ncscmit]. Even Microsoft 365 Backup's append-only restore points can be deleted by a Backup admin after a 90-day grace period[^m365backup]. Only cutting it to 7 days needs a second approver[^m365off].",
         "**Taking every backup offline.** One offline or immutable copy of what the first week needs is enough to start. Keep the rest online for fast restores."
       ]
     },
@@ -192,6 +192,11 @@
   ],
   "changes": [
     {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Added that Microsoft 365 Backup's two-person approval covers only shortening the deletion grace period, and updated its source date."
+    },
+    {
       "date": "2026-11-02",
       "version": "1.0",
       "text": "Published after a copy edit and a source-by-source fact check, which narrowed 6 statements and labels vendor survey figures as such."
@@ -219,14 +224,14 @@
     },
     {
       "id": "gtig",
-      "title": "Ransomware Under Pressure: Tactics, Techniques, and Procedures in a Shifting Threat Landscape",
+      "title": "Ransomware Under Pressure",
       "publisher": "Google Threat Intelligence Group",
       "date": "16 Mar 2026",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/ransomware-ttps-shifting-threat-landscape"
     },
     {
       "id": "mtrends",
-      "title": "M-Trends 2026: Data, Insights, and Strategies From the Frontlines",
+      "title": "M-Trends 2026",
       "publisher": "Google Cloud (Mandiant)",
       "date": "23 Mar 2026",
       "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
@@ -317,7 +322,7 @@
     },
     {
       "id": "ukresp",
-      "title": "Ransomware legislative proposals: reducing payments to cyber criminals and increasing incident reporting. Government response",
+      "title": "Ransomware legislative proposals: government response",
       "publisher": "Home Office (UK)",
       "date": "22 Jul 2025",
       "url": "https://assets.publishing.service.gov.uk/media/6899a4ddad0cbc0e276431e3/Government_Response_Ransomware_proposals_to_increase_incident_reporting_and_reduce_payments_to_criminals.pdf"

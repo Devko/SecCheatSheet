@@ -8,7 +8,7 @@
   "short": "Exploited and internet-facing: contain in 24 hours, patch within 72.",
   "answer": "If a vulnerability is being exploited and the system is reachable from the internet, contain it within 24 hours and patch within 72. Schedule everything else by exploitation and exposure, not by CVSS score alone.",
   "audience": "IT and security teams of any size",
-  "version": "1.1",
+  "version": "1.2",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -71,7 +71,7 @@
         },
         {
           "title": "Track exploitation, not just severity.",
-          "text": "Vulnerability exploitation is now the most common initial access vector, at 31% of breaches[^dbir]. Subscribe to CISA KEV[^kev] and to the advisories of every product you expose."
+          "text": "Exploitation is now the top initial access vector, at 31% of breaches with a known vector, excluding errors and misuse[^dbir]. Subscribe to CISA KEV[^kev] and to the advisories of every product you expose."
         },
         {
           "title": "Patch edge devices first.",
@@ -238,6 +238,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Stated the scope of the DBIR's 31% figure: breaches with a known initial access vector, excluding errors and misuse."
+    },
     {
       "date": "2026-11-05",
       "version": "1.1",

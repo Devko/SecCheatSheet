@@ -8,7 +8,7 @@
   "short": "Certify only what customers or regulators ask for, scope all relevant operations and review risks with management at least once a year.",
   "answer": "Decide this quarter which evidence your customers and regulators actually ask for, such as an ISO/IEC 27001:2022 certificate or a TISAX label, because NIS2 and the German BSIG require documented measures, not a certificate[^bsiiso]. Then scope the ISMS to all the regulated entity's relevant operations, let your risk register choose the controls and have management decide on the remaining risks at least once a year.",
   "audience": "Security, compliance and IT leads in EU organizations, especially in Germany, deciding whether and how to build an ISMS",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -220,6 +220,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Moved the IAF document links to Global Accreditation Cooperation, which replaced IAF and ILAC on 1 January 2026, and stated the end of classic IT-Grundschutz certification as the BSI words it."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",
