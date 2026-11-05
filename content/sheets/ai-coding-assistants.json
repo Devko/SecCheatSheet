@@ -1,14 +1,14 @@
 {
   "slug": "ai-coding-assistants",
   "topic": "AI coding assistants",
-  "status": "draft",
+  "status": "published",
   "order": 46,
   "capability": "ai/coding-assistants",
   "title": "AI coding assistants: what can your agents reach and run?",
   "short": "Use company accounts, require the sandbox with bypass modes off, and have a second person approve every agent pull request.",
   "answer": "This month, move every developer to a company account, require the tool's sandbox with bypass modes switched off in managed settings, and keep production credentials away from agents. Judge every new tool, MCP server or automation by what outsiders can write into what it reads, and what it could run, reach or merge if that text took over.",
   "audience": "Engineering leads, platform and security teams whose developers use AI coding assistants and agents",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -20,7 +20,7 @@
       "items": [
         {
           "title": "Move everyone to company accounts.",
-          "text": "Since 24 April 2026, GitHub trains on Copilot Free, Pro and Pro+ interactions by default, but not on Business or Enterprise[^ghdata]. Block `*.individual.githubcopilot.com` at the firewall[^ghnet]."
+          "text": "Since 24 April 2026, GitHub trains on Copilot Free, Pro, Pro+ and Max interactions by default, not on Business or Enterprise[^ghpub]. Block `*.individual.githubcopilot.com` at the firewall[^ghnet]."
         },
         {
           "title": "Keep production credentials away from agents.",
@@ -28,11 +28,11 @@
         },
         {
           "title": "Require the sandbox and block bypass modes.",
-          "text": "Claude Code's sandbox is off by default and still reads `~/.ssh` unless you deny it[^ccsandbox]. Require it in managed settings, set `disableBypassPermissionsMode` in Claude Code and Copilot[^ccmodes][^ghms] and keep yolo modes for throwaway containers[^ccmodes]."
+          "text": "Claude Code's sandbox is off by default and still reads `~/.ssh` unless you deny it[^ccsandbox]. Require it in managed settings, set `disableBypassPermissionsMode` in Claude Code and Copilot[^ccmodes][^ghms] and keep yolo modes for offline throwaway containers[^ccmodes]."
         },
         {
           "title": "Treat inputs as instructions from their authors.",
-          "text": "Issues, pull requests, docs and config files can all steer an agent. Cline's triage agent had a shell and read any GitHub user's issues, which exposed its publishing credentials; a token it failed to rotate later published an unauthorized release[^cline]. Agents that read outsiders' text get no shell and no secrets."
+          "text": "Issues, pull requests, docs and config files can all steer an agent. Cline's triage agent had a shell and read any GitHub user's issues, which exposed its publishing credentials; an npm token Cline failed to rotate let an outsider publish a release[^cline]. Agents that read outsiders' text get no shell and no secrets."
         },
         {
           "title": "Have a second person approve every agent change.",
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Settle plans and data terms first.",
-          "text": "Choose business plans that don't train on your code, check retention options and sign the processor contract the AI inputs sheet describes. Where licensing matters, set **Suggestions matching public code** to Block[^ghpub]."
+          "text": "Choose business plans that don't train on your code, check retention options and sign the processor contract the AI inputs sheet describes. Where licensing matters, block **Suggestions matching public code**, which only IDEs fully enforce[^ghsurf]."
         },
         {
-          "title": "Write one managed settings file.",
-          "text": "Require the sandbox, in Claude Code with `failIfUnavailable` and `allowUnsandboxedCommands: false`[^ccsandbox], disable bypass modes and allowlist MCP servers[^ghms]. Deliver it so developers can't weaken it[^ghsandbox]."
+          "title": "Write managed settings per tool.",
+          "text": "Require the sandbox, in Claude Code with `failIfUnavailable` and `allowUnsandboxedCommands: false`, which needs macOS, Linux or WSL2[^ccsandbox], disable bypass modes and allowlist MCP servers[^ghms]. Push them so developers can't weaken them[^ghsandbox]."
         },
         {
           "title": "Move unattended work off laptops.",
@@ -86,8 +86,8 @@
       "title": "Reviewing what agents write and install",
       "navTitle": "Review",
       "items": [
-        "**Working code can be exploitable.** On BaxBench, 35% of the top model's working backends were exploitable when the prompt didn't mention security[^baxbench]. Keep agent pull requests behind the same CI gates.",
-        "**Check that every new package is real.** In a 2025 study, 19.7% of packages in code from 16 models didn't exist, and 43% of those names recurred in all 10 repeats of a prompt[^usenix]. Check a new dependency's history first.",
+        "**Working code can be exploitable.** If the prompt skipped security, 35% of working backends by BaxBench's top model, Claude Opus 4.5, were exploitable[^baxbench]. Keep agent pull requests behind the same CI gates.",
+        "**Check that every new package is real.** In a 2025 study, 19.7% of packages in code from 16 early-2024 models didn't exist, and 43% of those recurred in all 10 repeats of a prompt[^usenix]. Check a new dependency's history first.",
         "**Pin MCP servers.** The fake `postmark-mcp` built trust over 15 versions before 1.0.16 secretly BCC'd emails to an outside server[^postmark]. Allowlist servers in managed settings[^ghms] and pin versions."
       ]
     },
@@ -100,8 +100,8 @@
       "items": [
         "**Copilot offers EU data residency** since April[^ghresnew], on Enterprise Cloud with data residency, off by default and at 10% more AI credits[^ghresidency].",
         "**GitHub can require local sandboxing** for Copilot, generally available since 7 October, with policies developers can't weaken[^ghsandbox].",
-        "**Copilot's approval can count toward required approvals** since 1 September, if admins allow it[^ghcrapprove]. Keep it off for agents' pull requests.",
-        "**Claude Code now starts in auto mode**, where a classifier reviews actions; `permissions.disableAutoMode` turns it off[^ccmodes]."
+        "**Copilot's approval can count toward required approvals** since 28 October, if admins allow it[^ghcrapprove]. Keep it off where agents open pull requests.",
+        "**Claude Code starts in auto mode** from v2.1.283, with a classifier reviewing actions; `permissions.disableAutoMode` turns it off[^ccmodes]."
       ]
     },
     {
@@ -122,7 +122,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Giving a CI agent a shell and outsiders' text.** Cline calls that \"functionally equivalent to giving every GitHub user shell access\"[^cline].",
-        "**Letting a classifier approve risky work.** Anthropic says auto mode doesn't guarantee safety or replace review of sensitive operations[^ccmodes]. Add `ask` rules for deploys, migrations and pushes, such as `Bash(git push *)`.",
+        "**Letting a classifier approve risky work.** Anthropic says auto mode doesn't guarantee safety or replace review of sensitive operations[^ccmodes]. Add `ask` rules for deploys, migrations and pushes, such as `Bash(git push *)`, knowing they miss rewritten commands[^ccperm].",
         "**Skipping workflow approval on agent pull requests.** Admins can let workflows run on Copilot's pull requests without a human[^ghrisks]. Keep the approval, as for outside contributors.",
         "**Putting deployment secrets in Agents secrets.** Copilot can read those. Keep what it shouldn't touch in Actions secrets, which it can't[^ghguard].",
         "**Yolo mode in a container with secrets.** A malicious project can then take anything inside, including the agent's credentials[^codex]."
@@ -166,21 +166,26 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which updated Copilot's training plans and code review approvals to GitHub's current docs, noted where the public code filter applies and recomputed the BaxBench figure from the leaderboard data."
+    },
+    {
+      "date": "2026-11-05",
       "version": "0.1",
       "text": "First draft, based on GitHub, Anthropic and VS Code documentation, the BSI and ANSSI guidance on AI coding assistants, the USENIX Security 2025 package hallucination study, BaxBench and incident reports from Cline, Railway, Postmark and Gemini CLI."
     }
   ],
   "sources": [
     {
-      "id": "ghdata",
-      "title": "Updates to our Privacy Statement and Terms of Service",
-      "publisher": "GitHub Changelog",
-      "date": "25 Mar 2026",
-      "url": "https://github.blog/changelog/2026-03-25-updates-to-our-privacy-statement-and-terms-of-service-how-we-use-your-data/"
+      "id": "ghpub",
+      "title": "Managing GitHub Copilot policies as an individual subscriber",
+      "publisher": "GitHub Docs",
+      "date": "checked 5 Nov 2026",
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
     },
     {
       "id": "ghnet",
-      "title": "Managing Copilot access to your enterprise's network",
+      "title": "Managing GitHub Copilot access to your enterprise's network",
       "publisher": "GitHub Docs",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-access/manage-network-access"
@@ -229,9 +234,9 @@
     },
     {
       "id": "cline",
-      "title": "Post-mortem: Unauthorized Cline CLI npm publish",
+      "title": "Post-mortem: Unauthorized Cline CLI npm publish on February 17, 2026",
       "publisher": "Cline",
-      "date": "23 Feb 2026",
+      "date": "24 Feb 2026",
       "url": "https://cline.bot/blog/post-mortem-unauthorized-cline-cli-npm"
     },
     {
@@ -250,7 +255,7 @@
     },
     {
       "id": "ghguard",
-      "title": "Building a secure cloud environment for agents",
+      "title": "Building a secure cloud environment for agents in your enterprise",
       "publisher": "GitHub Docs",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.github.com/en/copilot/tutorials/cloud-agent/build-guardrails"
@@ -285,7 +290,7 @@
     },
     {
       "id": "gemadv",
-      "title": "Gemini CLI remote code execution (CVE-2026-12537)",
+      "title": "Gemini CLI: Remote Code Execution via workspace trust and tool allowlisting bypasses",
       "publisher": "GitHub Advisory Database",
       "date": "24 Apr 2026",
       "url": "https://github.com/advisories/GHSA-wpqr-6v78-jr5g"
@@ -313,7 +318,7 @@
     },
     {
       "id": "usenix",
-      "title": "We Have a Package for You! Package hallucinations by code generating LLMs",
+      "title": "We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs",
       "publisher": "USENIX Security",
       "date": "Aug 2025",
       "url": "https://www.usenix.org/conference/usenixsecurity25/presentation/spracklen"
@@ -341,10 +346,10 @@
     },
     {
       "id": "ghcrapprove",
-      "title": "Copilot code review can now approve pull requests",
+      "title": "Copilot code review: Merge with confidence with Max and approvals",
       "publisher": "GitHub Changelog",
-      "date": "1 Sep 2026",
-      "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests/"
+      "date": "28 Oct 2026",
+      "url": "https://github.blog/changelog/2026-10-28-copilot-code-review-merge-with-confidence-with-max-and-approvals/"
     },
     {
       "id": "codex",
@@ -354,11 +359,11 @@
       "url": "https://learn.chatgpt.com/docs/agent-approvals-security"
     },
     {
-      "id": "ghpub",
-      "title": "Managing GitHub Copilot policies as an individual subscriber",
+      "id": "ghsurf",
+      "title": "Supported surfaces for GitHub Copilot policies",
       "publisher": "GitHub Docs",
       "date": "checked 5 Nov 2026",
-      "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+      "url": "https://docs.github.com/en/copilot/reference/supported-surfaces-for-policies"
     }
   ]
 }
