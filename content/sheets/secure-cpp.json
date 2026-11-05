@@ -21,15 +21,15 @@
       "items": [
         {
           "title": "Build every release with the OpenSSF hardening flags.",
-          "text": "For GCC and Clang these include `-D_FORTIFY_SOURCE=3`, `-fstack-protector-strong`, `-fstack-clash-protection`, `-ftrivial-auto-var-init=zero`, PIE and full RELRO[^openssf]; GCC's `-fhardened` sets them all at once[^gccinst]. On MSVC, add `/guard:cf`[^mscfg]."
+          "text": "For GCC and Clang these include `-D_FORTIFY_SOURCE=3`, `-fstack-protector-strong`, `-fstack-clash-protection`, `-ftrivial-auto-var-init=zero`, PIE and full RELRO[^openssf]; on GNU/Linux, GCC's `-fhardened` sets them all at once[^gccinst]. On MSVC, add `/guard:cf`[^mscfg]."
         },
         {
           "title": "Bounds-check the standard library in production.",
-          "text": "Define `_GLIBCXX_ASSERTIONS`, set libc++ to `_LIBCPP_HARDENING_MODE_FAST`[^openssf][^libcxx] or define `_MSVC_STL_HARDENING=1`[^msstl]. At Google it cost 0.3% on average, found over 1,000 bugs and cut segfaults by 30%[^gretro]."
+          "text": "Define `_GLIBCXX_ASSERTIONS`, set libc++'s mode to `_LIBCPP_HARDENING_MODE_FAST`[^openssf][^libcxx] or define `_MSVC_STL_HARDENING=1`[^msstl]. At Google it cost 0.3% on average, found over 1,000 bugs and cut segfaults by 30%[^gretro]."
         },
         {
           "title": "Run every test under ASan and UBSan.",
-          "text": "`-fsanitize=address` finds out-of-bounds access and use after free at about half speed[^asan], `-fsanitize=undefined` overflow and other undefined behavior[^ubsan]. Leave out `_FORTIFY_SOURCE` there[^openssf]."
+          "text": "`-fsanitize=address` finds out-of-bounds access and use after free at about half speed[^asan], `-fsanitize=undefined` signed overflow and other undefined behavior[^ubsan]. Leave out `_FORTIFY_SOURCE` there[^openssf]."
         },
         {
           "title": "Fuzz every parser of outside data.",
@@ -37,7 +37,7 @@
         },
         {
           "title": "Write new components in a memory-safe language.",
-          "text": "New code holds most bugs: five-year-old code has 3.4 to 7.4 times lower vulnerability density[^gsource]. CISA and the FBI asked C and C++ product makers to publish a memory-safety roadmap by the end of 2025[^cisabad]."
+          "text": "New code holds most bugs: five-year-old code has 3.4 to 7.4 times lower vulnerability density[^gsource]. CISA and the FBI asked makers of C and C++ products for critical infrastructure to publish a memory-safety roadmap by the end of 2025[^cisabad]."
         }
       ]
     },
@@ -77,11 +77,11 @@
       "span": "full",
       "items": [
         "**`memcpy(buf, p, len)` with `len` from the input.** OpenSSL copied an AEAD IV into a fixed-size stack buffer without checking it fit, before any authentication (CVE-2025-15467, high)[^openssl]. Check each length against the destination and the bytes left; `_FORTIFY_SOURCE=3` catches this only when it knows the buffer size[^openssf].",
-        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Ruby's C regex engine let crafted patterns run code on GitLab servers (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow` and `__builtin_add_overflow`[^gccovf].",
+        "**`n * size` and `len + 1` in size calculations.** Unsigned arithmetic wraps, and signed overflow is undefined, so the compiler may delete your overflow check[^openssf]. Integer overflows in Onigmo, Ruby's regex engine, let crafted patterns run code on GitLab servers (CVE-2026-97229, exploited)[^ruby][^kev]. Use `__builtin_mul_overflow` and `__builtin_add_overflow`[^gccovf].",
         "**Error codes that let a decoder keep going.** Brotli's decoder treated an invalid block switch as a need for more input and kept appending to an eight-byte buffer (CVE-2026-111497, exploited)[^nodejs][^kev]. Treat each format error as final, check the bound on every append, and mark error-returning functions `[[nodiscard]]`.",
         "**Ownership an API leaves unclear.** OpenSSL's `PKCS7_verify()` freed a BIO its caller still owned, so the caller's `BIO_free()` became a use after free (CVE-2026-45447, high)[^openssl]. Own with `std::unique_ptr`, never keep a `std::string_view` or `std::span` past its owner, and in C document who frees each argument.",
-        "**Reading a union or downcast object as the wrong type.** OpenSSL read an `ASN1_TYPE` union member without checking its type (CVE-2026-22796)[^openssl]; CISA lists type confusion in V8 and Windows as exploited in 2026[^kev]. Check the tag first; in C++ use `std::variant`.",
-        "**`printf(msg)` and your own logging wrappers.** OpenSSL passed a peer's name as the format string to `ERR_raise_data()`, so `CN=%s%n` crashed CMP clients (CVE-2026-63073)[^openssl]. Pass data through `\"%s\"`, and mark wrappers `format(printf, m, n)` so `-Werror=format-security` covers them[^openssf][^gccattr]."
+        "**Reading a union member as the wrong type.** OpenSSL read an `ASN1_TYPE` union member without checking its type (CVE-2026-22796)[^openssl], and CISA added type confusion bugs in V8 and Windows to its exploited list in 2026[^kev]. Check the tag first; in C++ use `std::variant`.",
+        "**`printf(msg)` and your own logging wrappers.** OpenSSL passed a peer's distinguished name as the format string to `ERR_raise_data()`, so `CN=%s%n` crashed CMP clients (CVE-2026-63073)[^openssl]. Pass data through `\"%s\"` and mark wrappers `format(printf, m, n)` so calls to them get printf's checks[^gccattr]."
       ]
     },
     {
@@ -92,7 +92,7 @@
       "items": [
         "**Sanitizers.** ASan (about 2x slower), UBSan, MSan for uninitialized reads (needs every library instrumented, even libc) and TSan for data races; ASan and TSan can't be combined[^asan][^msan][^openssf]. MSVC has `/fsanitize=address`[^msasan].",
         "**Fuzzers.** libFuzzer gets bug fixes only, as its authors moved to Centipede[^libfuzzer]; ClusterFuzzLite still runs it on pull requests and in batch jobs[^cflite].",
-        "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2` and `-Wconversion`[^openssf]; in C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers so you can move it to `std::span`[^safebuf]. On MSVC, `/sdl` turns uninitialized-variable warnings into errors[^mssdl]."
+        "**Warnings.** `-Wall`, `-Wextra`, `-Wformat=2`, `-Wconversion` and `-Werror=format-security`[^openssf]; in C++, Clang's `-Wunsafe-buffer-usage` flags buffer access through raw pointers so you can move it to `std::span`[^safebuf]. On MSVC, `/sdl` turns uninitialized-variable warnings into errors[^mssdl]."
       ]
     },
     {
@@ -102,7 +102,7 @@
       "navTitle": "What changed",
       "items": [
         "**GCC 16 (30 April) zero-initializes locals under `-std=c++26`** and now defaults to `-std=gnu++20`[^gcc16][^gccopt].",
-        "**Clang 23 (26 August) added `-Wlifetime-safety`,** which detects use after free within a function. Add it to CI[^clang23].",
+        "**Clang 23 added `-Wlifetime-safety`,** which detects use after free within a function. Add it to CI[^clang23].",
         "**OpenSSL published 63 CVEs in 2026, against 6 in 2025;** all three High ones are memory-safety bugs[^openssl]. 3.0 reached end of life on 7 September; 3.5 is supported until April 2030[^openssleol].",
         "**CISA added an exploited Brotli overflow on 27 October.** Update every copy, vendored ones too, to 1.0.10, 1.1.1 or 1.2.1[^cvebrotli][^kev]."
       ]
@@ -114,7 +114,7 @@
       "items": [
         "**Waiting for C++26.** Its library hardening standardizes checks the three major libraries already ship[^p3471], and `-ftrivial-auto-var-init=zero` initializes locals today[^openssf].",
         "**Rewriting stable code at once.** Vulnerabilities decay as code ages[^gsource]: harden old code and rewrite the parsers that take outside data.",
-        "**Valgrind in CI.** Sanitizers run 2x to 4x slower, not 20x to 50x[^openssf]."
+        "**Valgrind in CI.** Sanitizers find similar bugs at a 2x to 4x slowdown, against up to 20x to 50x[^openssf]."
       ]
     },
     {
@@ -147,7 +147,7 @@
           "items": [
             "Roll out hardening as Google did: tests first, then pre-production, then production over months[^gretro].",
             "Replace `[0]` and `[1]` trailing arrays with `[]`, then add `-fstrict-flex-arrays=3`[^openssf].",
-            "Fuzz network-facing and crypto code first[^cisabad]; publish a date after which new code is memory-safe[^cisaroad]."
+            "Fuzz first the code CISA calls priority, network-facing and crypto[^cisabad]; publish a date after which new code is memory-safe[^cisaroad]."
           ]
         },
         {
@@ -355,7 +355,7 @@
       "id": "clang23",
       "title": "Clang 23.1.0 Release Notes",
       "publisher": "LLVM",
-      "date": "26 Aug 2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://releases.llvm.org/23.1.0/tools/clang/docs/ReleaseNotes.html"
     },
     {

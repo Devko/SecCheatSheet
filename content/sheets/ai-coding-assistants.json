@@ -98,7 +98,7 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Copilot offers EU data residency** on Enterprise Cloud with data residency since April, off by default and at 10% more AI credits[^ghresidency].",
+        "**Copilot offers EU data residency** since April[^ghresnew], on Enterprise Cloud with data residency, off by default and at 10% more AI credits[^ghresidency].",
         "**GitHub can require local sandboxing** for Copilot, generally available since 7 October, with policies developers can't weaken[^ghsandbox].",
         "**Copilot's approval can count toward required approvals** since 1 September, if admins allow it[^ghcrapprove]. Keep it off for agents' pull requests.",
         "**Claude Code now starts in auto mode**, where a classifier reviews actions; `permissions.disableAutoMode` turns it off[^ccmodes]."
@@ -324,6 +324,13 @@
       "publisher": "Postmark",
       "date": "25 Sep 2025",
       "url": "https://postmarkapp.com/blog/information-regarding-malicious-postmark-mcp-package"
+    },
+    {
+      "id": "ghresnew",
+      "title": "Data residency (US + EU) and FedRAMP-authorized models now available in Copilot",
+      "publisher": "GitHub Changelog",
+      "date": "13 Apr 2026",
+      "url": "https://github.blog/changelog/2026-04-13-copilot-data-residency-in-us-eu-and-fedramp-compliance-now-available/"
     },
     {
       "id": "ghresidency",
