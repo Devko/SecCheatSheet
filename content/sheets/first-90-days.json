@@ -1,14 +1,14 @@
 {
   "slug": "first-90-days",
   "topic": "First 90 days as head of security",
-  "status": "draft",
+  "status": "published",
   "order": 69,
   "capability": "leadership/first-90-days",
   "title": "First 90 days as head of security: what do you check, fix and decide?",
   "short": "Listen and fix five basics in month one, measure in month two, and get a strategy and roadmap approved by day 90.",
   "answer": "In your first 30 days, find out who decides, which laws and promises bind you and whom to call, and fix five basics that need no strategy. Build the first risk register and a light maturity assessment in month two, and bring a strategy draft, operating model and first roadmap to management for approval by day 90.",
   "audience": "New heads of security, CISOs and information security officers (ISBs), IT leads who take over security, and the managing directors they report to",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -74,9 +74,9 @@
       "title": "Five fixes for month one that need no strategy",
       "navTitle": "Quick fixes",
       "items": [
-        "**Phishing-resistant MFA for every admin.** Register security keys or passkeys, then require the Phishing-resistant MFA strength in Conditional Access (Entra ID P1 or Business Premium)[^ca]. Microsoft lists 14 roles as a minimum and warns that enforcing before registration can lock you out[^caadmin]. See the passkeys and MFA sheet.",
+        "**Phishing-resistant MFA for every admin.** Register security keys or passkeys, then require the Phishing-resistant MFA strength in Conditional Access (Entra ID P1 or Business Premium)[^ca] for at least Microsoft's 14 roles. Exclude break-glass accounts and start in report-only, or you can lock yourself out[^caadmin]. See the passkeys and MFA sheet.",
         "**One backup copy admins can't delete.** Give backups their own admin accounts and require MFA to change or delete them, as the NCSC advises[^ncscprem]. Then time one restore, as the ransomware sheet describes.",
-        "**No exploited flaw on an edge device.** Exploits were the most common way into Mandiant's 2025 intrusions, at 32%, for a sixth year[^mtrends]. Patch exploited firewall and VPN flaws within the patching sheet's 72 hours.",
+        "**No exploited flaw on an edge device.** Exploits opened 32% of Mandiant's 2025 intrusions[^mtrends]. Patch exploited firewall and VPN flaws in 72 hours, then run the edge devices sheet's compromise check.",
         "**Logging that is on.** Auditing isn't on by default in Microsoft 365 Business plans; check `Get-AdminAuditLogConfig`[^auditon]. Without logs you may have to assume and disclose a worst-case data theft[^mtrends]. See the logging sheet.",
         "**A call chain that works at 3 a.m.** Name who is on call, who may shut systems down and who reports, each with a deputy, on paper. The BSI asks how the 24-hour deadline holds at night and on weekends[^bsicurr]. See the incident response sheet."
       ]
@@ -88,9 +88,9 @@
       "navTitle": "BSIG duties",
       "items": [
         "**Registration.** It's due within three months of falling in scope[^bsig], and the BSI says the deadline has passed[^bsinis2]. If you missed it, register in the BSI portal now with an ELSTER organization certificate from Mein Unternehmenskonto[^bsinis2].",
-        "**Current details.** The registration holds email, phone numbers and public IP ranges; report changes within two weeks[^bsig]. Urgent BSI warnings may come at night[^bsimelde], so route them to someone on call.",
-        "**Your own portal access.** Each user needs their own ELSTER certificate, activated by a letter that usually takes five working days or more. The BSI advises at least two owners; if the only one left, ask portal support[^bsiportalfaq].",
-        "**The reporting chain.** Any employee given portal access may report, and a provider can be authorized to report for you, though responsibility stays with you[^bsimelde]. The 24 hours start when an employee learns of the incident during working hours[^bsimelde]; the EU security laws sheet has the clocks.",
+        "**Current details.** The registration holds email, phone numbers and public IP ranges; report changes within two weeks[^bsig]. Use a role mailbox the on-call person sees, since urgent BSI warnings may come at night[^bsimelde].",
+        "**Your own portal access.** Each user needs their own ELSTER certificate, activated by a letter that usually takes five working days or more. The BSI advises at least two owners; if the only one leaves, ask portal support[^bsiportalfaq].",
+        "**The reporting chain.** Any employee given portal access may report, and a provider can be authorized to report for you, though responsibility stays with you[^bsimelde]. The BSI starts the 24 hours when an employee learns of the incident during working hours[^bsimelde]; the EU security laws sheet has the clocks.",
         "**Management training.** The managing directors must attend regularly[^bsig]; training only the IT lead or ISB doesn't replace it[^bsicurr]. Record provider, participants and roles, date, duration and content[^bsihand]."
       ]
     },
@@ -102,11 +102,11 @@
       "items": [
         {
           "title": "Days 31 to 45: the first risk register rows.",
-          "text": "Write 15 to 30 risks with business owners and reconfirm or expire inherited acceptances; see the risk register sheet."
+          "text": "Start from the asset list and the internet-facing systems the attack surface sheet finds. Write 20 to 30 risks with business owners, a first cut of the risk register sheet's 20 to 50, and reconfirm or expire inherited acceptances."
         },
         {
           "title": "Days 46 to 60: a light maturity assessment.",
-          "text": "Run the maturity sheet's assessment in three weeks: scope it to the crown jewels and sample one piece of evidence per outcome."
+          "text": "Compress the maturity sheet's five-week assessment into two: scope it to the crown jewels and sample one piece of evidence per outcome."
         },
         {
           "title": "Days 61 to 75: strategy draft and operating model.",
@@ -162,7 +162,7 @@
       "span": "full",
       "items": [
         "**German NIS2 duties apply.** By 30 September 2026, 20,141 entities had registered with the BSI under NIS2[^bsizahlen]. Check that yours is one.",
-        "**The BSI published a model management training.** Its curriculum of 28 October 2026 lists the decisions to take, ideally within 2 to 6 weeks[^bsicurr].",
+        "**The BSI published a model management training.** Its 28 October 2026 curriculum lists decisions to take ideally 2 to 6 weeks later[^bsicurr].",
         "**Voice phishing became the second way in.** It opened 11% of Mandiant's 2025 intrusions, after exploits[^mtrends]. Check how the help desk verifies callers before an MFA reset; see the security awareness sheet."
       ]
     },
@@ -178,7 +178,7 @@
           "items": [
             "As IT lead or part-time ISB, start with the managing director and the IT provider.",
             "Have the provider show the five basics on screen and close the gaps in month one.",
-            "In Germany, use the maturity sheet's CyberRisikoCheck as the light assessment."
+            "Under 50 staff in Germany, make the maturity sheet's CyberRisikoCheck the light assessment."
           ]
         },
         {
@@ -192,7 +192,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "In week two, map each legal entity to its laws and supervisors. Critical facilities register under the KRITIS umbrella act[^bsig].",
+            "In week two, map each legal entity to its laws and supervisors. Critical facilities register under the KRITIS umbrella act once its regulation applies[^bsig].",
             "Read the last supervisory and internal audit findings before you set priorities.",
             "Each entity's management approves its own part."
           ]
@@ -203,6 +203,11 @@
   "changes": [
     {
       "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which added break-glass exclusions and report-only mode to the admin MFA fix, a compromise check after edge patches, the correct BSIG registration sections and numbers that match the risk register and maturity sheets."
+    },
+    {
+      "date": "2026-11-05",
       "version": "0.1",
       "text": "First draft, based on BSIG §§ 32, 33 and 38, the BSI's registration, reporting and portal pages, its October 2026 management training curriculum, ENISA's NIS Investments 2025 and NIS360 2026, M-Trends 2026 and Microsoft Learn."
     }
@@ -210,14 +215,14 @@
   "sources": [
     {
       "id": "bsicurr",
-      "title": "Curriculum Geschäftsleitungsschulung NIS-2",
+      "title": "Curriculum für eine Geschäftsleitungsschulung nach NIS-2",
       "publisher": "BSI",
       "date": "28 Oct 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
     },
     {
       "id": "bsihand",
-      "title": "Handreichung Geschäftsleitungsschulung, v1.0",
+      "title": "Schulung für Geschäftsleitungen (Handreichung), version 1.0",
       "publisher": "BSI",
       "date": "17 Apr 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
@@ -273,9 +278,9 @@
     },
     {
       "id": "enisatig",
-      "title": "NIS2 Implementation Guidance",
+      "title": "NIS2 technical implementation guidance, v1.0",
       "publisher": "ENISA",
-      "date": "Jun 2025",
+      "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/sites/default/files/2025-06/ENISA_Technical_implementation_guidance_on_cybersecurity_risk_management_measures_version_1.0.pdf"
     },
     {
