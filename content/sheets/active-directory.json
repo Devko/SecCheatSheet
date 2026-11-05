@@ -71,11 +71,10 @@
     {
       "type": "list",
       "id": "adcs",
-      "title": "Certificate Services (AD CS)",
+      "title": "Certificate Services (ESC1 to ESC17)",
       "navTitle": "AD CS",
       "items": [
-        "**Know the classes.** SpecterOps named ESC1 to ESC8[^certified]; Certipy lists fixes up to ESC17[^certipy].",
-        "**Templates (ESC1 to ESC4).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
+        "**Templates (ESC1 to ESC4, named by SpecterOps[^certified]).** Turn off **Supply in the request** or require approval, remove write rights for broad groups and unpublish unused templates[^mdicert].",
         "**CA flags (ESC6, ESC11, ESC15, ESC16).** Clear `EDITF_ATTRIBUTESUBJECTALTNAME2`, set `IF_ENFORCEENCRYPTICERTREQUEST`, patch CVE-2024-49019[^mdicert] and keep the SID extension out of `DisableExtensionList`[^certipy].",
         "**Web enrollment (ESC8).** Require EPA and HTTPS[^kb5005413], or remove the role[^certipy].",
         "**Log it.** Turn on CA auditing, off by default, and alert on events 4886, 4887, 4899 and 4900[^asdad]."
@@ -111,9 +110,9 @@
       "navTitle": "Directory hygiene",
       "items": [
         "**Take DCSync rights from non-admins.** Defender for Identity lists them[^mdiacct]; review the remaining holders every six months[^asdad].",
-        "**Check who can change the admins:** non-admin rights on AdminSDHolder, WriteDACL on sensitive groups[^mdiacct] and write rights for Domain Computers[^asdad].",
+        "**Check who can change the admins.** Remove non-admin rights on AdminSDHolder and sensitive groups[^mdiacct]. Domain Computers need write rights nowhere[^asdad].",
         "**Clear risky attributes:** passwords in descriptions, **Password not required** and **Do not require Kerberos preauthentication**[^mdiacct].",
-        "**Disable accounts idle for 90 days** (`Search-ADAccount -AccountInactive`) and delete them weeks later[^mdiacct], within your retention rules[^bsiapp22].",
+        "**Disable accounts idle for 90 days** and delete them weeks later[^mdiacct], within your retention rules[^bsiapp22].",
         "**Guard DC backups like DCs.** They contain every password hash[^asdad]. The ransomware sheet covers forest recovery."
       ]
     },
@@ -135,7 +134,7 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**DCs stopped defaulting to RC4.** April 2026 updates assume AES where no encryption type is set, and July removed the rollback. KDCSVC event 205 flags a domain-wide override[^rc4kb].",
+        "**DCs stopped defaulting to RC4** in April 2026, with no rollback since July. KDCSVC event 205 flags a domain-wide override[^rc4kb].",
         "**Connect Sync tenants are moving to Cloud Sync.** Microsoft notifies each tenant of its window from July 2026, simple setups first[^entranew].",
         "**Synced users can become cloud users.** Since January 2026 you can move a user's source of authority to Entra ID[^entranew].",
         "**Defender for Identity reached CA and Entra Connect servers,** with v3 sensor support since September 2026 and ESC1, ESC8 and ESC11 alerts since October[^mdinew]."
@@ -158,7 +157,7 @@
       "navTitle": "Mistakes",
       "items": [
         "**Re-enabling RC4 domain-wide.** A `DefaultDomainSupportedEncTypes` of 0x24 leaves every account vulnerable; allow RC4 per service[^rc4kb].",
-        "**Fixing a template, keeping its certificates.** They stay valid until they expire or are revoked[^asdad]. Revoke those whose requester differs from the subject.",
+        "**Fixing a template, keeping its certificates.** They stay valid until they expire or are revoked[^asdad]; revoke those issued to someone else.",
         "**Running the Seamless SSO rollover twice.** A second run in one forest breaks Seamless SSO until users' tickets expire[^ssofaq]."
       ]
     },
@@ -262,7 +261,7 @@
     },
     {
       "id": "krbtgt",
-      "title": "AD Forest Recovery: Reset the krbtgt password",
+      "title": "Reset the krbtgt password",
       "publisher": "Microsoft Learn",
       "date": "21 May 2025",
       "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/forest-recovery-guide/ad-forest-recovery-reset-the-krbtgt-password"
@@ -311,14 +310,14 @@
     },
     {
       "id": "connectprereq",
-      "title": "Microsoft Entra Connect: Prerequisites and hardware",
+      "title": "Entra Connect prerequisites",
       "publisher": "Microsoft Learn",
       "date": "16 Jan 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-install-prerequisites"
     },
     {
       "id": "cloudsync",
-      "title": "Prerequisites for Microsoft Entra Cloud Sync",
+      "title": "Cloud Sync prerequisites",
       "publisher": "Microsoft Learn",
       "date": "22 Oct 2026",
       "url": "https://learn.microsoft.com/en-us/entra/identity/hybrid/cloud-sync/how-to-prerequisites"
@@ -346,7 +345,7 @@
     },
     {
       "id": "pingcastle",
-      "title": "PingCastle README: License",
+      "title": "PingCastle license",
       "publisher": "Netwrix on GitHub",
       "date": "checked 5 Nov 2026",
       "url": "https://github.com/netwrix/pingcastle"
@@ -360,14 +359,14 @@
     },
     {
       "id": "pkdocs",
-      "title": "Purple Knight Community documentation",
+      "title": "Purple Knight docs",
       "publisher": "Semperis",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.purple-knight.com/community/welcome.htm"
     },
     {
       "id": "bhce",
-      "title": "BloodHound Community Edition repository and license",
+      "title": "BloodHound CE license",
       "publisher": "SpecterOps on GitHub",
       "date": "checked 5 Nov 2026",
       "url": "https://github.com/SpecterOps/BloodHound"

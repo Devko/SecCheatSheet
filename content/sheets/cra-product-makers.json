@@ -1,0 +1,365 @@
+{
+  "slug": "cra-product-makers",
+  "topic": "CRA for product makers",
+  "status": "draft",
+  "order": 68,
+  "capability": "software/cra",
+  "title": "Cyber Resilience Act: can you still sell your products in the EU after 11 December 2027?",
+  "short": "Report exploited flaws within 24 hours now, and give every product a risk assessment, SBOM, support period and CE marking by 11 December 2027.",
+  "answer": "Be ready today to report an actively exploited vulnerability or severe incident in any product on the EU market within 24 hours, and have every product classified, with its support period, risk assessment, SBOM and technical documentation done, well before 11 December 2027. From that date only products with an EU declaration of conformity and the CE marking may be placed on the market, so book any notified body you need now.",
+  "audience": "Companies that make, import or distribute hardware or software sold in the EU, and open-source stewards",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "intro": "This is guidance, not legal advice.",
+      "items": [
+        {
+          "title": "Make sure you can report within 24 hours.",
+          "text": "Reporting applies since 11 September 2026, also to products placed on the market before December 2027 and after their support ends[^guide]. Name an owner and a deputy, give both an EU Login account with MFA, and decide which CSIRT you report to[^srpfaq]."
+        },
+        {
+          "title": "Classify every product by its core functionality.",
+          "text": "Check it against the category descriptions in Implementing Regulation (EU) 2025/2392[^ir2392]. Default products may always self-assess, important and critical ones may need a notified body[^guide]."
+        },
+        {
+          "title": "Set a support period for each product.",
+          "text": "Match the time it is expected to be in use, at least 5 years unless use is shorter[^cra]. The Commission says 5 years is not a default[^guide]. Show the end month and year at the point of sale[^cra]."
+        },
+        {
+          "title": "Write the risk assessment before anything else.",
+          "text": "It decides which Annex I requirements apply and justifies the ones that don't[^cra]. Cover planned features too: an update whose risks the assessment already covers is not a substantial modification[^guide]."
+        },
+        {
+          "title": "Run vulnerability handling as a process.",
+          "text": "An SBOM per release, a disclosure policy and contact, and free security updates, separate from feature updates where feasible[^cra]. The supply chain and secure development sheets show how."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "scope",
+      "title": "Are you in scope, and in which role?",
+      "navTitle": "Scope and roles",
+      "items": [
+        {
+          "title": "Does it connect to a device or network?",
+          "text": "Software and hardware with a direct or indirect data connection are in scope, with their remote data processing[^cra]. Web apps used only in a browser, websites and SaaS are not products, unless a product needs them to work[^guide]."
+        },
+        {
+          "title": "Is it excluded?",
+          "text": "Medical and in vitro diagnostic devices, motor vehicles, certified aviation products, marine equipment, identical spare parts and products made only for national security or defense are out[^cra]."
+        },
+        {
+          "title": "Do you supply it commercially?",
+          "text": "Charging for it, monetizing other services through it, charging for support beyond cost or requiring personal data for other purposes all count, even if the product is free[^cra]. Open source you don't monetize is not placed on the market[^cra]."
+        },
+        {
+          "title": "Are you an open-source steward?",
+          "text": "A foundation or company that systematically supports open source meant for commercial use without monetizing it is a steward[^guide]. It needs a documented security policy and must cooperate with authorities[^cra]. Its reporting starts in December 2027[^srp], and it can't be fined[^cra]."
+        },
+        {
+          "title": "Which role do you have?",
+          "text": "Manufacturers sell under their own name. Importers of non-EU brands check the conformity assessment, documentation and CE marking, distributors the CE marking and documents[^cra]. Selling under your own name or substantially modifying a product makes you its manufacturer[^cra]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "classes",
+      "title": "Product classes and conformity assessment",
+      "navTitle": "Product classes",
+      "items": [
+        "**Default.** Everything not listed in Annexes III and IV. Self-assessment (internal control, module A) is always allowed[^guide].",
+        "**Important, class I.** 19 categories, among them identity and access management, browsers, password managers, antivirus, VPNs, SIEM, operating systems, routers and smart home security products. Self-assess only by applying a cited harmonised standard, common specification or EU certificate at level substantial in full; otherwise use a notified body (modules B and C, or H)[^cra].",
+        "**Important, class II.** Hypervisors and container runtimes, firewalls, intrusion detection and prevention, and tamper-resistant microprocessors and microcontrollers. Always third party[^cra].",
+        "**Critical.** Hardware security boxes, smart meter gateways and smartcards or secure elements: EU certification where a delegated act requires it, otherwise as class II[^cra].",
+        "**The product as a whole counts.** Integrating an important component doesn't make your product important[^cra]. Open-source products in Annex III may self-assess if their technical documentation is public[^cra].",
+        "**Standards aren't a shortcut yet.** Only standards cited in the Official Journal give presumption of conformity[^cra]. The Commission requested 41[^ecstd]; ETSI's 17 product-specific drafts were in approval until mid-November 2026[^etsi]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "annex",
+      "title": "Essential requirements in practice (Annex I, Part I)",
+      "navTitle": "Essential requirements",
+      "items": [
+        "**No known exploitable vulnerabilities at release.** A flaw is known once it's in the EU vulnerability database or another prominent one, or reported to you privately. Weigh severity and exploitability before you ship[^guide].",
+        "**Secure by default, with a reset.** Control access with authentication and access management, encrypt stored and transmitted data with state-of-the-art mechanisms and process only the data you need[^cra].",
+        "**Automatic security updates on by default.** With a clear opt-out, update notifications and an option to postpone, and instructions for turning them off[^cra].",
+        "**Small attack surface, logs and deletion.** Limit external interfaces, use exploit mitigations, record security-relevant activity with a user opt-out and let users delete all data and settings[^cra].",
+        "**One assessment for a product family.** Variants that share architecture, security design and risks can share one risk assessment, technical documentation and declaration[^guide]."
+      ]
+    },
+    {
+      "type": "timelines",
+      "id": "reporting",
+      "title": "Reporting clocks since 11 September 2026",
+      "navTitle": "Reporting clocks",
+      "intro": "Clocks run from awareness: reasonable certainty after a prompt first assessment[^guide]. Report once, through ENISA's platform, to the coordinator CSIRT of your main EU establishment; in Germany, CERT-Bund at the BSI[^cra][^bsisrp].",
+      "items": [
+        {
+          "name": "Actively exploited vulnerability",
+          "scope": "Reliable evidence that an attacker exploited a flaw in your product[^cra]. A public exploit, proof of concept or port scans are not enough[^bsisrp].",
+          "steps": [
+            { "at": "24 hours", "what": "Early warning, naming the Member States where it's sold" },
+            { "at": "72 hours", "what": "Notification: the exploit, fixes, user measures, sensitivity" },
+            { "at": "14 days", "what": "Final report, after a fix or mitigation is available" }
+          ]
+        },
+        {
+          "name": "Severe incident",
+          "scope": "It harms the product's ability to protect data or functions, or could get malicious code into it or users' systems[^cra]. Ransomware at the maker counts only if it can affect software, updates, signing keys or product functions[^bsisrp].",
+          "steps": [
+            { "at": "24 hours", "what": "Early warning: suspected malicious act?" },
+            { "at": "72 hours", "what": "Notification with a first assessment" },
+            { "at": "1 month", "what": "Final report, after the notification: root cause, mitigations" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "vulns",
+      "title": "Vulnerability handling (Annex I, Part II)",
+      "navTitle": "Vulnerability handling",
+      "items": [
+        "**An SBOM per release.** Machine-readable, in a common format, covering at least top-level dependencies[^cra]. BSI TR-03183-2 asks for CycloneDX 1.6 or SPDX 3.0.1 or later, with dependencies resolved through everything you ship[^tr2].",
+        "**One contact users can reach their own way.** A single point of contact not limited to automated tools[^cra], a disclosure policy and a `security.txt`, as BSI TR-03183-3 requires[^tr3].",
+        "**Free fixes, kept available.** Fix without delay and free of charge, and keep each update available for 10 years or the rest of the support period, if longer[^cra]. For software, you may fix only the latest version if upgrading costs users nothing extra[^cra].",
+        "**Publish what you fixed and tell users.** Publish advisories once a fix is out, in CSAF as the BSI recommends[^cra][^tr3]. After an exploited flaw or severe incident, inform affected users[^cra].",
+        "**Report component flaws upstream.** Send the flaw and your fix to the maintainer, for the version you use, unless they already know[^cra][^guide]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "docs",
+      "title": "Documentation, declaration, CE marking and fines",
+      "navTitle": "Documentation and CE",
+      "items": [
+        "**Technical documentation (Annex VII).** Description and architecture, vulnerability handling with SBOM and disclosure policy, risk assessment, support period rationale, standards applied, test reports and the declaration. Keep it 10 years or for the support period, if longer[^cra].",
+        "**A simplified form for micro and small firms.** The CRA provides for one, but the Commission hasn't published it yet[^cra][^ecmsme].",
+        "**EU declaration of conformity.** Use Annex V, ship it or a simplified version with its web address, and issue one declaration for all EU acts that require one[^cra].",
+        "**CE marking from 11 December 2027.** On the product, or on the packaging and declaration; for software, on the declaration or the product's website[^cra].",
+        "**Fines up to €15 million or 2.5% of turnover.** For breaching Annex I or Articles 13 and 14, and up to €10 million or 2% for most other duties. Micro and small manufacturers aren't fined for a missed 24-hour early warning[^cra]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**Reporting went live.** ENISA's platform opened on 11 September with initial capabilities[^srp]: English only, no API, and a 72-hour counter that can show reports overdue early[^srpfaq].",
+        "**The Commission clarified the gray areas.** Its guidance, approved in draft on 27 July and adopted formally once all translations exist[^guidecomm], covers scope, open source, substantial modification, support periods and reporting. It isn't binding[^guide].",
+        "**Germany names the BSI.** The Bundestag's interior committee approved the CRA implementing bill on 14 October, making the BSI market surveillance and notifying authority[^bthib].",
+        "**Radio equipment moves to the CRA.** The radio equipment cybersecurity rules of Delegated Regulation (EU) 2022/30 are repealed from 11 December 2027, as the CRA covers them[^dr339].",
+        "**One report for NIS2 and the CRA, proposed.** The Digital Omnibus would let a CRA severe incident report count for NIS2[^omnibus]. It is still in committee in Parliament[^oeil]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Waiting for harmonised standards to start.** The risk assessment, SBOM, disclosure policy and update channel don't depend on them.",
+        "**A notified body for a default product.** Self-assessment is always allowed for default products[^guide]. Pay for third-party assessment only where the class requires it.",
+        "**Reporting every vulnerable dependency.** A component flaw that isn't reachable or exploited in your product isn't reportable[^guide]. Report it upstream and fix it in the normal cycle.",
+        "**Redesigning products that already hold up.** A design from before the CRA can stay as it is if the risk assessment shows its measures are adequate[^guide].",
+        "**Registering on ENISA's platform in advance.** ENISA asks manufacturers to register only when they first need to report; with an EU Login ready, it takes a few minutes[^srpfaq]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Assuming a model on sale before 2027 is covered by the transition.** Each hardware unit placed on the market from 11 December 2027 must comply, while a software version counts as placed when first offered[^guide].",
+        "**Picking the wrong CSIRT.** ENISA may invalidate the notification and ask you to resubmit it[^srpfaq]. Decide where your main establishment is before an incident.",
+        "**Rebranding without noticing.** An importer or distributor that sells under its own name takes on all of the manufacturer's duties[^cra].",
+        "**Leaving the support period at 5 years by reflex.** Products expected to be used longer need longer support[^guide], and authorities will read your reasons in the documentation[^cra]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "List every product and version you sell in the EU, with its class and support end date.",
+            "Write a one-page reporting runbook: who reports, to which CSIRT, with which EU Login accounts.",
+            "Work through ENISA's secure by design playbook for SMEs[^enisasbd] and BSI TR-03183-1[^tr]."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Name a product security owner and ship an SBOM and advisories with every release.",
+            "For class I or II products, contact notified bodies now. Member States aim to have enough by 11 December 2026[^cra].",
+            "Write the technical documentation for one product end to end, then reuse it across the family."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Base module H on your ISO/IEC 27001 ISMS, as BSI TR-03183-H describes[^trh].",
+            "Run CRA reports in the same incident process as NIS2; the EU security laws sheet has those clocks.",
+            "Agree with importers and distributors how they pass on vulnerabilities, which they must do without undue delay[^cra]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on the CRA, Implementing Regulation (EU) 2025/2392, the Commission's draft guidance of July 2026, ENISA's reporting platform FAQ and the BSI's TR-03183 and reporting pages."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cra",
+      "title": "Regulation (EU) 2024/2847 (Cyber Resilience Act), Articles 2, 3, 7, 8, 13, 14, 19 to 24, 28, 30 to 33, 35, 64 and 71, recitals 15 and 18, Annexes I to IV and VII",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj"
+    },
+    {
+      "id": "guide",
+      "title": "Commission guidance on the application of the CRA (draft, annex to C(2026) 5252)",
+      "publisher": "European Commission",
+      "date": "27 Jul 2026",
+      "url": "https://ec.europa.eu/newsroom/dae/redirection/document/131456"
+    },
+    {
+      "id": "guidecomm",
+      "title": "Approval of the content of the draft Communication on CRA guidance, C(2026) 5252",
+      "publisher": "European Commission",
+      "date": "27 Jul 2026",
+      "url": "https://ec.europa.eu/newsroom/dae/redirection/document/131455"
+    },
+    {
+      "id": "ir2392",
+      "title": "Implementing Regulation (EU) 2025/2392 on the technical description of important and critical products",
+      "publisher": "EUR-Lex",
+      "date": "28 Nov 2025",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2025/2392/oj"
+    },
+    {
+      "id": "srp",
+      "title": "The CRA Single Reporting Platform is launched",
+      "publisher": "ENISA",
+      "date": "11 Sep 2026",
+      "url": "https://www.enisa.europa.eu/news/the-cra-single-reporting-platform-is-launched"
+    },
+    {
+      "id": "srpfaq",
+      "title": "CRA Single Reporting Platform: frequently asked questions",
+      "publisher": "ENISA",
+      "date": "updated 15 Oct 2026",
+      "url": "https://www.enisa.europa.eu/topics/product-security/single-reporting-platform-srp/frequently-asked-questions"
+    },
+    {
+      "id": "bsisrp",
+      "title": "CRA Single Reporting Platform",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Cyber_Resilience_Act/Single_Reporting_Platform-CRA/single_reporting_platform-cra_node.html"
+    },
+    {
+      "id": "tr",
+      "title": "TR-03183: Cyber Resilience Requirements for Manufacturers and Products",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Technische-Richtlinien/TR-nach-Thema-sortiert/tr03183/TR-03183_node.html"
+    },
+    {
+      "id": "tr2",
+      "title": "TR-03183-2: Software Bill of Materials, version 2.1.0",
+      "publisher": "BSI",
+      "date": "20 Aug 2025",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-2_v2_1_0.pdf"
+    },
+    {
+      "id": "tr3",
+      "title": "TR-03183-3: Vulnerability Reports and Notifications, version 1.0.0",
+      "publisher": "BSI",
+      "date": "20 Aug 2025",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-3_v1_0_0.pdf"
+    },
+    {
+      "id": "trh",
+      "title": "TR-03183-H: Conformity based on full quality assurance (Module H), version 1.1.0",
+      "publisher": "BSI",
+      "date": "30 May 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TR03183/BSI-TR-03183-H_v1_1_0.pdf"
+    },
+    {
+      "id": "ecstd",
+      "title": "Cyber Resilience Act: Standardisation",
+      "publisher": "European Commission",
+      "date": "updated 31 Jul 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/cra-standardisation"
+    },
+    {
+      "id": "etsi",
+      "title": "ETSI launches approval process for 17 European Standards supporting the Cyber Resilience Act",
+      "publisher": "ETSI",
+      "date": "13 Aug 2026",
+      "url": "https://www.etsi.org/newsroom/press-releases/etsi-launches-approval-process-for-17-european-standards-supporting-the-cyber-resilience-act/"
+    },
+    {
+      "id": "ecmsme",
+      "title": "Cyber Resilience Act: Microenterprises and SMEs",
+      "publisher": "European Commission",
+      "date": "updated 31 Jul 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/cra-msmes"
+    },
+    {
+      "id": "bthib",
+      "title": "Ausschuss billigt Gesetzentwurf zu Cyberresilienz-Verordnung (hib 822/2026)",
+      "publisher": "Deutscher Bundestag",
+      "date": "14 Oct 2026",
+      "url": "https://www.bundestag.de/1224738"
+    },
+    {
+      "id": "dr339",
+      "title": "Delegated Regulation (EU) 2026/339 repealing Delegated Regulation (EU) 2022/30",
+      "publisher": "EUR-Lex",
+      "date": "29 Apr 2026",
+      "url": "https://eur-lex.europa.eu/eli/reg_del/2026/339/oj"
+    },
+    {
+      "id": "omnibus",
+      "title": "Digital Omnibus proposal, COM(2025) 837, Article 3 (NIS2 Article 23(12))",
+      "publisher": "EUR-Lex",
+      "date": "19 Nov 2025",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52025PC0837"
+    },
+    {
+      "id": "oeil",
+      "title": "2025/0360(COD): Simplification of the digital legislative framework (Digital Omnibus)",
+      "publisher": "European Parliament Legislative Observatory",
+      "date": "checked 5 Nov 2026",
+      "url": "https://oeil.europarl.europa.eu/oeil/en/procedure-file?reference=2025/0360(COD)"
+    },
+    {
+      "id": "enisasbd",
+      "title": "Secure by Design and Default Playbook",
+      "publisher": "ENISA",
+      "date": "30 Jul 2026",
+      "url": "https://www.enisa.europa.eu/publications/enisa-secure-by-design-and-default-playbook"
+    }
+  ]
+}

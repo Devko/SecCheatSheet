@@ -6,7 +6,7 @@
   "capability": "leadership/audits",
   "title": "Audit readiness: could you pass an audit without a fire drill?",
   "short": "Map every control to dated evidence and an owner, and sample your own controls each quarter so auditors find nothing new.",
-  "answer": "This quarter, build one evidence register that ties each control to its evidence, owner, location and refresh date, and name one coordinator for every auditor request. Then sample your own controls each quarter and close every finding with a root cause, an owner and a date, as ISO certifiers, TISAX, the BSI and DORA all expect[^ias][^tph][^bsioh][^rts].",
+  "answer": "This quarter, build one evidence register that ties each control to its evidence, owner, location and refresh date, and name one coordinator for every auditor request. Then sample your own controls each quarter and close every finding with a root cause, an owner and a date: ISO certifiers, TISAX, the BSI and DORA all ask for causes and deadlines[^ias][^tph][^bsioh][^rts].",
   "audience": "Security, ISMS and IT leads preparing for ISO 27001, TISAX, BSI, DORA, customer and data protection audits",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
@@ -129,8 +129,8 @@
               "what": "Proof and plan to the BSI"
             },
             {
-              "at": "Quarterly",
-              "what": "Usually, updated deficiency list"
+              "at": "Usually quarterly",
+              "what": "Updated deficiency list"
             },
             {
               "at": "3 years",
@@ -161,7 +161,7 @@
         "**ISO 27001.** Majors must be closed before certification, minors need an accepted plan, and a major not verified within 6 months repeats stage 2[^ias].",
         "**KRITIS.** Fix serious deficiencies at once, minor ones promptly or later with risk treatment[^gain]. The BSI wants each cause analyzed and can order fixes under penalty[^bsioh].",
         "**TISAX.** A minor non-conformity with an approved plan gets temporary labels, a major none. Actions over 3 months need a reason, over 6 months proof they can't be faster, and none may exceed 9 months[^tph].",
-        "**DORA TLPT.** Within 8 weeks of the authority accepting the test reports, send remediation plans with measures, dates, root causes and owners[^rts].",
+        "**DORA TLPT.** Within 8 weeks of the authority confirming the test reports are complete, send remediation plans with measures, dates, root causes and owners[^rts].",
         "**Old findings return.** The next KRITIS auditor gets your previous list unchanged, with status; open items carry over[^gain]."
       ]
     },
