@@ -24,7 +24,7 @@
         },
         {
           "title": "Tie each measure to a way in.",
-          "text": "Exploitation is now the most common initial access vector in Verizon's data, at 31%[^dbir]. Pick a few measures for the paths that hurt you; NIST says that initially, less is often more[^sp80055v1]."
+          "text": "Exploitation now opens 31% of breaches with a known vector in Verizon's data, more than any other[^dbir]. Pick a few measures for the paths that hurt you; NIST says that initially, less is often more[^sp80055v1]."
         },
         {
           "title": "Count against the whole inventory.",
@@ -32,7 +32,7 @@
         },
         {
           "title": "Agree targets and tolerances with management.",
-          "text": "The UK Cyber Governance Code asks boards for reporting at least quarterly, on metrics with tolerances based on the agreed risk appetite[^cgcop]."
+          "text": "The UK Cyber Governance Code asks boards to require reporting at least quarterly and agree a tolerance for each metric, based on the agreed risk appetite[^cgcop]."
         },
         {
           "title": "End every report with a decision.",
@@ -52,7 +52,7 @@
         },
         {
           "title": "What would show each path closing?",
-          "text": "Write each measure's formula, target, data source, owner and frequency, as NIST's template does[^sp80055v1]. Prefer ages, times and shares to counts."
+          "text": "Write each measure's formula, target, data source, owner and frequency, as NIST's suggested fields do[^sp80055v1]. Prefer ages, times and shares to counts."
         },
         {
           "title": "What is it counted against?",
@@ -64,7 +64,7 @@
         },
         {
           "title": "Is each measure still earning its place?",
-          "text": "Review the set at planned intervals, say yearly, and after significant incidents, as Regulation 2024/2690 requires of digital providers[^nis2ir]. Drop any measure that changed no decision in a year."
+          "text": "Review the set at planned intervals and after significant incidents or changes, as Regulation 2024/2690 requires of digital providers[^nis2ir]. Drop any measure that changed no decision in a year."
         }
       ]
     },
@@ -77,7 +77,7 @@
       "intro": "Report each as a trend against its target and coverage. The linked sheets define the measures.",
       "items": [
         "**Internet exposure.** High-risk services open to the internet without an expiring exception, and assets others found first, from the attack surface sheet.",
-        "**Age of exploited vulnerabilities.** Days the oldest known-exploited flaw has been open, and first-tier deadlines met, from the patching sheet. Verizon found only 26% of KEV flaws fully fixed in 2025, after a median of 43 days[^dbir].",
+        "**Age of exploited vulnerabilities.** Days the oldest known-exploited flaw has been open, and first-tier deadlines met, from the patching sheet. Only 26% of KEV flaws in Verizon's data were fully fixed in 2025, and full fixes took a median of 43 days[^dbir].",
         "**Phishing-resistant MFA coverage.** Accounts, admins first, that Conditional Access holds to phishing-resistant methods. Entra's passwordless count includes phone sign-in[^entraact], which isn't phishing-resistant[^authstr].",
         "**Standing privileged accounts.** Tier 0 rights held permanently, not on activation, against the privileged access sheet's limits. Microsoft ranks tiered administration among the best safeguards[^mddr].",
         "**EDR coverage.** Devices and servers with EDR and tamper protection, out of all discovered; Defender's inventory lists devices not onboarded[^mdedisc]. Count hypervisors apart: virtualization has traditionally sat outside EDR's scope[^mtrends].",
@@ -92,8 +92,8 @@
       "items": [
         "**Counts of blocked attacks.** They follow attacker volume and filter settings, not your risk.",
         "**Phishing click rates as a target.** A poorly designed test can show a better rate while saying less, NIST notes[^sp80055v1]. Report reports instead.",
-        "**Color-only heat maps and maturity levels.** NIST doesn't count color scales or rankings as measures[^sp80055v1]. Put a number behind each color.",
-        "**Live dashboards for the board.** It meets quarterly and needs trends and decisions."
+        "**Colors and maturity levels alone.** NIST doesn't count color scales or rankings as measures[^sp80055v1]. Put a number behind each.",
+        "**Live dashboards for the board.** It needs a quarterly page of trends and decisions, not live data."
       ]
     },
     {
@@ -128,9 +128,9 @@
       "navTitle": "Management duties",
       "items": [
         "**NIS2.** Management approves the measures, oversees them and can be held liable; the measures include assessing their effectiveness[^nis2].",
-        "**Germany.** Under BSIG § 38, management implements and oversees the § 30 measures, including effectiveness checks, and is liable to the entity[^bsig]. The BSI's model answer adds KPIs, KRIs and a yearly audit[^bsihand].",
+        "**Germany.** Under BSIG § 38, management implements and oversees the § 30 measures, including effectiveness checks, and is liable to the entity[^bsig]. The BSI's example answer adds KPIs, KRIs and a yearly audit[^bsihand].",
         "**Digital providers.** Indicators for the security policy, one person reporting directly to management, and measurement results reported to it[^nis2ir].",
-        "**DORA.** The management body approves the ICT risk framework, sets the risk tolerance and hears of major incidents; the strategy sets KPIs and key risk metrics[^dora]. BSIG § 38 doesn't apply[^bsig]."
+        "**DORA.** The management body approves the ICT risk framework and risk tolerance; the strategy sets KPIs and key risk metrics. It hears of major incidents and yearly lessons learned[^dora]. BSIG § 38 doesn't apply[^bsig]."
       ]
     },
     {
@@ -151,7 +151,7 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The BSI expects a regular report.** Its October 2026 curriculum lists a resolution on a regular cyber risk report among the decisions to take, ideally within 2 to 6 weeks of management's first training[^bsicurr].",
+        "**The BSI recommends a regular report.** Its October 2026 curriculum lists a resolution on a regular cyber risk report among the decisions to take, ideally within 2 to 6 weeks of management's first training[^bsicurr].",
         "**Voice phishing overtook email.** It opened 11% of Mandiant's 2025 intrusions, after exploits; email phishing fell to 6%[^mtrends]. Measure how the help desk handles reset calls.",
         "**Microsoft discounted alert counts.** Its 2026 report says they no longer show SOC maturity; measure detection fidelity and time to contain[^mddr]."
       ]
@@ -166,7 +166,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Ask your IT provider for four numbers a quarter: admins on phishing-resistant MFA, EDR coverage, oldest missing critical patch, last restore time.",
+            "Ask your IT provider for four numbers a quarter: admins on phishing-resistant MFA, EDR coverage, oldest open exploited flaw, last restore time.",
             "Give the managing directors one page and file their decisions with the training record."
           ]
         },
@@ -240,7 +240,7 @@
     },
     {
       "id": "nis2ir",
-      "title": "Commission Implementing Regulation (EU) 2024/2690, Annex points 1, 2 and 7",
+      "title": "Commission Implementing Regulation (EU) 2024/2690, Article 1 and Annex points 1, 2 and 7",
       "publisher": "EUR-Lex",
       "date": "2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"

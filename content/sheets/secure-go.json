@@ -75,12 +75,12 @@
       "navTitle": "Traps",
       "span": "full",
       "items": [
-        "**`filepath.Join(dir, name)` and `http.Dir`.** `filepath.Join(\"a/b\", \"../../../xyz\")` returns `../xyz`[^filepath], and `http.Dir` follows symlinks out of its tree and serves dotfiles such as `.git`[^nethttp]. Use `os.OpenInRoot`, `os.Root` and `http.FileServerFS(root.FS())`[^ospkg], and patch: `os.Root` escapes were fixed in March, July and October[^osvulns].",
+        "**`filepath.Join(dir, name)` and `http.Dir`.** `filepath.Join(\"a/b\", \"../../../xyz\")` returns `../xyz`[^filepath], and `http.Dir` follows symlinks out of its tree and serves dotfiles such as `.git`[^nethttp]. Use `os.OpenInRoot`, `os.Root` and `http.FileServerFS(root.FS())`[^ospkg] on a tree without dotfiles, and patch: `os.Root` escapes were fixed in March, April, July and October[^osvulns][^rootchmod].",
         "**`zip.NewReader` and `tar.NewReader`.** Both accept entry names like `../x` unless `GODEBUG` sets `zipinsecurepath=0` or `tarinsecurepath=0`[^godebug]. Create each entry through an `os.Root` and copy with `io.CopyN` to cap its size, as gosec G110 asks[^gosec].",
         "**`text/template`, `template.HTML(s)` and data inside `<script>`.** Only `html/template` escapes, and it trusts template authors and `template.HTML` values[^htmltpl]. Go fixed seven `html/template` escaping bugs in 2026, five in script contexts[^tplvulns]. Pass data in `data-` attributes, and never parse templates from user input. Cross-site scripting ranks 1st in the CWE Top 25[^cwe].",
         "**`db.Query(fmt.Sprintf(...))` and ORM string methods.** Go's docs call SQL built with `fmt` a security risk: pass values as arguments with your driver's placeholder, such as `?` or `$1`[^gosql]. GORM doesn't escape `Order`, `Select`, `Table`, `Group` or `Raw`, and `db.First(&u, id)` with a string `id` is injectable[^gorm]. Map sort columns from a fixed list.",
-        "**`exec.Command(\"sh\", \"-c\", cmd)`.** `os/exec` deliberately runs no shell[^exec], and `sh -c` brings back OS command injection, 9th in the CWE Top 25[^cwe]. Pass each argument separately, put `--` before values that may start with `-`, and don't clear `exec.ErrDot`, which stops `Command` from running a program in the current directory[^exec].",
-        "**`http.Get(r.FormValue(\"url\"))`.** The default client has no timeout and follows up to 10 redirects[^nethttp]. Allowlist hosts, then reject loopback, private and link-local addresses in `net.Dialer.ControlContext`, which runs just before each connection is made[^net]. Server-side request forgery ranks 22nd in the CWE Top 25[^cwe].",
+        "**`exec.Command(\"sh\", \"-c\", cmd)`.** `os/exec` deliberately runs no shell[^exec], and `sh -c` brings back OS command injection, 9th in the CWE Top 25[^cwe]. Pass each argument separately, put `--` before values that may start with `-`, and don't clear `exec.ErrDot`, which stops `Command` from resolving a name to a program in the current directory[^exec].",
+        "**`http.Get(r.FormValue(\"url\"))`.** The default client has no timeout and follows up to 10 redirects[^nethttp]. Allowlist hosts, also in `CheckRedirect`, then reject loopback, private and link-local addresses in `net.Dialer.ControlContext`, which runs just before each connection is made[^net]. Server-side request forgery ranks 22nd in the CWE Top 25[^cwe].",
         "**`json.Unmarshal(body, &req)`.** The v1 decoder matches names case-insensitively, lets the later of duplicate names win and ignores unknown fields, so two services can read one request differently[^jsonv2]. On Go 1.27, use `encoding/json/v2`, which rejects duplicates and invalid UTF-8 and matches names exactly, with `json.RejectUnknownMembers(true)`[^jsonv2].",
         "**`go func() { ... }()` in a handler.** `net/http` recovers a panic in the handler itself[^nethttp], but an unrecovered panic in a goroutine it starts ends the program. Nil map writes, nil pointers, bad indexes and one-value type assertions all panic[^spec]. Use `v, ok := x.(T)` and a deferred `recover` in goroutines that handle input.",
         "**`int32(n)` and other integer conversions.** They truncate with no indication of overflow, and arithmetic overflows without a panic[^spec]. Parse with the target size, as in `strconv.ParseInt(s, 10, 32)`, and check lengths before converting them, which gosec G115 flags[^gosec]."
@@ -92,7 +92,7 @@
       "title": "Tools that catch it",
       "navTitle": "Tools",
       "items": [
-        "**govulncheck.** Source mode checks the standard library of the `go` on your `PATH`, `-mode binary` a built binary. Calls through `reflect` are invisible[^govulncheck].",
+        "**govulncheck.** Source mode checks the standard library of the `go` on your `PATH`, `-mode binary` a built binary. Calls through `reflect` are invisible, and `-json` or `-format sarif` output never fails the build[^govulncheck].",
         "**gosec.** Fix G112 (no `ReadHeaderTimeout`), G115 (integer conversion), G204, G304, G305, G402, G404 (`math/rand`) and G701 to G705 first[^gosec].",
         "**Race detector and fuzzer.** `go test -race` can use 5 to 10 times the memory and 2 to 20 times the time[^race]: run it in CI. Fuzz one target per run with `-fuzztime`[^fuzz].",
         "**Goroutine leak profile.** Go 1.27's `goroutineleak` profile reports goroutines that can never wake up[^go127]."
@@ -126,7 +126,7 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Patching the image, not the binary.** On Linux, Go checks certificates itself, without revocation checks[^emudhra]. Only binaries rebuilt with 1.27.3 or 1.26.10 reject the eMudhra intermediates. Scan what you deploy with `govulncheck -mode binary`.",
+        "**Patching the image, not the binary.** On Linux, Go checks certificates itself, without revocation checks[^emudhra]. Binaries rebuilt with 1.27.3 or 1.26.10 reject the eMudhra intermediates whatever trust store the image ships[^emudhra]. Scan what you deploy with `govulncheck -mode binary`.",
         "**Leaving the `go` line in `go.mod` behind.** Most GODEBUG defaults follow it, so a `go 1.23` module built with Go 1.27 still accepts RSA keys under 1,024 bits. Check with `go list -f '{{.DefaultGODEBUG}}'`[^godebug]."
       ]
     },
@@ -158,7 +158,7 @@
           "items": [
             "For FIPS 140-3, build with `GOFIPS140=certified`: Go Cryptographic Module v1.0.0 holds CMVP certificate #5247[^fips].",
             "Fuzz every parser continuously; OSS-Fuzz runs native Go fuzz tests[^fuzz].",
-            "Require CodeQL's `security-extended` suite, and build with `CGO_ENABLED=0` unless a reviewed package needs cgo[^go127]."
+            "Require CodeQL's `security-extended` suite, and build releases with `CGO_ENABLED=0` unless a reviewed package needs cgo; `-race` needs it[^race]."
           ]
         }
       ]
@@ -262,6 +262,13 @@
       "publisher": "Go",
       "date": "checked 5 Nov 2026",
       "url": "https://pkg.go.dev/search?q=os&m=vuln"
+    },
+    {
+      "id": "rootchmod",
+      "title": "GO-2026-4864 (CVE-2026-32282)",
+      "publisher": "Go",
+      "date": "7 Apr 2026",
+      "url": "https://pkg.go.dev/vuln/GO-2026-4864"
     },
     {
       "id": "memmodel",
