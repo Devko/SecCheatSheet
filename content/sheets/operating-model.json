@@ -77,8 +77,8 @@
       "intro": "A answers for the outcome, R does the work, C is asked before and I is told after. Keep one A per row. ENISA maps the roles requirement of 2024/2690 to ISO/IEC 27001 clause 5.3[^enisatig], so one RACI can serve both.",
       "items": [
         "**Patching.** A: head of IT. R: IT operations or the MSP. C: security, which sets deadlines from the patching sheet, and system owners for maintenance windows. I: management, about exploited flaws past deadline.",
-        "**Vulnerability management.** A: head of security. R: security scans, rates and tracks; system owners fix. C: IT operations. I: management, monthly. Record why a finding needs no fix[^ir2690].",
-        "**Access reviews.** A: each application's business owner. R: the owner's team leads, with lists from IT. C: security, for admin rights. I: internal audit. Document results and changes[^ir2690].",
+        "**Vulnerability management.** A: head of security. R: security scans, rates and tracks; system owners fix. C: IT operations. I: management, monthly. Digital providers must document why a finding needs no fix[^ir2690].",
+        "**Access reviews.** A: each application's business owner. R: the owner's team leads, with lists from IT. C: security, for admin rights. I: internal audit. Digital providers must document results and changes[^ir2690].",
         "**Incident response.** A: head of security. R: the SOC or MDR and IT operations. C: legal, data protection, communications. I: management, insurer, authorities. Stopping business processes is for the crisis team.",
         "**Supplier onboarding.** A: the business owner who wants the supplier. R: procurement, with a contract manager per contract[^iiatp]. C: security, for tier and clauses. I: IT, to grant and later remove access.",
         "**Exceptions.** A: the risk owner, at the level set in the risk register sheet. R: the requester, with the case, a compensating measure and an end date. C: security. I: management, via the open exceptions list."
@@ -92,8 +92,8 @@
       "items": [
         "**First line: whoever runs it.** The IIA's first line owns the risk and runs the controls[^iia3l]: IT operations, the MSP, application owners.",
         "**Second line: security.** It advises, monitors and challenges the first line[^iia3l]. If it also runs the firewall or EDR, have someone else check that.",
-        "**Third line: someone independent.** Internal audit, in-house or bought in. The IIA treats a 12-month gap after running a process as typically sufficient[^iia3l].",
-        "**Small companies may merge the first two.** The rules for digital providers allow duties on top of existing roles and, where size rules out an independent reviewer, other ways to keep reviews impartial[^ir2690]."
+        "**Third line: someone independent.** Internal audit, in-house or bought in. The IIA treats at least 12 months between running and assuring a process as typically enough for objectivity[^iia3l].",
+        "**Small companies may merge the first two.** The rules for digital providers allow duties on top of existing roles and, where size rules out reviewers outside the reviewed line, other ways to keep reviews impartial[^ir2690]."
       ]
     },
     {
@@ -113,9 +113,9 @@
       "title": "What to buy and what to keep",
       "navTitle": "Buy or keep",
       "items": [
-        "**Buy what is rare or round the clock.** The NCSC suggests outsourcing seldom-used functions and notes that in-house teams know the business better[^ncscsoc]. Typical buys: MDR (see the SOC and MDR sheet), pentests, a response retainer, a virtual CISO.",
+        "**Buy what is rare or round the clock.** The NCSC says a SOC can outsource seldom-used functions, though in-house staff know the business better[^ncscsoc]. Typical buys: MDR (see the SOC and MDR sheet), pentests, a response retainer, a virtual CISO.",
         "**Put a responsibility matrix in the MSP contract.** State what the MSP does and what stays with you, as the NCSC advises[^ncscmsp].",
-        "**Know which line a provider is in.** The IIA places providers in the line of whoever engages them[^iia3l]: a pentest ordered by IT isn't independent.",
+        "**Know which line a provider is in.** The IIA places providers in the line of whoever engages and directs them[^iia3l]: a pentest ordered by IT isn't independent.",
         "**Keep risk acceptance and supplier oversight.** DORA makes financial entities above micro size name a role to monitor ICT suppliers[^dora]. Give every supplier an internal owner anyway."
       ]
     },
@@ -125,9 +125,9 @@
       "title": "Decision rights and escalation",
       "navTitle": "Decisions",
       "items": [
-        "**Let delegates accept smaller risks.** 2024/2690 allows it if they have the authority and management gets adequate reports[^ir2690]. Set levels with the risk register sheet.",
+        "**Let delegates accept smaller risks.** 2024/2690 lets digital providers delegate to accountable people with the authority, if management gets adequate reports[^ir2690]. Set levels with the risk register sheet.",
         "**Pre-authorize containment.** Let on-call staff or the MDR isolate a device or disable an account without asking. Leave business shutdowns to the crisis team.",
-        "**Escalate on triggers.** The IIA expects a process to escalate quickly any risk that reaches an unacceptable level[^iiacyber]. Set triggers such as an exploited flaw past its deadline.",
+        "**Escalate on triggers.** IIA auditors must check for a process that escalates unacceptable cyber risks quickly[^iiacyber]. Set triggers such as an exploited flaw past its deadline.",
         "**Set when security must be asked.** Grundschutz++ requires defining when the security officer joins projects[^std3001]."
       ]
     },
@@ -148,9 +148,9 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**The IIA updated its Three Lines Model.** The 2026 Statement of Position adds guidance for organizations without separate assurance functions[^iia3l]. Recheck where you've merged lines.",
+        "**The IIA updated its Three Lines Model.** Its July 2026 Statement of Position adds guidance for organizations not required to keep separate assurance functions[^iia3l]. Recheck where you've merged lines.",
         "**Internal audit now checks roles.** Since 5 February 2026, cyber audits must assess roles and escalation[^iiacyber]; since 15 September 2026, supplier audits must assess who selects, manages and monitors suppliers[^iiatp].",
-        "**The BSI drew the line on delegation.** Its October 2026 curriculum on BSIG § 38 lets management delegate work, not responsibility or oversight, and lists a responsibility matrix as evidence[^bsicurr]."
+        "**The BSI spelled out delegation limits.** Its non-binding October 2026 curriculum on BSIG § 38 says management may delegate operational work, not responsibility or oversight, and suggests a responsibility matrix[^bsicurr]."
       ]
     },
     {
@@ -171,7 +171,7 @@
       "items": [
         "**Two accountable people for one process.** Then nobody is. Split the process or pick one.",
         "**Security as A for everything.** IT and the business then stop treating patching and access as their job.",
-        "**No deputies.** ENISA advises a deputy for each security role[^enisatig]. Name one for every A and test the phone chain twice a year."
+        "**No deputies.** ENISA advises a deputy for each security role where possible[^enisatig]. Name one for every A and test the phone chain twice a year."
       ]
     },
     {
@@ -193,7 +193,7 @@
           "title": "Growing, with IT or security staff",
           "items": [
             "Run hybrid, with champions in IT and business teams.",
-            "Keep the security role apart from the IT lead, as Grundschutz++ requires[^std3001].",
+            "Don't make the IT lead the security officer: Grundschutz++ calls that a conflict to avoid[^std3001].",
             "Publish the service catalog and the decision table."
           ]
         },
@@ -201,7 +201,7 @@
           "title": "Enterprise or regulated",
           "items": [
             "Name security officers per unit or entity, under one group standard and register.",
-            "Keep an assurance map of who checks which control, to find gaps and duplicates[^iia3l].",
+            "Keep an assurance map of who checks which risk, to find gaps and duplicates[^iia3l].",
             "Under DORA, keep ICT risk control separate from internal audit[^dora]."
           ]
         }
@@ -218,10 +218,10 @@
   "sources": [
     {
       "id": "csfie",
-      "title": "CSF 2.0 Implementation Examples",
+      "title": "CSF 2.0 Implementation Examples, GV.RR-02",
       "publisher": "NIST",
-      "date": "checked 5 Nov 2026",
-      "url": "https://csrc.nist.gov/projects/cprt/catalog#/cprt/framework/version/CSF_2_0_0/home"
+      "date": "26 Feb 2024",
+      "url": "https://www.nist.gov/system/files/documents/2024/02/21/CSF%202.0%20Implementation%20Examples.pdf"
     },
     {
       "id": "bsicurr",
@@ -234,7 +234,7 @@
       "id": "iia3l",
       "title": "Statement of Position: Three Lines Model",
       "publisher": "IIA",
-      "date": "Jul 2026",
+      "date": "8 Jul 2026",
       "url": "https://www.theiia.org/globalassets/site/resources/statements-of-position/tlm_assurance_advice_support_effective_gov_en.pdf"
     },
     {
@@ -253,7 +253,7 @@
     },
     {
       "id": "enisatig",
-      "title": "NIS2 implementation guidance and mapping table",
+      "title": "NIS2 technical implementation guidance and mapping table v1.2",
       "publisher": "ENISA",
       "date": "26 Jun 2025",
       "url": "https://www.enisa.europa.eu/publications/nis2-technical-implementation-guidance"

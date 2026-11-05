@@ -20,11 +20,11 @@
       "items": [
         {
           "title": "Appoint one owner in writing.",
-          "text": "Have management appoint a head of security or ISB, a deputy and their authority in a minuted decision. ENISA counts appointments, job descriptions and proof of competence as NIS2 evidence[^enisatig]."
+          "text": "Have management appoint a head of security or ISB, a deputy and their authority in a minuted decision. ENISA counts appointments, job descriptions and proof of competence as evidence for digital providers[^enisatig]."
         },
         {
           "title": "Give them a direct line to management.",
-          "text": "Digital providers need at least one person reporting directly to the management body[^nis2ir]. The BSI asks German NIS2 managers to confirm the ISB or CISO line early[^bsicurr]."
+          "text": "Digital providers need at least one person reporting directly to the management body[^nis2ir]. The BSI advises German NIS2 managers to confirm the ISB or CISO line early[^bsicurr]."
         },
         {
           "title": "Keep oversight out of IT operations.",
@@ -86,7 +86,7 @@
       "title": "How big the team should be",
       "navTitle": "Team size",
       "items": [
-        "**About one in ten IT staff work on security.** The share was 10.6% in ENISA's 2025 survey, the lowest yet[^nisinv], with a German median of 9.4%[^nisinvdata]. Most respondents were large organizations[^nisinv], so treat it as a cross-check, not a target.",
+        "**About one in ten IT staff work on security.** The median share was 10.6% in ENISA's 2025 survey, the lowest yet[^nisinv], with a German median of 9.4%[^nisinvdata]. Most respondents were large organizations[^nisinv], so treat it as a cross-check, not a target.",
         "**Operations takes the largest share.** In ENISA's 2023 survey, operations held 40% of security staff, architecture and engineering 23%, governance and risk 21% and audit and compliance 16%[^nisinv23].",
         "**Outsource operations, not governance.** 57% of those organizations used the most contractors in operations, only 9% in governance and risk; contractors were a median 20% of security staff[^nisinv23].",
         "**Count the work, not the ratio.** List recurring tasks with hours per month, and make sure two trained people can do each one, in-house or at a provider."
@@ -101,7 +101,7 @@
         "**The BSIG requires an ISB only of federal bodies.** With a deputy, independent reporting and protection from being penalized for the job[^bsig]. Copy that into your ISB's appointment.",
         "**The ISB protects all information.** In the BSI's model, the ISB steers the security process, advises management and joins major projects, for paper as well as IT[^std2002].",
         "**The DPO monitors data protection law.** They take no instructions on it, report to the top and may be external[^gdpr]. Germany requires one from 20 people regularly processing personal data by computer, or for processing that needs a DPIA[^bdsg38].",
-        "**Keep the two apart.** The CJEU sees a possible conflict of interest when a DPO's other duties decide the purposes and means of processing[^c453]. Grundschutz++ calls DPO versus ISB a conflict to avoid[^std3001]."
+        "**Keep the two apart.** Grundschutz++ calls DPO versus ISB a conflict to avoid[^std3001]. The CJEU sees a possible conflict of interest when other duties have the DPO set the purposes and means of processing[^c453]."
       ]
     },
     {
@@ -110,7 +110,7 @@
       "title": "A virtual or fractional CISO",
       "navTitle": "Virtual CISO",
       "items": [
-        "**It fits part-time work.** Below about 250 staff, for a first ISMS or between hires. The BSI sees an external ISB as useful in small companies[^std2002]; digital providers may give security roles to external parties[^nis2ir].",
+        "**It fits part-time work.** Use one below about 250 staff, for a first ISMS or between hires. The BSI sees an external ISB as useful in small companies[^std2002]; digital providers may give security roles to external parties[^nis2ir].",
         "**Keep accountability and control in-house.** Responsibility and oversight can't be delegated, the BSI says[^bsicurr]. Keep an internal coordinator, risk acceptance, the decision to report an incident, admin and emergency credentials, and the asset and supplier lists.",
         "**Write the contract for the bad day.** Name the person and a deputy, hours per month, incident response time, deliverables, document ownership and exit handover. See the third-party risk sheet.",
         "**Don't hire your IT provider for it.** It would check its own work[^enisatig]."
@@ -134,9 +134,9 @@
       "title": "What changed in 2026",
       "navTitle": "Changes",
       "items": [
-        "**German duties apply.** Under BSIG § 38, management implements and oversees the measures[^bsig]. The BSI's new curriculum recommends confirming the ISB or CISO line within 2 to 6 weeks of the first training[^bsicurr].",
+        "**German duties apply.** Since 6 December 2025, BSIG § 38 has management implement and oversee the measures[^bsig]. The BSI's new curriculum recommends confirming the ISB or CISO line within 2 to 6 weeks of the first training[^bsicurr].",
         "**Grundschutz++ names the conflicts.** BSI-Standard 300-1 of 20 October 2026 asks for roles with defined qualifications and no IT lead versus ISB or DPO versus ISB conflicts[^std3001].",
-        "**Germany plans to drop the 20-person DPO rule.** On 4 December 2025, federal and state leaders agreed the federal government will propose repealing it by the end of 2026[^fma]. It still applies[^bdsg38].",
+        "**Germany plans to drop its national DPO rule.** On 4 December 2025, federal and state leaders agreed the federal government will propose repealing BDSG § 38(1) by the end of 2026[^fma]. It still applies[^bdsg38].",
         "**The role catalogs are moving.** NICE v2.2.0 added a supply chain risk role in April 2026[^nice]. ENISA plans to consult on a revised ECSF with proficiency levels at the end of 2026[^ecsf]. Map to the current 12 profiles now."
       ]
     },
@@ -145,7 +145,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A full-time CISO before there's a full-time job.** Below about 100 staff, a part-time ISB with a deputy, an IT provider and MDR cover it.",
+        "**A full-time CISO before there's a full-time job.** Below about 100 staff, let a part-time ISB with a deputy, an IT provider and MDR cover it.",
         "**An in-house 24/7 SOC.** A few analysts can't staff round-the-clock shifts. Buy MDR; see the SOC and MDR sheet.",
         "**One hire per ECSF profile.** The 12 profiles describe work, not headcount.",
         "**Certificates as the first filter.** Much of today's workforce came from other jobs through upskilling, ENISA notes[^nisinv]. Screen with a work sample."
@@ -213,14 +213,14 @@
     },
     {
       "id": "nis2ir",
-      "title": "Regulation (EU) 2024/2690, Annex 1.2 and 10",
+      "title": "Regulation (EU) 2024/2690, recitals 5 and 27, Annex 1.2 and 10",
       "publisher": "EUR-Lex",
-      "date": "2024",
+      "date": "17 Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
     },
     {
       "id": "bsicurr",
-      "title": "NIS-2 Curriculum Geschäftsleitungsschulung",
+      "title": "Curriculum für eine Geschäftsleitungsschulung nach NIS-2",
       "publisher": "BSI",
       "date": "28 Oct 2026",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
@@ -311,7 +311,7 @@
     },
     {
       "id": "gdpr",
-      "title": "GDPR, Articles 37 and 38",
+      "title": "GDPR, Articles 37 to 39",
       "publisher": "EUR-Lex",
       "date": "2016",
       "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
@@ -332,7 +332,7 @@
     },
     {
       "id": "fma",
-      "title": "Föderale Modernisierungsagenda, 2.2",
+      "title": "Föderale Modernisierungsagenda, ch. 2, III.2.2",
       "publisher": "Bundeskanzler and Länder",
       "date": "4 Dec 2025",
       "url": "https://www.rlp.de/fileadmin/02/MPK_Vorsitz/Beschluesse_MPK_4._Dezember_2025_Berlin/Foederale_Modernisierungsagenda.pdf"
