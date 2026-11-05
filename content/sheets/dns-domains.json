@@ -24,11 +24,11 @@
         },
         {
           "title": "Registry-lock the domains everything depends on.",
-          "text": "Anyone in your registrar account can lift a registrar lock. A registry lock is set at the registry and is slower to remove[^eppcodes]; DENIC's .de lock needs a named contact to confirm each change[^denicrl]. Lock the domains behind sign-in, email, your website and name servers."
+          "text": "A registrar lock lasts only until someone in your registrar account asks for its removal. A registry lock is set by the registry and takes longer to remove[^eppcodes]; DENIC's .de lock needs a named contact to confirm each change[^denicrl]. Lock the domains behind sign-in, email, your website and name servers."
         },
         {
           "title": "Make expiry impossible.",
-          "text": "Use auto-renew on a company card, with more than one trusted person able to manage each domain[^ncscdomains]. Answer registry verification requests: unverified .de domains go offline[^denicverify]."
+          "text": "Use auto-renew on a company card, with more than one trusted person able to manage each domain[^ncscdomains]. Answer holder verification requests from your provider: unverified .de domains go offline[^denicverify]."
         },
         {
           "title": "Publish CAA everywhere and watch CT logs.",
@@ -52,15 +52,15 @@
         },
         {
           "title": "Call your registrar and DNS provider.",
-          "text": "Ask both to freeze the domain. For a gTLD transferred away, only a registrar can file an ICANN transfer dispute, within 12 months[^tdrp], so push yours to act today."
+          "text": "Ask both to freeze the domain. If a gTLD domain was transferred away, only the registrars involved can file an ICANN transfer dispute, within 12 months[^tdrp], so push yours to act today."
         },
         {
           "title": "Lock the attacker out and restore.",
-          "text": "Change the passwords and MFA of every account that can change DNS records, revoke API keys, then audit every public record against your last zone export[^ed1901]."
+          "text": "Change the passwords and MFA of every account that can change DNS records, and audit every public record on all authoritative servers, as ED 19-01 required[^ed1901]. Revoke API keys and compare against your last zone export."
         },
         {
           "title": "Hunt down certificates.",
-          "text": "Report certificates issued during the hijack to the issuing CA[^ed1901]. CAA can't stop issuance during a hijack, but CAA bound to your ACME account stops attackers reusing that validation afterwards[^googlecctld]."
+          "text": "Find certificates issued during the hijack in CT logs and report them to the issuing CA[^ed1901]. CAA can't stop issuance during a hijack, but CAA bound to your ACME account stops attackers reusing that validation afterwards[^googlecctld]."
         },
         {
           "title": "Treat redirected traffic as stolen.",
@@ -74,10 +74,10 @@
       "title": "Registrar and DNS provider accounts",
       "navTitle": "Accounts",
       "items": [
-        "**One owner, several hands.** Move domains out of personal and agency accounts into ones your organization owns, and have one internal group register every domain[^ncscdomains].",
+        "**One owner, several hands.** Move domains out of personal, agency and hosting accounts into ones your organization owns, and have one internal group register every domain[^ncscdomains].",
         "**Scope who can change records.** In Azure DNS, grant DNS Zone Contributor per zone and ReadOnly-lock zones that rarely change. A CanNotDelete lock on the SOA record blocks deleting the zone[^azdns].",
         "**Alert on NS and MX changes** and keep DNS change logs in your SIEM[^ncscdomains]. Export every zone weekly as a known-good copy.",
-        "**Report lookalikes instead of buying them.** gTLD registrars must act promptly on actionable evidence of phishing[^icannabuse]. Register only close typos of domains people sign in or pay on[^sp80081]."
+        "**Report lookalikes to the registrar.** Monitor new registrations[^sp80081]. Registrars of gTLDs must act promptly on actionable evidence of phishing and other DNS abuse[^icannabuse]."
       ]
     },
     {
@@ -87,8 +87,8 @@
       "navTitle": "DNSSEC and CAA",
       "items": [
         "**Sign only where your provider automates the keys.** DNSSEC can't stop someone who logs in to your registrar or DNS provider, but it lets CAs detect forged CAA records[^rfc8659]. Use ECDSA P-256 or Ed25519; RSA/SHA-1 is deprecated[^icannalg].",
-        "**Know what breaks.** Since 15 March 2026, a DNSSEC error stops CAs issuing[^br], so a broken signature also blocks certificate renewals. Remove the DS record before you change DNS provider[^awsmigrate].",
-        "**Bind CAA to your ACME account.** Let's Encrypt honors `accounturi` now[^lecaa]; all CAs must from 15 March 2027. Email validation ends in March 2028[^br], so DNS control will mean certificates."
+        "**Know what breaks.** Since 15 March 2026, CAs must validate DNSSEC and can't issue on a validation error[^br], so a broken signature also blocks certificate renewals. Moving DNS provider? Remove the DS record first, as Route 53's migration steps do[^awsmigrate].",
+        "**Bind CAA to your ACME account.** Let's Encrypt honors `accounturi` now[^lecaa]. All CAs must from 15 March 2027, and email validation ends on 15 March 2028[^br]. Whoever controls your DNS will be able to get certificates."
       ]
     },
     {
@@ -110,7 +110,7 @@
       "title": "Protective DNS and DNS over HTTPS",
       "navTitle": "Protective DNS",
       "items": [
-        "**Use a free service if it fits.** UK central government must use the NCSC's free PDNS[^ncscpdns]. DNS4EU runs a free protective resolver with DoH and DoT, and DNS4GOV for public institutions[^dns4eu].",
+        "**Use a free service if it fits.** UK central government must use the NCSC's free PDNS[^ncscpdns]. DNS4EU runs a free public protective resolver with DoH and DoT, and offers DNS4GOV to public institutions[^dns4eu].",
         "**Or buy one with logs and an API.** Ask for current deny lists, editable allow lists and block logs your SIEM can pull. It doesn't replace your own DNS logs[^ncscpriv].",
         "**Control DoH in browsers.** Chrome sends no DoH on managed devices unless the `DnsOverHttpsMode` policy allows it[^chromedoh]. Firefox's DoH bypasses your DNS unless the `DNSOverHTTPS` policy's `ProviderURL` points at your resolver[^ffdoh]."
       ]
@@ -122,10 +122,10 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Three ccTLD registries were hijacked.** Attackers compromised the operators of .gh, .sl and .as, changed DNS records and got certificates for Google and other brands. Google advises restrictive CAA with ACME account bindings[^googlecctld].",
+        "**Three ccTLD registries were hijacked.** Attackers compromised the registries of .gh, .sl and .as, changed DNS records and got certificates for Google and other brands. Google advises restrictive CAA with ACME account bindings[^googlecctld].",
         "**The root zone has a new key.** KSK-2024 (key tag 38696) has signed it since 11 October 2026. Check each validating resolver's trust anchors instead of assuming automatic updates worked[^ksk].",
-        "**.de checks holder data.** Under NIS2, DENIC verifies holder data for new and existing domains. Real requests come through your provider, and DENIC never asks for passwords by email[^denicverify].",
-        "**Windows DNS Server speaks DoH.** Since the June 2026 update, Windows Server 2025 accepts DoH from clients, but not toward upstream servers[^kb5094125]."
+        "**.de verifies holder data.** Under NIS2, DENIC has risk-checked holder data since December 2025, now including a phone number, and existing domains must be verified too[^denicreg][^denicverify]. Real requests come through your provider, and DENIC never asks for passwords by email[^denicverify].",
+        "**Windows DNS Server speaks DoH.** Since the June 2026 update, Windows Server 2025 accepts DoH from clients, but not toward upstream servers[^kb5094125]. Clients can encrypt DNS without bypassing your resolver."
       ]
     },
     {
@@ -145,8 +145,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Domains in an account that can close.** Closing an AWS account suspends its Route 53 domains on day 5[^awsdomains]. Keep domains in an account nobody closes.",
-        "**Recovery email on the domain itself.** If the domain lapses or is hijacked, warnings and resets go astray[^awsdomains].",
-        "**Deleting the zone, not the delegation.** Anyone who opens an account at that DNS host can take over the name[^sp80081]. Dangling CNAMEs are in the attack surface sheet."
+        "**Recovery email on the domain itself.** If the domain lapses, warnings can't reach you[^awsdomains]; if it's hijacked, the attacker gets your resets.",
+        "**Deleting the zone, not the delegation.** Anyone who opens an account at that DNS host can take over the name[^sp80081]."
       ]
     },
     {
@@ -234,6 +234,13 @@
       "url": "https://www.denic.de/en/products/holder-data-verification/general-information/"
     },
     {
+      "id": "denicreg",
+      "title": "What is changing about the registration of .de domains",
+      "publisher": "DENIC",
+      "date": "19 Dec 2025",
+      "url": "https://blog.denic.de/en/new-legislation-what-is-changing-about-the-registration-of-de-domains/"
+    },
+    {
       "id": "tdrp",
       "title": "Registrar Transfer Dispute Resolution Policy",
       "publisher": "ICANN",
@@ -242,10 +249,10 @@
     },
     {
       "id": "icannabuse",
-      "title": "2024 global amendments on DNS abuse",
+      "title": "2013 RAA amendment on DNS abuse, Section 3.18",
       "publisher": "ICANN",
       "date": "effective 5 Apr 2024",
-      "url": "https://www.icann.org/en/contracted-parties/registry-operators/global-amendments/2024-global-amendments"
+      "url": "https://itp.cdn.icann.org/en/files/accredited-registrars/registrar-accreditation-agreement-global-amendment-05apr24-en.htm"
     },
     {
       "id": "azdns",
@@ -263,7 +270,7 @@
     },
     {
       "id": "awsmigrate",
-      "title": "Making Route 53 the DNS service for a domain that's in use",
+      "title": "Making Route 53 the DNS service for a domain in use",
       "publisher": "AWS Docs",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/migrate-dns-domain-in-use.html"
@@ -284,7 +291,7 @@
     },
     {
       "id": "icannalg",
-      "title": "DNSSEC algorithm recommendations for registrars",
+      "title": "DNSSEC algorithm guidance for registrars",
       "publisher": "ICANN",
       "date": "20 May 2026",
       "url": "https://itp.cdn.icann.org/en/files/communications/registrars-dnssec-algorithm-recommendations-best-practices-20-05-2026-en.pdf"
@@ -305,7 +312,7 @@
     },
     {
       "id": "lecaa",
-      "title": "Certificate Authority Authorization (CAA)",
+      "title": "CAA",
       "publisher": "Let's Encrypt",
       "date": "updated 4 Oct 2026",
       "url": "https://letsencrypt.org/docs/caa/"
@@ -319,7 +326,7 @@
     },
     {
       "id": "ncscpdns",
-      "title": "Protective Domain Name Service (PDNS)",
+      "title": "Protective DNS (PDNS)",
       "publisher": "NCSC (UK)",
       "date": "reviewed 17 Sep 2024",
       "url": "https://www.ncsc.gov.uk/information/pdns"
@@ -354,7 +361,7 @@
     },
     {
       "id": "kb5094125",
-      "title": "June 9, 2026: KB5094125 (OS Build 26100.32995)",
+      "title": "KB5094125 (OS Build 26100.32995)",
       "publisher": "Microsoft Support",
       "date": "9 Jun 2026",
       "url": "https://support.microsoft.com/kb/5094125"

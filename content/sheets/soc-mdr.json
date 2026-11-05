@@ -28,11 +28,11 @@
         },
         {
           "title": "Find out what it can't see.",
-          "text": "Get covered sources and incident types in writing. Microsoft advises watching firewalls, VPNs, identity systems, RMM tools, email gateways and file transfers[^mddr]; Microsoft's own MDR excludes iOS, Android, IoT, DLP and custom detections[^dexfaq]."
+          "text": "Get covered sources and incident types in writing. Microsoft advises watching firewalls, VPNs, identity systems, RMM tools, email gateways and file transfer services[^mddr]; Microsoft's own MDR excludes iOS, Android, IoT, DLP and custom detections[^dexfaq]."
         },
         {
           "title": "Line up incident response separately.",
-          "text": "Check where the service stops: Microsoft's MDR doesn't respond to an active compromise[^dexov]. Agree who takes over, and how fast, through the retainer in the incident response sheet."
+          "text": "Check where the service stops: Microsoft's MDR doesn't provide incident response for an active compromise[^dexov]. Agree who takes over, and how fast, through the retainer in the incident response sheet."
         },
         {
           "title": "Test it yourself, out of hours.",
@@ -95,11 +95,11 @@
         },
         {
           "title": "Hand over your context.",
-          "text": "List critical systems, admin and service accounts, VPN ranges and admin jobs: Microsoft says these baselines let detections suppress noise[^mddr]. In Germany, agree the scope with the works council, which has a say in systems designed to monitor staff[^betrvg]."
+          "text": "List critical systems, VPN ranges, service accounts and scheduled admin jobs: Microsoft says baselines like these let detections suppress noise[^mddr]. In Germany, agree the scope with the works council, which has a say in systems designed to monitor staff[^betrvg]."
         },
         {
           "title": "Turn on what lets it act.",
-          "text": "Run Defender in active mode; in passive mode the experts can only advise[^dexpre]."
+          "text": "Run your EDR in active mode: with Defender in passive mode, Microsoft's experts may only be able to advise[^dexpre]."
         },
         {
           "title": "Tune with end dates, and hunt.",
@@ -113,9 +113,9 @@
       "title": "How to tell whether it works",
       "navTitle": "Testing",
       "items": [
-        "**Plant a test each quarter.** Out of hours, on a test machine, add a local admin, install an unapproved remote tool or forward a mailbox outside. Microsoft counts an unsanctioned RMM agent among the most reliable signs of a hands-on attacker[^mddr].",
+        "**Plant a test each quarter.** Out of hours, on a test machine or mailbox, add a local admin, install an unapproved remote tool or forward mail outside. Microsoft counts an unsanctioned RMM agent among the most reliable signs of a hands-on attacker[^mddr].",
         "**Purple team once a year.** Testers and the provider replay techniques and fix gaps as they go[^ncscdet]; see the penetration testing sheet.",
-        "**Sample what it closed.** Each month, read 10 incidents closed as false positives. Providers triage with AI that analysts validate[^dexfaq], so check the evidence for each.",
+        "**Sample what it closed.** Each month, read 10 incidents closed as false positives and check the evidence. Microsoft's MDR triages with AI that analysts validate[^dexfaq].",
         "**Ask for outcomes, not alert counts.** Time to triage, time to containment and how long incidents waited for you. Microsoft says alert counts no longer measure a SOC's maturity[^mddr]."
       ]
     },
@@ -127,8 +127,8 @@
       "items": [
         "**Hand-offs take seconds.** Mandiant's median from initial access to a second group fell to 22 seconds, from over 8 hours in 2022. It advises treating routine malware alerts as high priority[^mtrends].",
         "**AI does much of the triage.** Microsoft's own security team has AI agents investigate 75% of incoming incidents[^mddr]. Ask your provider which closures no analyst saw.",
-        "**An EU certificate is in draft.** ENISA's July 2026 draft for managed security services starts with incident response, not detection[^enisamss]. Don't wait for it.",
-        "**Microsoft moved third-party coverage to a new plan.** Third-party network enrichment in Defender Experts Plan 1 was deprecated on 1 September 2026 and ends at renewal; Plan 2 covers some non-Microsoft sources through Sentinel[^dexov]."
+        "**An EU certificate is in draft.** ENISA's July 2026 draft scheme for managed security services covers only incident response so far[^enisamss]. Don't wait for it to choose an MDR provider.",
+        "**Microsoft's MDR dropped third-party enrichment from Plan 1.** It was deprecated on 1 September 2026 and ends at your renewal; Plan 2 covers some non-Microsoft sources through Sentinel[^dexov]."
       ]
     },
     {
@@ -136,7 +136,7 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**A SIEM before MDR.** An MDR can work in the XDR you run; Microsoft's Plan 1 needs no Sentinel[^dexfaq].",
+        "**A SIEM before MDR.** An MDR can work in the XDR you run; Microsoft's Defender Experts Plan 1 needs no Sentinel[^dexfaq].",
         "**Long RFP questionnaires.** A planted test in the trial tells you more than 300 answers.",
         "**Analyst rankings and feature counts.** They describe other networks; a timed test in yours decides.",
         "**Your own 24/7 shift below enterprise size.** Five people per seat buy one pair of eyes. Use them for context and response."
@@ -164,7 +164,7 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Buy MDR for the EDR you run, such as Defender for Business, allowed to isolate devices and disable accounts.",
+            "Buy MDR for the EDR you already run, with authority to isolate devices and disable accounts.",
             "Give the provider two night contacts and your IT firm's emergency number.",
             "Time a planted test on a spare laptop."
           ]
@@ -303,7 +303,7 @@
     },
     {
       "id": "enisamss",
-      "title": "Have your say on EU managed security services certification",
+      "title": "Have your say on the certification of EU Managed Security Services",
       "publisher": "ENISA",
       "date": "24 Jul 2026",
       "url": "https://certification.enisa.europa.eu/news/have-your-say-certification-eu-managed-security-services-2026-07-24_en"
