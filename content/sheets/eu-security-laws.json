@@ -195,6 +195,7 @@
         "**The law took effect on 6 December 2025.** The act was published in the Bundesgesetzblatt on 5 December 2025, with no general transition period[^bgbl][^bsifaq]. It applies to about 29,500 companies and federal institutions[^bsiportal].",
         "**The registration deadline has passed.** Entities must register within 3 months of falling under the law, so the first deadline passed in March 2026[^bsig][^bsinis2]. If you haven't registered, get an ELSTER organization certificate through Mein Unternehmenskonto, then register in the BSI portal[^bsinis2], open since 6 January 2026[^bsiportal]. Report changes within 2 weeks[^bsig].",
         "**DORA entities must register too.** They are exempt from the BSIG's risk management, reporting and management body duties, and the BSIG rules out reporting the same incident under both laws[^bsifaq].",
+        "**Energy operators follow the EnWG.** Grid and energy plant operators meet their security and management duties through the Federal Network Agency's IT security catalogs under §§ 5c and 5e EnWG, but still register with and report to the BSI[^bsig][^enwg].",
         "**Group figures can be left out.** The BSIG excludes linked and partner enterprises from the size test if your IT systems run independently of theirs[^bsig].",
         "**Management is liable to the entity.** It must implement and oversee the risk management measures and attend regular training, and it is liable for culpable damage under company law[^bsig]."
       ]
@@ -317,9 +318,16 @@
     {
       "id": "bsig",
       "title": "BSI-Gesetz (BSIG), §§ 28, 32, 33 and 38",
-      "publisher": "Federal Ministry of Justice and Consumer Protection (Germany)",
+      "publisher": "BMJV (Germany)",
       "date": "checked 2 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "enwg",
+      "title": "Energiewirtschaftsgesetz (EnWG), §§ 5c to 5e",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/enwg_2005/"
     },
     {
       "id": "enisa",

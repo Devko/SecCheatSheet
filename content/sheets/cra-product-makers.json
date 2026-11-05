@@ -185,7 +185,7 @@
       "items": [
         "**Reporting went live on 11 September.** ENISA's platform is English only, has no API yet, and its 72-hour counter can show reports overdue early[^srpfaq].",
         "**Draft Commission guidance, 27 July.** It explains scope, open source, substantial modification and support periods, and isn't binding[^guide].",
-        "**Germany is naming the BSI.** A bill the Bundestag passed on 15 October would make it market surveillance authority[^bthib][^brdrs].",
+        "**Germany is naming the BSI.** A bill the Bundestag passed on 15 October would make it market surveillance authority; the Bundesrat takes it up on 20 November[^bthib][^brdrs][^brto].",
         "**Radio equipment moves to the CRA.** The radio equipment cybersecurity delegated act is repealed from 11 December 2027[^dr339]."
       ]
     },
@@ -319,6 +319,13 @@
       "publisher": "Bundesrat",
       "date": "30 Oct 2026",
       "url": "https://dserver.bundestag.de/brd/2026/0621-26.pdf"
+    },
+    {
+      "id": "brto",
+      "title": "1070. Sitzung, Entwurf der Tagesordnung, TOP 6",
+      "publisher": "Bundesrat",
+      "date": "3 Nov 2026",
+      "url": "https://www.bundesrat.de/SharedDocs/TO/1070/to-node.html"
     },
     {
       "id": "dr339",
