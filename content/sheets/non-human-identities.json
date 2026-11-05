@@ -1,14 +1,14 @@
 {
   "slug": "non-human-identities",
   "topic": "Non-human identities and secrets",
-  "status": "draft",
+  "status": "published",
   "order": 52,
   "capability": "identity/workload",
-  "title": "Non-human identities: who owns each service account and key, and when does it expire?",
-  "short": "Give every service account, app secret and API key an owner and an expiry date, and cap app secrets at 180 days.",
-  "answer": "Within 90 days, list every service account, app registration, API key and token with an owner and an expiry date, and block new secrets that never expire. Then replace each static secret with a managed identity or federation wherever the platform supports it, and rotate the rest on a schedule your policies enforce.",
+  "title": "Non-human identities: who owns each service account and key, and when is it rotated?",
+  "short": "Give every service account, app secret and API key an owner and a rotation date, and cap Entra app secrets at 180 days.",
+  "answer": "Within 90 days, list every service account, app registration, API key and token with an owner and a rotation date, and block or cap new secrets in policy. Then replace each static secret with a managed identity or federation wherever the platform supports it, and rotate the rest on a schedule your policies enforce.",
   "audience": "IT, cloud and security teams on Microsoft 365, Azure, AWS or Google Cloud, with or without on-premises Active Directory",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -19,7 +19,7 @@
       "navTitle": "Five things",
       "items": [
         {
-          "title": "List every non-human identity with an owner and an expiry date.",
+          "title": "List every non-human identity with an owner and a rotation date.",
           "text": "Add purpose, permissions and a review date[^svcgov]. Improper offboarding tops OWASP's list of NHI risks[^owaspnhi]."
         },
         {
@@ -27,8 +27,8 @@
           "text": "Use managed identities in Azure, which are free[^mi], and federation elsewhere, as Microsoft, AWS and Google advise[^wif][^awsbp][^gcpkeys]."
         },
         {
-          "title": "Enforce lifetimes in policy.",
-          "text": "Block new Entra client secrets or cap them at 180 days[^scuba]. Google service account keys never expire unless you set a limit[^gcpkeys]."
+          "title": "Block or cap secrets in policy.",
+          "text": "Block new Entra client secrets or cap them at 180 days[^scuba], exempting apps that still need them[^amp]. Rotate Google keys: expiry can cause outages[^gcpkeys]."
         },
         {
           "title": "Log what they do.",
@@ -60,7 +60,7 @@
         },
         {
           "title": "Ask about the rest.",
-          "text": "SaaS API keys, GitHub tokens and deploy keys, SSH keys, what your IT provider set up, CI secrets (see the supply-chain sheet) and agents (see the agentic AI sheet). Disable what nobody claims; delete it after a set period[^svcgov]."
+          "text": "SaaS API keys, GitHub tokens and deploy keys, SSH keys, what your IT provider set up, CI secrets (see the supply-chain sheet) and agents (see the agentic AI sheet). Check sign-ins, disable what nobody claims, delete it after a set period[^svcgov]."
         }
       ]
     },
@@ -75,8 +75,8 @@
         "**Into Entra: federated credentials.** They accept tokens from GitHub Actions, Kubernetes, Google Cloud, AWS and SPIFFE[^wif].",
         "**Into AWS: roles.** From outside AWS, use IAM Roles Anywhere with an X.509 certificate, or `AssumeRoleWithWebIdentity`[^awsbp].",
         "**Into Google Cloud: Workload Identity Federation.** Then block key creation; organizations created before 3 May 2024 may not block it by default[^gcpbase].",
-        "**Secrets that must stay: your platform's store.** Key Vault, AWS Secrets Manager or Google Secret Manager, each with an expiry date. Key Vault can trigger rotation 30 days before expiry[^akvrot]. Encryption keys are in the encryption sheet.",
-        "**Self-hosted stores: check the license.** HashiCorp Vault's Business Source License allows internal production use, but not a competing hosted or embedded paid offering[^vaultlic]. OpenBao, a fork managed by the Linux Foundation's OpenSSF, uses the open-source MPL 2.0[^openbao]."
+        "**Secrets that must stay: your platform's store.** Key Vault, AWS Secrets Manager or Google Secret Manager, each with a rotation schedule. Key Vault can trigger rotation 30 days before expiry[^akvrot]. Encryption keys are in the encryption sheet.",
+        "**Self-hosted stores: check the license.** HashiCorp Vault's Business Source License allows internal production use, but not a competing hosted or embedded paid offering[^vaultlic]. OpenBao, a fork managed by the Linux Foundation's OpenSSF[^openbao], uses the open-source MPL 2.0[^baolic]."
       ]
     },
     {
@@ -85,8 +85,8 @@
       "title": "Service accounts in Active Directory",
       "navTitle": "Active Directory",
       "items": [
-        "**Prefer gMSAs and dMSAs.** A Windows Server 2025 dMSA replaces a service account, disables its password and works only on mapped machines[^dmsa]. Keep user accounts out of privileged groups[^svcuser].",
-        "**Patch BadSuccessor.** In a domain with a Windows Server 2025 DC, the right to create a dMSA in an OU was enough to take over any account. Non-admins held it in 91% of environments Akamai examined[^akamai]. Install the August 2025 fix (CVE-2025-53779)[^msrc], limit dMSA rights to Tier 0 admins and audit events 5137 and 5136[^akamai].",
+        "**Prefer gMSAs and dMSAs.** A Windows Server 2025 dMSA replaces a service account and disables its password, so every machine using it must support dMSA[^dmsa]. Keep user accounts out of privileged groups[^svcuser].",
+        "**Patch BadSuccessor.** With a Windows Server 2025 DC, the right to create a dMSA in an OU let users take over any account. Users outside Domain Admins held it in 91% of environments Akamai examined[^akamai]. Install the August 2025 fix (CVE-2025-53779)[^msrc], limit dMSA creation to trusted admins and audit events 5137 and 5136[^akamai].",
         "**Guard the KDS root key as Tier 0.** Whoever reads it can compute gMSA and dMSA passwords offline, unlogged by default. Audit reads of `msKds-RootKeyData`[^semperis]."
       ]
     },
@@ -128,8 +128,8 @@
       "navTitle": "What changed",
       "items": [
         "**Agents got their own identities.** Entra Agent ID became generally available in April 2026, and Lifecycle Workflows can hand sponsorship to a leaver's manager[^entranew]. Entra security features for agents need Agent 365[^agentid].",
-        "**CISA capped app credentials.** ScubaGear 2.0 limits app secrets to 180 days and certificates to 365. Enter 181 and 366 in the portal[^scuba].",
-        "**AWS federates outward.** Since November 2025, workloads can use short-lived tokens instead of stored API keys for external services[^awsoutblog]."
+        "**CISA set credential limits.** ScubaGear 2.0 recommends app secrets of up to 180 days and certificates up to 365 (enter 181 and 366)[^scuba].",
+        "**AWS federates outward.** Since November 2025, workloads can use short-lived tokens instead of stored API keys for external services[^awsout]."
       ]
     },
     {
@@ -148,8 +148,8 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**One person as the only owner.** When they leave, the identity is orphaned. Name a team too.",
-        "**Expecting a policy to fix old credentials.** Entra app management policies leave existing apps working[^amp], and Google's key expiry limit doesn't apply to existing keys[^gcpkeys].",
+        "**One person as the only owner.** Name a team too, or a leaver orphans it.",
+        "**Expecting a policy to fix old credentials.** Entra app management policies leave existing apps and their secrets working[^amp].",
         "**Trusting private repositories.** GitGuardian's vendor report found secrets in 32.2% of internal repositories and 5.6% of public ones[^gg]."
       ]
     },
@@ -164,7 +164,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Keep the inventory in a shared spreadsheet; review it quarterly.",
-            "Block new Entra client secrets; CISA lists no license for it[^scuba]."
+            "Block new Entra client secrets (free[^wlfaq]), exempting apps that need them[^amp]."
           ]
         },
         {
@@ -177,7 +177,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Buy Workload ID Premium for privileged single-tenant apps; reviewing them also needs P2 for reviewers[^wlfaq].",
+            "Buy Workload ID Premium for privileged apps; reviewing them needs P2 for reviewers[^wlfaq].",
             "Give each AI agent a sponsor who confirms twice a year that it's still needed."
           ]
         }
@@ -185,6 +185,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which made secret blocking, account cleanup and dMSA migration safe for running apps, follows Google's advice to rotate keys rather than expire them and replaced an AWS blog post with AWS documentation."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
@@ -208,6 +213,7 @@
     {"id": "akvrot", "title": "Rotation tutorial for resources with one set of authentication credentials", "publisher": "Microsoft Learn", "date": "7 Jul 2026", "url": "https://learn.microsoft.com/en-us/azure/key-vault/secrets/tutorial-rotation"},
     {"id": "vaultlic", "title": "Vault LICENSE (Business Source License 1.1)", "publisher": "HashiCorp (IBM)", "date": "checked 5 Nov 2026", "url": "https://github.com/hashicorp/vault/blob/main/LICENSE"},
     {"id": "openbao", "title": "OpenBao", "publisher": "OpenBao (OpenSSF)", "date": "checked 5 Nov 2026", "url": "https://openbao.org/"},
+    {"id": "baolic", "title": "OpenBao LICENSE (Mozilla Public License 2.0)", "publisher": "OpenBao", "date": "checked 5 Nov 2026", "url": "https://github.com/openbao/openbao/blob/main/LICENSE"},
     {"id": "akamai", "title": "BadSuccessor: Abusing dMSA to Escalate Privileges in Active Directory (vendor research)", "publisher": "Akamai", "date": "21 May 2025", "url": "https://www.akamai.com/blog/security-research/abusing-dmsa-for-privilege-escalation-in-active-directory"},
     {"id": "msrc", "title": "CVE-2025-53779: Windows Kerberos Elevation of Privilege Vulnerability", "publisher": "Microsoft (MSRC)", "date": "12 Aug 2025", "url": "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-53779"},
     {"id": "semperis", "title": "Golden dMSA: What Is dMSA Authentication Bypass? (vendor research)", "publisher": "Semperis", "date": "16 Jul 2025", "url": "https://www.semperis.com/blog/golden-dmsa-what-is-dmsa-authentication-bypass/"},
@@ -217,7 +223,7 @@
     {"id": "wlca", "title": "Conditional Access for workload identities", "publisher": "Microsoft Learn", "date": "24 Mar 2026", "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/workload-identity"},
     {"id": "entranew", "title": "Microsoft Entra releases and announcements", "publisher": "Microsoft Learn", "date": "26 Jun 2026", "url": "https://learn.microsoft.com/en-us/entra/fundamentals/whats-new"},
     {"id": "agentid", "title": "What is Microsoft Entra Agent ID?", "publisher": "Microsoft Learn", "date": "14 Apr 2026", "url": "https://learn.microsoft.com/en-us/entra/agent-id/what-is-microsoft-entra-agent-id"},
-    {"id": "awsoutblog", "title": "Simplify access to external services using AWS IAM outbound identity federation", "publisher": "AWS News Blog", "date": "19 Nov 2025", "url": "https://aws.amazon.com/blogs/aws/simplify-access-to-external-services-using-aws-iam-outbound-identity-federation/"},
+    {"id": "awsout", "title": "Federating AWS identities to external services (IAM User Guide)", "publisher": "AWS", "date": "checked 5 Nov 2026", "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_outbound.html"},
     {"id": "amp", "title": "Microsoft Entra application management policy API overview", "publisher": "Microsoft Learn", "date": "13 Sep 2024", "url": "https://learn.microsoft.com/en-us/graph/api/resources/applicationauthenticationmethodpolicy"},
     {"id": "gg", "title": "The State of Secrets Sprawl 2026 (vendor research report)", "publisher": "GitGuardian", "date": "2026", "url": "https://www.gitguardian.com/state-of-secrets-sprawl-report-2026"}
   ]
