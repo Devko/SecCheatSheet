@@ -5,7 +5,7 @@
   "order": 34,
   "capability": "exposure/pentest",
   "title": "Penetration testing: are you testing what attackers target, and fixing what testers find?",
-  "short": "Scope tests around identity, internet-facing systems and critical apps, and fix and retest critical and high findings within 30 days.",
+  "short": "Scope tests around identity, internet-facing systems and critical apps, and fix and retest critical and high findings within 30 days, or 14 if internet-facing.",
   "answer": "Before the next test, write down the question it must answer and scope it around identity, internet-facing systems and critical apps, not an IP list. Judge each test by how many findings were fixed and retested on time.",
   "audience": "IT, security and engineering leads in EU organizations, many in Germany, who commission penetration tests or red team exercises, or must under DORA or PCI DSS",
   "version": "0.1",
@@ -28,7 +28,7 @@
         },
         {
           "title": "Give testers the inside view.",
-          "text": "The BSI recommends white-box tests, since black-box tests miss more and risk more damage[^bsipt]. Hand over network plans, test accounts, source code and your latest vulnerability assessment[^ncscpt]."
+          "text": "The BSI recommends white-box tests, since black-box tests miss more and risk more damage[^bsipt]. Hand over network plans[^bsipt], test accounts, your latest vulnerability assessment[^ncscpt] and app source code."
         },
         {
           "title": "Get written authorization from every owner.",
@@ -51,20 +51,20 @@
           "text": "Involve risk owners, technical staff and the testers, and agree boundaries, test types, effort in days and reporting[^ncscpt]."
         },
         {
-          "title": "Get everyone's consent.",
-          "text": "The system owner, any hoster or SaaS provider and, if staff or personal data are affected, the data protection officer and works council[^bsipt]."
+          "title": "Get the owners' consent.",
+          "text": "From the system owner and any hoster or SaaS provider. If staff or personal data are affected, involve the data protection officer and works council first[^bsipt]."
         },
         {
           "title": "Set the rules of engagement.",
-          "text": "Agree the window, exclusions, depth, a stop rule and a contact on call[^ncscpt]. Freeze changes in scope; if a flaw can't wait, pause the test[^bsipt]."
+          "text": "Agree the window, exclusions and depth[^bsipt], a stop rule and a contact on call[^ncscpt]. Freeze changes in scope; if a flaw can't wait, pause the test[^bsipt]."
         },
         {
           "title": "Read the report critically.",
-          "text": "The risk decision is yours[^ncscpt]. Group findings by cause[^bsipt] and ask why you didn't already know about each one[^ncscpt]."
+          "text": "The risk decision is yours[^ncscpt]. Group repeated findings[^bsipt] and ask why you didn't already know about each one[^ncscpt]."
         },
         {
           "title": "Close the loop.",
-          "text": "Fix by deadline, retest and add each finding to your own regular checks[^bsipt]. Removing the software or adding monitoring may beat the suggested patch[^ncscpt]."
+          "text": "Fix by deadline, retest and add each finding to your own regular checks[^bsipt]. Removing the software or adding monitoring may suffice instead of the suggested patch[^ncscpt]."
         }
       ]
     },
@@ -114,9 +114,9 @@
       "title": "Stay legal and safe",
       "navTitle": "Legal and safe",
       "items": [
-        "**Authorization.** In Germany, unauthorized access to protected data carries up to three years in prison[^stgb].",
-        "**Cloud.** On Azure, AWS and Google Cloud, most tests of your own resources need no notice[^azpt][^aws][^gcp]. Azure and AWS ban DoS tests; AWS wants two weeks' notice of covert red teaming or phishing[^aws].",
-        "**Production and OT.** No test can rule out side effects[^ncscpt], so keep a stop rule. For OT, hire testers with OT experience[^ncsccni]."
+        "**Authorization.** In Germany, getting past access protection without permission carries up to three years in prison or a fine[^stgb].",
+        "**Cloud.** Azure and Google Cloud need no notice for tests of your own resources, AWS none for its listed services[^azpt][^gcp][^aws]. Azure and AWS ban DoS tests; AWS must approve covert red teaming and phishing, asked two weeks ahead[^aws].",
+        "**Production and OT.** No test rules out side effects[^ncscpt]: keep a stop rule. In OT, use testers with OT experience[^ncsccni] and test in outages or on a replica."
       ]
     },
     {
@@ -135,11 +135,11 @@
       "title": "Tests a regulation or contract requires",
       "navTitle": "Required tests",
       "span": "full",
-      "intro": "NIS2 requires checks that security measures work[^nis2], and a risk-based testing policy for cloud and managed service providers[^nis2ir]. DORA requires yearly tests of systems behind critical or important functions[^dora].",
+      "intro": "NIS2 requires essential and important entities to assess whether their measures work[^nis2], and cloud, managed service and other digital providers to set a risk-based testing policy[^nis2ir]. DORA requires yearly tests of systems behind critical or important functions, except at microenterprises[^dora].",
       "items": [
         {
           "name": "DORA threat-led penetration test (TLPT)",
-          "scope": "Entities their authority selects, at least every 3 years, on live systems[^dora]. In Germany the Bundesbank runs tests BaFin or the ECB orders[^tiberde]. Clocks start at the notice, then at the end of red teaming[^rts].",
+          "scope": "Entities their authority selects, at least every 3 years, on live systems[^dora]. In Germany the Bundesbank's TIBER team manages tests BaFin or the ECB orders[^tiberde]. Clocks start at the notice, then at the end of red teaming[^rts].",
           "steps": [
             {
               "at": "3 months",
@@ -190,7 +190,7 @@
       "items": [
         "**Black-box tests for realism.** Testers then spend paid days finding out what you could tell them. The BSI recommends white-box tests[^bsipt].",
         "**A red team before the basics.** If scans still find unpatched edge systems and nobody handles alerts, a red team only confirms it, at a high price.",
-        "**External retests of low findings.** Retest critical and high findings with the testers and check the rest yourself[^bsipt]."
+        "**Paying testers to recheck every finding.** The BSI wants your own staff to check fixes with repeatable tests[^bsipt]. Book external retests for critical and high findings only."
       ]
     },
     {
@@ -216,7 +216,7 @@
           "title": "Small team, no security staff",
           "items": [
             "Test your cloud tenant and internet edge yearly.",
-            "Fix and retest critical and high findings in 30 days.",
+            "Fix and retest critical and high findings in 30 days, 14 if exposed.",
             "Shortlist from the BSI list or CREST."
           ]
         },
