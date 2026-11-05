@@ -1,0 +1,406 @@
+{
+  "slug": "mobile-devices",
+  "topic": "Mobile devices",
+  "status": "draft",
+  "order": 40,
+  "capability": "infrastructure/mobile",
+  "title": "Mobile devices: what to control on company and personal phones?",
+  "short": "Gate every phone in Conditional Access this month; block iOS more than one major release behind and Android older than 14.",
+  "answer": "This month, require a compliant device or Intune app protection for every phone that reaches work data, and block iOS older than the previous major release and Android older than 14. Then manage company phones fully, protect only the work apps on personal ones, and harden the phones of high-risk users.",
+  "audience": "IT teams of any size in the EU and Germany managing company phones and work data on personal ones, mostly with Intune, some with Jamf or Google",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Gate every phone in Conditional Access.",
+          "text": "Require a compliant device or app protection for iOS and Android. Set **Mark devices with no compliance policy assigned as** to Not compliant; by default they count as compliant[^compliance]."
+        },
+        {
+          "title": "Block OS versions the maker no longer patches.",
+          "text": "Allow the current and previous iOS major release, as Microsoft's apps do[^ioscomp], and Android 14 or later, the oldest in Google's November 2026 bulletin[^asb]."
+        },
+        {
+          "title": "Keep work data in managed apps.",
+          "text": "Use Level 2 app protection, as the endpoints and email sheet says, and block **Sync policy managed app data with native apps**[^appios]: WhatsApp reads the address book regularly[^whatsapp]."
+        },
+        {
+          "title": "Harden high-risk users' phones.",
+          "text": "Enroll the phone, then turn on Lockdown Mode or Advanced Protection. MDM can't turn Lockdown Mode on, and a phone in it can't enroll[^lockdown]."
+        },
+        {
+          "title": "Require two admins to wipe phones.",
+          "text": "With Multi Admin Approval, a second admin approves every wipe, retire and delete[^maa], so one stolen admin account can't erase the fleet."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "model",
+      "title": "Choose the model for each phone",
+      "navTitle": "Model",
+      "items": [
+        {
+          "title": "Does the company own it?",
+          "text": "Enroll it supervised or fully managed through Apple Business Manager or Android zero-touch. Only supervised iPhones take restrictions such as blocking marketplaces[^restr]."
+        },
+        {
+          "title": "Personal, with only Microsoft 365 apps?",
+          "text": "Use app protection without enrollment. IT manages, and can wipe, only the work data in those apps[^appprot]."
+        },
+        {
+          "title": "Personal, but needs Wi-Fi, VPN or certificates?",
+          "text": "Use an Android work profile, which keeps personal apps and data outside Intune[^workprofile], or Apple User Enrollment, where Intune collects no serial number, IMEI or phone number[^ue]."
+        },
+        {
+          "title": "Is the user at high risk?",
+          "text": "Issue a company phone with Level 3 policies, which add mobile threat defense[^ioscomp]."
+        },
+        {
+          "title": "Is it written down?",
+          "text": "The BSI requires a policy on who may reach which data from phones[^bsi]. In Germany, agree with the works council what IT can see[^betrvg]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "updates",
+      "title": "Versions, patches and end of support",
+      "navTitle": "Updates",
+      "items": [
+        "**Enforce iPhone updates with declarative management:** Intune's **Software Update Enforce Latest**, with a delay in days. It needs device or automated enrollment[^ddm]; elsewhere, block access.",
+        "**Treat iOS 18 as unsupported.** Apple's October 2026 iOS 18 update covered only the iPhone XS, XS Max, XR and iPad 7th generation[^appsec].",
+        "**Set an Android patch floor you can keep.** Check that your devices get updates first[^byodand]; start at 6 months and tighten.",
+        "**Buy for the support period, retire on time.** EU makers that update phones sold since 20 June 2025 must do so for 5 years after the last unit is placed on the market[^eco]. The BSI requires replacing unpatched devices[^bsi]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "high-risk",
+      "title": "High-risk users and mercenary spyware",
+      "navTitle": "High-risk users",
+      "items": [
+        "**Lockdown Mode** blocks most message attachments, link previews, complex web technologies, FaceTime from people not called in 30 days, 2G and new configuration profiles[^lockdown].",
+        "**Advanced Protection** blocks sideloading and USB access while locked and reboots phones locked for 72 hours. Turn on its Intrusion Logging too[^aap].",
+        "**Threat notifications.** Apple's arrive on the iPhone and by email, never ask you to click a link and show at account.apple.com; get expert help such as Access Now[^atn]. Google Workspace alerts admins to government-backed attacks[^gwsgov].",
+        "**Habits.** Patch at once and reboot regularly. Mobile zero-days rose to 15 in 2025, from 9[^gtig]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "apps",
+      "title": "App stores, sideloading and messaging",
+      "navTitle": "Apps",
+      "items": [
+        "**EU app marketplaces.** Notarization is only a baseline check, and Apple can't help with scams in those apps[^altdist]. Block them on supervised iPhones with the `allowMarketplaceAppInstallation` and `allowWebDistributionAppInstallation` restrictions[^restr]; on personal ones, rely on app protection.",
+        "**Android sideloading.** Block unknown sources, even in the personal profile, as Microsoft's Level 2 examples do[^byodand].",
+        "**One work messenger.** Without guidance, staff turn to channels such as SMS, and chats in apps without enterprise audit may break regulatory duties[^ncscim]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "lost",
+      "title": "Lost phones, SIM swaps and eSIMs",
+      "navTitle": "Lost and SIM",
+      "items": [
+        "**Report, lock, remove sign-ins.** The BSI requires reporting a lost device at once[^bsi]. Mark it lost on iCloud.com[^sdp] or lock it at android.com/lock[^theft], then delete its passkeys and authenticator from the account.",
+        "**Turn on theft protection beforehand.** Away from familiar places, Stolen Device Protection needs Face ID or Touch ID to use saved passwords, erase the phone or move its eSIM[^sdp]. On Android, use Theft Detection Lock[^theft].",
+        "**Make SIM swaps harder.** Carriers mostly verify requests with personal details such as date of birth[^enisa]. Set a password on the business account and block eSIM changes on supervised iPhones[^restr]. If the signal vanishes, call the carrier at once[^enisa]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**iOS 27 dropped the old MDM update restrictions.** Since 14 September 2026[^appsec], update deferrals work only through declarative device management[^restr].",
+        "**The approved client app grant is retiring.** Microsoft set March 2026 and says new policies should require app protection instead[^grant].",
+        "**Spyware vendors led zero-day exploitation.** For 2025, Google attributed more zero-days to them than to state espionage groups, a first[^gtig].",
+        "**EU iPhones forward notifications to other watches.** Since iOS 26.5 in May 2026[^appsec], companion apps can receive them[^accnotif]. Set **Org data notifications** to Block Org Data, which covers wearables[^appios]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Mobile antivirus for everyone.** The NCSC says iOS and Android don't need it in their default configuration[^ncscav]. Keep mobile threat defense for Level 3 users[^ioscomp].",
+        "**Full enrollment of personal phones.** A work profile or app protection covers most needs.",
+        "**Lockdown Mode for all staff.** Apple built it for the very few people personally targeted[^lockdown].",
+        "**Passcode expiry and long passcodes.** Microsoft's Level 2 examples use 6 digits and no expiry[^ioscomp][^byodand]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Exempting executives.** They are the likeliest targets; give them the strictest policies.",
+        "**Accepting rooted or uncertified Android phones.** Require Play Integrity's device integrity check, and strong integrity where supported[^byodand].",
+        "**Message previews on the lock screen.** The BSI requires hiding confidential information there[^bsi].",
+        "**Android web enrollment in a passkey-only tenant.** Users can't complete it yet, and the setting can't be reversed[^workprofile]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Protect personal phones with app protection; enroll only company phones.",
+            "Buy company phones from resellers that register them in Apple Business Manager or Android zero-touch.",
+            "Raise the minimum OS versions each quarter."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Supervise every company iPhone; block marketplaces and eSIM transfers.",
+            "Report weekly on OS versions, patch levels and devices without a policy.",
+            "On Jamf, feed compliance to Entra ID through Intune's partner integration[^partners]."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Keep a named high-risk group on company phones with Level 3 policies.",
+            "Pilot mobile threat defense for that group.",
+            "Where regulators expect records, choose an enterprise messenger with audit[^ncscim]."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on Microsoft Learn pages on Intune and Conditional Access, Apple and Google support and developer documentation, Google's 2025 zero-day review, the EU ecodesign rules for phones, BSI IT-Grundschutz and NCSC device guidance."
+    }
+  ],
+  "sources": [
+    {
+      "id": "grant",
+      "title": "Grant controls in Conditional Access",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/concept-conditional-access-grant"
+    },
+    {
+      "id": "compliance",
+      "title": "Device compliance policies in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "2 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/compliance/overview"
+    },
+    {
+      "id": "ioscomp",
+      "title": "iOS/iPadOS device compliance security configurations",
+      "publisher": "Microsoft Learn",
+      "date": "20 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/security-configurations/ios-ipados-compliance"
+    },
+    {
+      "id": "byodand",
+      "title": "Android Enterprise configurations for personally owned work profiles",
+      "publisher": "Microsoft Learn",
+      "date": "26 Mar 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/security-configurations/android-personally-owned"
+    },
+    {
+      "id": "appprot",
+      "title": "App protection data protection framework",
+      "publisher": "Microsoft Learn",
+      "date": "12 Jun 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/app-management/protection/data-protection-framework"
+    },
+    {
+      "id": "appios",
+      "title": "iOS app protection policy settings",
+      "publisher": "Microsoft Learn",
+      "date": "18 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/intune/app-management/protection/ref-settings-ios"
+    },
+    {
+      "id": "workprofile",
+      "title": "Enroll personal devices with Android Enterprise work profiles",
+      "publisher": "Microsoft Learn",
+      "date": "18 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile"
+    },
+    {
+      "id": "ue",
+      "title": "Overview of Apple User Enrollment in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "19 Aug 2024",
+      "url": "https://learn.microsoft.com/en-us/intune/device-enrollment/apple/user-enrollment-methods-ios"
+    },
+    {
+      "id": "ddm",
+      "title": "Configure update policies for Apple devices",
+      "publisher": "Microsoft Learn",
+      "date": "24 Feb 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-updates/apple/"
+    },
+    {
+      "id": "maa",
+      "title": "Use Multi Admin Approval in Intune",
+      "publisher": "Microsoft Learn",
+      "date": "30 Jul 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/fundamentals/role-based-access-control/multi-admin-approval"
+    },
+    {
+      "id": "partners",
+      "title": "Third-party device compliance partners",
+      "publisher": "Microsoft Learn",
+      "date": "24 Jun 2026",
+      "url": "https://learn.microsoft.com/en-us/intune/device-security/compliance/third-party-partners"
+    },
+    {
+      "id": "lockdown",
+      "title": "About Lockdown Mode",
+      "publisher": "Apple Support",
+      "date": "14 Sep 2026",
+      "url": "https://support.apple.com/en-us/105120"
+    },
+    {
+      "id": "atn",
+      "title": "About Apple threat notifications and protecting against mercenary spyware",
+      "publisher": "Apple Support",
+      "date": "13 Aug 2026",
+      "url": "https://support.apple.com/en-us/102174"
+    },
+    {
+      "id": "sdp",
+      "title": "About Stolen Device Protection for iPhone",
+      "publisher": "Apple Support",
+      "date": "22 Oct 2026",
+      "url": "https://support.apple.com/en-us/120340"
+    },
+    {
+      "id": "altdist",
+      "title": "About alternative app distribution",
+      "publisher": "Apple Support",
+      "date": "26 Oct 2026",
+      "url": "https://support.apple.com/en-us/118110"
+    },
+    {
+      "id": "appsec",
+      "title": "Apple security releases",
+      "publisher": "Apple Support",
+      "date": "30 Oct 2026",
+      "url": "https://support.apple.com/en-us/100100"
+    },
+    {
+      "id": "restr",
+      "title": "Restrictions (Device Management)",
+      "publisher": "Apple Developer",
+      "date": "checked 5 Nov 2026",
+      "url": "https://developer.apple.com/documentation/devicemanagement/restrictions"
+    },
+    {
+      "id": "accnotif",
+      "title": "Accessory Notifications",
+      "publisher": "Apple Developer",
+      "date": "checked 5 Nov 2026",
+      "url": "https://developer.apple.com/documentation/accessorynotifications"
+    },
+    {
+      "id": "aap",
+      "title": "Improve device security with Advanced Protection for Android",
+      "publisher": "Android Help",
+      "date": "checked 5 Nov 2026",
+      "url": "https://support.google.com/android/answer/16339980"
+    },
+    {
+      "id": "theft",
+      "title": "Protect your personal data against theft",
+      "publisher": "Android Help",
+      "date": "checked 5 Nov 2026",
+      "url": "https://support.google.com/android/answer/15146908"
+    },
+    {
+      "id": "asb",
+      "title": "Android Security Bulletin, November 2026",
+      "publisher": "Android Open Source Project",
+      "date": "2 Nov 2026",
+      "url": "https://source.android.com/docs/security/bulletin/2026/2026-11-01"
+    },
+    {
+      "id": "gwsgov",
+      "title": "Government-backed attack alerts",
+      "publisher": "Google Workspace Help",
+      "date": "updated 26 Oct 2026",
+      "url": "https://support.google.com/a/answer/9007870"
+    },
+    {
+      "id": "gtig",
+      "title": "Look What You Made Us Patch: 2025 Zero-Days in Review",
+      "publisher": "Google Threat Intelligence Group",
+      "date": "5 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/2025-zero-day-review"
+    },
+    {
+      "id": "eco",
+      "title": "Regulation (EU) 2023/1670, ecodesign for smartphones and tablets",
+      "publisher": "EUR-Lex",
+      "date": "16 Jun 2023",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/1670/oj/eng"
+    },
+    {
+      "id": "bsi",
+      "title": "IT-Grundschutz SYS.3.2.1 Allgemeine Smartphones und Tablets",
+      "publisher": "BSI",
+      "date": "Edition 2023",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/07_SYS_IT_Systeme/SYS_3_2_1_Allgemeine_Smartphones_und_Tablets_Edition_2023.pdf?__blob=publicationFile&v=3"
+    },
+    {
+      "id": "ncscav",
+      "title": "Antivirus and other security software",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 13 May 2025",
+      "url": "https://www.ncsc.gov.uk/collection/device-security-guidance/policies-and-settings/antivirus-and-other-security-software"
+    },
+    {
+      "id": "ncscim",
+      "title": "Choosing an enterprise instant messaging solution",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 13 May 2025",
+      "url": "https://www.ncsc.gov.uk/collection/device-security-guidance/policies-and-settings/choosing-an-enterprise-instant-messaging-solution"
+    },
+    {
+      "id": "whatsapp",
+      "title": "WhatsApp Privacy Policy (EEA)",
+      "publisher": "WhatsApp",
+      "date": "effective 2 Jul 2026",
+      "url": "https://www.whatsapp.com/legal/privacy-policy-eea"
+    },
+    {
+      "id": "enisa",
+      "title": "Countering SIM-Swapping",
+      "publisher": "ENISA",
+      "date": "Dec 2021",
+      "url": "https://www.enisa.europa.eu/publications/countering-sim-swapping"
+    },
+    {
+      "id": "betrvg",
+      "title": "BetrVG, Section 87",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "as amended 19 Jul 2024",
+      "url": "https://www.gesetze-im-internet.de/betrvg/__87.html"
+    }
+  ]
+}
