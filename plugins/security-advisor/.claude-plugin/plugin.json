@@ -1,0 +1,20 @@
+{
+  "name": "security-advisor",
+  "displayName": "Security Advisor",
+  "version": "1.0.0",
+  "description": "A security advisor built on the Security Cheat Sheets: cited, dated answers, read-only code review, CVE triage against patch deadlines, and gap assessments. New and updated sheets are picked up automatically.",
+  "author": {
+    "name": "Devko"
+  },
+  "homepage": "https://devko.github.io/SecCheatSheet/",
+  "repository": "https://github.com/Devko/SecCheatSheet",
+  "keywords": [
+    "security",
+    "appsec",
+    "code-review",
+    "vulnerability-management",
+    "cve",
+    "nis2",
+    "mcp"
+  ]
+}

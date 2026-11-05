@@ -13,6 +13,7 @@ There are no npm dependencies.
 npm run build      # dist/ with HTML, Markdown, JSON and PDF for every sheet
 npm run check      # same, but fails if PDFs can't be built or a sheet runs past 2 pages
 npm run dev        # HTML only, then serve dist/ at http://localhost:4321
+npm test           # security advisor plugin, against a fresh build
 ```
 
 To check one sheet without touching `dist/` (useful when several people or agents work at once):
@@ -26,6 +27,7 @@ Output:
 ```
 dist/
   index.html                  overview: capability map and all sheets
+  index.json                  the same, machine-readable, for the security advisor plugin
   assets/                     CSS, JS, freshness.mjs, self-hosted font
   patching/
     index.html                the sheet
@@ -70,6 +72,30 @@ The build fails on unknown citations and missing fields.
 | `clock`     | Deadlines by risk on a log time axis         | The full-width chart      |
 
 Blocks are half width by default; set `"span": "full"` for full width.
+
+## Security advisor
+
+[`plugins/security-advisor`](plugins/security-advisor) is a Claude Code plugin that turns the sheets
+into a security advisor: cited answers, read-only code review, CVE triage against the patching
+sheet's deadlines and gap assessments. Anyone can install it from this repository:
+
+```
+/plugin install security-advisor --marketplace Devko/SecCheatSheet
+```
+
+It reads the published sheets through `index.json` at run time, so:
+
+- **A new or updated sheet needs no change to the plugin.** It reaches users when `main` deploys.
+  Add one realistic question for a new sheet to `test/advisor-routing.json`; `npm test` checks that
+  search finds the right sheet for each question, and names new sheets that have none.
+- **Changes to the plugin itself** (its skills, agent or server) need `version` raised in
+  `plugins/security-advisor/.claude-plugin/plugin.json`. Users only receive plugin updates when it changes.
+- **To try sheets before they're published**, build locally and point the plugin at the build:
+
+  ```bash
+  npm run build:html
+  SECURITY_ADVISOR_SOURCE="$PWD/dist" claude --plugin-dir plugins/security-advisor
+  ```
 
 ## Monthly review
 

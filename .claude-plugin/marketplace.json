@@ -1,0 +1,14 @@
+{
+  "name": "seccheatsheet",
+  "owner": { "name": "Devko" },
+  "metadata": {
+    "description": "Plugins built on the Security Cheat Sheets: https://devko.github.io/SecCheatSheet/"
+  },
+  "plugins": [
+    {
+      "name": "security-advisor",
+      "source": "./plugins/security-advisor",
+      "description": "A security advisor built on the Security Cheat Sheets: cited, dated answers, read-only code review, CVE triage against patch deadlines, and gap assessments."
+    }
+  ]
+}

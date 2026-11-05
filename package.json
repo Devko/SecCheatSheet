@@ -8,7 +8,8 @@
     "build:html": "node src/build.mjs --no-pdf",
     "check": "node src/build.mjs --strict",
     "serve": "node src/serve.mjs",
-    "dev": "node src/build.mjs --no-pdf && node src/serve.mjs"
+    "dev": "node src/build.mjs --no-pdf && node src/serve.mjs",
+    "test": "node --test \"test/*.test.mjs\""
   },
   "engines": {
     "node": ">=20"
