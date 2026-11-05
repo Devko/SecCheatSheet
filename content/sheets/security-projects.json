@@ -1,14 +1,14 @@
 {
   "slug": "security-projects",
   "topic": "Security projects",
-  "status": "draft",
+  "status": "published",
   "order": 63,
   "capability": "leadership/projects",
   "title": "Security projects: how do you get a control to everyone, and into IT projects before go-live?",
   "short": "Set a coverage target such as 98% and dated exceptions before the pilot, run report-only for at least a week, and check IT projects at kickoff and before go-live.",
   "answer": "Before your next security rollout starts, write down its scope, a coverage target such as 98% of in-scope accounts enforced, and an end date for every exception, then run it in report-only or audit mode, a pilot and two or three rings. In the company's other IT projects, ask the security questions at kickoff and sign off before go-live, and scale the effort by protection need so only high-need projects wait for a full review.",
   "audience": "Heads of security, IT leads who own security, and project managers in small and mid-size companies",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -126,7 +126,7 @@
         "**At kickoff, ask six questions:** what data, who signs in and how, internet-facing or not, which supplier, who gets admin rights, when it goes live.",
         "**Rate the processes the system serves: normal or high.** Grundschutz++ sets these two; on its catalog, high need adds a risk analysis[^std3001].",
         "**Write requirements into the plan.** Normal: SSO with MFA, exportable logs, named admins, backups, patch deadlines. High: add a design review. Software you build: see the secure development sheet.",
-        "**Pentest before go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA advises testing at set-up[^enisatig]. Otherwise scan and check settings. See the penetration testing sheet.",
+        "**Pentest at go-live** if the system faces the internet, has high need, is custom-built or changes sign-in; ENISA advises testing at set-up[^enisatig]. Otherwise scan and check settings. See the penetration testing sheet.",
         "**Sign off.** Security confirms each requirement or lists open items with owners and dates; management approves the risk of unmet ones, which Grundschutz++ rules out for MUSS requirements[^std3001]."
       ]
     },
@@ -160,7 +160,7 @@
       "title": "What you can skip",
       "items": [
         "**A risk analysis for every project.** With the Grundschutz++ catalog, normal need requires none unless a requirement stays unmet[^std3001].",
-        "**A pentest before every go-live.** A standard SaaS app behind SSO needs a check of your tenant's configuration.",
+        "**A pentest at every go-live.** A standard SaaS app behind SSO needs a check of your tenant's configuration.",
         "**Auditing the standard ASR rules.** Microsoft says they can typically go to block or warn without testing[^asrtest].",
         "**Months in report-only.** Our limit: a week to a month of real sign-ins. Enforce, then fix the tail."
       ]
@@ -212,6 +212,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which made the rollback steps real rollbacks, added break-glass exclusions and Defender license needs, aligned exceptions with the risk register and scoped the Grundschutz++ and CRA claims to what the sources say."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
