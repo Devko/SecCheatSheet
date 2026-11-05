@@ -1,14 +1,14 @@
 {
   "slug": "remote-access",
   "topic": "Remote access",
-  "status": "draft",
+  "status": "published",
   "order": 54,
   "capability": "infrastructure/remote-access",
   "title": "Remote access: which ways into your network should still exist?",
   "short": "Close every RDP and SSH port on the internet, require phishing-resistant MFA and a compliant device on every way in, and license one support tool.",
-  "answer": "This quarter, close every RDP, SSH and admin port on the internet, require phishing-resistant MFA and a compliant device on every way in, and allow one licensed remote support tool. Then give supplier sessions an approval, an end date and a recording, and replace the VPN with per-app access at its next renewal.",
+  "answer": "This quarter, close every RDP, SSH and admin port on the internet, require phishing-resistant MFA on every way in and a compliant device for staff, and allow one licensed remote support tool. Then give supplier sessions an approval, an end date and a recording, and plan per-app access for the VPN's next renewal.",
   "audience": "IT and security teams in small and mid-size organizations, including those on Microsoft 365 and Azure",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -99,7 +99,7 @@
       "items": [
         "**Named accounts that expire.** Give contractors guest accounts through Entra access packages with approval, an end date and automatic removal. This needs Entra ID Governance or the Entra Suite[^entitle].",
         "**Hours, not standing access.** Limit VPN access to the times it's needed and disable unused accounts promptly, as BSI requires[^net33].",
-        "**Recording in Germany.** The works council co-determines any system able to monitor staff conduct or performance, whatever you intend[^betrvg][^bag]. Agree session recording and support-tool reports with it first."
+        "**Recording in Germany.** The works council co-determines any system able to monitor staff conduct or performance, whatever you intend[^betrvg][^bag]. Agree recordings and support-tool reports with it. Contracts are in the third-party risk sheet."
       ]
     },
     {
@@ -202,6 +202,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which scoped the Verizon and Google remote tool figures, narrowed the free license claims to each vendor's terms, added Teams external access limits and corrected the works council and Bastion statements."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
