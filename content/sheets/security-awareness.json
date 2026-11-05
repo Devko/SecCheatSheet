@@ -1,0 +1,326 @@
+{
+  "slug": "security-awareness",
+  "topic": "Security awareness",
+  "status": "draft",
+  "order": 31,
+  "capability": "govern/awareness",
+  "title": "Security awareness: which behaviors are worth training, and what actually changes them?",
+  "short": "Train five behaviors, make reporting one click and blameless, and track time to report instead of click rates.",
+  "answer": "This quarter, pick a few behaviors per role, starting with reporting at once and confirming payment and reset requests by call-back, turn on one-click reporting in Outlook and Teams, and book management's NIS2 training if your organization is in scope. Judge every other awareness measure by whether more people report, and sooner, not by click rates.",
+  "audience": "Security, IT and HR leads in EU organizations of any size, many in Germany, who run or buy security awareness programs, including management training under NIS2",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Pick a few behaviors per role.",
+          "text": "Report at once, confirm payment and credential requests through a second channel, check identity before resets, sign in with passkeys or the password manager and use only the approved AI tool. Microsoft advises role-based training on phishing, ClickFix prompts and unusual requests to run commands or share credentials[^mddr]."
+        },
+        {
+          "title": "Make reporting one click and blameless.",
+          "text": "Turn on reporting of messages and calls in Teams[^teamsrep] and the Report button in Outlook, then thank each reporter and say what happened. Users who fear reprisals won't report mistakes promptly, if at all, the NCSC warns[^ncscphish]."
+        },
+        {
+          "title": "Train the help desk to refuse resets on a call alone.",
+          "text": "Financially motivated groups vish help desks while posing as employees, and Mandiant advises training help desk staff on unauthorized MFA reset requests[^mtrends]. Write down how callers are verified, using the recovery rules in the passkeys and MFA sheet."
+        },
+        {
+          "title": "Count reports and time to report, not clicks.",
+          "text": "The lure sets the click rate: at UC San Diego Health, bland lures fooled 1-2% of staff and others over 30%[^ucsd]. ETH Zurich estimates that if 100 staff get a phishing email, one likely reports it within 5 minutes[^lain22]."
+        },
+        {
+          "title": "Train management on decisions, and keep the record.",
+          "text": "Management of German NIS2 entities must attend training regularly[^bsig]; the BSI's example first session takes 4 hours[^bsicurr]. Record provider, participants and roles, date, duration and content[^bsihand]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "program",
+      "title": "Build the program in this order",
+      "navTitle": "Program",
+      "items": [
+        {
+          "title": "Which mistakes would hurt you most?",
+          "text": "Go through recent incidents, help desk tickets and fraud attempts, then pick three to five behaviors per role."
+        },
+        {
+          "title": "Is the secure way the easy way?",
+          "text": "Roll out passkeys, a password manager, the report button and an approved AI tool first. The BSI says systems should make secure behavior easy[^bsiaware]."
+        },
+        {
+          "title": "Does each rule fit in one sentence?",
+          "text": "Put one page of rules per role into onboarding. The NCSC says to test every rule for usability and to separate rules from advice[^ncscculture]."
+        },
+        {
+          "title": "When does each person hear it?",
+          "text": "At onboarding, on moving into a security-relevant role[^nis2ir] and when threats change. The BSI suggests onboarding plus a yearly update[^bsiaware]."
+        },
+        {
+          "title": "Does it hold up against a real attempt?",
+          "text": "Test the process, not the person: have someone call the help desk for a reset and time how fast a report reaches security. Mandiant advises measuring how fast you detect interactive social engineering[^mtrends]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "roles",
+      "title": "What to train, by role",
+      "navTitle": "By role",
+      "items": [
+        "**Everyone.** Report at once, including your own click. Never grant remote access you didn't ask for: vishing callers use it to take over the computer[^mddr]. If the password manager won't fill, stop: it fills only on the real domain[^ucsd]. Use only the approved AI tool; 67% of users reach AI services with non-corporate accounts on work devices[^dbir].",
+        "**Finance and HR.** Confirm bank detail changes by call-back, as the endpoints and email sheet says. Payroll diversion peaks on Mondays[^mddr].",
+        "**Help desk.** Verify before every reset: call back on the directory number or ask the manager, and for admin accounts check ID in person or on video.",
+        "**Admins and developers.** Cover secure configuration, known threats and what to do in a security event[^nis2ir]. Warn developers about fake recruiting and git repositories to troubleshoot, which espionage actors use[^dbir]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "voice",
+      "title": "Voice phishing and the help desk",
+      "navTitle": "Voice phishing",
+      "items": [
+        "**The usual script.** Attackers flood a user with spam, then message them on Teams as the help desk and ask them to share their desktop[^dbir]. Tell staff that IT never contacts them from outside accounts.",
+        "**Email that asks you to call.** One in four impersonation emails pushes the victim to a phone call, outside email defenses[^mddr].",
+        "**Callers keep people talking.** 93% of attackers studied kept a target on a Teams call for 20 seconds or more at least once, and most now use names that look like employees'[^mddr].",
+        "**Limit who can reach staff.** Teams allows all external domains by default[^teamsext]; choose **Allow only specific external domains**.",
+        "**Don't trust the voice.** AI and deepfakes make any unauthenticated conversation an easy target[^mddr], so base every reset on a check."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "evidence",
+      "title": "What the evidence says about phishing training",
+      "navTitle": "Evidence",
+      "items": [
+        "**Annual training didn't predict who clicked** in 10 simulations sent to over 19,500 UC San Diego Health staff[^ucsd].",
+        "**Training after a click barely helps.** It cut failure rates by 1.7 percentage points, and most sessions ended within 10 seconds[^ucsd]. At ETH Zurich it backfired[^lain22].",
+        "**Reminders do the work, not content.** Delayed training worked as well, rewards didn't help, and the problem was attention, not knowledge[^lain24].",
+        "**Most people click eventually.** Over 56% of UC San Diego Health staff clicked at least once in 8 months[^ucsd]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "duties",
+      "title": "What you owe regulators",
+      "navTitle": "Legal duties",
+      "items": [
+        "**NIS2.** Management bodies must follow training, staff training is encouraged, and training is a required measure[^nis2].",
+        "**Germany.** BSIG § 38 binds management; § 30 covers staff training and awareness[^bsig][^bsiaware]. Keep records of both[^bsiaware][^bsihand].",
+        "**Digital providers.** Regulation 2024/2690 requires recurring awareness for staff and management, and role training assessed for effectiveness[^nis2ir].",
+        "**DORA.** Awareness and resilience training are compulsory for all staff and senior management, and management body members train regularly[^dora].",
+        "**AI Act.** For AI literacy, see the AI Act sheet."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Mandiant said to train beyond the inbox.** It names live voice phishing, messaging app lures and unauthorized MFA reset requests[^mtrends].",
+        "**Staff can report Teams calls as scams.** Since March 2026, with Defender for Office 365 Plan 1[^teamsrep], in Microsoft 365 E3 since July[^mdonew].",
+        "**The BSI issued an example management curriculum.** It fills 4 hours, or 3 with a pre-read, and suggests decisions within 2 to 6 weeks[^bsicurr].",
+        "**The DBIR now counts pretexting.** It started 6% of breaches; phone and text simulations had a 40% higher median click rate than email[^dbir]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Monthly email simulations and click-rate targets.** Click rates track the lure more than the staff[^ucsd]. Spend the time on call-back rules, as the endpoints and email sheet advises.",
+        "**Tips for spotting typos.** AI makes phishing personalized and fluent[^mddr].",
+        "**Prizes for reporting.** Rewards didn't improve behavior[^lain24]; positive feedback did increase reporting[^lain22].",
+        "**Exams for management.** Neither the BSIG nor the BSI requires one[^bsihand]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Punishing clicks.** The NCSC says it starts to resemble entrapment, and that staff afraid for their jobs won't report mistakes[^ncscphish].",
+        "**Annual videos as the whole program.** They didn't change who clicked[^ucsd].",
+        "**Training the help desk but not the process.** The DBIR says pretexting calls for business rules[^dbir]. Give them a script and the right to refuse.",
+        "**Sending only the IT lead to management training.** The BSI says it doesn't replace management's own[^bsicurr]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Turn on the Outlook Report button and answer each report the same day.",
+            "Give every new hire one page with five rules.",
+            "Under NIS2, book a half-day session for the managing directors and file the record."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Turn on Teams call reporting and add short modules for finance, HR, the help desk, admins and developers.",
+            "Report the report rate and median time to first report monthly.",
+            "Have an outsider call the help desk twice a year to test the reset script."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Record effectiveness reviews against Implementing Regulation 2024/2690 or DORA.",
+            "Hold a quarterly risk session with management, as the BSI suggests[^bsihand].",
+            "In Germany, agree simulations and report data with the works council first."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on field studies from UC San Diego Health and ETH Zurich, NCSC guidance, M-Trends 2026, the 2026 DBIR, the Microsoft Digital Defense Report 2026, NIS2, DORA, the BSIG and the BSI's guidance on management training."
+    }
+  ],
+  "sources": [
+    {
+      "id": "mddr",
+      "title": "Microsoft Digital Defense Report 2026",
+      "publisher": "Microsoft Threat Intelligence",
+      "date": "Oct 2026",
+      "url": "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msc/documents/presentations/CSR/Microsoft-Digital-Defense-Report-2026-v1.1.pdf"
+    },
+    {
+      "id": "teamsrep",
+      "title": "User reported settings in Teams",
+      "publisher": "Microsoft Learn",
+      "date": "5 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-office-365/submissions-teams"
+    },
+    {
+      "id": "ncscphish",
+      "title": "Phishing attacks: defending your organisation, version 2.0",
+      "publisher": "NCSC (UK)",
+      "date": "reviewed 13 Feb 2024",
+      "url": "https://www.ncsc.gov.uk/guidance/phishing"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026 Executive Edition",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "Mar 2026",
+      "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
+    },
+    {
+      "id": "ucsd",
+      "title": "Understanding the Efficacy of Phishing Training in Practice (IEEE S&P 2025)",
+      "publisher": "UC San Diego",
+      "date": "2025",
+      "url": "https://sysnet.ucsd.edu/~voelker/pubs/phishtrain-oakland25.pdf"
+    },
+    {
+      "id": "bsig",
+      "title": "BSI-Gesetz (BSIG), §§ 30 and 38",
+      "publisher": "Federal Ministry of Justice (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "bsicurr",
+      "title": "Curriculum für eine Geschäftsleitungsschulung nach NIS-2",
+      "publisher": "BSI",
+      "date": "28 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-curriculum-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=6"
+    },
+    {
+      "id": "bsihand",
+      "title": "Schulung für Geschäftsleitungen (Handreichung), version 1.0",
+      "publisher": "BSI",
+      "date": "17 Apr 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/NIS-2/nis-2-geschaeftsleitungsschulung.pdf?__blob=publicationFile&v=8"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Implementing Regulation (EU) 2024/2690, Article 1 and Annex point 8",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "bsiaware",
+      "title": "Grundlegende Schulungen und Sensibilisierungsmaßnahmen (#nis2know)",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/DE/Themen/Regulierte-Wirtschaft/NIS-2-regulierte-Unternehmen/NIS-2-Infopakete/NIS-2-Schulungen/NIS-2-Schulungen_node.html"
+    },
+    {
+      "id": "ncscculture",
+      "title": "Cyber security culture principles: Principle 6",
+      "publisher": "NCSC (UK)",
+      "date": "4 Jun 2025",
+      "url": "https://www.ncsc.gov.uk/collection/cyber-security-culture-principles/principle-6"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 Data Breach Investigations Report",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6c3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "lain22",
+      "title": "Phishing in Organizations: Findings from a Large-Scale and Long-Term Study (IEEE S&P 2022)",
+      "publisher": "ETH Zurich",
+      "date": "14 Dec 2021",
+      "url": "https://arxiv.org/abs/2112.07498"
+    },
+    {
+      "id": "lain24",
+      "title": "Content, Nudges and Incentives: embedded phishing training (ACM CCS 2024)",
+      "publisher": "ETH Zurich",
+      "date": "2 Sep 2024",
+      "url": "https://arxiv.org/abs/2409.01378"
+    },
+    {
+      "id": "nis2",
+      "title": "Directive (EU) 2022/2555 (NIS2), Articles 20 and 21",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "dora",
+      "title": "Regulation (EU) 2022/2554 (DORA), Articles 5 and 13",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "teamsext",
+      "title": "Manage external meetings and chat with other organizations",
+      "publisher": "Microsoft Learn",
+      "date": "19 Nov 2025",
+      "url": "https://learn.microsoft.com/en-us/microsoftteams/trusted-organizations-external-meetings-chat"
+    },
+    {
+      "id": "mdonew",
+      "title": "What's new in Microsoft Defender for Office 365",
+      "publisher": "Microsoft Learn",
+      "date": "28 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-office-365/defender-for-office-365-whats-new"
+    }
+  ]
+}

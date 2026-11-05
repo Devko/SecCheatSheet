@@ -1,0 +1,386 @@
+{
+  "slug": "threat-intelligence",
+  "topic": "Threat intelligence",
+  "status": "draft",
+  "order": 32,
+  "capability": "detect-respond/threat-intel",
+  "title": "Threat intelligence: which warnings deserve your time, and what do you do with them?",
+  "short": "Subscribe to CERT-Bund, the KEV catalogs and your vendors' advisories, and give every warning that matches your inventory an owner and a decision within one working day.",
+  "answer": "This month, write down the products, suppliers and sector you need warnings about, and subscribe to the free sources that cover them: CERT-Bund's WID, CISA's and ENISA's catalogs of exploited vulnerabilities and your vendors' advisories. Give every warning that matches your inventory an owner and a decision (patch, block, hunt or detect) within one working day, and judge your intelligence by the actions it produced, not by what you read.",
+  "audience": "IT and security teams in EU organizations of any size, many in Germany, from teams without analysts to those with a small SOC",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Write down what you need to know.",
+          "text": "List your internet-facing products and versions, critical suppliers, sector and countries. A warning that touches none of them is reading, not work."
+        },
+        {
+          "title": "Subscribe to the free primary sources.",
+          "text": "Register for CERT-Bund's WID, which emails advisories free of charge to match a profile you maintain[^wid]. Add CISA KEV[^kev], ENISA's EU KEV[^enisavs] and your vendors' advisories."
+        },
+        {
+          "title": "Filter by your inventory, then act on every match.",
+          "text": "CERT-Bund issued 4,250 advisories in 2026 by 5 November, 55% more than in all of 2025[^widcsaf]. CISA added 284 KEV entries[^kev]: few enough to check each one."
+        },
+        {
+          "title": "Detect techniques, not just indicators.",
+          "text": "The NCSC warns that indicators from attackers' covert networks \"disappear as quickly as they are discovered\"[^ncsccovert]. Build lasting detections on the behavior an advisory describes[^mtrends]."
+        },
+        {
+          "title": "Join one sharing community.",
+          "text": "In Germany, the Allianz für Cyber-Sicherheit is free[^acs] and passes on the BSI's confidential TLP-labeled warnings[^csw]. Elsewhere, ask your national CERT or your sector's ISAC."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "action",
+      "title": "Turn a warning into an action",
+      "navTitle": "Warning to action",
+      "items": [
+        {
+          "title": "Does it touch something on your list?",
+          "text": "Match product, version and exposure against the inventory. CSAF, the JSON format CERT-Bund and many vendors use, lets a tool match advisories against an asset list or SBOM[^csaf][^widcsaf]."
+        },
+        {
+          "title": "Is it being exploited?",
+          "text": "Check KEV, EU KEV and the advisory. Verizon found the chance of renewed exploitation roughly halves 30 days after the last observed activity[^dbir], so weigh recent activity over an old listing."
+        },
+        {
+          "title": "Which action fits?",
+          "text": "Patch or contain within the patching sheet's deadlines. Block indicators that are recent and specific. Hunt in your logs back to the first known exploitation. Add a detection when the advisory describes a technique your logs can show."
+        },
+        {
+          "title": "Who does it, and did it hold?",
+          "text": "Open a ticket with one owner and a due date. Close it with the outcome (patched, blocked, nothing found or not affected) once a check confirms it."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "needs",
+      "title": "Decide what you need to know",
+      "navTitle": "Requirements",
+      "items": [
+        "**Your technology.** Edge devices, identity, remote access and what suppliers run for you. Where ENISA knew the vector of an unauthorized access incident in the EU in 2025, 60.4% used a vulnerability[^etl].",
+        "**Your sector and region.** Public administration, business services, transport, manufacturing and finance were the most targeted EU sectors, and ideology-driven operations made up 57.3% of incidents[^etl].",
+        "**Your suppliers and your own alerts.** Add your MSP and cloud suppliers, and feed phishing reports and blocked sign-ins back in.",
+        "**Strategic reports, once a year.** Read your sector's part of the ENISA Threat Landscape[^etl], the BSI's Lagebericht[^bsilage] and M-Trends or the DBIR. Take one or two changes in priority from each."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "sources",
+      "title": "Free sources worth subscribing to",
+      "navTitle": "Free sources",
+      "items": [
+        "**CERT-Bund's WID.** Advisories, short notes and warnings by email, tailored to a profile you manage[^wid], and a CSAF feed for automation[^widcsaf].",
+        "**CISA KEV and ENISA's EU KEV.** KEV lists 1,768 exploited vulnerabilities[^kev]. EU KEV lists those EU CSIRTs and ENISA confirmed exploited against EU entities[^enisavs].",
+        "**Vendor advisories.** Subscribe for every product on your list. NIS2's rules for digital providers require reviewing such channels at planned intervals[^nis2ir].",
+        "**The BSI-Portal and the ACS.** Participants get BSI security notices (BITS), warnings and daily and monthly situation reports[^acsportal].",
+        "**Microsoft Defender threat analytics.** With any Defender license except Defender for Endpoint P1, reports show your vulnerable devices and the fixes, with email updates[^msta]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "indicators",
+      "title": "Indicators, techniques and ATT&CK",
+      "navTitle": "Indicators and TTPs",
+      "items": [
+        "**Indicators expire.** Hashes, IP addresses and domains are the easiest things for an attacker to change; techniques are the costliest[^pop]. Give each blocked indicator an expiry date, such as 30 days for IP addresses.",
+        "**Search the past.** When an advisory lists indicators, search your logs back to the campaign's start. A hit means incident response, not just a block.",
+        "**Build lasting detections on behavior.** Mandiant advises it because attackers rapidly change infrastructure and run malware in memory[^mtrends].",
+        "**Tag rules with ATT&CK technique IDs.** Start from the detection strategies MITRE has linked to techniques since v18[^attack18], but don't chase 100% coverage[^attres]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "sharing",
+      "title": "Share what you see",
+      "navTitle": "Sharing",
+      "items": [
+        "**The law expects it.** NIS2 Article 29 has member states let entities share indicators, TTPs and alerts in sharing arrangements, including with suppliers[^nis2]. DORA Article 45 covers financial entities[^dora].",
+        "**Personal data needs a basis.** NIS2 recital 121 says legitimate interest under GDPR Article 6(1)(f) can cover sharing IP addresses, URLs and email addresses[^nis2].",
+        "**Tell the authority when you join,** as NIS2 and DORA require[^nis2][^dora]. In Germany, BSIG § 30(7) says sharing on the BSI's platform adds no obligations[^bsig].",
+        "**Label with TLP 2.0.** CLEAR is public, GREEN stays in the community, AMBER in your organization and its clients, AMBER+STRICT in your organization, RED with named recipients[^tlp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "measure",
+      "title": "Is it changing anything?",
+      "navTitle": "Measure",
+      "items": [
+        "**Actions per month.** Patches, blocks, hunts and detections that started from a warning. Drop any source that produced none for two quarters.",
+        "**Time from advisory to decision.** For warnings that match your list. Aim for one working day.",
+        "**Learned too late.** Exploited flaws in your products you first heard about from a customer, supplier or the news."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "items": [
+        "**The ACS moved into the BSI-Portal.** Existing participants must re-register there by 31 January 2027 or lose their participation[^acsportal].",
+        "**ATT&CK split Defense Evasion** into Stealth and Defense Impairment in v19, April 2026[^attack19]. Re-tag rules mapped to the old tactic.",
+        "**Manufacturers' reports now feed EU KEV.** CRA reports of exploited vulnerabilities, required since 11 September 2026, will further enrich it[^enisavs]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Paid feeds before free ones turn into tickets.** Only 26% of KEV vulnerabilities in Verizon's data were fully fixed in 2025, after a median of 43 days[^dbir].",
+        "**Indicator lists without context.** Without campaign, date and confidence you can't judge them, and IP lists go stale fast[^ncsccovert].",
+        "**Tracking actor names.** Microsoft lists 12 other names for its Forest Blizzard, APT28 among them[^msnames]. Track techniques instead.",
+        "**A threat intelligence platform before a process.** A mailbox, a ticket queue and a one-page requirements list come first."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Reading without a ticket.** A warning that ends in a chat has no owner. Every match gets a ticket, even when the answer is \"not affected\".",
+        "**Blocking feeds unfiltered.** Feeds can include public DNS resolvers, popular domains and scanners. Check them against MISP's warninglists[^mispwl].",
+        "**Forwarding labeled warnings to suppliers.** TLP:AMBER covers your organization and its clients, not your MSP. Ask the source first[^tlp].",
+        "**Stale subscriptions.** Update the WID profile and vendor subscriptions whenever you add a product."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Register for WID with a profile for your internet-facing products, sent to a mailbox two people read.",
+            "Join the ACS, or your national CERT's community.",
+            "Ask your IT provider which advisories it acted on last month."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Pull KEV, EU KEV and vendor CSAF feeds into tickets, matched against the inventory.",
+            "Add one detection a month from an advisory relevant to your sector.",
+            "Run MISP, which is free and open source[^misp], or use your ISAC's."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Review intelligence requirements with risk owners every quarter.",
+            "Register the sharing arrangements you join and the notifications you made.",
+            "Put TLP handling in your MSSP contract and report the three measures to leadership."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on NIS2, DORA, the BSIG, TLP 2.0, the CERT-Bund, CISA and ENISA feeds, ATT&CK and the 2026 reports from ENISA, Mandiant and Verizon."
+    }
+  ],
+  "sources": [
+    {
+      "id": "wid",
+      "title": "Warning and Information Service",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Technische-Sicherheitshinweise-und-Warnungen/Technische-Sicherheitshinweise/technische-sicherheitshinweise.html"
+    },
+    {
+      "id": "widcsaf",
+      "title": "WID CSAF feed",
+      "publisher": "CERT-Bund",
+      "date": "counted 5 Nov 2026",
+      "url": "https://wid.cert-bund.de/.well-known/csaf/white/bsi-wid-white.json"
+    },
+    {
+      "id": "csw",
+      "title": "Cyber security warnings",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/EN/Themen/Unternehmen-und-Organisationen/Cyber-Sicherheitslage/Technische-Sicherheitshinweise-und-Warnungen/Cyber-Sicherheitswarnungen/cyber-sicherheitswarnungen_node.html"
+    },
+    {
+      "id": "acs",
+      "title": "Teilnehmer",
+      "publisher": "ACS (BSI)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.allianz-fuer-cybersicherheit.de/Webs/ACS/DE/Ueber-uns/Teilnehmer/teilnehmer_node.html"
+    },
+    {
+      "id": "acsportal",
+      "title": "Die ACS erweitert ihre Präsenz um das neue BSI-Portal",
+      "publisher": "ACS (BSI)",
+      "date": "6 Jan 2026",
+      "url": "https://www.allianz-fuer-cybersicherheit.de/Webs/ACS/DE/Home/_/infos/20260106_BSI-Portal.html"
+    },
+    {
+      "id": "bsig",
+      "title": "BSIG §§ 5, 6 and 30",
+      "publisher": "BMJV",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/BJNR12D0B0025.html"
+    },
+    {
+      "id": "csaf",
+      "title": "TR-03191: CSAF",
+      "publisher": "BSI",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bsi.bund.de/dok/TR-03191-en"
+    },
+    {
+      "id": "kev",
+      "title": "KEV catalog (JSON feed)",
+      "publisher": "CISA",
+      "date": "version 2026.11.04",
+      "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+    },
+    {
+      "id": "enisavs",
+      "title": "Vulnerability Services",
+      "publisher": "ENISA",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.enisa.europa.eu/topics/vulnerability-services"
+    },
+    {
+      "id": "nis2",
+      "title": "NIS2 Directive, Article 29 and recital 121",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
+    },
+    {
+      "id": "nis2ir",
+      "title": "Regulation 2024/2690, Annex 6.10",
+      "publisher": "EUR-Lex",
+      "date": "2024",
+      "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
+    },
+    {
+      "id": "dora",
+      "title": "DORA Regulation, Article 45",
+      "publisher": "EUR-Lex",
+      "date": "2022",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
+    },
+    {
+      "id": "tlp",
+      "title": "Traffic Light Protocol 2.0",
+      "publisher": "FIRST",
+      "date": "Aug 2022",
+      "url": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "misp",
+      "title": "MISP",
+      "publisher": "MISP Project",
+      "date": "2.5.50, 9 Oct 2026",
+      "url": "https://www.misp-project.org/"
+    },
+    {
+      "id": "mispwl",
+      "title": "MISP warninglists",
+      "publisher": "MISP Project",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.misp-project.org/warninglists/"
+    },
+    {
+      "id": "attres",
+      "title": "ATT&CK resources",
+      "publisher": "MITRE",
+      "date": "checked 5 Nov 2026",
+      "url": "https://attack.mitre.org/resources/"
+    },
+    {
+      "id": "attack18",
+      "title": "ATT&CK v18 release notes",
+      "publisher": "MITRE",
+      "date": "28 Oct 2025",
+      "url": "https://attack.mitre.org/resources/updates/updates-october-2025/"
+    },
+    {
+      "id": "attack19",
+      "title": "ATT&CK v19 release notes",
+      "publisher": "MITRE",
+      "date": "28 Apr 2026",
+      "url": "https://attack.mitre.org/resources/updates/updates-april-2026/"
+    },
+    {
+      "id": "pop",
+      "title": "The Pyramid of Pain",
+      "publisher": "David Bianco",
+      "date": "1 Mar 2013",
+      "url": "https://detect-respond.blogspot.com/2013/03/the-pyramid-of-pain.html"
+    },
+    {
+      "id": "ncsccovert",
+      "title": "China-nexus covert networks",
+      "publisher": "NCSC (UK)",
+      "date": "23 Apr 2026",
+      "url": "https://www.ncsc.gov.uk/news/executive-summary-defending-against-china-nexus-covert-networks-of-compromised-devices"
+    },
+    {
+      "id": "mtrends",
+      "title": "M-Trends 2026",
+      "publisher": "Google Cloud (Mandiant)",
+      "date": "23 Mar 2026",
+      "url": "https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026"
+    },
+    {
+      "id": "dbir",
+      "title": "2026 DBIR",
+      "publisher": "Verizon",
+      "date": "19 May 2026",
+      "url": "https://www.verizon.com/business/resources/T6d3/reports/2026-dbir-data-breach-investigations-report.pdf"
+    },
+    {
+      "id": "etl",
+      "title": "ENISA Threat Landscape 2026",
+      "publisher": "ENISA",
+      "date": "Sep 2026",
+      "url": "https://www.enisa.europa.eu/sites/default/files/2026-09/ENISA%20Threat%20Landscape%202026_Final.pdf"
+    },
+    {
+      "id": "bsilage",
+      "title": "State of IT Security in Germany 2025",
+      "publisher": "BSI",
+      "date": "Nov 2025",
+      "url": "https://medien.bsi.bund.de/lagebericht/en/"
+    },
+    {
+      "id": "msta",
+      "title": "Threat analytics",
+      "publisher": "Microsoft Learn",
+      "date": "26 May 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/threat-analytics"
+    },
+    {
+      "id": "msnames",
+      "title": "Threat actor naming",
+      "publisher": "Microsoft Learn",
+      "date": "21 Oct 2026",
+      "url": "https://learn.microsoft.com/en-us/defender-xdr/microsoft-threat-actor-naming"
+    }
+  ]
+}
