@@ -6,7 +6,7 @@
   "capability": "exposure/pentest",
   "title": "Penetration testing: are you testing what attackers target, and fixing what testers find?",
   "short": "Scope tests around identity, internet-facing systems and critical apps, and retest every critical finding within 30 days.",
-  "answer": "Before you sign the next test, write down the question it must answer and scope it around identity, internet-facing systems and the applications that move money or data, not around an IP list. Judge each test by how many of its findings were fixed and retested on time, not by the length of the report.",
+  "answer": "Before the next test, write down the question it must answer and scope it around identity, internet-facing systems and critical apps, not an IP list. Judge each test by how many findings were fixed and retested on time.",
   "audience": "IT, security and engineering leads in EU organizations, many in Germany, who commission penetration tests or red team exercises, or must under DORA or PCI DSS",
   "version": "0.1",
   "lastReviewed": "2026-11-05",
@@ -20,23 +20,23 @@
       "items": [
         {
           "title": "Start from a question, not a product.",
-          "text": "The NCSC treats a penetration test as an audit of your own vulnerability management: you should already know most of what testers find[^ncscpt]. Write down what the test must answer, then pick the test type below."
+          "text": "The NCSC treats a penetration test as an audit of your vulnerability management: you should already know most of what it finds[^ncscpt]. Write down the question the test must answer."
         },
         {
           "title": "Scope by attacker targets.",
-          "text": "Exploits opened 32% of Mandiant's 2025 intrusions and voice phishing 11%, with groups calling help desks to get past MFA[^mtrends]. Put identity, the help desk, internet-facing systems and critical applications in scope first."
+          "text": "Exploits opened 32% of Mandiant's 2025 intrusions and voice phishing 11%, with groups calling help desks to get past MFA[^mtrends]. Scope identity, the help desk, the edge and critical apps first."
         },
         {
           "title": "Give testers the inside view.",
-          "text": "The BSI recommends white-box tests, since black-box tests miss flaws, take longer and risk more damage[^bsipt]. Hand over network plans[^bsipt], test accounts and your latest vulnerability assessment[^ncscpt], and source code."
+          "text": "The BSI recommends white-box tests, since black-box tests miss more and risk more damage[^bsipt]. Hand over network plans, test accounts, source code and your latest vulnerability assessment[^ncscpt]."
         },
         {
           "title": "Get written authorization from every owner.",
-          "text": "The BSI says never to test without a written contract that also covers any hoster running the service[^bsipt]. Cloud providers don't authorize testers for you: Microsoft wants the resource owner's explicit written authorization[^azpt]."
+          "text": "The BSI says never to test without a written contract that includes any hoster running the service[^bsipt]. Microsoft won't authorize testers for you[^azpt]."
         },
         {
           "title": "Retest and track every finding to closure.",
-          "text": "PCI DSS requires a retest to verify fixes[^pci], DORA a check that every weakness is fully addressed[^dora]. Give each finding an owner and a deadline in your ticket system, and book the retest with the test."
+          "text": "PCI DSS requires a retest to verify fixes[^pci] and DORA a check that every weakness is addressed[^dora]. Give each finding an owner and a deadline, and book the retest with the test."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Agree the scope with the risk owner.",
-          "text": "Bring risk owners, technical staff and the testers together. The NCSC expects a plan with boundaries, test types, effort in days and reporting needs[^ncscpt]."
+          "text": "Involve risk owners, technical staff and the testers, and agree boundaries, test types, effort in days and reporting[^ncscpt]."
         },
         {
           "title": "Get everyone's consent.",
-          "text": "The system owner, any hoster or SaaS provider, the data protection officer and, if staff or personal data are affected, the works council[^bsipt]."
+          "text": "The system owner, any hoster or SaaS provider and, if staff or personal data are affected, the data protection officer and works council[^bsipt]."
         },
         {
           "title": "Set the rules of engagement.",
@@ -60,11 +60,11 @@
         },
         {
           "title": "Read the report critically.",
-          "text": "The risk decision is yours, since testers may lack business context[^ncscpt]. Group findings by cause[^bsipt] and ask why you didn't already know about each one[^ncscpt]."
+          "text": "The risk decision is yours[^ncscpt]. Group findings by cause[^bsipt] and ask why you didn't already know about each one[^ncscpt]."
         },
         {
           "title": "Close the loop.",
-          "text": "Fix by deadline, retest, and add each finding to the checks your own team repeats[^bsipt]. Removing the software or adding monitoring can beat the suggested patch[^ncscpt]."
+          "text": "Fix by deadline, retest and add each finding to your own regular checks[^bsipt]. Removing the software or adding monitoring may beat the suggested patch[^ncscpt]."
         }
       ]
     },
@@ -75,12 +75,12 @@
       "navTitle": "Test types",
       "span": "full",
       "items": [
-        "**Vulnerability scan: which known flaws are open?** Automated and frequent, as in the attack surface sheet. It doesn't replace a penetration test, which PCI DSS describes as a competent manual attacker trying to exploit weaknesses[^pci].",
-        "**Penetration test: does this system hold up against a skilled tester?** Days of manual work on one application, network or tenant, with full information. Run it after go-live and significant changes[^bsipt].",
-        "**Assumed breach: how far does one compromised laptop or account get?** The tester starts inside, as in the NCSC's lost laptop and rogue device scenarios[^ncscpt].",
+        "**Vulnerability scan: which known flaws are open?** Automated and frequent; see the attack surface sheet. A penetration test adds a competent manual attacker[^pci].",
+        "**Penetration test: does this system hold up against a skilled tester?** Days of manual work on one system with full information, after go-live and significant changes[^bsipt].",
+        "**Assumed breach: how far does one compromised laptop or account get?** The tester starts inside, as in the NCSC's lost laptop scenario[^ncscpt].",
         "**Red team: would you detect and stop a real attacker?** A covert, threat-led attack on live systems; DORA's lasts at least 12 weeks[^rts]. Wait until logging and alert handling work.",
         "**Purple teaming: which attacker techniques do you detect?** Testers and defenders work together and tune detections as they go. DORA requires it after every threat-led test[^rts].",
-        "**Bug bounty: what do outsiders find over time?** The secure development sheet covers when a bounty is worth it."
+        "**Bug bounty: what do outsiders find over time?** See the secure development sheet."
       ]
     },
     {
@@ -89,10 +89,10 @@
       "title": "Scope by risk, not by IP list",
       "navTitle": "Scope",
       "items": [
-        "**Identity.** Paths from a normal user to domain admin or Global Administrator, including AD CS, which attackers abuse to create admin accounts[^mtrends]. The privileged access sheet lists fixes.",
-        "**The help desk.** A call asking for an MFA reset. The BSI wants social engineering tested only under defined rules, by specialists and with the works council[^bsipt].",
-        "**The internet edge and critical apps.** Everything in the attack surface sheet's inventory, and apps tested with two tenants as in the API security sheet.",
-        "**Cloud tenants, backups and hypervisors.** Microsoft encourages testing your own tenant's Conditional Access and detection[^azpt]. Ransomware groups target backups and virtualization management[^mtrends].",
+        "**Identity.** Paths from a normal user to domain admin or Global Administrator, including AD CS; the privileged access sheet lists fixes.",
+        "**The help desk.** A call asking for an MFA reset, under rules agreed with the works council and run by specialists[^bsipt].",
+        "**The internet edge and critical apps.** Everything in the attack surface sheet's inventory, and apps tested as the API security sheet describes.",
+        "**Backups, hypervisors and tenants.** Ransomware groups target backups and virtualization management[^mtrends]; Microsoft encourages tenant tests[^azpt].",
         "**How often.** Test high-risk areas yearly and after major changes. The BSI suggests repeating tests every two to three years[^bsipt]."
       ]
     },
@@ -105,8 +105,7 @@
         "**Treat certificates as signals.** PCI DSS calls them an indication of skill and asks about past engagements too[^pci]. BSI personnel certification and CREST include practical exams[^bsipt].",
         "**In Germany, check the BSI list.** It names 22 providers certified for IS penetration tests[^bsilist].",
         "**In UK government and CNI, use CHECK.** Its team leaders hold the UK Cyber Security Council's Principal title and SC clearance[^check].",
-        "**Buy the people, not the logo.** Get CVs of the named testers, at least two, and make sure they do the work. Rotate testers so they don't go blind to a system[^bsipt].",
-        "**Ask how they clean up.** DORA's threat-led tests require removing backdoors, stopping command and control and deleting captured credentials[^rts]. Require the same."
+        "**Buy the people, not the logo.** Get CVs of the named testers, at least two, check they do the work and rotate them over the years[^bsipt]."
       ]
     },
     {
@@ -115,11 +114,9 @@
       "title": "Stay legal and safe",
       "navTitle": "Legal and safe",
       "items": [
-        "**Authorization.** In Germany, unauthorized access to protected data carries up to three years in prison[^stgb]. Name who authorizes the test in the contract.",
-        "**Cloud.** Azure, AWS and Google Cloud need no notice for tests of your own resources[^azpt][^aws][^gcp]. Azure and AWS ban denial-of-service tests, and AWS wants a form two weeks ahead for covert red teaming, command and control or phishing[^aws].",
-        "**SaaS.** Test your configuration and accounts, not the vendor's platform. Microsoft bans post-exploit actions against its online services[^azpt].",
-        "**Production and OT.** No test can rule out unexpected reactions[^ncscpt], so keep a stop rule. Hire testers with OT experience for OT, or they may cause real-world effects[^ncsccni].",
-        "**Test data.** Agree what testers store, where, and when they delete it[^bsipt]."
+        "**Authorization.** In Germany, unauthorized access to protected data carries up to three years in prison[^stgb].",
+        "**Cloud.** On Azure, AWS and Google Cloud, most tests of your own resources need no notice[^azpt][^aws][^gcp]. Azure and AWS ban DoS tests; AWS wants two weeks' notice of covert red teaming or phishing[^aws].",
+        "**Production and OT.** No test can rule out side effects[^ncscpt], so keep a stop rule. For OT, hire testers with OT experience[^ncsccni]."
       ]
     },
     {
@@ -128,9 +125,8 @@
       "title": "What changed in 2026",
       "navTitle": "What changed",
       "items": [
-        "**AI finds vulnerabilities at scale.** The NCSC's May 2026 questions start with who fixes the findings, then sandboxing, data terms and legality. It advises starting with the external attack surface and checking results with people[^ncscai]. Ask AI-assisted testers the same.",
-        "**CREST accredits AI security testing.** It named the first four accredited companies in November 2026[^crestai]. Ask for it, or similar evidence, before testing a GenAI or LLM system.",
-        "**More BSI-certified testers.** Eight of the 22 on the BSI list were first certified since November 2025[^bsilist]."
+        "**AI-assisted testing needs ground rules.** The NCSC's 10 questions from May 2026 cover who fixes the findings, sandboxing, data terms and legality[^ncscai]. Ask testers who use AI the same.",
+        "**CREST accredits AI security testing.** It named the first four companies in November 2026[^crestai]. Ask for it, or comparable evidence, before testing a GenAI or LLM system."
       ]
     },
     {
@@ -139,19 +135,19 @@
       "title": "Tests a regulation or contract requires",
       "navTitle": "Required tests",
       "span": "full",
-      "intro": "DORA also requires yearly tests of all ICT systems supporting critical or important functions[^dora]. NIS2 sets no frequency but requires ways to assess whether measures work[^nis2]; cloud, managed service and other digital providers need a risk-based testing policy[^nis2ir].",
+      "intro": "NIS2 requires checks that security measures work[^nis2], and a risk-based testing policy for cloud and managed service providers[^nis2ir]. DORA adds yearly tests[^dora].",
       "items": [
         {
           "name": "DORA threat-led penetration test (TLPT)",
-          "scope": "Entities their authority selects, at least every 3 years, on live production systems[^dora]. In Germany, BaFin or the ECB orders it and the Bundesbank runs it[^tiberde]. Clocks run from the notice, then from the end of red teaming[^rts].",
+          "scope": "Entities their authority selects, at least every 3 years, on live systems[^dora]. In Germany the Bundesbank runs it[^tiberde]. Clocks run from the notice, then from the end of red teaming[^rts].",
           "steps": [
             {
               "at": "3 months",
-              "what": "Initiation documents"
+              "what": "Initiation papers"
             },
             {
               "at": "6 months",
-              "what": "Scope approved by management"
+              "what": "Scope document"
             },
             {
               "at": "12+ weeks",
@@ -163,7 +159,7 @@
             },
             {
               "at": "10 weeks",
-              "what": "Blue team report, replay and purple teaming"
+              "what": "Replay, purple teaming"
             }
           ]
         },
@@ -173,11 +169,11 @@
           "steps": [
             {
               "at": "12 months",
-              "what": "Internal and external test"
+              "what": "Internal and external tests"
             },
             {
               "at": "After changes",
-              "what": "Test again after significant upgrades"
+              "what": "Significant upgrades"
             },
             {
               "at": "After fixes",
@@ -192,9 +188,9 @@
       "id": "skip",
       "title": "What you can skip",
       "items": [
-        "**Black-box tests for realism.** Attackers have months, your tester days. The BSI recommends white-box tests[^bsipt].",
-        "**A red team before the basics.** If scans still find unpatched internet-facing systems and nobody handles alerts, a red team tells you that at many times the price.",
-        "**External retests of low findings.** Retest critical and high findings with the testers and check the rest yourself, as the BSI prefers for follow-up checks[^bsipt]."
+        "**Black-box tests for realism.** Testers then spend paid days finding out what you could tell them. The BSI recommends white-box tests[^bsipt].",
+        "**A red team before the basics.** If scans still find unpatched edge systems and nobody handles alerts, a red team only confirms it, at a high price.",
+        "**External retests of low findings.** Retest critical and high findings with the testers and check the rest yourself[^bsipt]."
       ]
     },
     {
@@ -203,10 +199,10 @@
       "title": "Mistakes that cost the most",
       "navTitle": "Mistakes",
       "items": [
-        "**Taking a clean report as proof.** PCI DSS says a test that finds nothing usually reflects the tester's shortcomings[^pci]. See also the edge devices sheet.",
-        "**Letting the WAF test itself.** If it blocks the testers, you learn about the filter, not the application. The BSI advises lifting blocks for testers and testing the gateway separately[^bsipt].",
-        "**Leaving the testers' tools behind.** Check that their accounts and implants are gone and reset every credential they captured[^rts].",
-        "**Findings without an owner.** A PDF on a file share fixes nothing, and the NCSC says not to outsource risk decisions to the testers[^ncscpt]."
+        "**Taking a clean report as proof.** PCI DSS says a test that finds nothing usually reflects the tester's shortcomings[^pci]; see the edge devices sheet.",
+        "**Letting the WAF test itself.** If it blocks the testers, you test the filter. Lift the blocks for them and test the gateway separately[^bsipt].",
+        "**Leaving the testers' tools behind.** DORA makes testers remove backdoors and delete captured credentials[^rts]; demand the same.",
+        "**Findings without an owner.** Risk decisions stay with you, not the testers[^ncscpt]."
       ]
     },
     {
@@ -219,25 +215,25 @@
         {
           "title": "Small team, no security staff",
           "items": [
-            "Buy one open-box test a year of your Microsoft 365 or Google tenant and internet-facing systems, with your IT provider's written consent.",
-            "Have each high finding fixed within 30 days and pay for one retest.",
-            "Shortlist from the BSI list or CREST and compare sample reports."
+            "Test your cloud tenant and internet edge yearly.",
+            "Have high findings fixed in 30 days and retested.",
+            "Shortlist from the BSI list or CREST."
           ]
         },
         {
           "title": "Growing, with IT or security staff",
           "items": [
-            "Run a yearly assumed-breach test from a standard user's laptop against AD and Entra ID.",
-            "Test each major release of a critical app with source code.",
-            "Track findings in the ticket system with deadlines by severity and report open ones monthly."
+            "Test AD and Entra ID yearly from a user's laptop.",
+            "Test critical app releases with source code.",
+            "Report open findings by age every month."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Keep a multi-year test plan by risk, with a red team every few years and purple teaming after each.",
-            "Map it to DORA's yearly tests and TLPT[^dora] and to PCI DSS 11.4[^pci].",
-            "Rotate providers, keep a framework contract for retests and report time to close to the board."
+            "Plan tests by risk for several years ahead.",
+            "Map the plan to DORA[^dora] and PCI DSS 11.4[^pci].",
+            "Report time to close to the board."
           ]
         }
       ]
@@ -247,7 +243,7 @@
     {
       "date": "2026-11-05",
       "version": "0.1",
-      "text": "First draft, based on NCSC and BSI penetration testing guidance, DORA and its TLPT standard (Delegated Regulation 2025/1190), PCI DSS v4.0.1, M-Trends 2026 and the Microsoft, AWS and Google Cloud testing rules."
+      "text": "First draft, based on NCSC and BSI guidance, DORA and its TLPT standard, PCI DSS v4.0.1, M-Trends 2026 and the cloud providers' testing rules."
     }
   ],
   "sources": [
@@ -267,28 +263,28 @@
     },
     {
       "id": "bsipt",
-      "title": "Ein Praxis-Leitfaden für IS-Penetrationstests, version 1.2",
+      "title": "Praxis-Leitfaden für IS-Penetrationstests, version 1.2",
       "publisher": "BSI",
       "date": "Nov 2016",
       "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Sicherheitsberatung/Pentest_Webcheck/Leitfaden_Penetrationstest.pdf?__blob=publicationFile&v=3"
     },
     {
       "id": "azpt",
-      "title": "Penetration testing (Azure)",
+      "title": "Azure penetration testing",
       "publisher": "Microsoft Learn",
       "date": "15 May 2026",
       "url": "https://learn.microsoft.com/en-us/azure/security/fundamentals/pen-testing"
     },
     {
       "id": "pci",
-      "title": "PCI DSS v4.0.1, requirement 11.4",
-      "publisher": "PCI Security Standards Council",
+      "title": "PCI DSS v4.0.1, req. 11.4",
+      "publisher": "PCI SSC",
       "date": "Jun 2024",
       "url": "https://www.pcisecuritystandards.org/document_library/"
     },
     {
       "id": "dora",
-      "title": "Regulation (EU) 2022/2554 (DORA), Articles 24 to 27",
+      "title": "Regulation (EU) 2022/2554 (DORA), Art. 24 to 27",
       "publisher": "EUR-Lex",
       "date": "2022",
       "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj"
@@ -316,15 +312,15 @@
     },
     {
       "id": "check",
-      "title": "CHECK: information for buyers",
+      "title": "Information for CHECK buyers",
       "publisher": "NCSC (UK)",
       "date": "checked 5 Nov 2026",
       "url": "https://www.ncsc.gov.uk/schemes/check/information-for-buyers"
     },
     {
       "id": "stgb",
-      "title": "Strafgesetzbuch (StGB), § 202a",
-      "publisher": "BMJV (Germany)",
+      "title": "StGB § 202a",
+      "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/stgb/__202a.html"
     },
@@ -344,22 +340,22 @@
     },
     {
       "id": "nis2",
-      "title": "Directive (EU) 2022/2555 (NIS2), Article 21",
+      "title": "Directive (EU) 2022/2555 (NIS2), Art. 21",
       "publisher": "EUR-Lex",
       "date": "2022",
       "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj"
     },
     {
       "id": "nis2ir",
-      "title": "Implementing Regulation (EU) 2024/2690, Annex point 6.5",
+      "title": "Implementing Regulation (EU) 2024/2690, Annex 6.5",
       "publisher": "EUR-Lex",
-      "date": "17 Oct 2024",
+      "date": "Oct 2024",
       "url": "https://eur-lex.europa.eu/eli/reg_impl/2024/2690/oj"
     },
     {
       "id": "tiberde",
       "title": "Implementation of TIBER-DE, version 4.0",
-      "publisher": "Deutsche Bundesbank",
+      "publisher": "Bundesbank",
       "date": "Jul 2025",
       "url": "https://www.bundesbank.de/resource/blob/848920/d54c662179f26da23b9b0bc3daf9bafb/472B63F073F071307366337C94F8C870/tiber-implementierung-data.pdf"
     },

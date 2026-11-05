@@ -20,15 +20,15 @@
       "items": [
         {
           "title": "Take the API server off the internet.",
-          "text": "EKS, AKS and GKE all expose it publicly by default[^eksendpoint][^aksapi][^gkeharden]. Use a private endpoint, or GKE's DNS-based endpoint, and allow only admin networks. Microsoft found that default credentials, exposed APIs and unpatched images drive most successful container compromises[^mddr]."
+          "text": "EKS, AKS and GKE expose it by default[^eksendpoint][^aksapi][^gkeharden]. Make it private or admin-only: Microsoft finds exposed APIs, default credentials and unpatched images behind most container compromises[^mddr]."
         },
         {
           "title": "Enforce Pod Security baseline in every namespace.",
-          "text": "Label each namespace `pod-security.kubernetes.io/enforce: baseline`, which blocks privileged containers, hostPath volumes and host namespaces[^pss], and set `warn` and `audit` to `restricted`[^psa]. North Korea's UNC4899 broke out of a cluster through a pod running in privileged mode[^th]."
+          "text": "Set the Pod Security Admission label `enforce` to `baseline` to block privileged containers, hostPath and host namespaces[^pss], and `warn` and `audit` to `restricted`[^psa]. North Korea-linked UNC4899 used a privileged pod to break out of its container[^th]."
         },
         {
           "title": "Treat pod creation as a privileged right.",
-          "text": "Anyone who can create pods in a namespace can mount its Secrets and run as any of its service accounts[^rbacgp]. Every quarter, list who holds that right, `cluster-admin` or the rights below, and cut the list."
+          "text": "Anyone who can create pods in a namespace can mount its Secrets and run as any of its service accounts[^rbacgp]. Each quarter, list who holds that right, `cluster-admin` or the rights below, and cut the list."
         },
         {
           "title": "Keep workload credentials short-lived.",
@@ -36,7 +36,7 @@
         },
         {
           "title": "Stay on a supported version, add-ons included.",
-          "text": "Kubernetes patches only its three newest minor versions, each for about a year[^releases]. Ingress NGINX, used in about half of cloud native environments, can read every Secret by default and was retired on 24 March 2026[^ingstmt][^ingcve][^r136]. Replace unmaintained add-ons."
+          "text": "Kubernetes patches only its three newest minor versions, for about a year each[^releases]. Ingress NGINX, in about half of cloud native environments, can read every Secret by default and was retired in March 2026[^ingstmt][^ingcve][^r136]."
         }
       ]
     },
@@ -48,11 +48,11 @@
       "items": [
         {
           "title": "Who can reach and administer it?",
-          "text": "List each cluster's endpoint, version, add-ons and `cluster-admin` bindings. Find Ingress NGINX with `kubectl get pods --all-namespaces --selector app.kubernetes.io/name=ingress-nginx`[^ingstmt]."
+          "text": "List each cluster's endpoint, version, add-ons and `cluster-admin` bindings. Find Ingress NGINX with `kubectl get pods -A -l app.kubernetes.io/name=ingress-nginx`[^ingstmt]."
         },
         {
           "title": "Which pods would Pod Security reject?",
-          "text": "Set `warn` and `audit` first. They also check Deployments, while `enforce` rejects only pods, so a bad Deployment is accepted and then never starts[^psa]."
+          "text": "Set the `pod-security.kubernetes.io/warn` and `audit` labels first. They also check Deployments, while `enforce` checks only pods, so a noncompliant Deployment is accepted but its pods are rejected[^psa]."
         },
         {
           "title": "Does your network plugin enforce NetworkPolicy?",
@@ -60,11 +60,11 @@
         },
         {
           "title": "What does Pod Security miss?",
-          "text": "Add admission rules for image sources and digests[^checklist]. ValidatingAdmissionPolicy is built in, stable since 1.30, and can `Warn` and `Audit` before it denies[^vap]. Kyverno and OPA Gatekeeper are add-on alternatives[^pss]."
+          "text": "Add admission rules for image sources and digests[^checklist]; signing is in the supply-chain sheet. ValidatingAdmissionPolicy is built in and can `Warn` and `Audit` before it denies[^vap]; Kyverno and OPA Gatekeeper are add-ons[^pss]."
         },
         {
           "title": "Would you see a takeover?",
-          "text": "Turn on audit logs: off by default on EKS[^ekslogs], behind a diagnostic setting on AKS[^aksmon] and, self-managed, off without `--audit-policy-file`[^auditing]. Alert on `exec` into pods, new cluster role bindings and Secrets listed by people."
+          "text": "Turn on audit logs: they are off by default on EKS[^ekslogs] and need a diagnostic setting on AKS[^aksmon]. Alert on `exec` into pods, new cluster role bindings and Secrets listed by people. Retention is in the logging sheet."
         }
       ]
     },
@@ -79,17 +79,15 @@
           "title": "Amazon EKS",
           "items": [
             "**Public endpoint.** Enable private access, then limit or disable public access[^eksendpoint].",
-            "**No control plane logs.** Enable at least `audit` and `authenticator`[^ekslogs].",
-            "**aws-auth.** It is deprecated: move to access entries and drop `cluster-admin` from the cluster creator[^eksbpiam].",
-            "**Support.** 14 months, then 12 of paid extended support, on by default. It ends for 1.31 on 26 November 2026[^eksver]."
+            "**aws-auth.** Deprecated: move to access entries and remove the creator's `cluster-admin`[^eksbpiam].",
+            "**Support.** 14 months, then 12 of paid extended support, on by default. Extended support for 1.31 ends on 26 November 2026[^eksver]."
           ]
         },
         {
           "title": "Azure AKS",
           "items": [
             "**Public API server.** Use a private cluster or at least authorized IP ranges[^aksapi].",
-            "**Local accounts.** On by default, they are an unaudited way around Entra ID. Set `--disable-local-accounts` and rotate certificates[^akslocal].",
-            "**Audit logs.** Route `kube-audit-admin`, which skips get and list events and costs less[^aksmon].",
+            "**Local accounts.** On by default and unaudited, they bypass Entra ID. Set `--disable-local-accounts` and rotate certificates[^akslocal].",
             "**Support.** 12 months per version; 1.34 reaches end of life in November 2026[^aksver]."
           ]
         },
@@ -97,37 +95,10 @@
           "title": "Google GKE",
           "items": [
             "**Reachable control plane.** Use only the DNS-based endpoint, or authorized networks[^gkeharden].",
-            "**Anonymous requests.** Set `--anonymous-authentication-config=LIMITED`; only clusters created on 1.35 deny them by default[^gkeharden].",
-            "**Upgrades.** Use a release channel with accelerated patch auto-upgrades[^gkeharden].",
-            "**Cloud access.** Use Workload Identity Federation, always on in Autopilot[^gkeharden]."
+            "**Anonymous access.** Only clusters created on 1.35 or later limit it by default; elsewhere set `--anonymous-authentication-config=LIMITED`[^gkeharden].",
+            "**Upgrades.** Use a release channel with accelerated patch auto-upgrades[^gkeharden]."
           ]
         }
-      ]
-    },
-    {
-      "type": "list",
-      "id": "rbac",
-      "title": "RBAC rights that lead to cluster admin",
-      "navTitle": "RBAC",
-      "items": [
-        "**`list` or `watch` on Secrets.** Both return the Secrets' contents[^rbacgp].",
-        "**`escalate`, `bind` and `impersonate`.** They bypass RBAC's escalation checks or borrow another user's rights[^rbacgp].",
-        "**Any right on `nodes/proxy`.** Even `get` runs commands in every pod on the node, unaudited and past admission control[^rbacgp].",
-        "**Webhook configurations, `serviceaccounts/token` and PersistentVolumes.** They let the holder read admitted objects, mint tokens or mount the node's disk[^rbacgp].",
-        "**`patch` on namespaces.** It lets a user relabel a namespace to a looser Pod Security level[^rbacgp]."
-      ]
-    },
-    {
-      "type": "list",
-      "id": "pods",
-      "title": "Pod settings that stop an escape",
-      "navTitle": "Pod settings",
-      "items": [
-        "**Non-root, no escalation.** Restricted requires `runAsNonRoot`, no privilege escalation, a seccomp profile and dropping `ALL` capabilities[^pss].",
-        "**Read-only root filesystem.** Set `readOnlyRootFilesystem: true`[^appcheck]. Restricted doesn't require it[^pss], so add an admission rule.",
-        "**User namespaces.** Since 1.36, `hostUsers: false` maps container root to an unprivileged host user[^userns].",
-        "**Minimal images by digest.** No shells or debug tools, and sha256 digests instead of tags[^checklist]. Signing is in the supply-chain sheet.",
-        "**Secrets as files.** Environment variables leak more easily than mounted files; mount secrets from an external store with the Secrets Store CSI Driver[^checklist]."
       ]
     },
     {
@@ -137,11 +108,36 @@
       "navTitle": "What changed",
       "span": "full",
       "items": [
-        "**Ingress NGINX is archived.** It gets no fixes after 24 March 2026[^r136]. Move to Gateway API or another Ingress controller[^ingstmt].",
-        "**Kubernetes 1.36 closed old gaps.** It disabled `gitRepo` volumes for good, deprecated Service `externalIPs` and made user namespaces and fine-grained kubelet authorization generally available[^r136].",
-        "**Admission policies can live on disk.** Manifest-based admission control, beta in 1.37, enforces policies from API server startup and can protect them from privileged API users[^r137].",
-        "**AKS will upgrade unsupported clusters itself.** From 1 June 2027, 60 days after end of support, ignoring maintenance windows and deprecated API checks[^akspiu].",
+        "**Ingress NGINX is archived.** It has had no fixes since 24 March 2026[^r136]. Move to Gateway API or another controller[^ingstmt].",
+        "**Kubernetes 1.36 closed old gaps.** It disabled `gitRepo` volumes for good and deprecated Service `externalIPs`[^r136].",
+        "**AKS will upgrade unsupported clusters itself.** From 1 June 2027, after a 60-day grace period and regardless of maintenance windows[^akspiu].",
         "**Linux root exploits came with public code.** Three flaws disclosed from 29 April to 13 May 2026 gave local users root on major distributions[^mddr]. Patch node images within the patching sheet's deadlines."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "rbac",
+      "title": "RBAC rights that allow escalation",
+      "navTitle": "RBAC",
+      "items": [
+        "**`get`, `list` or `watch` on Secrets.** List and watch return the contents too[^rbacgp].",
+        "**`escalate`, `bind` and `impersonate`.** They bypass RBAC's escalation checks or borrow another user's rights[^rbacgp].",
+        "**Any right on `nodes/proxy`.** Even `get` runs commands in every pod on the node, unaudited and past admission control[^rbacgp].",
+        "**Webhook, token and volume rights.** Control of webhook configurations, `serviceaccounts/token` or PersistentVolumes exposes admitted objects, mints tokens or mounts the node's disk[^rbacgp].",
+        "**`patch` on namespaces.** It lets a user relabel a namespace to a looser Pod Security level[^rbacgp]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "pods",
+      "title": "Pod and node settings that stop an escape",
+      "navTitle": "Pod and node",
+      "items": [
+        "**Non-root, read-only, no escalation.** Restricted requires `runAsNonRoot`, no privilege escalation, seccomp and dropping `ALL` capabilities[^pss]. Add `readOnlyRootFilesystem`[^appcheck].",
+        "**User namespaces.** Set `hostUsers: false`, GA since 1.36, to map container root to an unprivileged host user[^userns].",
+        "**Minimal images by digest.** Ship no shells or debug tools, pin sha256 digests instead of tags and scan at build and deploy[^checklist].",
+        "**Secrets as files.** They leak less than environment variables; mount them from an external store with the Secrets Store CSI Driver[^checklist].",
+        "**Kubelet API.** On your own nodes, turn off `--anonymous-auth` and set `--authorization-mode=Webhook`: the defaults allow anonymous access[^kubeletauth]."
       ]
     },
     {
@@ -151,8 +147,7 @@
       "items": [
         "**A service mesh just for encryption.** The checklist suggests one only if your network plugin can't encrypt traffic[^checklist].",
         "**Waiting for fixes to old CVEs.** Scanners can flag CVE-2020-8561, CVE-2020-8562 and CVE-2021-25740 on every version since June 2026; they won't be fixed[^unfixed]. Mitigate once and accept them.",
-        "**CPU limits on every pod.** They throttle work and can upset autoscaling; the checklist suggests them only for sensitive workloads[^checklist].",
-        "**Sandboxed runtimes everywhere.** Keep gVisor or Kata Containers for untrusted or sensitive code[^appcheck]."
+        "**CPU limits on every pod.** They throttle work and can upset autoscaling; the checklist suggests them only for sensitive workloads[^checklist]."
       ]
     },
     {
@@ -162,9 +157,8 @@
       "navTitle": "Mistakes",
       "items": [
         "**Exempting a controller from Pod Security.** Exempting the ReplicaSet controller exempts everyone who can create a Deployment[^psa].",
-        "**Binding roles to built-in groups.** `system:unauthenticated` is anyone who can reach the API server[^rbacgp]; on GKE, `system:authenticated` includes any Google account[^gkeharden].",
-        "**Keeping bindings for deleted users.** A new account with the same name inherits them[^rbacgp].",
-        "**Upgrading the control plane but not the nodes.** EKS node groups don't follow it[^eksver]."
+        "**Giving CI a cluster-wide service account.** UNC4899 made CI jobs print service account tokens to logs, then used a highly privileged one to escalate[^th]. Scope deploy accounts to namespaces.",
+        "**Binding roles to built-in groups.** `system:unauthenticated` is anyone who can reach the API server[^rbacgp]; on GKE, `system:authenticated` includes any Google account[^gkeharden]."
       ]
     },
     {
@@ -187,15 +181,15 @@
           "items": [
             "Reach a private API server through a VPN or bastion, with SSO groups mapped to RBAC roles.",
             "Keep admission and network policies in Git, and move each rule from warn to deny.",
-            "Upgrade the minor version twice a year, staging cluster first."
+            "Upgrade control plane and nodes twice a year, staging cluster first."
           ]
         },
         {
           "title": "Enterprise or regulated",
           "items": [
-            "Give each trust level its own cluster: Kubernetes calls namespace boundaries weak[^rbacgp].",
-            "On self-managed clusters, load must-have admission policies from disk[^r137].",
-            "Send audit logs and runtime alerts from GuardDuty, Defender for Containers or Falco to the SIEM."
+            "Give untrusted tenants their own cluster and each trust level its own namespace[^rbacgp].",
+            "On self-managed clusters, load must-have admission policies from disk, beta in 1.37[^r137].",
+            "Send audit logs and GuardDuty, Defender for Containers or Falco alerts to the SIEM."
           ]
         }
       ]
@@ -212,58 +206,58 @@
     {
       "id": "checklist",
       "title": "Security Checklist",
-      "publisher": "Kubernetes docs",
-      "date": "updated 28 Feb 2025",
+      "publisher": "Kubernetes",
+      "date": "28 Feb 2025",
       "url": "https://kubernetes.io/docs/concepts/security/security-checklist/"
     },
     {
       "id": "appcheck",
       "title": "Application Security Checklist",
-      "publisher": "Kubernetes docs",
-      "date": "updated 6 Nov 2024",
+      "publisher": "Kubernetes",
+      "date": "6 Nov 2024",
       "url": "https://kubernetes.io/docs/concepts/security/application-security-checklist/"
     },
     {
       "id": "rbacgp",
-      "title": "Role Based Access Control Good Practices",
-      "publisher": "Kubernetes docs",
-      "date": "updated 18 Aug 2026",
+      "title": "RBAC Good Practices",
+      "publisher": "Kubernetes",
+      "date": "18 Aug 2026",
       "url": "https://kubernetes.io/docs/concepts/security/rbac-good-practices/"
     },
     {
       "id": "pss",
       "title": "Pod Security Standards",
-      "publisher": "Kubernetes docs",
-      "date": "updated 16 Oct 2026",
+      "publisher": "Kubernetes",
+      "date": "16 Oct 2026",
       "url": "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
     },
     {
       "id": "psa",
       "title": "Pod Security Admission",
-      "publisher": "Kubernetes docs",
-      "date": "updated 7 Mar 2024",
+      "publisher": "Kubernetes",
+      "date": "7 Mar 2024",
       "url": "https://kubernetes.io/docs/concepts/security/pod-security-admission/"
     },
     {
       "id": "vap",
       "title": "Validating Admission Policy",
-      "publisher": "Kubernetes docs",
-      "date": "updated 28 Sep 2026",
+      "publisher": "Kubernetes",
+      "date": "28 Sep 2026",
       "url": "https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/"
     },
     {
       "id": "netpol",
       "title": "Network Policies",
-      "publisher": "Kubernetes docs",
-      "date": "updated 14 Apr 2026",
+      "publisher": "Kubernetes",
+      "date": "14 Apr 2026",
       "url": "https://kubernetes.io/docs/concepts/services-networking/network-policies/"
     },
     {
-      "id": "auditing",
-      "title": "Auditing",
-      "publisher": "Kubernetes docs",
-      "date": "updated 16 Mar 2025",
-      "url": "https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/"
+      "id": "kubeletauth",
+      "title": "Kubelet authentication/authorization",
+      "publisher": "Kubernetes",
+      "date": "19 Feb 2026",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/"
     },
     {
       "id": "releases",
@@ -281,7 +275,7 @@
     },
     {
       "id": "ingstmt",
-      "title": "Ingress NGINX: Statement from the Steering and Security Response Committees",
+      "title": "Ingress NGINX: Statement from the Kubernetes Steering and Security Response Committees",
       "publisher": "Kubernetes Blog",
       "date": "29 Jan 2026",
       "url": "https://kubernetes.io/blog/2026/01/29/ingress-nginx-statement/"
@@ -295,7 +289,7 @@
     },
     {
       "id": "userns",
-      "title": "Kubernetes v1.36: User Namespaces in Kubernetes are finally GA",
+      "title": "Kubernetes v1.36: User Namespaces are finally GA",
       "publisher": "Kubernetes Blog",
       "date": "23 Apr 2026",
       "url": "https://kubernetes.io/blog/2026/04/23/kubernetes-v1-36-userns-ga/"
@@ -331,28 +325,28 @@
     {
       "id": "eksendpoint",
       "title": "Cluster API server endpoint",
-      "publisher": "AWS Docs",
+      "publisher": "AWS",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html"
     },
     {
       "id": "ekslogs",
       "title": "Send control plane logs to CloudWatch Logs",
-      "publisher": "AWS Docs",
+      "publisher": "AWS",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html"
     },
     {
       "id": "eksbpiam",
       "title": "EKS Best Practices: Identity and Access Management",
-      "publisher": "AWS Docs",
+      "publisher": "AWS",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.aws.amazon.com/eks/latest/best-practices/identity-and-access-management.html"
     },
     {
       "id": "eksver",
       "title": "Kubernetes version lifecycle on EKS",
-      "publisher": "AWS Docs",
+      "publisher": "AWS",
       "date": "checked 5 Nov 2026",
       "url": "https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html"
     },
@@ -395,7 +389,7 @@
       "id": "gkeharden",
       "title": "Best practices for hardening your cluster's security",
       "publisher": "Google Cloud",
-      "date": "updated 30 Oct 2026",
+      "date": "30 Oct 2026",
       "url": "https://docs.cloud.google.com/kubernetes-engine/docs/how-to/hardening-your-cluster"
     }
   ]

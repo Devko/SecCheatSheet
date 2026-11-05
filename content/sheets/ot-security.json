@@ -1,0 +1,338 @@
+{
+  "slug": "ot-security",
+  "topic": "OT and industrial systems",
+  "status": "draft",
+  "order": 36,
+  "capability": "infrastructure/ot",
+  "title": "OT and industrial systems: how do you protect plants you can't patch or reboot?",
+  "short": "This month, take every PLC and HMI off the internet, change default passwords and keep offline copies of controller logic.",
+  "answer": "This month, close every path from the internet to your controllers, including port forwards, cellular modems and vendor VPNs, and change every default or shared password on them. Then route all remote access through one broker in the OT DMZ, keep verified offline copies of controller logic and rehearse isolating the plant and running it by hand.",
+  "audience": "IT/OT security, engineering and plant operations leads at EU manufacturers, utilities, water and building operators, including KRITIS and NIS2 entities in Germany",
+  "version": "0.1",
+  "lastReviewed": "2026-11-05",
+  "reviewEveryDays": 30,
+  "blocks": [
+    {
+      "type": "ranked",
+      "id": "first",
+      "title": "If you only do five things",
+      "navTitle": "Five things",
+      "items": [
+        {
+          "title": "Close every path in from the internet.",
+          "text": "Check routers for port forwards and cabinets for modems[^bsi154]. Iranian-affiliated actors have been changing the logic of exposed PLCs since March 2026[^aa26097a]."
+        },
+        {
+          "title": "Change every default and shared password.",
+          "text": "Attackers used default accounts at over 30 Polish wind and solar sites in December 2025; password reuse across sites is common[^certpl]."
+        },
+        {
+          "title": "Put all remote access through one broker.",
+          "text": "One gateway in the OT DMZ with phishing-resistant MFA, enabled per job, replaces vendor VPNs and modems[^ncscot]."
+        },
+        {
+          "title": "Keep offline copies of controller logic.",
+          "text": "Back up PLC programs and configurations offline and test a restore[^aa26097a]. Keep spares and firmware for a bricked controller."
+        },
+        {
+          "title": "Rehearse running the plant by hand.",
+          "text": "Test manual operation and islanding[^primary] and a staged isolation plan, from one vendor link to the whole site[^ncscot]."
+        }
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "inventory",
+      "title": "Build an inventory you can act on",
+      "navTitle": "Inventory",
+      "items": [
+        {
+          "title": "Walk the plant, not just the network.",
+          "text": "Combine a physical inspection with network data and documents[^inventory]. Modems and gateways often show an antenna or a Gateway label[^bsi154]."
+        },
+        {
+          "title": "Listen before you scan.",
+          "text": "Passive discovery adds no traffic. Active scans can make devices unstable, so run them in planned outages[^sp80082]."
+        },
+        {
+          "title": "Collect the fields that matter.",
+          "text": "CISA and eight partner agencies rank 14 attributes high priority, such as criticality, protocols, ports, accounts and logging[^inventory]. Add firmware, last backup and remote access path."
+        },
+        {
+          "title": "Rank by consequence, keep it current.",
+          "text": "Classify assets by what their failure would do to safety, group them into zones and update the list with every change, even emergency ones[^inventory]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "cant-patch",
+      "title": "Protect what you can't patch",
+      "navTitle": "Can't patch",
+      "items": [
+        "**Split the deadlines.** Remote access gateways rarely affect real-time control, so patch them on IT deadlines[^bsi108]. Patch PLCs in planned downtime unless a flaw is known exploited[^aa26097a], and test first[^nsas7].",
+        "**Wrap obsolete devices.** Put a current protocol gateway or hardened jump host in front, and log every interaction[^ncscot].",
+        "**Use the protection you have.** Keep mode switches in RUN[^aa26097a] and allow programming only from named engineering workstations[^nsas7]. None of the Polish RTUs that supported signed firmware had it on[^certpl].",
+        "**Switch off what you don't use.** Web servers, FTP, Telnet and VNC[^aa26097a][^nsas7]. A relay's default FTP account let attackers delete its system files[^certpl]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "monitor",
+      "title": "Monitoring that understands OT",
+      "navTitle": "Monitoring",
+      "items": [
+        "**Watch passively.** Feed SPAN ports or taps at the OT boundary[^sp80082] into ICS-aware intrusion detection[^nsas7]. A small site can start with CISA's free Malcolm suite[^bsi154].",
+        "**Alert on changes to the process.** Program downloads, mode changes, controller writes and programming from non-engineering machines or outside change windows[^aa26097a][^nsas7].",
+        "**Tie alerts to work orders.** Tell the SOC about maintenance windows, and make any break-glass login its top alarm[^ncscot].",
+        "**Get logs off the devices.** The Polish attackers factory-reset firewalls, erasing their logs[^certpl]. Forward gateway, firewall, modem and HMI logs."
+      ]
+    },
+    {
+      "type": "steps",
+      "id": "respond",
+      "title": "When something looks wrong on the plant",
+      "navTitle": "Response",
+      "items": [
+        {
+          "title": "Make the process safe first.",
+          "text": "Operations decides on manual operation or shutdown; security advises."
+        },
+        {
+          "title": "Suspect unexplained trips.",
+          "text": "A Polish CHP plant first blamed a contractor for a turbine shutdown that was an attack[^certpl2]."
+        },
+        {
+          "title": "Isolate in stages.",
+          "text": "Revoke one vendor's access, or isolate the site and keep only the flows your plan exempts[^ncscot]."
+        },
+        {
+          "title": "Check the logic before you restart.",
+          "text": "Compare programs and backups with known-good logic, and reimage what the attacker reached[^aa26097a]."
+        }
+      ]
+    },
+    {
+      "type": "list",
+      "id": "engineering",
+      "title": "Engineering access and safety systems",
+      "navTitle": "Engineering and safety",
+      "items": [
+        "**Dedicate engineering workstations.** Keep them in OT, without email or browsing, with application allowlisting[^nsas7]. Polish HMIs fell to an admin password set at commissioning[^certpl].",
+        "**Control media and laptops.** Use registered company media, scan it on a station with a different operating system, block unused USB ports and quarantine contractor laptops[^bsitop10].",
+        "**Keep safety systems separate.** Combined control and safety networks could give an attacker both; keep safety keys in RUN unless programming[^sp80082]. F-series safety CPUs are among the Siemens targets[^nsas7]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "suppliers",
+      "title": "Suppliers and products",
+      "navTitle": "Suppliers",
+      "items": [
+        "**Buy secure by default.** Require the 12 Secure by Demand elements, such as no default passwords, and IEC 62443-4-2 Security Level 3[^sbd].",
+        "**Contract the remote access.** Integrators use your broker, install no modems, hand over all accounts and backups, and come on site if you cut access[^ncscot].",
+        "**Mind 2027.** The CRA's main obligations apply from 11 December 2027[^eccra]; machines placed on the market from 20 January 2027 need protection against corruption[^dguv]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "regulators",
+      "title": "What regulators expect in Germany",
+      "navTitle": "Regulators",
+      "items": [
+        "**Treat plant systems as in scope.** § 30 BSIG covers the IT systems, components and processes you use to provide your services[^bsig]. Reporting is in the EU security laws sheet.",
+        "**Critical facilities need attack detection.** § 31 BSIG requires it[^bsig], covering OT as well as IT[^ohsza], with proof to the BSI every three years[^bsig].",
+        "**Exposed OT is a breach of duty.** BSI says so of operators who expose OT to the internet without adequate protection[^bsi154]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "changed",
+      "title": "What changed in 2026",
+      "navTitle": "What changed",
+      "span": "full",
+      "items": [
+        "**Destructive attacks reached EU energy.** On 29 December 2025, attackers damaged controllers at over 30 Polish wind and solar sites and hit two CHP plants[^certpl], one through a private APN[^certpl2].",
+        "**PLC attacks moved to logic changes.** The FBI saw a project file override logic that kept a process within safe limits; Siemens and Schneider PLCs are targets too[^aa26097a].",
+        "**Attackers use AI to write PLC exploits.** An August 2026 advisory describes AI-generated scripts that read and write Siemens S7 memory; block TCP port 102[^nsas7].",
+        "**BSI set a baseline for small plants** in October 2026: no direct internet access, secured remote access, current software, routine checks[^bsi154]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "skip",
+      "title": "What you can skip",
+      "items": [
+        "**Active scans of a running plant.** Run them only in planned outages[^sp80082].",
+        "**Emergency patching every ICS advisory.** Fix exposed and known exploited flaws first; the rest can wait for planned downtime[^aa26097a].",
+        "**Agents the vendor hasn't approved.** Measures must not cost you warranty or support[^bsitop10].",
+        "**Anomaly detection instead of blocking.** It must not replace disabling unused commands, services and ports[^ncscot]."
+      ]
+    },
+    {
+      "type": "list",
+      "id": "mistakes",
+      "title": "Mistakes that cost the most",
+      "navTitle": "Mistakes",
+      "items": [
+        "**Calling a VLAN isolation.** An attacker with admin rights on the Polish sites' firewalls reached every VLAN[^certpl].",
+        "**Running OT on the corporate domain.** At a Polish CHP plant, attackers with domain admin rights pushed a wiper through Group Policy[^certpl].",
+        "**Assuming the integrator handled it.** Owners whose providers have remote access may not know their PLCs are exposed[^nsas7]."
+      ]
+    },
+    {
+      "type": "columns",
+      "id": "by-size",
+      "title": "What this looks like at your size",
+      "navTitle": "By team size",
+      "span": "full",
+      "columns": [
+        {
+          "title": "Small team, no security staff",
+          "items": [
+            "Check the router for port forwards and look up your IP on internetdb.shodan.io[^bsi154].",
+            "Get every remote access path, account, modem and PLC program from your integrator.",
+            "Drop cloud links operation doesn't need[^bsi154]; practice manual operation yearly."
+          ]
+        },
+        {
+          "title": "Growing, with IT or security staff",
+          "items": [
+            "Build the inventory with CISA's fields and a passive sensor at the IT/OT boundary.",
+            "Replace vendor VPNs and modems with one broker, enabled per job.",
+            "Back up logic after every change and test a restore each quarter."
+          ]
+        },
+        {
+          "title": "Enterprise or regulated",
+          "items": [
+            "Run attack detection in OT[^bsig] and use your sector's B3S where one exists[^bsi154].",
+            "Exercise an attack on all sites at once and test fleet-wide isolation[^ncscot].",
+            "Put Secure by Demand and IEC 62443-4-2 in tenders, and CRA conformity for later deliveries."
+          ]
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "0.1",
+      "text": "First draft, based on CISA, NCSC and BSI OT guidance, AA26-097A, the NSA-led Siemens S7 advisory, CERT Polska's Polish energy reports, NIST SP 800-82r3 and the BSIG."
+    }
+  ],
+  "sources": [
+    {
+      "id": "bsi154",
+      "title": "Risks Posed by Internet-Connected OT Systems (BSI-CS 154E)",
+      "publisher": "BSI",
+      "date": "14 Oct 2026",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/ICS/Operational-Technology_CS_154E.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "aa26097a",
+      "title": "Iranian-Affiliated Cyber Actors Exploit Programmable Logic Controllers (AA26-097A)",
+      "publisher": "FBI, CISA, NSA and partners",
+      "date": "updated 22 Jul 2026",
+      "url": "https://www.ic3.gov/CSA/2026/260722.pdf"
+    },
+    {
+      "id": "certpl",
+      "title": "Energy Sector Incident Report: 29 December",
+      "publisher": "CERT Polska",
+      "date": "30 Jan 2026",
+      "url": "https://cert.pl/en/posts/2026/01/incident-report-energy-sector-2025/"
+    },
+    {
+      "id": "certpl2",
+      "title": "Follow-up analysis of the 29 December 2025 energy sector incident",
+      "publisher": "CERT Polska",
+      "date": "8 Aug 2026",
+      "url": "https://cert.pl/en/posts/2026/08/incident-follow-up-report-energy-sector-2025/"
+    },
+    {
+      "id": "ncscot",
+      "title": "Secure connectivity principles for operational technology (OT)",
+      "publisher": "NCSC (UK) and partners",
+      "date": "14 Jan 2026",
+      "url": "https://www.ncsc.gov.uk/files/ncsc-secure-connectivity-for-operational-technology.pdf"
+    },
+    {
+      "id": "primary",
+      "title": "Primary Mitigations to Reduce Cyber Threats to Operational Technology",
+      "publisher": "CISA, FBI, EPA and DOE",
+      "date": "6 May 2025",
+      "url": "https://www.ic3.gov/CSA/2025/250506.pdf"
+    },
+    {
+      "id": "inventory",
+      "title": "Foundations for OT Cybersecurity: Asset Inventory Guidance for Owners and Operators",
+      "publisher": "CISA and partners",
+      "date": "13 Aug 2025",
+      "url": "https://www.epa.gov/system/files/documents/2025-09/joint-guide-foundations-for-ot-cybersecurity-asset-inventory-guidance_508c.pdf"
+    },
+    {
+      "id": "sp80082",
+      "title": "SP 800-82r3, Guide to Operational Technology Security",
+      "publisher": "NIST",
+      "date": "Sep 2023",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-82r3.pdf"
+    },
+    {
+      "id": "bsi108",
+      "title": "Fernwartung im industriellen Umfeld (BSI-CS 108)",
+      "publisher": "BSI",
+      "date": "version 2.0, 11 Jul 2018",
+      "url": "https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/BSI-CS/BSI-CS_108.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "nsas7",
+      "title": "Defending Against an Active Threat to Siemens S7 Series PLCs",
+      "publisher": "NSA, CISA, FBI, DOE and EPA",
+      "date": "Aug 2026",
+      "url": "https://www.ic3.gov/CSA/2026/260819.pdf"
+    },
+    {
+      "id": "bsitop10",
+      "title": "ICS Security: Top 10 threats and countermeasures 2022 (BSI-CS 005E)",
+      "publisher": "BSI",
+      "date": "version 1.50, 3 May 2022",
+      "url": "https://www.allianz-fuer-cybersicherheit.de/SharedDocs/Downloads/Webs/ACS/DE/BSI-CS/BSI-CS_005E.pdf?__blob=publicationFile"
+    },
+    {
+      "id": "sbd",
+      "title": "Secure by Demand: Priority Considerations for OT Owners and Operators",
+      "publisher": "CISA and partners",
+      "date": "13 Jan 2025",
+      "url": "https://www.ic3.gov/CSA/2025/250113.pdf"
+    },
+    {
+      "id": "eccra",
+      "title": "Cyber Resilience Act",
+      "publisher": "European Commission",
+      "date": "7 Sep 2026",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act"
+    },
+    {
+      "id": "dguv",
+      "title": "Schutz gegen Korrumpierung nach EU-Maschinenverordnung",
+      "publisher": "DGUV",
+      "date": "31 Aug 2026",
+      "url": "https://www.dguv.de/dguv-test/aktuelles/details-aktuelles_710401.jsp"
+    },
+    {
+      "id": "bsig",
+      "title": "BSI-Gesetz (BSIG), §§ 30, 31 and 39",
+      "publisher": "BMJV (Germany)",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "ohsza",
+      "title": "Orientierungshilfe zum Einsatz von Systemen zur Angriffserkennung",
+      "publisher": "BSI",
+      "date": "version 1.1, 18 Nov 2024",
+      "url": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/oh-sza.pdf?__blob=publicationFile"
+    }
+  ]
+}
