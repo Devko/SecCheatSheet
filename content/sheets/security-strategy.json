@@ -1,14 +1,14 @@
 {
   "slug": "security-strategy",
   "topic": "Security strategy",
-  "status": "draft",
+  "status": "published",
   "order": 58,
   "capability": "leadership/strategy",
   "title": "Security strategy: what goes on the one page that management signs?",
   "short": "Tie three to five measurable bets to the business plan and a numeric risk appetite on one page; management signs it and reviews it every year.",
   "answer": "Within six weeks, write a one-page strategy that ties three to five measurable security bets to the business plan, your crown jewels and a risk appetite in numbers, and have the management body approve it in a minuted decision. Review it every year before the budget, and sooner when an incident, acquisition, new law or new threat breaks one of its assumptions.",
   "audience": "Heads of security, CISOs and IT leads who own security, and the managing directors and boards who approve the strategy, especially in EU organizations with NIS2, BSIG or DORA duties",
-  "version": "0.1",
+  "version": "1.0",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -157,7 +157,7 @@
           "title": "Small team, no security staff",
           "items": [
             "The managing director owns it; the IT provider helps draft it in two half-day sessions.",
-            "Have an IT provider run the BSI's CyberRisikoCheck, a 1 to 2 hour interview priced by the provider: 27 requirements, a score and fixes by urgency[^crc].",
+            "Book the BSI's CyberRisikoCheck, ideally not from the provider that runs your IT: a 1 to 2 hour interview on 27 requirements, with a score and fixes by urgency[^crc].",
             "Three bets: a tested restore of email and files, phishing-resistant sign-in for admins and finance, exploited edge flaws patched within 72 hours.",
             "Won't do: hire security staff. Buy MDR."
           ]
@@ -184,6 +184,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.0",
+      "text": "Published after a copy edit and a source-by-source fact check, which presented Regulation 2024/2690 and ENISA's review cycle as a benchmark for digital providers, not a duty for everyone, tied delegation limits to the BSI's curriculum and added DORA's yearly review of the strategy."
+    },
     {
       "date": "2026-11-05",
       "version": "0.1",
