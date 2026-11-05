@@ -8,7 +8,7 @@
   "short": "Fund 8 to 12 initiatives on one 18-month roadmap, ranked by risk reduction per euro, and steer it monthly and quarterly.",
   "answer": "This quarter, turn strategy bets and assessment gaps into 8 to 12 initiatives with an owner, outcome, cost and quarter each, rank them by risk reduction per euro after fixed deadlines, and get the roadmap and budget approved. Steer it monthly with the owners and quarterly with management, and change it only there.",
   "audience": "Heads of security, CISOs and IT leads who own security, and the managing directors who fund the program",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -192,7 +192,7 @@
       "items": [
         "**ENISA's newest data.** Its December 2025 report found spend steady at a median 9% of IT budgets but moving to tools and outsourcing, as security's share of IT staff hit a new low[^nisinv]. Budget operators too.",
         "**Grundschutz++ formalizes the plan.** BSI-Standard 300-1 (October 2026) wants a prioritized implementation plan with owners, deadlines and tracking, approved by management, which carries the risk of open items[^std3001].",
-        "**German critical facilities got resilience duties.** The KRITIS umbrella act took effect on 17 March 2026; its duties start 9 to 10 months after registration[^kritis], which waits for a scope ordinance still in draft[^bbkfaq]. Plan them on this roadmap."
+        "**German critical facilities got resilience duties.** The KRITIS umbrella act took effect on 17 March 2026; its duties start 9 to 10 months after registration[^kritis], which waits for its scope ordinance, still a draft[^bbkfaq]. Plan them on this roadmap."
       ]
     },
     {
@@ -230,6 +230,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Confirmed that KRITIS registration still waits for the draft scope ordinance."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

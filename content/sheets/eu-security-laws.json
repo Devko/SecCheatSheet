@@ -8,8 +8,8 @@
   "short": "Map each legal entity and product to NIS2, DORA and the CRA, and set up one process that can report within 24 hours.",
   "answer": "Check which of your legal entities fall under NIS2 or DORA and which products under the CRA, since all three require a first report within 24 hours[^nis2][^dorarts][^cra]. Then resolve overlaps by role: DORA replaces NIS2's risk and reporting rules for financial entities[^nis2] and the CRA adds product duties, so one group can face all three.",
   "audience": "IT, security and compliance leads in EU organizations, especially in Germany",
-  "version": "1.1",
-  "lastReviewed": "2026-11-04",
+  "version": "1.2",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
@@ -214,6 +214,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.2",
+      "text": "Added that German energy grid and plant operators meet their security and management duties through the Federal Network Agency's IT security catalogs under the EnWG, but still register with and report to the BSI."
+    },
     {
       "date": "2026-11-04",
       "version": "1.1",

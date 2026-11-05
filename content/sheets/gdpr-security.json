@@ -8,7 +8,7 @@
   "short": "Require MFA on every remote login, link each processing record to its systems and keep dated proof that you test your measures.",
   "answer": "This quarter, require MFA on every remote, partner and admin login, and link each entry in your Article 30 records to the systems, processors and measures that protect it. Judge every other measure by the harm a breach would do to the people concerned and by what the state of the art offers, because in a damages claim you must prove your measures were appropriate[^c340].",
   "audience": "IT, security and data protection teams in companies in Germany and the EU",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -125,7 +125,7 @@
       "items": [
         "**The SDM logging module was rewritten.** Building block 43 v2.0, valid since 1 June 2026, asks for an organization-wide logging concept[^b43].",
         "**Fixed steps for cross-border cases.** For cases opened after 2 April 2027, you get preliminary findings and three to six weeks to reply[^proc].",
-        "**Fewer firms may need records.** The Omnibus IV deal would exempt firms under 1,000 staff except for high-risk processing[^pe790]; Parliament plans to vote on 23 November 2026[^oeil130]. The Digital Omnibus is still a proposal[^oeil360]."
+        "**Fewer firms may need records.** The Omnibus IV deal would exempt firms under 1,000 staff except for high-risk processing[^pe790]; Parliament's indicative plenary date is 23 November 2026[^oeil130]. The Digital Omnibus is still a proposal[^oeil360]."
       ]
     },
     {
@@ -186,6 +186,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Stated Parliament's 23 November 2026 date for Omnibus IV as the indicative plenary date it is."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",

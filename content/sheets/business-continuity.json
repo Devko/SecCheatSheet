@@ -8,8 +8,8 @@
   "short": "List the processes that can't stop for a week, give each a written workaround and exercise the plan at least once a year.",
   "answer": "This quarter, list the processes that would do serious harm if stopped for a week, set up a crisis team with deputies and a channel outside your own IT, and give each process a one-page workaround. Then run a tabletop and a technical failover at least once a year, and let the measured recovery times decide what to fix next.",
   "audience": "IT, security, risk and operations leads in EU organizations of any size, including those under NIS2 or DORA",
-  "version": "1.0",
-  "lastReviewed": "2026-11-04",
+  "version": "1.1",
+  "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
     {
@@ -146,7 +146,7 @@
       "items": [
         "**A power failure in one zone slowed a cloud region.** On 20 October 2026, generators at Google Cloud's London zone europe-west2-b failed to start; other zones were affected and some failovers failed for lack of capacity[^gcp]. Test failover at full capacity.",
         "**The NCSC published guidance on recovering to minimum viable operations:** the lowest level at which you can operate safely, meet legal duties and keep trust[^ncscrec2]. Set one per critical process.",
-        "**Germany's KRITIS umbrella act took effect** on 17 March 2026; the ordinance setting its scope is still a draft[^bbkfaq]. Most registered operators outside IT, telecom and finance have 10 months for a resilience plan[^kritis]."
+        "**Germany's KRITIS umbrella act took effect** on 17 March 2026; registration waits for its scope ordinance, still a draft[^bbkfaq]. Most registered operators outside IT, telecom and finance have 10 months for a resilience plan[^kritis]."
       ]
     },
     {
@@ -195,6 +195,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "Confirmed that KRITIS registration still waits for the draft scope ordinance."
+    },
     {
       "date": "2026-11-04",
       "version": "1.0",
@@ -281,7 +286,7 @@
       "id": "bbkfaq",
       "title": "FAQ zum KRITIS-Dachgesetz",
       "publisher": "BBK",
-      "date": "checked 4 Nov 2026",
+      "date": "checked 5 Nov 2026",
       "url": "https://www.bbk.bund.de/DE/Themen/Kritische-Infrastrukturen/Strategien-und-rechtlicher-Rahmen/KRITISDachG/FAQ/faq_node.html"
     },
     {

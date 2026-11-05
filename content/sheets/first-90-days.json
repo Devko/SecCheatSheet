@@ -8,7 +8,7 @@
   "short": "Listen and fix five basics in month one, measure in month two, and get a strategy and roadmap approved by day 90.",
   "answer": "In your first 30 days, find out who decides, which laws and promises bind you and whom to call, and fix five basics that need no strategy. Build the first risk register and a light maturity assessment in month two, and bring a strategy draft, operating model and first roadmap to management for approval by day 90.",
   "audience": "New heads of security, CISOs and information security officers (ISBs), IT leads who take over security, and the managing directors they report to",
-  "version": "1.0",
+  "version": "1.1",
   "lastReviewed": "2026-11-05",
   "reviewEveryDays": 30,
   "blocks": [
@@ -192,7 +192,7 @@
         {
           "title": "Enterprise or regulated",
           "items": [
-            "In week two, map each legal entity to its laws and supervisors. Critical facilities register under the KRITIS umbrella act once its regulation applies[^bsig].",
+            "In week two, map each legal entity to its laws and supervisors. KRITIS umbrella act registration waits for its scope ordinance, still a draft[^bbkfaq].",
             "Read the last supervisory and internal audit findings before you set priorities.",
             "Each entity's management approves its own part."
           ]
@@ -201,6 +201,11 @@
     }
   ],
   "changes": [
+    {
+      "date": "2026-11-05",
+      "version": "1.1",
+      "text": "KRITIS registration now cites the BBK: it waits for the scope ordinance, still a draft."
+    },
     {
       "date": "2026-11-05",
       "version": "1.0",
@@ -233,6 +238,13 @@
       "publisher": "BMJV",
       "date": "checked 5 Nov 2026",
       "url": "https://www.gesetze-im-internet.de/bsig_2025/"
+    },
+    {
+      "id": "bbkfaq",
+      "title": "FAQ zum KRITIS-Dachgesetz",
+      "publisher": "BBK",
+      "date": "checked 5 Nov 2026",
+      "url": "https://www.bbk.bund.de/DE/Themen/Kritische-Infrastrukturen/Strategien-und-rechtlicher-Rahmen/KRITISDachG/FAQ/faq_node.html"
     },
     {
       "id": "bsinis2",
@@ -299,7 +311,7 @@
     },
     {
       "id": "mtrends",
-      "title": "M-Trends 2026, Executive Edition",
+      "title": "M-Trends 2026",
       "publisher": "Mandiant",
       "date": "Mar 2026",
       "url": "https://services.google.com/fh/files/misc/m-trends-2026-executive-edition-en.pdf"
